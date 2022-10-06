@@ -117,7 +117,7 @@ const Signup = () => {
             });
 
             if(statusCode(user.status, 2)) {
-                alert('회원가입이 완료되었습니다')
+                alert('회원 가입이 완료되었습니다. 기존 페이지는 닫아주세요')
                 // 로그인 페이지 만들면 로그인으로 
                 navigate('/')
             }

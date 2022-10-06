@@ -61,7 +61,7 @@ const FindIdQuestion = () => {
 
 
     useEffect(() => {
-        console.log(resMsg)
+        // console.log(resMsg)
         return () => {
             findIdSubmit.cancel()
         }

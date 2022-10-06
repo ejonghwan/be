@@ -28,6 +28,9 @@ const UserPasswordEdit = props => {
     const navigate = useNavigate();
 
     const { prevPasswordCheck, userId } = props;
+
+    console.log('props???', props)
+
     const [prevPassword, handlePrevPassword, setPrevPassword] = useInput('') 
     const [newPassword, handleNewPassword, setNewPassword] = useInput('') 
     const [newPasswordCheck, handleNewPasswordCheck, setNewPasswordCheck] = useInput('') 
@@ -84,6 +87,7 @@ const UserPasswordEdit = props => {
     const newPasswordEdit = useMemo(() => _debounce(async() => {
         try {   
             if(!userId && !newPassword && !state && !passwordIsChecked) return console.error('정보 확인해주세요');
+            console.log('front??', userId)
             dispatch({ type: "LOADING", loadingMessage: "비번 변경중.." })
             const user = await findPasswordEditUser({
                 newPassword, 

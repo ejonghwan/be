@@ -280,7 +280,7 @@ const UserRequest = () => {
     };
     
     
-    // 이전 비번을 알고 있는 경우 비번수정
+    // 이전 비번을 알고 있는 경우 비번수정 //로그인 된 상태
      const prevPasswordEditUser = async data => {
         try {
             const accToken = localStorage.getItem('X-access-token')
@@ -310,10 +310,11 @@ const UserRequest = () => {
         }
     }
     
-    // 이전 비번을 모르고 있는 경우 비번수정
+    // 이전 비번을 모르고 있는 경우 비번수정 //로그인 안 된 상태
      const findPasswordEditUser = async data => {
         try {
-            const { newPassword, _id, newPasswordCheck } = data;
+            const { _id, newPassword, newPasswordCheck } = data;
+            console.log('req?', data)
             if(!newPassword && typeof newPassword !== 'string') throw new Error('user request error. is not newPassword');
             if(!newPasswordCheck && typeof newPasswordCheck !== 'string') throw new Error('user request error. is not newPasswordCheck');
             if(!_id && typeof _id !== 'string') throw new Error('user request error. is not _id');
