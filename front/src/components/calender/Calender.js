@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 // import { Icon } from '@iconify/react';
 import { format, addMonths, subMonths, addYears, subYears } from 'date-fns';
 // import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
@@ -39,11 +39,10 @@ export const Calender = () => {
 
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [slideState, setSlideState] = useState(false);
     const [date, setDate] = useState(null);
-    const [headerM, setHeaderM] = useState(format(currentMonth, 'M')) //본문 슬라이드 움직일때만 
-    const [headerY, setHeaderY] = useState(format(currentMonth, 'yyyy')) //본문 슬라이드 움직일때만 
+    const calenderSwiper = useRef(null);
 
-    // console.log('????????', date)
 
     const prevMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1));
@@ -71,11 +70,6 @@ export const Calender = () => {
         (el, index) => `${index + 1}`
       );
 
-    useEffect(() => {
-        setHeaderM(format(currentMonth, 'M'))
-        setHeaderY(format(currentMonth, 'yyyy'))
-    }, [currentMonth])
-
 
     return (
         <Fragment>
@@ -86,11 +80,12 @@ export const Calender = () => {
                     nextMonth={nextMonth}
                     prevYears={prevYears}
                     nextYears={nextYears}
-                    m={headerM}
-                    y={headerY}
+                    m={format(currentMonth, 'M')}
+                    y={format(currentMonth, 'yyyy')}
+                    slideState={slideState}
                 />
                 <CalenderDays />
-                <Swiper 
+                <Swiper ref={calenderSwiper}
                     modules={[Virtual, Navigation]} 
                     spaceBetween={0} 
                     slidesPerView={1} 
@@ -99,14 +94,11 @@ export const Calender = () => {
                     navigation={true}
                     className="mySwiper"
                     onSlideChange={(swiper) => {
-                        // console.log(swiper.activeIndex)
-                        // console.log(swiper.previousIndex)
-                        // setHeaderM(format(currentMonth, 'M'))
-                        // setHeaderY(format(currentMonth, 'yyyy'))
-                   
+                       
                         setTimeout(() => {
                             if(swiper.activeIndex > swiper.previousIndex) nextMonth();
                             if(swiper.activeIndex < swiper.previousIndex) prevMonth();
+                            setSlideState(!slideState)
                         }, 0);
                     }}
                     onSwiper={(swiper) => {
