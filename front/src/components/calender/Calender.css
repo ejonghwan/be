@@ -1,5 +1,5 @@
 .calendar * {box-sizing: border-box;}
-.header  {text-align: center; height: 40px;}
+.header  {text-align: center; }
 
 
 .days,
@@ -25,3 +25,15 @@
 .swiper-rtl .swiper-button-prev:after,
 .swiper-button-next:after, 
 .swiper-button-prev:after {font-size: 25px !important;;}
+
+.yy { padding: 5px 0;}
+.yy .swiper-slide.swiper-slide-visible {opacity: .5; }
+.yy .swiper-slide.swiper-slide-visible.swiper-slide-active {font-weight: bold; opacity: 1;}
+.yy .swiper-button-prev {top: 50%;}
+.yy .swiper-button-next {top: 50%;}
+
+.mm {margin-bottom: 30px; padding: 5px 0;}
+.mm .swiper-slide.swiper-slide-visible {opacity: .5; }
+.mm .swiper-slide.swiper-slide-visible.swiper-slide-active {font-weight: bold; opacity: 1; }
+.mm .swiper-button-prev {top: 50%;}
+.mm .swiper-button-next {top: 50%;}

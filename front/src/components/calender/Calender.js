@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 // import { Icon } from '@iconify/react';
-import { format, addMonths, subMonths } from 'date-fns';
+import { format, addMonths, subMonths, addYears, subYears } from 'date-fns';
 // import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 // import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
 
@@ -40,6 +40,8 @@ export const Calender = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [date, setDate] = useState(null);
+    const [headerM, setHeaderM] = useState(format(currentMonth, 'M')) //본문 슬라이드 움직일때만 
+    const [headerY, setHeaderY] = useState(format(currentMonth, 'yyyy')) //본문 슬라이드 움직일때만 
 
     // console.log('????????', date)
 
@@ -49,6 +51,14 @@ export const Calender = () => {
     const nextMonth = () => {
         setCurrentMonth(addMonths(currentMonth, 1));
     };
+
+    const prevYears = () => {
+        setCurrentMonth(subYears(currentMonth, 1));
+    };
+    const nextYears = () => {
+        setCurrentMonth(addYears(currentMonth, 1));
+    };
+
     const onDateClick = (day) => {
         if(format(day, 'M') < format(currentMonth, 'M')) prevMonth();  
         if(format(day, 'M') > format(currentMonth, 'M')) nextMonth();
@@ -61,6 +71,11 @@ export const Calender = () => {
         (el, index) => `${index + 1}`
       );
 
+    useEffect(() => {
+        setHeaderM(format(currentMonth, 'M'))
+        setHeaderY(format(currentMonth, 'yyyy'))
+    }, [currentMonth])
+
 
     return (
         <Fragment>
@@ -69,6 +84,10 @@ export const Calender = () => {
                     currentMonth={currentMonth}
                     prevMonth={prevMonth}
                     nextMonth={nextMonth}
+                    prevYears={prevYears}
+                    nextYears={nextYears}
+                    m={headerM}
+                    y={headerY}
                 />
                 <CalenderDays />
                 <Swiper 
@@ -82,6 +101,9 @@ export const Calender = () => {
                     onSlideChange={(swiper) => {
                         // console.log(swiper.activeIndex)
                         // console.log(swiper.previousIndex)
+                        // setHeaderM(format(currentMonth, 'M'))
+                        // setHeaderY(format(currentMonth, 'yyyy'))
+                   
                         setTimeout(() => {
                             if(swiper.activeIndex > swiper.previousIndex) nextMonth();
                             if(swiper.activeIndex < swiper.previousIndex) prevMonth();
@@ -94,7 +116,6 @@ export const Calender = () => {
                     {slides.map((item, index) => {
                         return (
                             <SwiperSlide key={item} virtualIndex={index}>
-                                {/* {item} */}
                                 <CalenderCells
                                     currentMonth={currentMonth}
                                     selectedDate={selectedDate}
