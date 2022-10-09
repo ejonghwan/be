@@ -90,6 +90,7 @@ export const Calender = () => {
                     spaceBetween={0} 
                     slidesPerView={1} 
                     virtual
+                    touchRatio={.5}
                     initialSlide={500}
                     navigation={true}
                     className="mySwiper"
