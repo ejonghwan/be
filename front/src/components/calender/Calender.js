@@ -92,7 +92,10 @@ export const Calender = () => {
                     virtual
                     touchRatio={.5}
                     initialSlide={500}
-                    navigation={true}
+                    navigation={{
+                        prevEl: '.mprev',
+                        nextEl: '.mnext',
+                    }}
                     className="mySwiper"
                     onSlideChange={(swiper) => {
                        
@@ -118,6 +121,8 @@ export const Calender = () => {
                         )
                     })}
                 </Swiper>
+                <button className="mprev" onClick={prevMonth}>prev</button>
+                <button className="mnext" onClick={nextMonth}>next</button>
             </div>
             {date && <CalenderReview date={date} />}
         </Fragment>

@@ -9,6 +9,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 const CalenderHeader = props => {
 
     const { currentMonth, prevMonth, nextMonth, prevYears, nextYears, y, m, slideState } = props;
+    // 스와이프 이벤트 정리 
+    // https://velog.io/@rhtjdrhkd123/20220516-swiper-events-%EC%A0%95%EB%A6%AC
 
     // 여기 밖은 마운트 되기 전
     const mswiper = useRef(null);
@@ -29,6 +31,9 @@ const CalenderHeader = props => {
         // console.log('m', m);
         mswiper.current.swiper.slideTo(m - 1);
         yswiper.current.swiper.slideTo(Math.abs(y - 1972));
+
+        console.log(mswiper.current.swiper.navigationNext)
+
     }, [slideState])
   
 
@@ -56,9 +61,13 @@ const CalenderHeader = props => {
                         autoHeight={false}
                         freeMode={true}
                         initialSlide={50}
-                        navigation={true}
+                        navigation={{
+                            prevEl: '.yprev',
+                            nextEl: '.ynext',
+                        }}
                         onTouchMove={swiper => setTouch(true)}
                         onTouchEnd={swiper => setTouch(false)}
+                        
                         // className="mySwiper"
                         onSlideChange={(swiper) => {
                             // console.log('y', swiper.activeIndex + 1972)
@@ -77,6 +86,8 @@ const CalenderHeader = props => {
                             )
                         })}
                     </Swiper>
+                    <button className="yprev" onClick={prevYears}>prev</button>
+                    <button className="ynext" onClick={nextYears}>next</button>
                 </div>
 
                 <div className="mm">
@@ -90,7 +101,10 @@ const CalenderHeader = props => {
                         autoHeight={false}
                         freeMode={true}
                         initialSlide={format(currentMonth, 'M')}
-                        navigation={true}
+                        navigation={{
+                            prevEl: '.mprev',
+                            nextEl: '.mnext',
+                        }}
                         // className="mySwiper"
                         onTouchMove={swiper => setTouch(true)}
                         onTouchEnd={swiper => setTouch(false)}
@@ -110,6 +124,8 @@ const CalenderHeader = props => {
                             )
                         })}
                     </Swiper>
+                    <button className="mprev" onClick={prevMonth}>prev</button>
+                    <button className="mnext" onClick={nextMonth}>next</button>
                 </div>
             </div>
         </div>
