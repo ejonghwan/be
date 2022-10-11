@@ -96,7 +96,7 @@ export const Calender = () => {
                         prevEl: '.mprev',
                         nextEl: '.mnext',
                     }}
-                    className="mySwiper"
+                    // className="mySwiper"
                     onSlideChange={(swiper) => {
                        
                         setTimeout(() => {

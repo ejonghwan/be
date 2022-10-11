@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 
-// phoneNumber gender birthday 추가
+const { Types } = mongoose.Schema;
+
+
 const UserSchema = mongoose.Schema({
     // 소문자로 이뤄진 6~15 공백없이 
     id: { type: String, require: true, unique: true, minlength: 4, maxlength: 15, trim: true, lowercase: true,}, /* 8 ~15 소문자 공백제거  */
@@ -15,6 +17,14 @@ const UserSchema = mongoose.Schema({
         questionType: { type: String, require: true },
         result: { type: String, require: true, minlength: 1, maxlength: 15, trim: true, lowercase: true, },  /* 소문자 1 ~ 15공백제거  */
      },
+     profileImage: { _id: { type: Types.ObjectId, ref: 'image' } },
+     project: {
+        _id: { type: Types.ObjectId, ref: 'project'},
+        date: [{ type: String, }],
+     },
+     writes: [{ _id: { type: Types.ObjectId, ref: 'writes'} }],
+     comments: [{ _id: { type: Types.ObjectId, ref: 'comment'} }],
+     recomment: [{ _id: { type: Types.ObjectId, ref: 'recomment'} }],
 }, {
     timestamps: true,
 })
