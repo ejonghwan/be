@@ -13,16 +13,17 @@ const ProjectSchema = new mongoose.Schema(
             name: { type: String, required: true, }  
         },],
         rank: [
-            { a: { _id: Types.ObjectId, ref: 'user' } }
-            { b: { _id: Types.ObjectId, ref: 'user' } }
-            { c: { _id: Types.ObjectId, ref: 'user' } }
+            { a: { _id: Types.ObjectId, ref: 'user' } },
+            { b: { _id: Types.ObjectId, ref: 'user' } },
+            { c: { _id: Types.ObjectId, ref: 'user' } },
             { d: { _id: Types.ObjectId, ref: 'user' }, default: true }
         ],
         userCount: { type: Number, required: true, default: 0, },
         title: { type: String, required: true, },
         content: { type: String, required: true, },
         write: [{ _id: { type: Types.ObjectId, ref: 'write' } }],
-        public: { type: Boolean, required: true, }
+        public: { type: Boolean, required: true, },
+        category: { type: Types.ObjectId, ref: 'category' },
     },
     { timestamps: true }
 )
