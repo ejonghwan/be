@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser';
 import imagesRoutes from './routes/images.js'
 import usersRoutes from './routes/users.js'
 import emailRoutes from './routes/email.js'
+import projectRoutes from './routes/project.js'
 
 
 
@@ -40,6 +41,7 @@ mongoose.connect(process.env.MONGO_URI, {}).then(() => {
         app.use('/api/images', imagesRoutes)
         app.use('/api/users', usersRoutes)
         app.use('/api/auth', emailRoutes)
+        app.use('/api/project', projectRoutes)
         app.listen(PORT, () => console.log('express server listening port ' + PORT))
 
     } catch(err) {
