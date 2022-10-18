@@ -21,9 +21,9 @@ const ProjectSchema = new mongoose.Schema(
         userCount: { type: Number, required: true, default: 0, },
         title: { type: String, required: true, },
         content: { type: String, required: true, },
-        write: [{ type: Types.ObjectId, ref: 'write' }],
+        writes: [{ type: Types.ObjectId, ref: 'write' }],
         projectPublic: { type: Boolean, required: true, default: true, },
-        category: [{ type: Types.ObjectId, ref: 'category' }],
+        categorys: [{ type: Types.ObjectId, ref: 'category' }],
     },
     { timestamps: true }
 )

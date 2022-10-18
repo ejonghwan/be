@@ -18,13 +18,14 @@ const UserSchema = mongoose.Schema({
         result: { type: String, require: true, minlength: 1, maxlength: 15, trim: true, lowercase: true, },  /* 소문자 1 ~ 15공백제거  */
      },
      profileImage: { _id: { type: Types.ObjectId, ref: 'image' } },
-     project: [{
+     projects: [{
         _id: { type: Types.ObjectId, ref: 'project'},
         date: [{ type: String, }],
      }],
-     writes: [{ _id: { type: Types.ObjectId, ref: 'writes'} }],
-     comments: [{ _id: { type: Types.ObjectId, ref: 'comment'} }],
-     recomment: [{ _id: { type: Types.ObjectId, ref: 'recomment'} }],
+     writes: [{ type: Types.ObjectId, ref: 'write'}],
+     comments: [{ type: Types.ObjectId, ref: 'comment'}],
+     recomments: [{ type: Types.ObjectId, ref: 'recomment'}],
+     likePost: [{ type: Types.ObjectId, ref: 'write' }]
 }, {
     timestamps: true,
 })

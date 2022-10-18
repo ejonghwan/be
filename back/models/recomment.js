@@ -20,14 +20,14 @@ const recommentSchema = new mongoose.Schema(
        
         isLive: { type: Boolean, default: false,},
         public: { type: Boolean, default: false,},
-        like: { type: Number, default: 0, },
+        likes: [{ type: Types.ObjectId, ref: 'user' }],
         likeCount: { type: Number, required: true, default: 0, },
     },
     { timestamps: true }
 )
 
-
-export default mongoose.model("recomment", recommentSchema)
+const Recomment = mongoose.model("recomment", recommentSchema)
+export default Recomment;
 
 
 /*

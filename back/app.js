@@ -8,10 +8,12 @@ import cookieParser from 'cookie-parser';
 
 
 // router
-import imagesRoutes from './routes/images.js'
-import usersRoutes from './routes/users.js'
-import emailRoutes from './routes/email.js'
-import projectRoutes from './routes/project.js'
+import imagesRoutes from './routes/images.js';
+import usersRoutes from './routes/users.js';
+import emailRoutes from './routes/email.js';
+import projectRoutes from './routes/project.js';
+import writeRoutes from './routes/write.js';
+import commentRoutes from './routes/comment.js';
 
 
 
@@ -37,12 +39,14 @@ dotenv.config()
 
 mongoose.connect(process.env.MONGO_URI, {}).then(() => {
     try {
-        console.log('mongodb connect')
-        app.use('/api/images', imagesRoutes)
-        app.use('/api/users', usersRoutes)
-        app.use('/api/auth', emailRoutes)
-        app.use('/api/project', projectRoutes)
-        app.listen(PORT, () => console.log('express server listening port ' + PORT))
+        console.log('mongodb connect');
+        app.use('/api/images', imagesRoutes);
+        app.use('/api/users', usersRoutes);
+        app.use('/api/auth', emailRoutes);
+        app.use('/api/project', projectRoutes);
+        app.use('/api/write', writeRoutes);
+        app.use('/api/comment', commentRoutes);
+        app.listen(PORT, () => console.log('express server listening port ' + PORT));
 
     } catch(err) {
         console.error(err)

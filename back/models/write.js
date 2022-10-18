@@ -12,15 +12,16 @@ const WriteSchema = new mongoose.Schema(
         title: { type: String, required: true,  },
         content: { type: String, required: true,  },
         images: [{ _id: { type: Types.ObjectId, ref: 'image' } }],
-        comments: [{ _id: { type: Types.ObjectId, ref: 'comment' } }],
+        comments: [{ type: Types.ObjectId, ref: 'comment' }],
         commentCount: { type: Number, required: true, default: 0, },
         isLive: { type: Boolean, default: false,},
-        public: { type: Boolean, default: false,},
-        like: { type: Number, default: 0, },
+        writePublic: { type: Boolean, default: false,},
+        likes: [{ type: Types.ObjectId, ref: 'user' }],
         likeCount: { type: Number, required: true, default: 0, },
     },
     { timestamps: true }
-)
+);
 
 
-export default mongoose.model("write", WriteSchema)
+const Write =  mongoose.model("write", WriteSchema);
+export default Write;

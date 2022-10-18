@@ -4,7 +4,7 @@ const { Types } = mongoose.Schema;
 
 const CategorySchema = new mongoose.Schema({
         categoryName: { type: String, default: '미분류' },
-        project: [{ type: Types.ObjectId, ref: 'project' }]
+        projects: [{ type: Types.ObjectId, ref: 'project' }]
     })
 
 
