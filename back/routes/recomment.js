@@ -12,8 +12,8 @@ import Recomment from '../models/recomment.js';
 const router = express.Router();
 
 
-//@ path    GET /api/comment
-//@ doc     댓글 가져오기
+//@ path    GET /api/recomment
+//@ doc     대댓글 가져오기
 //@ access  private
 router.get('/', async (req, res) => {
     try {
@@ -27,20 +27,22 @@ router.get('/', async (req, res) => {
 })
 
 
-//@ path    POST /api/comment
-//@ doc     댓글 생성
+//@ path    POST /api/recomment
+//@ doc     대댓글 생성
 //@ access  private
 router.post('/', async (req, res) => { 
     try {
         // get data: user, content, coomentId, 
-        const { user, content, commentId } = req.body;
+        const { user, content, comment } = req.body;
         const recomment = await new Recomment(req.body)
         recomment.save();
 
         await Promise.all([
             User.findByIdAndUpdate(user._id, { $push: { recomments: recomment._id } }, { new: true }).exec(),
-            Comment.findByIdAndUpdate(commentId, { $push: { recomments: recomment._id } }, { new: true }).exec()
+            Comment.findByIdAndUpdate(comment, { $push: { recomments: recomment._id }, $inc: { recommentCount: 1 } }, { new: true }).exec()
         ])
+
+
 
         res.status(201).json(recomment)
 
@@ -52,19 +54,19 @@ router.post('/', async (req, res) => {
 })
 
 
-//@ path    PUT /api/comment
-//@ doc     댓글 수정
+//@ path    PATCH /api/recomment
+//@ doc     대댓글 수정
 //@ access  private
-router.put('/:commentId', async (req, res) => {
+router.patch('/:recommentId', async (req, res) => {
     try {
-        const { commentId } = req.params;
+        const { recommentId } = req.params;
         const { content } = req.body;
         const putData = {};
 
         if(content) putData.content = content;
 
-        const comment = await Comment.findByIdAndUpdate(commentId, putData, { new: true }).exec();
-        res.status(201).json(comment)
+        const recomment = await Recomment.findByIdAndUpdate(recommentId, putData, { new: true }).exec();
+        res.status(201).json(recomment)
 
     } catch (err) {
         console.error('server:', err);
@@ -73,58 +75,57 @@ router.put('/:commentId', async (req, res) => {
 });
 
 
-//@ path    DELETE /api/comment
-//@ doc     댓글 삭제
+//@ path    DELETE /api/recomment
+//@ doc     대댓글 삭제
 //@ access  private
 router.delete('/', async (req, res) => {
     try {
-        const { userId, writeId, commentId } = req.body;
-        const [comment, user, write] = await Promise.all([
-            Comment.findByIdAndDelete(commentId, { new: true }).exec(),
-            User.findByIdAndUpdate(userId, { $pull: { comments: commentId } }, { new: true }).exec(),
-            Write.findByIdAndUpdate(writeId, { $pull: { comments: commentId } }, { new: true }).exec(),
+        const { userId, commentId, recommentId } = req.body;
+        const [recomment, user, comment] = await Promise.all([
+            Recomment.findByIdAndDelete(recommentId, { new: true }).exec(),
+            User.findByIdAndUpdate(userId, { $pull: { recomments: recommentId } }, { new: true }).exec(),
+            Comment.findByIdAndUpdate(commentId, { $pull: { recomments: recommentId }, $inc: { recommentCount: -1 } }, { new: true }).exec(),
         ])
-        res.status(201).json(write);
-        // promise all 코멘트 왜 밑에 두면 삭제 안되지 ? 
-
+        res.status(201).json(comment);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
     }
-    
 })
 
 
 
-//@ path    PATCH /api/comment/like
+//@ path    PATCH /api/recomment/like
 //@ doc     좋아요 업
 //@ access  private
-router.patch('/like', async (req, res) => {
-    try {
-        const { userId, commentId } = req.body;
-        const [ comment ] = await Promise.all([
-            Comment.findByIdAndUpdate(commentId, { $push: {likes: userId }, $inc: { likeCount: 1 } }, { new: true }),
-            // 유저모델에 좋아요한 댓글을 넣을까 말까 ...
-        ])
-        res.status(201).json(comment);
-    } catch (err) {
-        console.error('server:', err);
-        res.status(500).json({ message: err.message });
-    }
-})
+// router.patch('/', async (req, res) => {
+//     try {
+//         // console.log(req.body)
+//         // const { userId, recommentId } = req.body;
+//         // // console.log(11, userId)
+//         // const [ recomment ] = await Promise.all([
+//         //     Recomment.findByIdAndUpdate(recommentId, { $push: { likes: userId }, $inc: { likeCount: 1 } }, { new: true }),
+//         // ])
+//         // res.status(201).json(recomment);
+//         // res.send('??????????')
+//     } catch (err) {
+//         console.error('server:', err);
+//         res.status(500).json({ message: err.message });
+//     }
+// })
 
 
 
-//@ path    PATCH /api/comment/unlike
+//@ path    PATCH /api/recomment/unlike
 //@ doc     좋아요 취소 
 //@ access  private
-router.patch('/unlike', async (req, res) => {
+router.put('/unlike', async (req, res) => {
     try {
-        const { userId, commentId } = req.body;
-        const [ comment ] = await Promise.all([
-            Comment.findByIdAndUpdate(commentId, { $pull: {likes: userId }, $inc: { likeCount: -1 } }, { new: true }),
+        const { userId, recommentId } = req.body;
+        const [ recomment ] = await Promise.all([
+            Recomment.findByIdAndUpdate(recommentId, { $pull: {likes: userId }, $inc: { likeCount: -1 } }, { new: true }),
         ])
-        res.status(201).json(comment);
+        res.status(201).json(recomment);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -132,6 +133,17 @@ router.patch('/unlike', async (req, res) => {
 })
 
 
+
+router.patch('/aa', async (req, res) => {
+    try {
+       
+        console.log(123123)
+        
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
 
 
 

@@ -47,10 +47,10 @@ router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 �
 })
 
 
-//@ path    PUT /api/project
+//@ path    PATCH /api/project
 //@ doc     수정 프로젝
 //@ access  private
-router.put('/:projectId', async (req, res) => {
+router.patch('/:projectId', async (req, res) => {
     try {
         // 양도 constructorUser
         const { constructorUser, instanceUser, rank, title, content, write, projectPublic, category } = req.body;

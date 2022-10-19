@@ -14,6 +14,7 @@ import emailRoutes from './routes/email.js';
 import projectRoutes from './routes/project.js';
 import writeRoutes from './routes/write.js';
 import commentRoutes from './routes/comment.js';
+import recommentRoutes from './routes/recomment.js';
 
 
 
@@ -46,6 +47,7 @@ mongoose.connect(process.env.MONGO_URI, {}).then(() => {
         app.use('/api/project', projectRoutes);
         app.use('/api/write', writeRoutes);
         app.use('/api/comment', commentRoutes);
+        app.use('/api/recomment', recommentRoutes);
         app.listen(PORT, () => console.log('express server listening port ' + PORT));
 
     } catch(err) {

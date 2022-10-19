@@ -34,10 +34,6 @@ router.post('/', async (req, res) => {
         const write = await new Write(req.body);
         write.save();
 
-        // const [] = await Promise.all([
-        //     User.updateOne({_id: user._id}, { $push: {writes: [write._id] } }, { new: true }),
-        //     Project.updateOne({_id: projectId}, { $push: {writes: [write._id] } }, { new: true })
-        // ])
 
         await Promise.all([
             User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
@@ -52,10 +48,10 @@ router.post('/', async (req, res) => {
 })
 
 
-//@ path    PUT /api/write
+//@ path    PATCH /api/write
 //@ doc     수정 인증글
 //@ access  private
-router.put('/:writeId', async (req, res) => {
+router.patch('/:writeId', async (req, res) => {
     try {
         const { writeId } = req.params;
         const { title, content, writePublic } = req.body;

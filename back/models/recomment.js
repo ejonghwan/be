@@ -16,11 +16,10 @@ const recommentSchema = new mongoose.Schema(
             4. 리코멘트에서 삭제
         */
         content: { type: String, required: true,  },
-        comment: { _id: { type: Types.ObjectId, ref: 'comment' } },
+        comment: { type: Types.ObjectId, ref: 'comment' },
        
         isLive: { type: Boolean, default: false,},
-        public: { type: Boolean, default: false,},
-        likes: [{ type: Types.ObjectId, ref: 'user' }],
+        likes: { type: Types.ObjectId, ref: 'user' },
         likeCount: { type: Number, required: true, default: 0, },
     },
     { timestamps: true }
