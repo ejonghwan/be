@@ -48,10 +48,10 @@ router.post('/', async (req, res) => {
 })
 
 
-//@ path    PATCH /api/write
+//@ path    PATCH /api/write/edit/:writeId
 //@ doc     수정 인증글
 //@ access  private
-router.patch('/:writeId', async (req, res) => {
+router.patch('/edit/:writeId', async (req, res) => {
     try {
         const { writeId } = req.params;
         const { title, content, writePublic } = req.body;
@@ -136,7 +136,7 @@ router.patch('/unlike', async (req, res) => {
 
 
 
-
+// 221020 내일 이미지 글에 연결하고 친추초대 기능 만들어야됨
 
 
 export default router;

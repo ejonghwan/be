@@ -54,10 +54,10 @@ router.post('/', async (req, res) => {
 })
 
 
-//@ path    PATCH /api/recomment
+//@ path    PATCH /api/recomment/edit/:recommentId
 //@ doc     대댓글 수정
 //@ access  private
-router.patch('/:recommentId', async (req, res) => {
+router.patch('/edit/:recommentId', async (req, res) => {
     try {
         const { recommentId } = req.params;
         const { content } = req.body;
@@ -98,33 +98,12 @@ router.delete('/', async (req, res) => {
 //@ path    PATCH /api/recomment/like
 //@ doc     좋아요 업
 //@ access  private
-// router.patch('/', async (req, res) => {
-//     try {
-//         // console.log(req.body)
-//         // const { userId, recommentId } = req.body;
-//         // // console.log(11, userId)
-//         // const [ recomment ] = await Promise.all([
-//         //     Recomment.findByIdAndUpdate(recommentId, { $push: { likes: userId }, $inc: { likeCount: 1 } }, { new: true }),
-//         // ])
-//         // res.status(201).json(recomment);
-//         // res.send('??????????')
-//     } catch (err) {
-//         console.error('server:', err);
-//         res.status(500).json({ message: err.message });
-//     }
-// })
-
-
-
-//@ path    PATCH /api/recomment/unlike
-//@ doc     좋아요 취소 
-//@ access  private
-router.put('/unlike', async (req, res) => {
+router.patch('/like', async (req, res) => {
     try {
         const { userId, recommentId } = req.body;
         const [ recomment ] = await Promise.all([
-            Recomment.findByIdAndUpdate(recommentId, { $pull: {likes: userId }, $inc: { likeCount: -1 } }, { new: true }),
-        ])
+            Recomment.findByIdAndUpdate(recommentId, { $push: { likes: userId }, $inc: { likeCount: 1 } }, { new: true }),
+        ]);
         res.status(201).json(recomment);
     } catch (err) {
         console.error('server:', err);
@@ -134,11 +113,16 @@ router.put('/unlike', async (req, res) => {
 
 
 
-router.patch('/aa', async (req, res) => {
+//@ path    PATCH /api/recomment/unlike
+//@ doc     좋아요 취소 
+//@ access  private
+router.patch('/unlike', async (req, res) => {
     try {
-       
-        console.log(123123)
-        
+        const { userId, recommentId } = req.body;
+        const [ recomment ] = await Promise.all([
+            Recomment.findByIdAndUpdate(recommentId, { $pull: {likes: userId }, $inc: { likeCount: -1 } }, { new: true }),
+        ])
+        res.status(201).json(recomment);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

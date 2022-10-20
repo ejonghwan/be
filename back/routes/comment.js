@@ -51,10 +51,10 @@ router.post('/', async (req, res) => {
 })
 
 
-//@ path    PATCH /api/comment
+//@ path    PATCH /api/comment/edit/:commentId
 //@ doc     댓글 수정
 //@ access  private
-router.patch('/:commentId', async (req, res) => {
+router.patch('/edit/:commentId', async (req, res) => {
     try {
         const { commentId } = req.params;
         const { content } = req.body;
