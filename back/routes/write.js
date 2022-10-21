@@ -10,6 +10,10 @@ import User from '../models/users.js';
 const router = express.Router();
 
 
+// 221020 내일 이미지 글에 연결하고 친추초대 기능 만들어야됨
+
+
+
 //@ path    GET /api/write
 //@ doc     로드 인증글
 //@ access  private
@@ -134,9 +138,6 @@ router.patch('/unlike', async (req, res) => {
     
 })
 
-
-
-// 221020 내일 이미지 글에 연결하고 친추초대 기능 만들어야됨
 
 
 export default router;

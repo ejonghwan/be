@@ -1,16 +1,28 @@
 import React, { useEffect, useState, useReducer, useContext } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import _debounce from 'lodash.debounce';
 
 
 import './ImageUploadForm.css';
 import ProgressBar from '../progress/ProgressBar.js';
 
+
+// request & reducer
 import { ImageContext } from '../../context/ImageContext.js';
 import { UserContext } from '../../context/UserContext.js';
+import { imageRequest } from '../../reducers/ImageRequest.js';
+
+// util
+import { statusCode } from '../../utils/utils.js'
 
 
-const ImageUploadForm = () => {
+
+const ImageUploadForm = props => {
+
+    // noneSubmitBtn 있으면 서브밋버튼 숨김
+    const { noneSubmitBtn } = props;
+
     const defaultFileName = '이미지 삽입'
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("이미지파일 업로드 해주세요")
@@ -53,7 +65,14 @@ const ImageUploadForm = () => {
 
         if(!formData) return;
         try {
-            const res = await axios.post('http://localhost:5000/api/images', formData, {
+            /*  
+                http://localhost:5000/api/images/${path}
+                userProfile 
+                write 
+                project
+                프론트에서 쿼리스트링으로 path + id 넘김 
+            */
+            const res = await axios.post(`http://localhost:5000/api/images/${encodeURIComponent("userProfile")}/634dfa1fc8d04dace20755e7`, formData, {
                 headers: { 
                     "Content-Type": "multipart/form-data",
                     'X-access-token': localStorage.getItem('X-access-token'),
@@ -80,15 +99,22 @@ const ImageUploadForm = () => {
     }
 
 
-    const testClick = e => {
-        console.log(111)
-        imageDispatch({ type: "IMAGE_UPLOAD_REQUEST", data: 'hoho'})
-    }
+    // 이미지 프로필에 등록 되는거까진 테스트함. 이거 적용 테스트해봐야됨
+      /** 이미지 업로드 리퀘스트 디바운스 적용 */
+    //   const handleAuthNumberSubmit = e => {
+    //     e.preventDefault();
+    //     authSubmit();
+    //     }
 
-    // useEffect(() => {
-
-    // }, [setPersent])
-    
+    //     const authSubmit = useMemo(() => _debounce(async() => {
+    //         try {
+    //             const number = await nonLoginMemberAuthNumberRequest({ name, email }); 
+    //             if(statusCode(number.status, 2)) return setAuthToggle(true) //성공 시 
+    //         } catch(err) {
+    //             console.error(err)
+    //         }
+    //     }, 1000), [name, email])
+        /** //이미지 업로드 리퀘스트 디바운스 적용 */
 
     return (
         <div>
@@ -103,7 +129,7 @@ const ImageUploadForm = () => {
                     <input id="image" type="file" accept='image/png, image/jpg, image/*' onChange={handleInputChange}/>
 
                 </div>
-                <button type='submit'>submit</button>
+                {!noneSubmitBtn && <button type='submit'>submit</button>}
             </form>
         </div>
     )

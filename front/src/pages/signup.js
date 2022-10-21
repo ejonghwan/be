@@ -11,6 +11,7 @@ import { useInput, useInputRadio } from '../components/common/hooks/index.js'
 // components
 import Input from '../components/common/form/Input.js'
 import Label from '../components/common/form/Label.js'
+import ImageUploadForm from '../components/image/ImageUploadForm.js' 
 
 // context & request 
 // import { signupUser } from '../reducers/UserRequest.js'
@@ -191,6 +192,10 @@ const Signup = () => {
                 <div>
                     <Label htmlFor="userEmail" content="이메일" classN="label_t1"/>
                     <span>{email} / 인증완료</span>
+                </div>
+                <div>
+                    프로필 이미지: <br />
+                    <ImageUploadForm noneSubmitBtn={true}/>
                 </div>
                 <div>
                     <Label htmlFor="userId" content="아이디" classN="label_t1"/>

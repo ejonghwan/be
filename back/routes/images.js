@@ -1,25 +1,32 @@
 import express from 'express';
-import ImageModel from '../models/images.js';
-import upload from '../middleware/imageUpload.js';
-
 import fs from 'fs';
 import util from 'util';
 
+// 모델
+import ImageModel from '../models/images.js';
+import User from '../models/users.js';
+import Project from '../models/project.js';
+import Write from '../models/write.js';
+
+// 미들웨어 
+import upload from '../middleware/imageUpload.js';
 import { auth } from '../middleware/auth.js';
+
 
 const router = express.Router();
 const unlink = util.promisify(fs.unlink);
 
 
 
-// @ POST /api/images
+// @ POST /api/images/:path/:id
 // @ public
 // @ desc 이미지 생성
-router.post('/', auth, upload.single("image"), async (req, res) => { 
+router.post('/:path/:id', auth, upload.single("image"), async (req, res) => { 
     try {
         //post로 이미지를 보낼때 이미 req에 저장이 되어있음. upload(미들웨어)를 이용해서 저장된 이미지 가져옴 
         // postman  body -> form-data -> key에 위에 미들웨어와 동일한 키값 image넣음
         if(!req.file) return res.status(400).json({ message: 'is not file' })
+        const { path, id } = req.params;
         
         // 어떤건 body에 저장됨? 
         const image = await new ImageModel({
@@ -32,6 +39,10 @@ router.post('/', auth, upload.single("image"), async (req, res) => {
             public: req.body.public,
         })
         image.save();
+
+        if(path && path === 'userProfile') {
+            await User.findByIdAndUpdate(id, { profileImage: image._id })
+        } 
     
         // console.log(req.file)
         res.json(req.file);
