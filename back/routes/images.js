@@ -40,11 +40,12 @@ router.post('/:path/:id', auth, upload.single("image"), async (req, res) => {
         })
         image.save();
 
+        
         // 여기하다가 감  221024
         if(path && path === 'userProfile') { await User.findByIdAndUpdate(id, { profileImage: image._id }) } 
         if(path && path === 'project') { await Project.findByIdAndUpdate(id, { projectImages: image._id }) } 
         if(path && path === 'write') { await Write.findByIdAndUpdate(id, { writeImages: image._id }) } 
-    
+        
         // console.log(req.file)
         res.json(req.file);
 

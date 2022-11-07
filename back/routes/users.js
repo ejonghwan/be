@@ -128,10 +128,10 @@ router.post('/signup', async (req, res) => {
             await bcrypt.hash(user.password, salt, async (err, hash) => {
                 if(err) throw Error(err);
                 user.password = hash;
-
                 jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "30 days" }, (err, reftoken) => {
                     user.token = reftoken;
                     user.save().then(user => {
+                        console.log('프로필 이미지 전달되는지 확인 ?????????????????', user)
                         res.status(201).end();
                     });
                 });

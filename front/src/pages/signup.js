@@ -15,8 +15,8 @@ import ImageUploadForm from '../components/image/ImageUploadForm.js'
 
 // context & request 
 // import { signupUser } from '../reducers/UserRequest.js'
-import UserRequest from '../reducers/UserRequest.js'
-import { UserContext } from '../context/UserContext.js'
+import UserRequest from '../reducers/UserRequest.js';
+import { UserContext } from '../context/UserContext.js';
 
 // util
 import { questionData, statusCode, passwordChecked, englishChecked, stringLengthChecked } from '../utils/utils.js'
@@ -51,6 +51,7 @@ import { questionData, statusCode, passwordChecked, englishChecked, stringLength
 const Signup = () => {
     
     const { signupUser } = UserRequest();
+    // const { imageUpload } = ImageRequest();
     const { state, dispatch } = useContext(UserContext)
     const cookies = new Cookies();
     const successRoot = cookies.get('signup')
@@ -77,6 +78,7 @@ const Signup = () => {
     const [gender, handleGender] = useInput('남') 
     const [birthday, handleBirthday] = useInput('')
     const [birthdayLengthChecked, setBirthdayLengthChecked] = useState(false)
+    const [profileImage, setProfileImage] = useState(null)
   
    
  
@@ -102,7 +104,7 @@ const Signup = () => {
     }
     const signup = useMemo(() => _debounce(async() => {
         try {   
-            if(!userId && !userPassword && !userName && !passwordIsChecked && !terms && !questionType && !result && !phoneNumber && !gender && !birthday) return;
+            if(!userId && !userPassword && !userName && !passwordIsChecked && !terms && !questionType && !result && !phoneNumber && !gender && !birthday && !profileImage) return;
 
             dispatch({ type: "LOADING", loadingMessage: "회원가입 중.." })
             const user = await signupUser({
@@ -114,8 +116,19 @@ const Signup = () => {
                 phoneNumber, 
                 gender, 
                 birthday,
-       
+                profileImage,
             });
+            // const profileImage = await imageUpload({
+            //     file: file, 
+            //     name: userName, 
+            //     _id: state.user._id, 
+            //     public: true, 
+            //     path: 'userProfile', 
+            // }); 
+            // console.log('i f number: ', profileImage)
+
+            // 
+
 
             if(statusCode(user.status, 2)) {
                 alert('회원 가입이 완료되었습니다. 기존 페이지는 닫아주세요')
@@ -135,7 +148,7 @@ const Signup = () => {
             navigate(-1)
         }
         cookies.remove('signup')
-        console.log('ggggggggg', gender)
+        // console.log('ggggggggg', gender)
     }, [])
 
     useEffect(() => { //비번 강화 체크 
@@ -195,7 +208,7 @@ const Signup = () => {
                 </div>
                 <div>
                     프로필 이미지: <br />
-                    <ImageUploadForm noneSubmitBtn={true}/>
+                    <ImageUploadForm noneSubmitBtn={true} setProfileImage={setProfileImage}/>
                 </div>
                 <div>
                     <Label htmlFor="userId" content="아이디" classN="label_t1"/>

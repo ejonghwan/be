@@ -74,13 +74,14 @@ const Auth = () => {
             ) : (
             <div>
                 메일이 발송되었습니다<br />
-                {authState && <Timer  
+                {/* 타이머 삭제 */}
+                {/* {authState && <Timer  
                     endSecond={180} 
                     startingPoint={180} 
                     countingName={''} 
                     endMessage={'인증시간이 만료되었습니다'}
                     callback={() => console.log('timer end')}
-                />}
+                />} */}
             </div>
         )}
          {state.authNumberErrorMessage && <span>{state.authNumberErrorMessage}</span>}<br />

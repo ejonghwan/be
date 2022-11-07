@@ -21,7 +21,7 @@ import { statusCode } from '../../utils/utils.js'
 const ImageUploadForm = props => {
 
     // noneSubmitBtn 있으면 서브밋버튼 숨김
-    const { noneSubmitBtn } = props;
+    const { noneSubmitBtn, setProfileImage } = props;
     const { imageUpload } = useImageRequest();
 
     const defaultFileName = '이미지 삽입'
@@ -48,6 +48,7 @@ const ImageUploadForm = props => {
         const fileReader = new FileReader();
         fileReader.readAsDataURL(imageData)
         fileReader.onload = e => setImageUrl(e.target.result);
+        setProfileImage(imageData)
     }
 
 
@@ -98,6 +99,7 @@ const ImageUploadForm = props => {
       /** 이미지 업로드 리퀘스트 디바운스 적용 */
     const handleImageUploadSubmit = e => {
         e.preventDefault();
+        console.log('회원가입에서 프로필 사진 업데이트됨!!!!!!!!!!!!!')
         handleImageUpload();
     }
 
@@ -109,7 +111,7 @@ const ImageUploadForm = props => {
                 name: state.user.name, 
                 _id: state.user._id, 
                 public: true, 
-                path: 'userProfile', 
+                path: 'default', 
             }); 
             console.log('i f number: ', number)
 
