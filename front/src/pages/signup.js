@@ -11,11 +11,12 @@ import { useInput, useInputRadio } from '../components/common/hooks/index.js'
 // components
 import Input from '../components/common/form/Input.js'
 import Label from '../components/common/form/Label.js'
-import ImageUploadForm from '../components/image/ImageUploadForm.js' 
+// import ImageUploadForm from '../components/image/ImageUploadForm.js' 
 
 // context & request 
 // import { signupUser } from '../reducers/UserRequest.js'
 import UserRequest from '../reducers/UserRequest.js';
+// import ImageRequest from '../reducers/ImageRequest.js';
 import { UserContext } from '../context/UserContext.js';
 
 // util
@@ -102,12 +103,18 @@ const Signup = () => {
         e.preventDefault();
         signup();
     }
+
+useEffect(() => {
+    console.log(profileImage)
+}, [])
+   
+
     const signup = useMemo(() => _debounce(async() => {
         try {   
             if(!userId && !userPassword && !userName && !passwordIsChecked && !terms && !questionType && !result && !phoneNumber && !gender && !birthday && !profileImage) return;
 
             dispatch({ type: "LOADING", loadingMessage: "회원가입 중.." })
-            const user = await signupUser({
+            const singupData = {
                 id: userId, 
                 password: userPassword, 
                 email: email, 
@@ -116,18 +123,13 @@ const Signup = () => {
                 phoneNumber, 
                 gender, 
                 birthday,
-                profileImage,
-            });
-            // const profileImage = await imageUpload({
-            //     file: file, 
-            //     name: userName, 
-            //     _id: state.user._id, 
-            //     public: true, 
-            //     path: 'userProfile', 
-            // }); 
-            // console.log('i f number: ', profileImage)
+            }
+       
+            // 이미지모델에 등록되면 어디에서 요청했는지에 따라 그 아이디값을 각 모델에 보냄
+            // 이미지는 default 기본이미지 넣고 나중에 개인정보 수정에서 수정하는걸로 
+           
 
-            // 
+            const user = await signupUser(singupData)
 
 
             if(statusCode(user.status, 2)) {
@@ -181,8 +183,6 @@ const Signup = () => {
     }, [userId, userName, passwordIsChecked, terms, userPassword, userPasswordCheck, questionType, result, phoneNumber, gender, birthday, passwordProtected, phoneNumberLengthChecked, birthdayLengthChecked])
 
 
-
-
     return (
         // id, password, email, name
         // 이메일은 먼저 인증하고 시작함(임시로 홈에있음)
@@ -205,10 +205,6 @@ const Signup = () => {
                 <div>
                     <Label htmlFor="userEmail" content="이메일" classN="label_t1"/>
                     <span>{email} / 인증완료</span>
-                </div>
-                <div>
-                    프로필 이미지: <br />
-                    <ImageUploadForm noneSubmitBtn={true} setProfileImage={setProfileImage}/>
                 </div>
                 <div>
                     <Label htmlFor="userId" content="아이디" classN="label_t1"/>

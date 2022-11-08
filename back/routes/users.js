@@ -123,6 +123,8 @@ router.post('/signup', async (req, res) => {
       
         const user = await new User(req.body, { token: null });
 
+        // default 프로필 이미지 6369f7f0d94aae125a0bc833
+
         await bcrypt.genSalt(10, async (err, salt) => {
             // password hash
             await bcrypt.hash(user.password, salt, async (err, hash) => {
@@ -130,6 +132,7 @@ router.post('/signup', async (req, res) => {
                 user.password = hash;
                 jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "30 days" }, (err, reftoken) => {
                     user.token = reftoken;
+                    user.profileImage = "6369f7f0d94aae125a0bc833"; //기본이미지 일단 이거넣음
                     user.save().then(user => {
                         console.log('프로필 이미지 전달되는지 확인 ?????????????????', user)
                         res.status(201).end();
@@ -352,6 +355,18 @@ router.post('/delete', auth, async (req, res) => {
             await User.deleteOne({ id: id });
             res.status(201).clearCookie('X-refresh-token').end();
         }
+
+        // 221108 아직 작업안함.
+        // 1. 6369f7f0d94aae125a0bc833 기본이미지가 아닌 프로필 이미지들은 image db에서 날려야됨 
+        // 2. 이 유저가 올렸던 이미지들 모두 image db 에서 날려야됨 
+        // 3. 이 유저가 올린 글 날려야됨 
+        // 4. 이 유저가 올린 코멘트 날려야됨 
+        // 5. 이 유저가 올린 카테고리 날려야됨 
+        // 6. 이 유저가 올린 프로젝트 날려야됨 => 프로젝트 날리는게 아니라..다른 유저한테 줘야될듯 ? 
+
+
+        
+
     } catch(err) {
         console.error(err);
         res.status(500).json({ message: err.message });

@@ -15,7 +15,7 @@ const imageSchema = new mongoose.Schema(
         write: { _id: { type: Types.ObjectId, ref: 'write' } },
         key: { type: String, required:true },
         originalFileName: { type: String, required: true },
-        // public: { type: Boolean, required: true,  }
+        // public: { type: Boolean, required: true, }
     },
     { timestamps: true }
 )

@@ -8,6 +8,7 @@ import { useInput } from '../common/hooks/index.js';
 import Input from '../common/form/Input.js';
 import Label from '../common/form/Label.js';
 import Timer from '../common/utils/Timer.js';
+import ProfileImageEdit from '../user/ProfileImageEdit.js'
 
 // context & request 
 // import  { userInfoEditUser, emailEditUser, memberAuthNumberRequest } from '../../reducers/UserRequest.js';
@@ -138,6 +139,10 @@ const UserProfile = () => {
         <Fragment>
             <div>프로필</div>
             <ul>
+            <li>
+                {/* 수정 / 원래꺼 statㄷ에 넣어야함 */}
+                <ProfileImageEdit />
+            </li>
             <li>
                 {editEmailState ? (
                     <Fragment>
