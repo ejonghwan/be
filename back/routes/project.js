@@ -11,7 +11,7 @@ const router = express.Router();
 
 
 //@ path    GET /api/project
-//@ doc     로드 프로젝
+//@ doc     로드 프로젝 (모두)
 //@ access  private
 router.get('/', async (req, res) => {
     try {
@@ -22,6 +22,25 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 })
+
+
+// 1. 내가 만든 프로젝트  (이건 데이터들 내장 갯수제한 )  
+// 2. 내가 가입한 프로젝트 나눠야겠구나  (이건 데이터들 몇개만 내려주고 더 요청하면 내려줌 갯수제한 없음)
+
+//@ path    GET /api/project
+//@ doc     로드 프로젝 (내가 가입한 프로젝트만)
+//@ access  private
+// router.get('/', async (req, res) => {
+//     try {
+//         const project = await User.findById();
+//         res.status(200).json(project)
+//     } catch (err) {
+//         console.error('server:', err);
+//         res.status(500).json({ message: err.message });
+//     }
+// })
+
+
 
 
 //@ path    POST /api/project

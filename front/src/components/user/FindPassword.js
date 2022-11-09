@@ -68,7 +68,7 @@ const FindPassword = () => {
                 const findId = await findUserId({ authNumber }); 
                 // 여기선 쿠키 2개 보냄
                 
-                console.log('?????????????????', findId)
+                // console.log('?????????????????', findId)
 
                 if(statusCode(findId.status, 2)) { 
                     setAuthToggle(false);

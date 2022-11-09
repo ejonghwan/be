@@ -14,7 +14,7 @@ export const auth = async (req, res, next) => {
             if(match && match.exp > Date.now().valueOf() / 1000) { 
                 // console.log(match)
                 console.log('auth / acc 토큰으로 인증함')
-                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 })
+                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate("projects").exec();
                 req.user = { accToken, ...user._doc }
                 next() 
 

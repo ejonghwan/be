@@ -141,6 +141,7 @@ const UserProfile = () => {
             <ul>
             <li>
                 {/* 수정 / 원래꺼 statㄷ에 넣어야함 */}
+                {/* user profile img */}
                 <ProfileImageEdit />
             </li>
             <li>

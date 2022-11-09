@@ -65,7 +65,8 @@ router.post('/login', async (req, res) => {
         if(!id) return res.status(400).json({ message: 'is not id' }) 
         if(!password) return res.status(400).json({ message: 'is not password' }) 
 
-        const user = await User.findOne({ id: id })
+        // 파퓰레이트 하위는 아래처럼 쓰면됨 이거 정리해둬야됨  221109 하다감
+        const user = await User.findOne({ id: id }).populate({ path: "projects", populate: { path: "rank.a" } }).exec();
         if(!user) return res.status(400).json({ message: "is not find user" })
 
         const match = await bcrypt.compare(password, user.password);
@@ -132,7 +133,7 @@ router.post('/signup', async (req, res) => {
                 user.password = hash;
                 jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "30 days" }, (err, reftoken) => {
                     user.token = reftoken;
-                    user.profileImage = "6369f7f0d94aae125a0bc833"; //기본이미지 일단 이거넣음
+                    user.profileImage = { _id: "6369f7f0d94aae125a0bc833", key: "8e09735b-553e-4879-b94c-7a3a23a40ce4.jpeg" }; //기본이미지 일단 이거넣음. 임시
                     user.save().then(user => {
                         console.log('프로필 이미지 전달되는지 확인 ?????????????????', user)
                         res.status(201).end();
@@ -358,7 +359,7 @@ router.post('/delete', auth, async (req, res) => {
 
         // 221108 아직 작업안함.
         // 1. 6369f7f0d94aae125a0bc833 기본이미지가 아닌 프로필 이미지들은 image db에서 날려야됨 
-        // 2. 이 유저가 올렸던 이미지들 모두 image db 에서 날려야됨 
+        // 2. 이 유저가 올렸던 이미지들 모두 image db 에서 날려야됨  => 프로필 이미지는 기본이면 삭제x
         // 3. 이 유저가 올린 글 날려야됨 
         // 4. 이 유저가 올린 코멘트 날려야됨 
         // 5. 이 유저가 올린 카테고리 날려야됨 

@@ -5,7 +5,7 @@ import { UserContext } from '../context/UserContext.js'
 
 
 
-const host = 'http://localhost:5000'
+const host = process.env.REACT_APP_BACKEND_HOST
 const UserRequest = () => {
     const { dispatch } = useContext(UserContext); 
 

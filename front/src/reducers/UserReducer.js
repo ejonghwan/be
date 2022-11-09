@@ -11,6 +11,7 @@ export const UserIntialState = {
     passwordEditErrorMessage: '',
     mailAuthErrorMessage: '',
     authNumberErrorMessage: '',
+    imageErrorMessage: '',
     loading: '',
     user: {},
 }
@@ -35,6 +36,7 @@ const UserReducer = (state = UserIntialState, action) => {
                 passwordEditErrorMessage: '',
                 authNumberErrorMessage: '',
                 mailAuthErrorMessage: '',
+                imageErrorMessage: '',
             }
 
             
@@ -157,6 +159,21 @@ const UserReducer = (state = UserIntialState, action) => {
                 ...state,
                 loading: '',
                 passwordEditErrorMessage: action.data,
+            }
+
+
+            case "USER_PROFILEIMAGE_EDIT_SUCCESS": return {
+                ...state,
+                loading: '', 
+                user: {
+                    ...state.user,
+                    profileImage: action.data //obj로 넣어야됨
+                }
+            }
+            case "IMAGE_FAILUE": return {
+                ...state,
+                loading: '', 
+                imageErrorMessage: action.data,
             }
 
             

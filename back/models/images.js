@@ -13,7 +13,7 @@ const imageSchema = new mongoose.Schema(
         //     name: { type: String, required: true, }  
         // },
         write: { _id: { type: Types.ObjectId, ref: 'write' } },
-        key: { type: String, required:true },
+        key: { type: String, required: true },
         originalFileName: { type: String, required: true },
         // public: { type: Boolean, required: true, }
     },

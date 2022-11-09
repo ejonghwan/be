@@ -17,11 +17,11 @@ const UserSchema = mongoose.Schema({
         questionType: { type: String, require: true },
         result: { type: String, require: true, minlength: 1, maxlength: 15, trim: true, lowercase: true, },  /* 소문자 1 ~ 15공백제거  */
      },
-     profileImage: { type: Types.ObjectId, ref: 'image' },
-     projects: [{
-        _id: { type: Types.ObjectId, ref: 'project'},
-        date: [{ type: String, }],
-     }],
+     profileImage: { 
+        _id: { type: Types.ObjectId, ref: 'image' },
+        key: { type: String, required: true, }
+     },
+     projects: [{ type: Types.ObjectId, ref: 'project'}],
      writes: [{ type: Types.ObjectId, ref: 'write'}],
      comments: [{ type: Types.ObjectId, ref: 'comment'}],
      recomments: [{ type: Types.ObjectId, ref: 'recomment'}],

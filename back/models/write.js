@@ -11,7 +11,7 @@ const WriteSchema = new mongoose.Schema(
         project: { _id: { type: Types.ObjectId, ref: 'project' } },
         title: { type: String, required: true,  },
         content: { type: String, required: true,  },
-        writeImages: [{ _id: { type: Types.ObjectId, ref: 'image' } }],
+        writeImages: [{ _id: { type: Types.ObjectId, ref: 'image' }, key: { type: String, required: true } }],
         comments: [{ type: Types.ObjectId, ref: 'comment' }],
         commentCount: { type: Number, required: true, default: 0, },
         isLive: { type: Boolean, default: false,},

@@ -24,7 +24,9 @@ const ProjectSchema = new mongoose.Schema(
         writes: [{ type: Types.ObjectId, ref: 'write' }],
         projectPublic: { type: Boolean, required: true, default: true, },
         categorys: [{ type: String, ref: 'category' }],
-        projectImages: [{ type: Types.ObjectId, ref: 'image' }]
+        projectImages: [
+            { _id: { type: Types.ObjectId, ref: 'image' }, key: { type: String, required: true } }
+        ]
         
     },
     { timestamps: true }

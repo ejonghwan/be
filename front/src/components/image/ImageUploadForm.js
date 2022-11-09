@@ -21,7 +21,7 @@ import { statusCode } from '../../utils/utils.js'
 const ImageUploadForm = (props) => {
 
     // noneSubmitBtn 있으면 서브밋버튼 숨김
-    const { noneSubmitBtn, path } = props;
+    const { noneSubmitBtn, path, setUploadState } = props;
     const { imageUpload } = useImageRequest();
 
     const defaultFileName = '이미지 삽입'
@@ -30,7 +30,8 @@ const ImageUploadForm = (props) => {
     const [persent, setPersent] = useState(0) 
     const [imageUrl, setImageUrl] = useState(null);
     const [formDatas, setFormDatas] = useState(null);
-
+    
+    const [imageSubmitState, setImageSubmitState] = useState(false)
     
     const { imageState, imageDispatch } = useContext(ImageContext)
     const { state, dispatch } = useContext(UserContext)
@@ -112,7 +113,11 @@ const ImageUploadForm = (props) => {
             }); 
             console.log('i f number: ', number)
 
-            // if(statusCode(number.status, 2)) return setAuthToggle(true) //성공 시 
+            if(statusCode(number.status, 2)) {
+                setImageSubmitState(true) //성공 시
+                setUploadState(true)
+                return;
+            } 
         } catch(err) {
             console.error(err)
         }
