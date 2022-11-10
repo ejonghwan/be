@@ -22,9 +22,9 @@ const UserRequest = () => {
             const res = await axios.post(`${host}/api/auth`, data, config);
             return res;
         } catch(err) {
-            console.error(err)
-            dispatch({ type: "AUTH_NUMBER_FAILUE", data: err.response.data.message })
-            return err.response
+            console.error(err);
+            dispatch({ type: "AUTH_NUMBER_FAILUE", data: err.response.data.message });
+            return err.response;
         }
     }
 
@@ -90,6 +90,14 @@ const UserRequest = () => {
             return err.response;
         };
     };
+
+    /*
+        방장: {}
+        유저: [_id, _id, ...]
+        권한: { a b c d }
+
+        유저: { 프로젝트: [_id, _id, ...] }
+    */
     
 
     // 로그인 유저

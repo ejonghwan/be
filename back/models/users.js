@@ -19,9 +19,12 @@ const UserSchema = mongoose.Schema({
      },
      profileImage: { 
         _id: { type: Types.ObjectId, ref: 'image' },
-        key: { type: String, required: true, }
+        key: { type: String, required: true, },
      },
      projects: [{ type: Types.ObjectId, ref: 'project'}],
+     joinProjects: [
+        { _id: { type: Types.ObjectId, ref: 'project'}, state: { type: Boolean, default: false } }
+     ],
      writes: [{ type: Types.ObjectId, ref: 'write'}],
      comments: [{ type: Types.ObjectId, ref: 'comment'}],
      recomments: [{ type: Types.ObjectId, ref: 'recomment'}],

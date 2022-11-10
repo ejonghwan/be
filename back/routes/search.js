@@ -11,7 +11,7 @@ const router = express.Router();
 
 
 //@ path    GET /api/search/:searchText
-//@ doc     검색 
+//@ doc     프로젝트, 글 검색 
 //@ access  public
 router.get('/:searchText', async (req, res) => {
     try {
@@ -43,6 +43,44 @@ router.get('/:searchText', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 })
+
+
+
+//@ path    GET /api/search/:userId
+//@ doc     유저 검색 (아이디 or 이름)
+//@ access  public
+router.get('/user/:user', async (req, res) => {
+    try {
+        
+        // front에서 보낼 때 encodeURIComponent("룰루")
+        const { user } = req.params;
+
+        const findUser = await User.find({
+           $or: [
+            {
+                id: {
+                    $regex: user,
+                    $options: 'i',
+                }, 
+            }, 
+            {   name: {
+                    $regex: user,
+                    $options: 'i',
+                }
+            }
+        ]
+        });
+ 
+         console.log('findUser result', findUser)
+         res.status(200).json(findUser);
+
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
 
 
 
