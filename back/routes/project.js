@@ -62,21 +62,16 @@ router.post('/join/:projectId/:userId', async (req, res) => {
     try {
 
         const { projectId, userId } = req.params;
-        const project = await Project.findById(projectId);
+        const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
+   
 
-        // 221110 초대 기능 하다가 집감
-        for(let i = 0; i < project.joinUser.length; i++) { 
-            console.log(project.joinUser[i]) //이거 4번 배열돔
-            // 이건 프론트에서 체크해서 아예 요청 안보내는게 나을듯. 그리고 find할때 처리할 수 있는 방법 찾아보기
-            if(project.joinUser[i]._id === userId) return res.status(401).json({ message: "이미 초대를 보냈습니다" })
-            // 이거 왜 안되지 ? 
+        if(isUser.joinUser.length >= 1) { 
+            // 만약 초대리스트를 내려준다면 ...이건 프론트에서 체크해서 아예 요청 안보내는게 나을듯.
+            return res.status(401).json({ message: "이미 초대를 보냈습니다" })
         }
 
-        project.joinUser.push({ _id: userId, state: false });
-        // project.save();
-
-        // console.log(project)
-       
+        const project = await Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId } } }, { new: true })
+        console.log(project)
 
         res.status(200).json(project)
     } catch (err) {
