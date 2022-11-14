@@ -14,7 +14,7 @@ export const auth = async (req, res, next) => {
             if(match && match.exp > Date.now().valueOf() / 1000) { 
                 // console.log(match)
                 console.log('auth / acc 토큰으로 인증함')
-                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate("projects").exec();
+                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate("projects joinProjects._id").exec();
                 req.user = { accToken, ...user._doc }
                 next() 
 
@@ -26,8 +26,8 @@ export const auth = async (req, res, next) => {
                 console.log('auth /  acc 토큰 만료돼서 refresh 토큰 으로 인증하고 다시 발급')
 
                 const refreshTokenDecode = decodeURIComponent(getRefreshToken)
-                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0 })
-
+                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0 }).populate("projects joinProjects._id").exec();
+                // 리프레시로 인증할 때 위에 셀렉+퍼퓰 테스트 아직 안해봄
 
                 // db에 저장된 리프레시가 만료되었을 경우 => db토큰 새로 교체하고 acc토큰 발급
                 const dbToken = await jwt.verify(user.token, process.env.JWT_KEY, {ignoreExpiration: true})

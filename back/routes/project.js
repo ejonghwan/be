@@ -55,24 +55,57 @@ projectDB: joinUser / userDB: joinProjects state값에 따라 두곳에서 임�
 
 
 
-//@ path    POST /api/project/join/:projectId/:userId
+//@ path    PATCH /api/project/join/:projectId/:userId
 //@ doc     프로젝트 초대
-//@ access  private
-router.post('/join/:projectId/:userId', async (req, res) => {
+//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
+router.patch('/join/:projectId/:userId', async (req, res) => {
     try {
-
         const { projectId, userId } = req.params;
         const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
-   
-
         if(isUser.joinUser.length >= 1) { 
             // 만약 초대리스트를 내려준다면 ...이건 프론트에서 체크해서 아예 요청 안보내는게 나을듯.
             return res.status(401).json({ message: "이미 초대를 보냈습니다" })
         }
+        const [project, user] = await Promise.all([
+            Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId } } }, { new: true }),
+            User.findByIdAndUpdate(userId, { $push: { "joinProjects": { _id: projectId } } }, { new: true })
+        ])
+        res.status(200).json(project)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
 
-        const project = await Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId } } }, { new: true })
-        console.log(project)
+//@ path    PATCH /api/project/join/accept/:projectId/:userId
+//@ doc     프로젝트 수락
+//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
+router.patch('/join/accept/:projectId/:userId', async (req, res) => {
+    try {
+        const { projectId, userId } = req.params;
+        const [project, user] = await Promise.all([
+            Project.findByIdAndUpdate(projectId, { "joinUser.$[ele].state": true }, { arrayFilters: [{"ele._id": userId }], new: true }),
+            User.findByIdAndUpdate(userId, { "joinProjects.$[ele].state": true }, { arrayFilters: [{"ele._id": projectId}], new: true })
+        ])
+        // console.log(project, user)
+        res.status(200).json(project)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
 
+//@ path    PATCH /api/project/join/reject/:projectId/:userId
+//@ doc     프로젝트 거절
+//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
+router.patch('/join/reject/:projectId/:userId', async (req, res) => {
+    try {
+        const { projectId, userId } = req.params;
+        const [project, user] = await Promise.all([
+            Project.findByIdAndUpdate(projectId, { $pull: { "joinUser": { _id: userId } } }, { new: true }),
+            User.findByIdAndUpdate(userId, { $pull: { "joinProjects": { _id: projectId } } }, { new: true })
+        ])
+        // console.log( 'project', project, 'user', user)
         res.status(200).json(project)
     } catch (err) {
         console.error('server:', err);
@@ -82,27 +115,15 @@ router.post('/join/:projectId/:userId', async (req, res) => {
 
 
 
-
-
 //@ path    GET /api/project
-//@ doc     로드 프로젝 (내가 가입한 프로젝트만)
+//@ doc     로드 프로젝 (내가 가입한 or 가입된 프로젝트만) 이건 유저에 있어야됨
 //@ access  private
-// router.get('/', async (req, res) => {
-//     try {
-//         const project = await User.findById();
-//         res.status(200).json(project)
-//     } catch (err) {
-//         console.error('server:', err);
-//         res.status(500).json({ message: err.message });
-//     }
-// })
-
 
 
 
 //@ path    POST /api/project
-//@ doc     생성 프로젝
-//@ access  private
+//@ doc     생성 프로젝 
+//@ access  private  (테스트 끝나면 auth 미들웨어 붙여야됨)
 router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 생성가능하게??
     try {
         const { constructorUser, instanceUser, rank, title, content, write, projectPublic, categorys, joinUser } = req.body; //joinUser 는 배열
@@ -145,7 +166,7 @@ router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 �
 
 //@ path    PATCH /api/project/edit/:projectId
 //@ doc     수정 프로젝
-//@ access  private
+//@ access  private  (테스트 끝나면 auth 미들웨어 붙여야됨)
 router.patch('/edit/:projectId', async (req, res) => { 
     try {
         // 양도 constructorUser
@@ -181,7 +202,7 @@ router.patch('/edit/:projectId', async (req, res) => {
 
 //@ path    DELETE /api/project
 //@ doc     삭제 프로젝
-//@ access  private
+//@ access  private  (테스트 끝나면 auth 미들웨어 붙여야됨)
 router.delete('/', async (req, res) => {
     try {
         const { userId, projectId } = req.body;
@@ -205,7 +226,7 @@ router.delete('/', async (req, res) => {
 
 
 //@ path    GET /api/project/category/:categoryName
-//@ doc     카테고리 정렬
+//@ doc     카테고리 검색
 //@ access  public
 router.get('/category/:categoryName', async (req, res) => {
     try {
