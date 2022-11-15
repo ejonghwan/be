@@ -22,6 +22,8 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
     let day = startDate;
     let formattedDate = '';
 
+    let testc = ["22.11.15","22.11.16","22.11.17","22.11.18","22.11.19","22.11.20","22.11.21","22.11.22","22.11.23","22.11.24",]
+
     
 
     while (day <= endDate) {
@@ -32,14 +34,26 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
             formattedDate = format(day, 'd');
             const cloneDay = day;
             // console.log('parse c????????', parse('50', 'yy',cloneDay))
+            /*
+                221115 아직 작업안함 (프론트 할떄 해야됨)
+                ${isSameDay(day, new Date("2022-11-15")) ? `hehehehe` : ``} 
+                이부분 나중에 데이터 들어오면 수정해야됨.
+                1. back에서 날짜 데이터 배열로 주면 
+                2. 해당되는 날짜에 특정 클래스를 주고 
+                3. 특정 클래스는 스타트와 엔드를 구분해서 
+                4. 시작과 끝엔 라운드 처리와 
+                5. 며칠 연속으로 했는지 계산해서 목표달성했는지 체크   
+            */
             days.push(
                 <div
                     className={`col cell ${
-                        // 
                         !isSameMonth(day, monthStart) ? 'disabled' : isSameDay(day, selectedDate)
                             ? 'selected' : format(currentMonth, 'M') !== format(day, 'M')
                             ? 'not-valid'
-                            : 'valid'} ${isSameDay(day, new Date()) ? `today` : ``}`}
+                            : 'valid'} 
+                            ${isSameDay(day, new Date()) ? `today` : ``}
+                            ${isSameDay(day, new Date("2022-11-15")) ? `hehehehe` : ``} 
+                            `}
                     
                     key={day}
                     // onClick={() => onDateClick(parse(cloneDay))}

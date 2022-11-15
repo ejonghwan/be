@@ -84,8 +84,10 @@ router.patch('/join/accept/:projectId/:userId', async (req, res) => {
     try {
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
-            Project.findByIdAndUpdate(projectId, { "joinUser.$[ele].state": true }, { arrayFilters: [{"ele._id": userId }], new: true }),
+            Project.findByIdAndUpdate(projectId, { $pull: { "joinUser": { _id: userId } } }, { new: true }),
+            Project.findByIdAndUpdate(projectId, { $push: { "instanceUser": { _id: userId } } }, { new: true }),
             User.findByIdAndUpdate(userId, { "joinProjects.$[ele].state": true }, { arrayFilters: [{"ele._id": projectId}], new: true })
+
         ])
         // console.log(project, user)
         res.status(200).json(project)
@@ -112,6 +114,34 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 })
+
+
+// 1. 프로젝트 탈퇴
+// 2. 프로젝트 강퇴 
+// 3. 방장이 프로젝트 없애려할 때 유저가 있으면 삭제 못하고 유저가 없어야 가능하게
+// 4. 탈퇴할때도 마찬가지 3
+
+
+//@ path    PATCH /api/project/reject/:projectId/:userId
+//@ doc     프로젝트 탈퇴
+//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
+router.patch('/reject/:projectId/:userId', async (req, res) => {
+    try {
+        const { projectId, userId } = req.params;
+        const [project, user] = await Promise.all([
+            // Project.findByIdAndUpdate(projectId, { $pull: { "joinUser": { _id: userId } } }, { new: true }),
+            // User.findByIdAndUpdate(userId, { $pull: { "joinProjects": { _id: projectId } } }, { new: true })
+        ])
+        // console.log( 'project', project, 'user', user)
+        res.status(200).json(project)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
+
 
 
 
@@ -153,7 +183,6 @@ router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 �
         // 생성 시 팀원을 추가했다면 joinproject 필드에 업데이트  
         for(let i = 0; i < joinUser.length; i++) {
             await User.findByIdAndUpdate(joinUser[i]._id, { $push: { joinProjects: { _id: newProject._id } } }, { new: true })
-            await Project.findByIdAndUpdate(newProject._id, { $push: { joinUser: { _id: joinUser[i]._id } } }, { new: true })
         }
 
         res.status(201).json(newProject);
