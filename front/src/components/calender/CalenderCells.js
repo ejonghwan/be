@@ -6,6 +6,7 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
 
 
+// https://date-fns.org/v2.28.0/docs/subYears
 
 
 const CalenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
@@ -22,10 +23,9 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
     let day = startDate;
     let formattedDate = '';
 
-    let testc = ["22.11.15","22.11.16","22.11.17","22.11.18","22.11.19","22.11.20","22.11.21","22.11.22","22.11.23","22.11.24",]
+    let testc = ["2022, 11, 15", "2022, 11, 16", "2022, 11, 17", "2022, 11, 18", "2022, 11, 19", "2022, 11, 20", "2022, 11, 21", "2022, 11, 22", ]
 
-    
-
+    // console.log(day) //렌더링 3번씩 됨?  이거 해결해야됨.. 아마 3개로 나눈거 한쪽 변화하면 다 다시 렌더링 되는듯
     while (day <= endDate) {
    
         // console.log('day', day, '#######', 'endDate', endDate)
@@ -35,6 +35,7 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
             const cloneDay = day;
             // console.log('parse c????????', parse('50', 'yy',cloneDay))
             /*
+                testc
                 221115 아직 작업안함 (프론트 할떄 해야됨)
                 ${isSameDay(day, new Date("2022-11-15")) ? `hehehehe` : ``} 
                 이부분 나중에 데이터 들어오면 수정해야됨.
@@ -52,9 +53,11 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
                             ? 'not-valid'
                             : 'valid'} 
                             ${isSameDay(day, new Date()) ? `today` : ``}
-                            ${isSameDay(day, new Date("2022-11-15")) ? `hehehehe` : ``} 
-                            `}
-                    
+                            ${testc.map(item => {
+                                // console.log('d?: ',  isSameDay(day, new Date("2022, 11, 16")))
+                                return isSameDay(day, new Date(item)) ?  `zzzzzzzzzzzzzzz` : ``;
+                            }).join(' ')}
+                        `}
                     key={day}
                     // onClick={() => onDateClick(parse(cloneDay))}
                     onClick={() => onDateClick(cloneDay)}
@@ -70,12 +73,15 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
                     </span>
                 </div>,
             );
-            day = addDays(day, 1);
+            // testc.map(item => {
+            //     return isSameDay(day, Date.now(item)) ? `hehehehe` : ``
+            // })
+            day = addDays(day, 1); //day 하루씩 늘림 와일문 조건
         }
         rows.push(
             <div className="row" key={day}>
                 {days}
-            </div>,
+            </div>
         );
         days = [];
     }
