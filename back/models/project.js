@@ -24,6 +24,8 @@ const { Types } = mongoose.Schema;
 
     위에꺼 완료 
 
+
+    221116 이거해야됨
     1. 프로젝트 탈퇴
     2. 프로젝트 강퇴 
     3. 방장이 프로젝트 없애려할 때 유저가 있으면 삭제 못하고 유저가 없어야 가능하게
@@ -31,17 +33,22 @@ const { Types } = mongoose.Schema;
 
 */
 
+
+
+// 데이터 타입은 days: ["2022, 11, 15"] 형식으로 저장
+// 달력&잔디 표시는 프로젝트 안에 개개인마다 있음. 
+
 const ProjectSchema = new mongoose.Schema(
     {
         constructorUser: {
             _id: { type: mongoose.Schema.Types.ObjectId, required: true, index: true, ref: 'user'},
             rank: { type: String, required: true, default: 'a'},
-            days: [{ type: String, }] //days로 달력/잔디 같이씀
+            days: [{ type: String, }], //days로 달력/잔디 같이씀
         },
         instanceUser: [{
             _id: { type: mongoose.Schema.Types.ObjectId, required: true, index: true, ref: 'user'},
             rank: { type: String, required: true, default: 'e'},
-            days: [{ type: String, }] //days로 달력/잔디 같이씀
+            days: [{ type: String, }], //days로 달력/잔디 같이씀
         },],
         userCount: { type: Number, required: true, default: 0, },
         title: { type: String, required: true, },
@@ -56,7 +63,9 @@ const ProjectSchema = new mongoose.Schema(
         joinUser: [{
             _id: { type: Types.ObjectId, ref: 'user', required: true, index: true, },
             state: { type: Boolean, required: true, default: false },
-        }]
+        }],
+        promise: { start: { type: String, default: new Date(), }, end: { type: String }, projectLevel: { type: String, default: "0" } }, 
+        // 레벨은 easy <- 0: 제한없음 1 2 3 -> hard 
         
     },
     { timestamps: true }

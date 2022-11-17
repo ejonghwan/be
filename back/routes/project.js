@@ -56,7 +56,7 @@ projectDB: joinUser / userDB: joinProjects state값에 따라 두곳에서 임�
 
 
 //@ path    PATCH /api/project/join/:projectId/:userId
-//@ doc     프로젝트 초대
+//@ doc     프로젝트 초대 & 가입신청
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
 router.patch('/join/:projectId/:userId', async (req, res) => {
     try {
@@ -64,7 +64,7 @@ router.patch('/join/:projectId/:userId', async (req, res) => {
         const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
         if(isUser.joinUser.length >= 1) { 
             // 만약 초대리스트를 내려준다면 ...이건 프론트에서 체크해서 아예 요청 안보내는게 나을듯.
-            return res.status(401).json({ message: "이미 초대를 보냈습니다" })
+            return res.status(401).json({ message: "이미 진행 중" })
         }
         const [project, user] = await Promise.all([
             Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId } } }, { new: true }),
@@ -77,10 +77,14 @@ router.patch('/join/:projectId/:userId', async (req, res) => {
     }
 })
 
+
+
 //@ path    PATCH /api/project/join/accept/:projectId/:userId
 //@ doc     프로젝트 수락
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
 router.patch('/join/accept/:projectId/:userId', async (req, res) => {
+    // 221116 수락할때 promise 디비 채워야됨 - 모드설정해서 이건 못하면 걍 프로젝트 닫히는걸로... 프로젝트 생성할때 프로젝트에 1개만 넣자. 
+    // 거짓으로 하고 싶어도 그것도 의지가 있을 때 얘기...니깐 
     try {
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
@@ -115,12 +119,24 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
     }
 })
 
-
+// 221116 이거해야됨
 // 1. 프로젝트 탈퇴
 // 2. 프로젝트 강퇴 
 // 3. 방장이 프로젝트 없애려할 때 유저가 있으면 삭제 못하고 유저가 없어야 가능하게
 // 4. 탈퇴할때도 마찬가지 3
 
+
+/*
+탈퇴할때 뭐뭐 없애야 하는지
+    if : 주인장일 때 or 가입원일 때 
+
+    # 주인장일 때 
+        1. 유저디비:  
+
+    # 가입원일 때 (글, 코멘트, 좋아요 삭제 할건지? 해야될듯. 대신 삭제한 유저라고 표기? )
+        1. 유저디비:  joinProjects에서 해당 id 삭제
+        2. 프로젝트디비:  instanceUser에서 해당 id 삭제
+*/
 
 //@ path    PATCH /api/project/reject/:projectId/:userId
 //@ doc     프로젝트 탈퇴
@@ -156,7 +172,9 @@ router.patch('/reject/:projectId/:userId', async (req, res) => {
 //@ access  private  (테스트 끝나면 auth 미들웨어 붙여야됨)
 router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 생성가능하게??
     try {
-        const { constructorUser, instanceUser, rank, title, content, write, projectPublic, categorys, joinUser } = req.body; //joinUser 는 배열
+        // 221116 promise 디비 채워야됨 promise: { start: string default: today, end: string, projectLevel: "0"  }
+
+        const { constructorUser, instanceUser, rank, title, content, write, projectPublic, categorys, joinUser, promise } = req.body; //joinUser 는 배열
         
         // 프로젝트 생성
         const newProject = await new Project(req.body);

@@ -21,7 +21,7 @@ const WriteSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
-
+// writeImages comments commentCount
 
 const Write =  mongoose.model("write", WriteSchema);
 export default Write;
