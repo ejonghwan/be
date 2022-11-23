@@ -134,8 +134,8 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
         1. 유저디비:  
 
     # 가입원일 때 (글, 코멘트, 좋아요 삭제 할건지? 해야될듯. 대신 삭제한 유저라고 표기? )
-        1. 유저디비:  joinProjects에서 해당 id 삭제
-        2. 프로젝트디비:  instanceUser에서 해당 id 삭제
+        1. 유저디비:  joinProjects 에서 해당 id 삭제
+        2. 프로젝트디비:  instanceUser 에서 해당 id 삭제
 */
 
 //@ path    PATCH /api/project/reject/:projectId/:userId
