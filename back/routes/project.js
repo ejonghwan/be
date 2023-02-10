@@ -160,7 +160,6 @@ router.patch('/reject/:projectId/:userId', async (req, res) => {
 
 
 
-
 //@ path    GET /api/project
 //@ doc     로드 프로젝 (내가 가입한 or 가입된 프로젝트만) 이건 유저에 있어야됨
 //@ access  private

@@ -34,7 +34,6 @@ const { Types } = mongoose.Schema;
 */
 
 
-
 // 데이터 타입은 days: ["2022, 11, 15"] 형식으로 저장
 // 달력&잔디 표시는 프로젝트 안에 개개인마다 있음. 
 
@@ -70,6 +69,7 @@ const ProjectSchema = new mongoose.Schema(
     },
     { timestamps: true }
 )
+
 
 
 
