@@ -6,6 +6,12 @@ import { auth } from '../middleware/auth.js' ;
 
 // model 
 import User from '../models/users.js';
+import Image from '../models/images.js';
+import Project from '../models/project.js';
+import Comment from '../models/comment.js';
+import Recomment from '../models/recomment.js';
+import Write from '../models/write.js';
+import Category from '../models/category.js';
 
 const router = express.Router();
 
@@ -354,17 +360,39 @@ router.post('/delete', auth, async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
         if(!passwordMatch) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다' });
         if(user && passwordMatch) {
-            await User.deleteOne({ id: id });
+            await Promise.all([
+                User.deleteOne({ id: id }),
+                Image.deleteMany({ "user._id": id }),
+                Project.deleteMany({ "user._id": id }),
+                Comment.deleteMany({ "user._id": id }),
+                Recomment.deleteMany({ "user._id": id }),
+            ])
+            // await User.deleteOne({ id: id });
             res.status(201).clearCookie('X-refresh-token').end();
         }
 
-        // 221108 아직 작업안함.
+        // 221108 아직 작업안함. ############ 230221 여기하다가 감!!
         // 1. 6369f7f0d94aae125a0bc833 기본이미지가 아닌 프로필 이미지들은 image db에서 날려야됨 
         // 2. 이 유저가 올렸던 이미지들 모두 image db 에서 날려야됨  => 프로필 이미지는 기본이면 삭제x
         // 3. 이 유저가 올린 글 날려야됨 
         // 4. 이 유저가 올린 코멘트 날려야됨 
         // 5. 이 유저가 올린 카테고리 날려야됨 
-        // 6. 이 유저가 올린 프로젝트 날려야됨 => 프로젝트 날리는게 아니라..다른 유저한테 줘야될듯 ? 
+        // 6. 이 유저가 올린 프로젝트 날려야됨 => 프로젝트 날리는게 아니라..다른 유저한테 줘야될듯 ? (결론: 걍 플젝 삭제)
+
+        /*
+            profileImage: { 
+                _id: { type: Types.ObjectId, ref: 'image' },
+                key: { type: String, required: true, },
+            },
+            projects: [{ type: Types.ObjectId, ref: 'project'}],
+            joinProjects: [
+                { _id: { type: Types.ObjectId, ref: 'project'}, state: { type: Boolean, default: false } }
+            ],
+            writes: [{ type: Types.ObjectId, ref: 'write'}],
+            comments: [{ type: Types.ObjectId, ref: 'comment'}],
+            recomments: [{ type: Types.ObjectId, ref: 'recomment'}],
+            likePost: [{ type: Types.ObjectId, ref: 'write' }]
+        */
 
 
         

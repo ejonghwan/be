@@ -143,6 +143,7 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
 router.patch('/reject/:projectId/:userId', async (req, res) => {
     try {
+        // 탈퇴할떄 모든거 삭제!! 
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
             // Project.findByIdAndUpdate(projectId, { $pull: { "joinUser": { _id: userId } } }, { new: true }),
