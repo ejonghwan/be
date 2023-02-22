@@ -118,6 +118,8 @@ router.post('/signup', async (req, res) => {
     try {
         const { id, password, email, name, question, phoneNumber, gender, birthday } = req.body;
         if(!id || typeof id !== 'string') return res.status(400).json({message: 'is not id'}) 
+        console.log(id)
+        if(id.length <= 3 || id.length >= 13) return res.status(400).json({message: 'id length check. 4~12'}) //front 에서도 검증해야됨
         if(!password ) return res.status(400).json({message:'is not password'}) 
         if(!email || typeof email !== 'string') return res.status(400).json({message:'is not email'}) 
         if(!name || typeof name !== 'string') return res.status(400).json({message:'is not name'}) 
@@ -360,6 +362,9 @@ router.post('/delete', auth, async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
         if(!passwordMatch) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다' });
         if(user && passwordMatch) {
+
+            // const category
+
             await Promise.all([
                 User.deleteOne({ id: id }),
                 Image.deleteMany({ "user._id": id }),

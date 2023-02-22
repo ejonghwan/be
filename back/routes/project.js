@@ -85,13 +85,13 @@ router.patch('/join/:projectId/:userId', async (req, res) => {
 router.patch('/join/accept/:projectId/:userId', async (req, res) => {
     // 221116 수락할때 promise 디비 채워야됨 - 모드설정해서 이건 못하면 걍 프로젝트 닫히는걸로... 프로젝트 생성할때 프로젝트에 1개만 넣자. 
     // 거짓으로 하고 싶어도 그것도 의지가 있을 때 얘기...니깐 
+    // 230222 위 기능은 그냥 안하거나 검토
     try {
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
             Project.findByIdAndUpdate(projectId, { $pull: { "joinUser": { _id: userId } } }, { new: true }),
             Project.findByIdAndUpdate(projectId, { $push: { "instanceUser": { _id: userId } } }, { new: true }),
             User.findByIdAndUpdate(userId, { "joinProjects.$[ele].state": true }, { arrayFilters: [{"ele._id": projectId}], new: true })
-
         ])
         // console.log(project, user)
         res.status(200).json(project)

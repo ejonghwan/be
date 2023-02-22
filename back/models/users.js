@@ -4,8 +4,8 @@ const { Types } = mongoose.Schema;
 
 
 const UserSchema = mongoose.Schema({
-    // 소문자로 이뤄진 6~15 공백없이 
-    id: { type: String, require: true, unique: true, minlength: 4, maxlength: 15, trim: true, lowercase: true,}, /* 8 ~15 소문자 공백제거  */
+    // 소문자로 이뤄진 6~15 공백없이  //minlength: 4, maxlength: 15, mongoose에서 검증 하는건 별로 안좋음. 서버가 죽음
+    id: { type: String, require: true, unique: true, trim: true, lowercase: true,}, /* 8 ~15 소문자 공백제거  */
     email: { type: String, require: true, unique: true, trim: true,},
     name: { type: String, require: true, minlength: 1, maxlength: 15, trim: true,}, /* minlength: 6, maxlength: 15, */
     password: { type: String, require: true, trim: true,}, /* 8 ~ 15공백제거  */
