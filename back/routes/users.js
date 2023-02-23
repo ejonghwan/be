@@ -367,14 +367,18 @@ router.post('/delete', auth, async (req, res) => {
 
             await Promise.all([
                 User.deleteOne({ id: id }),
-                Image.deleteMany({ "user._id": id }),
+                Image.deleteMany({ "user._id": id }), //230223이거 기본이미지면 날리면 안됨
                 Project.deleteMany({ "user._id": id }),
+                Write.deleteMany({ "user._id": id }),
                 Comment.deleteMany({ "user._id": id }),
                 Recomment.deleteMany({ "user._id": id }),
             ])
             // await User.deleteOne({ id: id });
             res.status(201).clearCookie('X-refresh-token').end();
         }
+
+        //230223 프로젝트 모델에서 인스턴스유저와 조인유저에 삭제할 유저아ㅣ이디 검색해서 삭제해야함.
+
 
         // 221108 아직 작업안함. ############ 230221 여기하다가 감!!
         // 1. 6369f7f0d94aae125a0bc833 기본이미지가 아닌 프로필 이미지들은 image db에서 날려야됨 
