@@ -388,8 +388,6 @@ router.post('/delete', auth, async (req, res) => {
         // 6. 이 유저가 올린 프로젝트 날려야됨 => 프로젝트 날리는게 아니라..다른 유저한테 줘야될듯 ? (결론: 걍 플젝 삭제)
 
 
-        https://www.shinhancard.com/mob/MOBFM022N/MOBFM022R02.shc
-        https://www.shinhancard.com/mob/MOBFM022N/MOBFM022R02.shc
 
 
         /*
