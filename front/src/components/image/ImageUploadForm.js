@@ -14,38 +14,39 @@ import { UserContext } from '../../context/UserContext.js';
 import useImageRequest from '../../reducers/ImageRequest.js';
 
 // util
-import { statusCode } from '../../utils/utils.js'
+import { statusCode } from '../../utils/utils.js';
 
 
 
 const ImageUploadForm = (props) => {
 
     // noneSubmitBtn 있으면 서브밋버튼 숨김
+    console.log('????????????props', props)
     const { noneSubmitBtn, path, setUploadState } = props;
     const { imageUpload } = useImageRequest();
 
     const defaultFileName = '이미지 삽입'
     const [file, setFile] = useState(null);
-    const [fileName, setFileName] = useState("이미지파일 업로드 해주세요")
-    const [persent, setPersent] = useState(0) 
+    const [fileName, setFileName] = useState("이미지파일 업로드 해주세요");
+    const [persent, setPersent] = useState(0);
     const [imageUrl, setImageUrl] = useState(null);
     const [formDatas, setFormDatas] = useState(null);
     
-    const [imageSubmitState, setImageSubmitState] = useState(false)
+    const [imageSubmitState, setImageSubmitState] = useState(false);
     
-    const { imageState, imageDispatch } = useContext(ImageContext)
-    const { state, dispatch } = useContext(UserContext)
+    const { imageState, imageDispatch } = useContext(ImageContext);
+    const { state, dispatch } = useContext(UserContext);
 
 
 
     const handleInputChange = e => {
         // console.log(e.target.files[0])
-        const imageData = e.target.files[0]
-        setFile(imageData)
-        setFileName(imageData.name)
+        const imageData = e.target.files[0];
+        setFile(imageData);
+        setFileName(imageData.name);
         // console.log(file)
         const fileReader = new FileReader();
-        fileReader.readAsDataURL(imageData)
+        fileReader.readAsDataURL(imageData);
         fileReader.onload = e => setImageUrl(e.target.result);
     }
 

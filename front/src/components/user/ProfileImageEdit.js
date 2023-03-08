@@ -33,7 +33,7 @@ const ProfileImageEdit = props => {
             {profileEdit ? (
                 <Fragment>
                     {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage.key}`} className="profileImage" />} 
-                    <ImageUploadForm noneSubmitBtn={false} path={"userProfile"} setUploadState={setUploadState}/>
+                    <ImageUploadForm noneSubmitBtn={false} path={"userProfile"} setUploadState={setUploadState} />
                 </Fragment>
             ) : (
                 <div>
