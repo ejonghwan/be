@@ -17,6 +17,8 @@ const router = express.Router();
 
 
 
+
+
 //@ path    GET /api/users/load
 //@ doc     로드 유저
 //@ access  public
@@ -346,6 +348,21 @@ router.post('/find/id/question', async (req, res) => {
 
 
 
+
+// router.get('/image', async (req, res) => {
+//     try {
+//         const image = await Image.find();
+//         console.log('all img: ', image)
+//         res.status(201).json(image)
+//     } catch(err) {
+//         console.error(err)
+//         res.status(500).json({ message: err.message })
+//     }
+// })
+
+
+
+
 //@ path    DELETE /api/users/delete
 //@ doc     회원탈퇴
 //@ access  private
@@ -361,20 +378,28 @@ router.post('/delete', auth, async (req, res) => {
         
         const passwordMatch = await bcrypt.compare(password, user.password);
         if(!passwordMatch) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다' });
+
+
+        // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트
+        const findUser = await Project.findOne({ "instanceUser._id": user._id });
+        console.log('id??', user._id, 'finduser??', findUser)
+        // db.users.update({}, {$unset: {A:1}}, {multi: true})
+        // db.URL_table.update({},{ $unset: {desc_anal2: 1, title_anal2: 1}},{ multi: true })
+
         if(user && passwordMatch) {
 
             // const category
 
             await Promise.all([
-                User.deleteOne({ id: id }),
-                Image.deleteMany({ "user._id": id }), //230223이거 기본이미지면 날리면 안됨
-                Project.deleteMany({ "user._id": id }),
-                Write.deleteMany({ "user._id": id }),
-                Comment.deleteMany({ "user._id": id }),
-                Recomment.deleteMany({ "user._id": id }),
+                // Image.deleteMany({ "user._id": user._id }), //230223이거 기본이미지면 날리면 안됨
+                // Project.deleteMany({ "user._id": user._id }),
+                // Project.deleteMany({ "instanceUser._id": user._id }),
+                // Write.deleteMany({ "user._id": user._id }),
+                // Comment.deleteMany({ "user._id": user._id }),
+                // Recomment.deleteMany({ "user._id": user._id }),
             ])
             // await User.deleteOne({ id: id });
-            res.status(201).clearCookie('X-refresh-token').end();
+            // res.status(201).clearCookie('X-refresh-token').end();
         }
 
         //230223 프로젝트 모델에서 인스턴스유저와 조인유저에 삭제할 유저아ㅣ이디 검색해서 삭제해야함.
