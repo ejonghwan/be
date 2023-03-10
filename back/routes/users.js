@@ -381,22 +381,31 @@ router.post('/delete', auth, async (req, res) => {
 
 
         // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트
-        const findUser = await Project.findOne({ "instanceUser._id": user._id });
-        console.log('id??', user._id, 'finduser??', findUser)
-        // db.users.update({}, {$unset: {A:1}}, {multi: true})
-        // db.URL_table.update({},{ $unset: {desc_anal2: 1, title_anal2: 1}},{ multi: true })
-
+        console.log('user', user)
         if(user && passwordMatch) {
-
-            // const category
-
             await Promise.all([
-                // Image.deleteMany({ "user._id": user._id }), //230223이거 기본이미지면 날리면 안됨
-                // Project.deleteMany({ "user._id": user._id }),
-                // Project.deleteMany({ "instanceUser._id": user._id }),
-                // Write.deleteMany({ "user._id": user._id }),
-                // Comment.deleteMany({ "user._id": user._id }),
-                // Recomment.deleteMany({ "user._id": user._id }),
+                // Image.deleteMany({ "user._id": user._id }), // [이미지]
+                // Project.deleteMany({ "user._id": user._id }), // [프로젝트]
+                // Write.deleteMany({ "user._id": user._id }), // [글]
+                // Comment.deleteMany({ "user._id": user._id }), // [코멘트]
+                // Recomment.deleteMany({ "user._id": user._id }), // [리코멘트]
+                // Category.deleteMany({ "user._id": user._id }), // [카테고리]
+
+                // Category.updateMany( // [카테고리]
+                //     { "instanceUser": { $elemMatch: { _id: user._id } } }, 
+                //     { $pull: { "instanceUser": { _id: user._id } } },
+                //     { new: true }
+                // ),
+                // Project.updateMany( // [들어가있는 프로젝트]
+                //     { "instanceUser": { $elemMatch: { _id: user._id } } }, 
+                //     { $pull: { "instanceUser": { _id: user._id } } },
+                //     { new: true }
+                // ),
+                // Project.updateMany( // [신청한 프로젝트]
+                //     { "joinUser": { $elemMatch: { _id: user._id } } }, 
+                //     { $pull: { "joinUser": { _id: user._id } } },
+                //     { new: true }
+                // )
             ])
             // await User.deleteOne({ id: id });
             // res.status(201).clearCookie('X-refresh-token').end();
@@ -404,13 +413,15 @@ router.post('/delete', auth, async (req, res) => {
 
         //230223 프로젝트 모델에서 인스턴스유저와 조인유저에 삭제할 유저아ㅣ이디 검색해서 삭제해야함.
 
-        // 221108 아직 작업안함. ############ 230221 여기하다가 감!!
-        // 1. 6369f7f0d94aae125a0bc833 기본이미지가 아닌 프로필 이미지들은 image db에서 날려야됨 
-        // 2. 이 유저가 올렸던 이미지들 모두 image db 에서 날려야됨  => 프로필 이미지는 기본이면 삭제x
-        // 3. 이 유저가 올린 글 날려야됨 
-        // 4. 이 유저가 올린 코멘트 날려야됨 
-        // 5. 이 유저가 올린 카테고리 날려야됨 
-        // 6. 이 유저가 올린 프로젝트 날려야됨 => 프로젝트 날리는게 아니라..다른 유저한테 줘야될듯 ? (결론: 걍 플젝 삭제)
+        // 1. [이미지]        (기본이미지는 없애면 안됨. 기본이미지는 다른아이디로 등록됨)
+        // 2. [글]  
+        // 3. [코멘트]   
+        // 4. [리코멘트]
+        // 5. [카테고리]  
+        // 6. [프로젝트]  => 프로젝트 날리는게 아니라..다른 유저한테 줘야될듯 ? (결론: 걍 플젝 삭제)
+        // 7. [들어가있는 프로젝트]
+        // 8. [신청한 프로젝트]
+        // 9. [좋아요][싫어요] 는 굳이 안없애도 될듯?
 
 
 

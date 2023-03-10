@@ -257,6 +257,7 @@ router.delete('/', async (req, res) => {
         // console.log('delete: ', projectId)
         const project = await Project.deleteMany({ _id: projectId });
 
+        // 여기도 아직안함. 삭제하면 프로젝트 연결되어있는곳 모두 삭제
         await Promise.all([
             Project.deleteMany({ _id: projectId }),
             User.updateOne({_id: userId}, { $pull: {projects: {_id: projectId} } }, { new: true })
