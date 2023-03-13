@@ -380,8 +380,14 @@ router.post('/delete', auth, async (req, res) => {
         if(!passwordMatch) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다' });
 
 
+        const test1 = await Category.find({ "projects._id": { $elemMatch: { _id: user.projects } } })
+        const test2 = await Category.find({ "projects": { $elemMatch: { _id: user.projects } } })
+        console.log('test1?', test1)
+        console.log('test2?', user.projects)
+
+
         // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트
-        console.log('user', user)
+        // console.log('user', user)
         if(user && passwordMatch) {
             await Promise.all([
                 // Image.deleteMany({ "user._id": user._id }), // [이미지]
@@ -392,7 +398,7 @@ router.post('/delete', auth, async (req, res) => {
                 // Category.deleteMany({ "user._id": user._id }), // [카테고리]
 
                 // Category.updateMany( // [카테고리]
-                //     { "instanceUser": { $elemMatch: { _id: user._id } } }, 
+                //     { "projects": { $elemMatch: { _id: user.projects } } }, 
                 //     { $pull: { "instanceUser": { _id: user._id } } },
                 //     { new: true }
                 // ),

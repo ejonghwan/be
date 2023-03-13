@@ -179,20 +179,30 @@ router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 �
         // 프로젝트 생성
         const newProject = await new Project(req.body);
         newProject.save();
+        
 
         // 카테고리 생성 분기
         let findCategory;
         let newCategory;
         for(let i = 0; i < categorys.length; i++) {
-            findCategory = await Category.findOne({ categoryName: categorys[i] });
+            findCategory = await Category.findOne({ categoryName: categorys[i].categoryName });
 
             if(findCategory) { // 카테고리가 기존에 존재할 경우
                 await Category.findByIdAndUpdate(findCategory._id, { $push: { projects: newProject._id } }, { new: true }).exec();
+                // await Project.findByIdAndUpdate(newProject._id, { categorys: {$push: { _id: findCategory._id} } }, { new: true }).exec();
+                // await newProject.categorys 카테고리 배열로 있는곳에 넣어야됨
+                console.log('findCategory', findCategory)
+                console.log('newProject', newProject)
+                
             }
             if(!findCategory) { // 카테고리가 없어서 새로운 카테고리 생성
-                newCategory = await new Category({ categoryName: categorys[i], projects: newProject._id });
+                newCategory = await new Category({ categoryName: categorys[i].categoryName, projects: newProject._id });
+                // await Project.findByIdAndUpdate(newProject._id, { categorys: {$push: { _id: newCategory._id} } }, { new: true }).exec();
                 newCategory.save();
+                console.log('findCategory', newCategory)
+                console.log('newProject', newProject)
             }
+           
         }
 
         // 프로젝트 생성 시 유저디비에 추가 / 프로젝트 참여시에도 유저디비+프로젝트 디비에 추가 
@@ -203,6 +213,7 @@ router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 �
             await User.findByIdAndUpdate(joinUser[i]._id, { $push: { joinProjects: { _id: newProject._id } } }, { new: true })
         }
 
+        
         res.status(201).json(newProject);
     } catch (err) {
         console.error('server:', err);

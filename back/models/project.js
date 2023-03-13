@@ -54,7 +54,10 @@ const ProjectSchema = new mongoose.Schema(
         content: { type: String, required: true, },
         writes: [{ type: Types.ObjectId, ref: 'write' }],
         projectPublic: { type: Boolean, required: true, default: true, },
-        categorys: [{ type: String, ref: 'category' }],
+        categorys: [{
+            _id: { type: Types.ObjectId, ref: 'category' },
+            categoryName: { type: String, ref: 'category' }
+        }],
         projectImages: [{ 
             _id: { type: Types.ObjectId, ref: 'image' }, 
             key: { type: String, required: true } 
