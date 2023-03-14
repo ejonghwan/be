@@ -380,10 +380,19 @@ router.post('/delete', auth, async (req, res) => {
         if(!passwordMatch) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다' });
 
 
-        const test1 = await Category.find({ "projects._id": { $elemMatch: { _id: user.projects } } })
-        const test2 = await Category.find({ "projects": { $elemMatch: { _id: user.projects } } })
-        console.log('test1?', test1)
-        console.log('test2?', user.projects)
+        const projectList = await Project.find({ _id: user.projects })
+        const categoryList = []
+        for(let i = 0; i < projectList.length; i++) {
+            categoryList.push(...projectList[i].categorys)
+        }
+        const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], [])
+        console.log('cList?', categoryList)
+        console.log('c??', categorys)
+        
+        const test2 = await Category.find({ categoryName: categorys })
+        // await Category.updateMany({ categoryName: categorys }, {'projects.$[_id]': {$pull: {_id}}}) 
+        // 일단 카테고리는 찾았고 ..여기서 아이디에 맞는것만 삭제해야됨 내일
+        console.log('test1222', test2)
 
 
         // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트
@@ -395,7 +404,7 @@ router.post('/delete', auth, async (req, res) => {
                 // Write.deleteMany({ "user._id": user._id }), // [글]
                 // Comment.deleteMany({ "user._id": user._id }), // [코멘트]
                 // Recomment.deleteMany({ "user._id": user._id }), // [리코멘트]
-                // Category.deleteMany({ "user._id": user._id }), // [카테고리]
+                
 
                 // Category.updateMany( // [카테고리]
                 //     { "projects": { $elemMatch: { _id: user.projects } } }, 
