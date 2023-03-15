@@ -388,10 +388,13 @@ router.post('/delete', auth, async (req, res) => {
         const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], [])
         console.log('cList?', categoryList)
         console.log('c??', categorys)
-        
-        const test2 = await Category.find({ categoryName: categorys })
+    
+
+
+
+        // 0315이거하다가감
+        const test2 = await Category.updateMany({ categoryName: categorys }, { "projects": '640ecac3b41f125b1a0f9f64' }, { new : true })
         // await Category.updateMany({ categoryName: categorys }, {'projects.$[_id]': {$pull: {_id}}}) 
-        // 일단 카테고리는 찾았고 ..여기서 아이디에 맞는것만 삭제해야됨 내일
         console.log('test1222', test2)
 
 
