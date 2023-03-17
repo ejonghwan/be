@@ -393,7 +393,7 @@ router.post('/delete', auth, async (req, res) => {
 
 
         // 0315이거하다가감
-        const test2 = await Category.updateMany({ categoryName: categorys }, { "projects": '640ecac3b41f125b1a0f9f64' }, { new : true })
+        const test2 = await Category.updateMany({ categoryName: categorys }, { "projects": 'asdasd' }, { new : true })
         // await Category.updateMany({ categoryName: categorys }, {'projects.$[_id]': {$pull: {_id}}}) 
         console.log('test1222', test2)
 
