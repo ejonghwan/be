@@ -380,10 +380,10 @@ router.post('/delete', auth, async (req, res) => {
         if(!passwordMatch) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다' });
 
 
-        const projectList = await Project.find({ _id: user.projects })
-        const categoryList = []
+        const projectList = await Project.find({ _id: user.projects });
+        const categoryList = [];
         for(let i = 0; i < projectList.length; i++) {
-            categoryList.push(...projectList[i].categorys)
+            categoryList.push(...projectList[i].categorys);
         }
         const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], [])
         console.log('cList?', categoryList)
