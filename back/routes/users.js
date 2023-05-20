@@ -402,11 +402,11 @@ router.post('/delete', auth, async (req, res) => {
         // console.log('user', user)
         if(user && passwordMatch) {
             await Promise.all([
-                // Image.deleteMany({ "user._id": user._id }), // [이미지]
-                // Project.deleteMany({ "user._id": user._id }), // [프로젝트]
-                // Write.deleteMany({ "user._id": user._id }), // [글]
-                // Comment.deleteMany({ "user._id": user._id }), // [코멘트]
-                // Recomment.deleteMany({ "user._id": user._id }), // [리코멘트]
+                Image.deleteMany({ "user._id": user._id }), // [이미지]
+                Project.deleteMany({ "user._id": user._id }), // [프로젝트]
+                Write.deleteMany({ "user._id": user._id }), // [글]
+                Comment.deleteMany({ "user._id": user._id }), // [코멘트]
+                Recomment.deleteMany({ "user._id": user._id }), // [리코멘트]
                 
 
                 // Category.updateMany( // [카테고리]
