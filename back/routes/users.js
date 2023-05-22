@@ -385,28 +385,28 @@ router.post('/delete', auth, async (req, res) => {
         for(let i = 0; i < projectList.length; i++) {
             categoryList.push(...projectList[i].categorys);
         }
-        const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], [])
+        const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], []) //중복제거
         console.log('cList?', categoryList)
         console.log('c??', categorys)
     
-
+        
 
 
         // 0315이거하다가감
-        const test2 = await Category.updateMany({ categoryName: categorys }, { "projects": 'asdasd' }, { new : true })
+        // const test2 = await Category.updateMany({ categoryName: categorys }, { "projects": 'asdasd' }, { new : true })
         // await Category.updateMany({ categoryName: categorys }, {'projects.$[_id]': {$pull: {_id}}}) 
-        console.log('test1222', test2)
+        // console.log('test1222', test2)
 
 
         // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트
         // console.log('user', user)
         if(user && passwordMatch) {
             await Promise.all([
-                Image.deleteMany({ "user._id": user._id }), // [이미지]
-                Project.deleteMany({ "user._id": user._id }), // [프로젝트]
-                Write.deleteMany({ "user._id": user._id }), // [글]
-                Comment.deleteMany({ "user._id": user._id }), // [코멘트]
-                Recomment.deleteMany({ "user._id": user._id }), // [리코멘트]
+                // Image.deleteMany({ "user._id": user._id }), // [이미지]
+                // Project.deleteMany({ "user._id": user._id }), // [프로젝트]
+                // Write.deleteMany({ "user._id": user._id }), // [글]
+                // Comment.deleteMany({ "user._id": user._id }), // [코멘트]
+                // Recomment.deleteMany({ "user._id": user._id }), // [리코멘트]
                 
 
                 // Category.updateMany( // [카테고리]
@@ -429,6 +429,16 @@ router.post('/delete', auth, async (req, res) => {
             // res.status(201).clearCookie('X-refresh-token').end();
         }
 
+        // 유저를 삭제하면 
+        /*
+            프로젝트 삭제하고 
+            카테고리 삭제하고 
+            올렸던 이미지 삭제하고 
+            코멘트 삭제하고 
+            글 삭제하고
+            조인 유저 삭제하고 
+            유저에 
+        */
         //230223 프로젝트 모델에서 인스턴스유저와 조인유저에 삭제할 유저아ㅣ이디 검색해서 삭제해야함.
 
         // 1. [이미지]        (기본이미지는 없애면 안됨. 기본이미지는 다른아이디로 등록됨)

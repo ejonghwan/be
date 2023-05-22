@@ -406,7 +406,8 @@ const UserRequest = () => {
                 },
                 withCredentials: true,
             };
-            const user = await axios.post(`${host}/api/users/delete`, data, config);
+            const user = await axios.post(`${host}/api/users/delete`, data, config); 
+            
             localStorage.removeItem('X-access-token');
             dispatch({ type: "USER_LOGOUT_SUCCESS" });
             dispatch({ type: "ERROR_LOADING_CLEAR"});
