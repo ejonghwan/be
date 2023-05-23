@@ -389,7 +389,7 @@ router.post('/delete', auth, async (req, res) => {
         console.log('cList?', categoryList)
         console.log('c??', categorys)
     
-        
+        // 아맞다 !! 프로젝트 아이디 찾아서 카테고리.프로젝츠 아이디 찾으려고 이거 했었음
 
 
         // 0315이거하다가감
@@ -397,13 +397,16 @@ router.post('/delete', auth, async (req, res) => {
         // await Category.updateMany({ categoryName: categorys }, {'projects.$[_id]': {$pull: {_id}}}) 
         // console.log('test1222', test2)
 
+        const test11 = await Category.find({ categoryName: categorys })
+        console.log(test11)
+
 
         // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트
         // console.log('user', user)
         if(user && passwordMatch) {
             await Promise.all([
-                // Image.deleteMany({ "user._id": user._id }), // [이미지]
-                // Project.deleteMany({ "user._id": user._id }), // [프로젝트]
+                // Image.deleteMany({ "user._id": user._id }), // [이미지] 
+                // Project.deleteMany({ "constructorUser._id": user._id }), // [프로젝트]
                 // Write.deleteMany({ "user._id": user._id }), // [글]
                 // Comment.deleteMany({ "user._id": user._id }), // [코멘트]
                 // Recomment.deleteMany({ "user._id": user._id }), // [리코멘트]
@@ -411,9 +414,11 @@ router.post('/delete', auth, async (req, res) => {
 
                 // Category.updateMany( // [카테고리]
                 //     { "projects": { $elemMatch: { _id: user.projects } } }, 
-                //     { $pull: { "instanceUser": { _id: user._id } } },
+                //     { $pull: { _id: user._id } },
                 //     { new: true }
                 // ),
+
+
                 // Project.updateMany( // [들어가있는 프로젝트]
                 //     { "instanceUser": { $elemMatch: { _id: user._id } } }, 
                 //     { $pull: { "instanceUser": { _id: user._id } } },
