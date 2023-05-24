@@ -385,19 +385,23 @@ router.post('/delete', auth, async (req, res) => {
         for(let i = 0; i < projectList.length; i++) {
             categoryList.push(...projectList[i].categorys);
         }
-        const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], []) //중복제거
+        const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName, obj._id], []) //중복제거
         console.log('cList?', categoryList)
         console.log('c??', categorys)
     
         // 아맞다 !! 프로젝트 아이디 찾아서 카테고리.프로젝츠 아이디 찾으려고 이거 했었음
 
-
-        // 0315이거하다가감
         // const test2 = await Category.updateMany({ categoryName: categorys }, { "projects": 'asdasd' }, { new : true })
         // await Category.updateMany({ categoryName: categorys }, {'projects.$[_id]': {$pull: {_id}}}) 
         // console.log('test1222', test2)
 
-        const test11 = await Category.find({ categoryName: categorys })
+        // const test11 = await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": { $elemMatch: { _id: "646d72f6cd68c40651491f24" } } } }, { new: true } );
+
+        const test11 = await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": '646d72f6cd68c40651491f24' } }, { new: true }) //후 ..삭제됐다!!!
+        // await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": '646d72f6cd68c40651491f24' } }, { new: true });
+    
+
+        // 646d72f6cd68c40651491f24 삭제 되는지
         console.log(test11)
 
 
