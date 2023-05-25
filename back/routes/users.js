@@ -385,54 +385,32 @@ router.post('/delete', auth, async (req, res) => {
         for(let i = 0; i < projectList.length; i++) {
             categoryList.push(...projectList[i].categorys);
         }
-        const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName, obj._id], []) //중복제거
-        console.log('cList?', categoryList)
-        console.log('c??', categorys)
-    
-        // 아맞다 !! 프로젝트 아이디 찾아서 카테고리.프로젝츠 아이디 찾으려고 이거 했었음
-
-        // const test2 = await Category.updateMany({ categoryName: categorys }, { "projects": 'asdasd' }, { new : true })
-        // await Category.updateMany({ categoryName: categorys }, {'projects.$[_id]': {$pull: {_id}}}) 
-        // console.log('test1222', test2)
-
-        // const test11 = await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": { $elemMatch: { _id: "646d72f6cd68c40651491f24" } } } }, { new: true } );
-
-        const test11 = await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": '646d72f6cd68c40651491f24' } }, { new: true }) //후 ..삭제됐다!!!
-        // await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": '646d72f6cd68c40651491f24' } }, { new: true });
-    
-
-        // 646d72f6cd68c40651491f24 삭제 되는지
-        console.log(test11)
+        const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], []) //중복제거
+        projectList.map(async item => {
+            // 유저 삭제 시 유저가 만든 카테고리에 연결된 프로젝트 아이디 삭제
+            await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": item._id } }, { new: true }) //후 ..삭제됐다!!!
+        })
 
 
-        // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트
-        // console.log('user', user)
+        // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트 - 테스트 완료
         if(user && passwordMatch) {
             await Promise.all([
-                // Image.deleteMany({ "user._id": user._id }), // [이미지] 
-                // Project.deleteMany({ "constructorUser._id": user._id }), // [프로젝트]
-                // Write.deleteMany({ "user._id": user._id }), // [글]
-                // Comment.deleteMany({ "user._id": user._id }), // [코멘트]
-                // Recomment.deleteMany({ "user._id": user._id }), // [리코멘트]
+                Image.deleteMany({ "user._id": user._id }), // [이미지] 
+                Project.deleteMany({ "constructorUser._id": user._id }), // [프로젝트]
+                Write.deleteMany({ "user._id": user._id }), // [글]
+                Comment.deleteMany({ "user._id": user._id }), // [코멘트]
+                Recomment.deleteMany({ "user._id": user._id }), // [리코멘트]
                 
-
-                // Category.updateMany( // [카테고리]
-                //     { "projects": { $elemMatch: { _id: user.projects } } }, 
-                //     { $pull: { _id: user._id } },
-                //     { new: true }
-                // ),
-
-
-                // Project.updateMany( // [들어가있는 프로젝트]
-                //     { "instanceUser": { $elemMatch: { _id: user._id } } }, 
-                //     { $pull: { "instanceUser": { _id: user._id } } },
-                //     { new: true }
-                // ),
-                // Project.updateMany( // [신청한 프로젝트]
-                //     { "joinUser": { $elemMatch: { _id: user._id } } }, 
-                //     { $pull: { "joinUser": { _id: user._id } } },
-                //     { new: true }
-                // )
+                Project.updateMany( // [들어가있는 프로젝트]
+                    { "instanceUser": { $elemMatch: { _id: user._id } } }, 
+                    { $pull: { "instanceUser": { _id: user._id } } },
+                    { new: true }
+                ),
+                Project.updateMany( // [신청한 프로젝트]
+                    { "joinUser": { $elemMatch: { _id: user._id } } }, 
+                    { $pull: { "joinUser": { _id: user._id } } },
+                    { new: true }
+                )
             ])
             // await User.deleteOne({ id: id });
             // res.status(201).clearCookie('X-refresh-token').end();
