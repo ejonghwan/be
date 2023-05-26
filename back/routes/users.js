@@ -412,6 +412,7 @@ router.post('/delete', auth, async (req, res) => {
                     { new: true }
                 )
             ])
+            // 테스트 다 끝나면 활성화
             // await User.deleteOne({ id: id });
             // res.status(201).clearCookie('X-refresh-token').end();
         }

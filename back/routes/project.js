@@ -266,13 +266,29 @@ router.delete('/', async (req, res) => {
     try {
         const { userId, projectId } = req.body;
 
-        // console.log('delete: ', projectId)
-        const project = await Project.deleteMany({ _id: projectId });
 
-        // 여기도 아직안함. 삭제하면 프로젝트 연결되어있는곳 모두 삭제
+
+
+        // const project = await Project.deleteMany({ _id: projectId });
+
+
+        /*
+            *중요. 프로젝트삭제하면 글,코멘트, 리코멘트 모두 삭제하지만 글, 코멘트, 리코멘트는 삭제해도 나머진 남겨놔야함. (삭제되었다고 코멘트만)
+
+            프로젝트 삭제하면 해당 "프로젝트"아이디
+            1. 프로젝트디비에서 삭제 
+            2. 생성한 유저디비에서 (인스턴스, 조인, 좋아요 필드) 삭제 
+            3. 인스턴스 유저디비에서 삭제
+            4. 글디비에서 삭제
+            5. 카테고리디비에서 삭제
+            6. 이미지디비에서 삭제
+            
+        */
+
         await Promise.all([
-            Project.deleteMany({ _id: projectId }),
-            User.updateOne({_id: userId}, { $pull: {projects: {_id: projectId} } }, { new: true })
+            // User.updateOne({_id: userId}, { $pull: {projects: {_id: projectId} } }, { new: true }),
+            // Project.deleteMany({ _id: projectId }),
+            
         ]);
         
         res.status(201).end();
