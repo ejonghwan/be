@@ -321,26 +321,26 @@ router.patch('/like', async (req, res) => {
     }
 })
 
-
+ 
 //@ path    PATCH /api/project/unlike
 //@ doc     프로젝트 찜or좋아요 취소
 //@ access  private
-// router.patch('/unlike', async (req, res) => {
-//     try {
-//         const { userId, writeId } = req.body;
+router.patch('/unlike', async (req, res) => {
+    try {
+        const { userId, projectId } = req.body;
 
-//         const [ write ] = await Promise.all([
-//             Write.findByIdAndUpdate(writeId, { $pull: {likes: userId }, $inc: { likeCount: -1 } }, { new: true }),
-//             User.updateOne({_id: userId}, { $pull: {likePost: writeId } }, { new: true }),
-//         ])
+        const [ project ] = await Promise.all([
+            Project.findByIdAndUpdate(projectId, { $pull: {likeUser: userId }, $inc: { likeCount: -1 } }, { new: true }),
+            User.updateOne({_id: userId}, { $pull: {likeProject: projectId } }, { new: true }),
+        ])
 
-//         res.status(201).json(write);
-//     } catch (err) {
-//         console.error('server:', err);
-//         res.status(500).json({ message: err.message });
-//     }
+        res.status(201).json(project);
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
     
-// })
+})
 
 
 
