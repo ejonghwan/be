@@ -6,6 +6,7 @@ import { auth } from '../middleware/auth.js' ;
 import Project from '../models/project.js';
 import User from '../models/users.js';
 import Category from '../models/category.js';
+import images from '../models/images.js';
 
 const router = express.Router();
 
@@ -276,7 +277,7 @@ router.delete('/', async (req, res) => {
             프로젝트 삭제하면 해당 "프로젝트"아이디
             1. 프로젝트디비에서 삭제 
             2. 생성한 유저디비에서 (인스턴스, 조인, 좋아요 필드) 삭제 
-            3. 인스턴스 유저디비에서 삭제
+
             4. 글디비에서 삭제
             5. 카테고리디비에서 삭제
             6. 이미지디비에서 삭제
@@ -286,7 +287,8 @@ router.delete('/', async (req, res) => {
         await Promise.all([
             // User.updateOne({_id: userId}, { $pull: {projects: {_id: projectId} } }, { new: true }),
             // Project.deleteMany({ _id: projectId }),
-            Image.deleteMany({_id: { $pull: project.projectImages }})
+            images.deleteMany({ _id: project.projectImages })
+            
             
         ]);
         
