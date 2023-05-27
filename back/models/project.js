@@ -68,6 +68,8 @@ const ProjectSchema = new mongoose.Schema(
         }],
         promise: { start: { type: String, default: new Date(), }, end: { type: String }, projectLevel: { type: String, default: "0" } }, 
         // 레벨은 easy <- 0: 제한없음 1 2 3 -> hard 
+        likeUser: [{ type: Types.ObjectId, ref: 'user' }],
+        likeCount: { type: Number, required: true, default: 0, },
     },
     { timestamps: true }
 )

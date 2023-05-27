@@ -308,10 +308,11 @@ router.delete('/', async (req, res) => {
 //@ access  private
 router.patch('/like', async (req, res) => {
     try {
+        console.log(req.body)
         const { userId, projectId } = req.body;
         const [ project ] = await Promise.all([
-            Project.findByIdAndUpdate(projectId, { $push: {likes: [userId] }, $inc: { likeCount: 1 } }, { new: true }),
-            User.updateOne({_id: userId}, { $push: {likeProject: projectId } }, { new: true }),
+            Project.findByIdAndUpdate(projectId, { $push: {likeUser: userId }, $inc: { likeCount: 1 } }, { new: true }),
+            // User.updateOne({_id: userId}, { $push: {likeProject: projectId } }, { new: true }),
         ])
         res.status(201).json(project);
     } catch (err) {
