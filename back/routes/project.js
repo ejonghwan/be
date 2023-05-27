@@ -302,6 +302,48 @@ router.delete('/', async (req, res) => {
 
 
 
+// 5.26 집가서 여기서 하면 됨
+//@ path    PATCH /api/project/like
+//@ doc     프로젝트 찜or좋아요
+//@ access  private
+router.patch('/like', async (req, res) => {
+    try {
+        const { userId, projectId } = req.body;
+        const [ project ] = await Promise.all([
+            Project.findByIdAndUpdate(projectId, { $push: {likes: [userId] }, $inc: { likeCount: 1 } }, { new: true }),
+            User.updateOne({_id: userId}, { $push: {likeProject: projectId } }, { new: true }),
+        ])
+        res.status(201).json(project);
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
+//@ path    PATCH /api/project/unlike
+//@ doc     프로젝트 찜or좋아요 취소
+//@ access  private
+// router.patch('/unlike', async (req, res) => {
+//     try {
+//         const { userId, writeId } = req.body;
+
+//         const [ write ] = await Promise.all([
+//             Write.findByIdAndUpdate(writeId, { $pull: {likes: userId }, $inc: { likeCount: -1 } }, { new: true }),
+//             User.updateOne({_id: userId}, { $pull: {likePost: writeId } }, { new: true }),
+//         ])
+
+//         res.status(201).json(write);
+//     } catch (err) {
+//         console.error('server:', err);
+//         res.status(500).json({ message: err.message });
+//     }
+    
+// })
+
+
+
+
 //@ path    GET /api/project/category/:categoryName
 //@ doc     카테고리 검색
 //@ access  public

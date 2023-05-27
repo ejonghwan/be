@@ -28,7 +28,8 @@ const UserSchema = mongoose.Schema({
      writes: [{ type: Types.ObjectId, ref: 'write'}],
      comments: [{ type: Types.ObjectId, ref: 'comment'}],
      recomments: [{ type: Types.ObjectId, ref: 'recomment'}],
-     likePost: [{ type: Types.ObjectId, ref: 'write' }]
+     likePost: [{ type: Types.ObjectId, ref: 'write' }],
+     likeProject: [{ type: Types.ObjectId, ref: 'project' }]
 }, {
     timestamps: true,
 })
