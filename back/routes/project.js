@@ -6,7 +6,8 @@ import { auth } from '../middleware/auth.js' ;
 import Project from '../models/project.js';
 import User from '../models/users.js';
 import Category from '../models/category.js';
-import images from '../models/images.js';
+import Images from '../models/images.js';
+import Write from '../models/write.js';
 
 const router = express.Router();
 
@@ -278,26 +279,22 @@ router.delete('/', async (req, res) => {
             1. 프로젝트디비에서 삭제 o
             2. 생성한 유저디비에서 (인스턴스는 안해도됨, 조인, 좋아요 필드) 삭제 o
 
-            4. 글디비에서 삭제
-            5. 카테고리디비에서 삭제
+            4. 글디비에서 삭제 o
+            5. 카테고리디비에서 삭제 o
             6. 이미지디비에서 삭제 o
             
         */
 
-
-
         await Promise.all([
-
-            // User.updateOne({_id: userId}, { $pull: {projects: {_id: projectId} } }, { new: true }),
-            // Project.deleteMany({ _id: projectId }),
-            // images.deleteMany({ _id: project.projectImages }),
-            // User.updateMany({ likeProject: project.id }, { $pull: { likeProject: project._id } }, { new: true }).exec(), //테스트 완료
-            // User.updateMany({ joinProjects: { _id: project.id } }, { $pull: { "joinProjects": { _id: project._id } } }, { new: true }).exec(), //테스트 완료
-            Category.updateMany({ projects: { _id: project._id } }, { $pull: { "projects": project.id } }, { new: true }).exec() //테스트 완료
+            User.updateMany({ _id: userId }, { $pull: { "projects": project.id } }, { new: true }),
+            Images.deleteMany({ _id: project.projectImages }),
+            User.updateMany({ likeProject: project.id }, { $pull: { likeProject: project._id } }, { new: true }).exec(), //테스트 완료
+            User.updateMany({ joinProjects: { _id: project.id } }, { $pull: { "joinProjects": { _id: project._id } } }, { new: true }).exec(), //테스트 완료
+            Category.updateMany({ projects: { _id: project._id } }, { $pull: { "projects": project.id } }, { new: true }).exec(), //테스트 완료
+            Write.deleteMany({ _id: project.writes })
            
-            
-            
         ]);
+        await Project.deleteMany({ _id: projectId }),
         
         res.status(201).end();
     } catch (err) {
