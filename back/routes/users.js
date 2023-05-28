@@ -439,27 +439,6 @@ router.post('/delete', auth, async (req, res) => {
         // 8. [신청한 프로젝트]
         // 9. [좋아요][싫어요] 는 굳이 안없애도 될듯?
 
-
-
-
-        /*
-            profileImage: { 
-                _id: { type: Types.ObjectId, ref: 'image' },
-                key: { type: String, required: true, },
-            },
-            projects: [{ type: Types.ObjectId, ref: 'project'}],
-            joinProjects: [
-                { _id: { type: Types.ObjectId, ref: 'project'}, state: { type: Boolean, default: false } }
-            ],
-            writes: [{ type: Types.ObjectId, ref: 'write'}],
-            comments: [{ type: Types.ObjectId, ref: 'comment'}],
-            recomments: [{ type: Types.ObjectId, ref: 'recomment'}],
-            likePost: [{ type: Types.ObjectId, ref: 'write' }]
-        */
-
-
-        
-
     } catch(err) {
         console.error(err);
         res.status(500).json({ message: err.message });
