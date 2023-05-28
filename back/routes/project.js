@@ -270,7 +270,7 @@ router.delete('/', async (req, res) => {
         // const project = await Project.deleteMany({ _id: projectId });
 
         const project = await Project.findById(projectId)
-        console.log(project.projectImages)
+        // console.log(project.projectImages)
         /*
             *중요. 프로젝트삭제하면 글, 코멘트, 리코멘트 모두 삭제하지만 글, 코멘트, 리코멘트는 삭제해도 나머진 남겨놔야함. (삭제되었다고 코멘트만)
 
@@ -287,7 +287,11 @@ router.delete('/', async (req, res) => {
         await Promise.all([
             // User.updateOne({_id: userId}, { $pull: {projects: {_id: projectId} } }, { new: true }),
             // Project.deleteMany({ _id: projectId }),
-            images.deleteMany({ _id: project.projectImages })
+            // images.deleteMany({ _id: project.projectImages })
+
+
+            User.findByIdAndUpdate(userId, { $pull: { likeProject: project._id } }, { new: true }).exec(), //테스트 완료
+            User.findByIdAndUpdate(userId, { $pull: { "joinProjects": { _id: project._id } } }, { new: true }).exec(), //테스트 완료
             
             
         ]);
