@@ -275,23 +275,27 @@ router.delete('/', async (req, res) => {
             *중요. 프로젝트삭제하면 글, 코멘트, 리코멘트 모두 삭제하지만 글, 코멘트, 리코멘트는 삭제해도 나머진 남겨놔야함. (삭제되었다고 코멘트만)
 
             프로젝트 삭제하면 해당 "프로젝트"아이디
-            1. 프로젝트디비에서 삭제 
-            2. 생성한 유저디비에서 (인스턴스, 조인, 좋아요 필드) 삭제 
+            1. 프로젝트디비에서 삭제 o
+            2. 생성한 유저디비에서 (인스턴스, 조인, 좋아요 필드) 삭제 o
 
             4. 글디비에서 삭제
             5. 카테고리디비에서 삭제
-            6. 이미지디비에서 삭제
+            6. 이미지디비에서 삭제 o
             
         */
+
+        const test1 = await User.updateMany({ joinProjects: { _id: project.id } }, { $pull: { "joinProjects": { _id: project._id } } }, { new: true }).exec();
+        console.log(test1)
 
         await Promise.all([
             // User.updateOne({_id: userId}, { $pull: {projects: {_id: projectId} } }, { new: true }),
             // Project.deleteMany({ _id: projectId }),
-            // images.deleteMany({ _id: project.projectImages })
 
 
-            User.findByIdAndUpdate(userId, { $pull: { likeProject: project._id } }, { new: true }).exec(), //테스트 완료
-            User.findByIdAndUpdate(userId, { $pull: { "joinProjects": { _id: project._id } } }, { new: true }).exec(), //테스트 완료
+            // images.deleteMany({ _id: project.projectImages }),
+            // User.updateMany({ likeProject: project.id }, { $pull: { likeProject: project._id } }, { new: true }).exec(), //테스트 완료
+            // User.updateMany({ joinProjects: { _id: project.id } }, { $pull: { "joinProjects": { _id: project._id } } }, { new: true }).exec(), //테스트 완료
+           
             
             
         ]);
