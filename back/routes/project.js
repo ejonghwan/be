@@ -145,14 +145,12 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
 router.patch('/delete/:projectId/:userId', async (req, res) => {
     try {
-        // 탈퇴할떄 모든거 삭제!! 
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
-            // Project.findByIdAndUpdate(projectId, { $pull: { "joinUser": { _id: userId } } }, { new: true }),
             Project.findByIdAndUpdate(projectId, { $pull: { "instanceUser": { _id: userId } } }, { new: true }),
-            // User.findByIdAndUpdate(userId, { $pull: { "joinProjects": { _id: projectId } } }, { new: true })
+            User.findByIdAndUpdate(userId, { $pull: { "joinProjects": { _id: projectId } } }, { new: true })
+            // 프로젝트에 썼던글, 이미지 삭제? 아니면 그냥 두기 ? 그냥 두자
         ])
-        // console.log( 'project', project, 'user', user)
         res.status(200).json(project)
     } catch (err) {
         console.error('server:', err);
