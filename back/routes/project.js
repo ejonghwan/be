@@ -140,15 +140,16 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
         2. 프로젝트디비:  instanceUser 에서 해당 id 삭제
 */
 
-//@ path    PATCH /api/project/reject/:projectId/:userId
+//@ path    PATCH /api/project/delete/:projectId/:userId
 //@ doc     프로젝트 탈퇴
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.patch('/reject/:projectId/:userId', async (req, res) => {
+router.patch('/delete/:projectId/:userId', async (req, res) => {
     try {
         // 탈퇴할떄 모든거 삭제!! 
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
             // Project.findByIdAndUpdate(projectId, { $pull: { "joinUser": { _id: userId } } }, { new: true }),
+            Project.findByIdAndUpdate(projectId, { $pull: { "instanceUser": { _id: userId } } }, { new: true }),
             // User.findByIdAndUpdate(userId, { $pull: { "joinProjects": { _id: projectId } } }, { new: true })
         ])
         // console.log( 'project', project, 'user', user)
@@ -158,14 +159,6 @@ router.patch('/reject/:projectId/:userId', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 })
-
-
-
-
-
-//@ path    GET /api/project
-//@ doc     로드 프로젝 (내가 가입한 or 가입된 프로젝트만) 이건 유저에 있어야됨
-//@ access  private
 
 
 
@@ -267,11 +260,7 @@ router.patch('/edit/:projectId', async (req, res) => {
 router.delete('/', async (req, res) => {
     try {
         const { userId, projectId } = req.body;
-
-        // const project = await Project.deleteMany({ _id: projectId });
-
         const project = await Project.findById(projectId)
-        // console.log(project.projectImages)
         /*
             *중요. 프로젝트삭제하면 글, 코멘트, 리코멘트 모두 삭제하지만 글, 코멘트, 리코멘트는 삭제해도 나머진 남겨놔야함. (삭제되었다고 코멘트만)
 
@@ -282,9 +271,7 @@ router.delete('/', async (req, res) => {
             4. 글디비에서 삭제 o
             5. 카테고리디비에서 삭제 o
             6. 이미지디비에서 삭제 o
-            
         */
-
         await Promise.all([
             User.updateMany({ _id: userId }, { $pull: { "projects": project.id } }, { new: true }),
             Images.deleteMany({ _id: project.projectImages }),
@@ -306,7 +293,6 @@ router.delete('/', async (req, res) => {
 
 
 
-// 5.26 집가서 여기서 하면 됨
 //@ path    PATCH /api/project/like
 //@ doc     프로젝트 찜or좋아요
 //@ access  private
@@ -345,8 +331,6 @@ router.patch('/unlike', async (req, res) => {
     }
     
 })
-
-
 
 
 //@ path    GET /api/project/category/:categoryName
