@@ -126,8 +126,6 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
 // 2. 프로젝트 강퇴 
 // 3. 방장이 프로젝트 없애려할 때 유저가 있으면 삭제 못하고 유저가 없어야 가능하게
 // 4. 탈퇴할때도 마찬가지 3
-
-
 /*
 탈퇴할때 뭐뭐 없애야 하는지
     if : 주인장일 때 or 가입원일 때 
@@ -166,14 +164,12 @@ router.patch('/delete/:projectId/:userId', async (req, res) => {
 router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 생성가능하게??
     try {
         // 221116 promise 디비 채워야됨 promise: { start: string default: today, end: string, projectLevel: "0"  }
-
         const { constructorUser, instanceUser, rank, title, content, write, projectPublic, categorys, joinUser, promise } = req.body; //joinUser 는 배열
         
         // 프로젝트 생성
         const newProject = await new Project(req.body);
         newProject.save();
         
-
         // 카테고리 생성 분기
         let findCategory;
         let newCategory;
@@ -198,7 +194,6 @@ router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 �
             }
            
         }
-
         // 프로젝트 생성 시 유저디비에 추가 / 프로젝트 참여시에도 유저디비+프로젝트 디비에 추가 
         await User.updateOne({_id: constructorUser._id}, { $push: { projects: { _id: newProject._id } } }, { new: true });
 
@@ -207,7 +202,6 @@ router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 �
             await User.findByIdAndUpdate(joinUser[i]._id, { $push: { joinProjects: { _id: newProject._id } } }, { new: true })
         }
 
-        
         res.status(201).json(newProject);
     } catch (err) {
         console.error('server:', err);
@@ -286,7 +280,6 @@ router.delete('/', async (req, res) => {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
     }
-
 })
 
 
@@ -336,7 +329,6 @@ router.patch('/unlike', async (req, res) => {
 //@ access  public
 router.get('/category/:categoryName', async (req, res) => {
     try {
-
         // 카테고리네임 프론트에서 encodeURIComponent("호호")
         const { categoryName } = req.params;
         const category = await Category.find({ categoryName: categoryName }, ).populate("projects")

@@ -35,20 +35,31 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => { 
     try {
         const { user, projectId, title, content, writePublic } = req.body;
-        const write = await new Write(req.body);
-        write.save();
+        // const write = await new Write(req.body);
+        // write.save();
+        /*
+            5.30 인증글을 작성하면 
+            1. 프로젝트 찾고 
+            2. 프로젝트 안에 인스턴스 유저찾고 
+            3. 그 안에 days에 Date.now push
+        */
 
+        // User.findByIdAndUpdate(userId, { "joinProjects.$[ele].state": true }, { arrayFilters: [{"ele._id": projectId}], new: true })
+        // const test1 = await Project.findByIdAndUpdate(projectId, { "instanceUser.$[ele].rank": "asd" }, { arrayFilters: [{ "ele._id": user._id }], new: true }).exec(); 
+        const test1 = await Project.findOne({"instanceUser._id": user._id},).exec(); 
+        console.log(test1)
 
         await Promise.all([
-            User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
-            Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true })
+            // User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
+            // Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true }),
+            // Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true })
         ])
-        res.status(201).json(write)
+        // res.status(201).json(write)
+        res.status(201).end();
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
     }
-
 })
 
 
