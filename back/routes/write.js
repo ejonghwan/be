@@ -55,15 +55,24 @@ router.post('/', async (req, res) => {
         //         count: { type: Number, default: 0, },
         //     }], //days로 달력/잔디 같이씀
         // },],
+        const nowDate = `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}`;
+        const userFindDate = await Project.findOne({ "instanceUser.days.date" : nowDate })
+        console.log(userFindDate)
 
-        const userFindDate = await Project.find(projectId)
-
-        // 완성
-        // const test1 = await Project.findByIdAndUpdate(projectId, 
-        //     { $push: { "instanceUser.$[ele].days": { date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}`} } },
-        //     { arrayFilters: [{"ele._id": user._id}], new: true }
-        //     )
-        // console.log(test1)
+        // 오늘 쓴 인증글이 있다면 count만 ++
+        if(userFindDate) {
+            await Project.findByIdAndUpdate(projectId, 
+                { $inc: { "instanceUser.$[ele].days": { $inc: { count: 1 } } } }, // 5/31 여기 ++안됨 해야됨
+                { arrayFilters: [{"ele._id": user._id}], new: true }
+            )
+        }
+        // 오늘 쓴 인증글이 없다면 date count 추가
+        if(!userFindDate) {
+            await Project.findByIdAndUpdate(projectId, 
+                { $push: { "instanceUser.$[ele].days": { date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}`} } },
+                { arrayFilters: [{"ele._id": user._id}], new: true }
+            )
+        }
 
         await Promise.all([
             // User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
