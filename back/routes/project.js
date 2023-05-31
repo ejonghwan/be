@@ -194,7 +194,7 @@ router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 �
             }
            
         }
-        // 프로젝트 생성 시 유저디비에 추가 / 프로젝트 참여시에도 유저디비+프로젝트 디비에 추가 
+        // 프로젝트 생성 시 유저디비에 추가 / 프로젝트 참여시에도 유저디비 + 프로젝트 디비에 추가 
         await User.updateOne({_id: constructorUser._id}, { $push: { projects: { _id: newProject._id } } }, { new: true });
 
         // 생성 시 팀원을 추가했다면 joinproject 필드에 업데이트  
