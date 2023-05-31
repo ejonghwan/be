@@ -39,14 +39,17 @@ router.post('/', async (req, res) => {
         // write.save();
         /*
             5.30 인증글을 작성하면 
+            0. 글쓴이가 프로젝트 리더이면 생성자로, 아니면 인스턴스 유저에서 돌아가게 분기처리
             1. 프로젝트 찾고 
             2. 프로젝트 안에 인스턴스 유저찾고 
-            3. 그 안에 days에 Date.now push
+            3. 그 안에 days에 date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` 이렇게 [{ date: "20235", count: 1 }]  , count: $int++
         */
+        // days필드엔 `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` 이렇게 [{ date: "20235", count: 1 }] 이런식으로 
+
 
         // User.findByIdAndUpdate(userId, { "joinProjects.$[ele].state": true }, { arrayFilters: [{"ele._id": projectId}], new: true })
         // const test1 = await Project.findByIdAndUpdate(projectId, { "instanceUser.$[ele].rank": "asd" }, { arrayFilters: [{ "ele._id": user._id }], new: true }).exec(); 
-        const test1 = await Project.findOne({"instanceUser._id": user._id},).exec(); 
+        const test1 = await Project.findById(projectId).exec(); 
         console.log(test1)
 
         await Promise.all([

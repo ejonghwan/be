@@ -42,7 +42,7 @@ const ProjectSchema = new mongoose.Schema(
             rank: { type: String, required: true, default: 'a'},
             days: [{ 
                 data: { type: String }, 
-                count: { type: Number },
+                count: { type: Number, default: 0, },
             }], //days로 달력/잔디 같이씀
         },
         instanceUser: [{
@@ -50,7 +50,7 @@ const ProjectSchema = new mongoose.Schema(
             rank: { type: String, required: true, default: 'e'},
             days: [{ 
                 data: { type: String }, 
-                count: { type: Number },
+                count: { type: Number, default: 0, },
             }], //days로 달력/잔디 같이씀
         },],
         userCount: { type: Number, required: true, default: 0, },
