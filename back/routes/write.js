@@ -10,10 +10,6 @@ import User from '../models/users.js';
 const router = express.Router();
 
 
-// 221020 내일 이미지 글에 연결하고 친추초대 기능 만들어야됨
-
-
-
 //@ path    GET /api/write
 //@ doc     로드 인증글
 //@ access  private
@@ -47,6 +43,8 @@ router.post('/', async (req, res) => {
         // days필드엔 `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` 이렇게 [{ date: "20235", count: 1 }] 이런식으로 
 
         // db 구조
+        // _id: ''
+        // constructorUser: {}
         // instanceUser: [{
         //     _id: { type: mongoose.Schema.Types.ObjectId, required: true, index: true, ref: 'user'},
         //     rank: { type: String, required: true, default: 'e'},
@@ -55,21 +53,33 @@ router.post('/', async (req, res) => {
         //         count: { type: Number, default: 0, },
         //     }], //days로 달력/잔디 같이씀
         // },],
-        const nowDate = `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}`;
-        const userFindDate = await Project.findOne({ "instanceUser.days.date" : nowDate })
-        console.log(userFindDate)
+        const nowDate = `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`;
+
+        // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
+         const isUserDate = await Project.findOne(
+            { $and: [{ _id: projectId }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
+            ) 
+        console.log('파인드?', isUserDate)
+
+
+
+
 
         // 오늘 쓴 인증글이 있다면 count만 ++
-        if(userFindDate) {
-            await Project.findByIdAndUpdate(projectId, 
-                { $inc: { "instanceUser.$[ele].days": { $inc: { count: 1 } } } }, // 5/31 여기 ++안됨 해야됨
-                { arrayFilters: [{"ele._id": user._id}], new: true }
-            )
+        if(isUserDate) {
+            console.log('인증글 있음!')
+            await Project.updateOne(
+                { $and: [{ _id: projectId }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
+                { $inc: { count: 1 } },
+                { new: true }
+                
+            ).exec();
         }
         // 오늘 쓴 인증글이 없다면 date count 추가
-        if(!userFindDate) {
+        if(!isUserDate) {
+            console.log('인증글 없음!')
             await Project.findByIdAndUpdate(projectId, 
-                { $push: { "instanceUser.$[ele].days": { date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}`} } },
+                { $push: { "instanceUser.$[ele].days": { date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`} } },
                 { arrayFilters: [{"ele._id": user._id}], new: true }
             )
         }
