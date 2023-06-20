@@ -31,8 +31,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => { 
     try {
         const { user, projectId, title, content, writePublic } = req.body;
-        // const write = await new Write(req.body);
-        // write.save();
+        const write = await new Write(req.body);
+        write.save();
         /*
             5.30 인증글을 작성하면 
             0. 글쓴이가 프로젝트 리더이면 생성자로, 아니면 인스턴스 유저에서 돌아가게 분기처리
@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
          const isUserDate = await Project.findOne(
             { $and: [{ _id: projectId }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
             ) 
-        console.log('파인드?', isUserDate)
+        // console.log('파인드?', isUserDate)
 
 
 
@@ -68,14 +68,19 @@ router.post('/', async (req, res) => {
         // 오늘 쓴 인증글이 있다면 count만 ++
         if(isUserDate) {
             console.log('인증글 있음!')
-            await Project.updateOne(
-                { $and: [{ _id: projectId }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
-                { $inc: { count: 1 } },
-                { new: true }
-                
-            ).exec();
+            // query 찾으면 수정하자....일단 고 
+            for(let i = 0; i < isUserDate.instanceUser.length; i++) {
+                if(isUserDate.instanceUser[i]._id.equals(user._id) ) {
+                    for(let h = 0; h < isUserDate.instanceUser[i].days.length; h++) {
+                        if(isUserDate.instanceUser[i].days[h].date === nowDate) {
+                            isUserDate.instanceUser[i].days[h].count++
+                            await isUserDate.save();
+                        }
+                    }
+                }
+            }
         }
-        // 오늘 쓴 인증글이 없다면 date count 추가
+        // 오늘 쓴 인증글이 없다면 필드 date count 추가
         if(!isUserDate) {
             console.log('인증글 없음!')
             await Project.findByIdAndUpdate(projectId, 
@@ -85,12 +90,12 @@ router.post('/', async (req, res) => {
         }
 
         await Promise.all([
-            // User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
-            // Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true }),
-            // Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true })
+            User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
+            Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true }),
+            Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true })
         ])
-        // res.status(201).json(write)
-        res.status(201).end();
+        res.status(201).json(write)
+        // res.status(201).end();
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -128,6 +133,23 @@ router.patch('/edit/:writeId', async (req, res) => {
 router.delete('/', async (req, res) => {
     try {
         const { userId, writeId, projectId } = req.body;
+
+        // 글삭제 시 ins에 있던 해당 일 count삭제
+        const nowDate = `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`;
+        const isUserDate = await Project.findOne(
+            { $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
+            ) 
+        // console.log('파인드?', isUserDate)
+        for(let i = 0; i < isUserDate.instanceUser.length; i++) {
+            if(isUserDate.instanceUser[i]._id.equals(userId) ) {
+                for(let h = 0; h < isUserDate.instanceUser[i].days.length; h++) {
+                    if(isUserDate.instanceUser[i].days[h].date === nowDate) {
+                        isUserDate.instanceUser[i].days[h].count--
+                        await isUserDate.save();
+                    }
+                }
+            }
+        }
 
         await Promise.all([
             Write.findByIdAndRemove(writeId),
