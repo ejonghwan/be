@@ -15,13 +15,18 @@ const router = express.Router();
 //@ access  private
 router.get('/', async (req, res) => {
     try {
-        const write = await Write.find();
+        const { page } = req.query;
+        let p = parseInt(page);
+        const write = await Write.find().skip(p * 6).limit(6);
+        // await axios.get(`http://localhost:5000/api/blog/allBlog?page=${1}`)
+
+        
+        
         res.status(200).json(write)
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
     }
-
 })
 
 
@@ -53,49 +58,77 @@ router.post('/', async (req, res) => {
         //         count: { type: Number, default: 0, },
         //     }], //days로 달력/잔디 같이씀
         // },],
+
+       
         const nowDate = `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`;
+        const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": user._id } ] }, )
+        const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
+
+        // #### constructor ####
+        // 오늘 쓴 인증글이 있다면 count만 ++
+          if(isConstructor && isConstructorDate) {
+            console.log('c 인증글 있음!')
+            // query 찾으면 수정하자....일단 고 
+            for(let h = 0; h < isConstructorDate.constructorUser.days.length; h++) {
+                if(isConstructorDate.constructorUser.days[h].date === nowDate) {
+                    isConstructorDate.constructorUser.days[h].count++
+                    await isConstructorDate.save();
+                }
+            }
+        }
+        // 오늘 쓴 인증글이 없다면 필드 date count 추가
+        if(isConstructor && !isConstructorDate) {
+            console.log('c 인증글 없음!')
+            await Project.findByIdAndUpdate(projectId, 
+                { $push: { "constructorUser.days": { date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`} } },
+                { new: true }
+            )
+        }
+        // #### constructor ####
+
+
 
         // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
-         const isUserDate = await Project.findOne(
+        const isInstance = await Project.findOne(
             { $and: [{ _id: projectId }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
             ) 
-        // console.log('파인드?', isUserDate)
 
-
-
-
-
+        // #### instance ####
         // 오늘 쓴 인증글이 있다면 count만 ++
-        if(isUserDate) {
+        if(!isConstructor && isInstance) {
             console.log('인증글 있음!')
             // query 찾으면 수정하자....일단 고 
-            for(let i = 0; i < isUserDate.instanceUser.length; i++) {
-                if(isUserDate.instanceUser[i]._id.equals(user._id) ) {
-                    for(let h = 0; h < isUserDate.instanceUser[i].days.length; h++) {
-                        if(isUserDate.instanceUser[i].days[h].date === nowDate) {
-                            isUserDate.instanceUser[i].days[h].count++
-                            await isUserDate.save();
+            for(let i = 0; i < isInstance.instanceUser.length; i++) {
+                if(isInstance.instanceUser[i]._id.equals(user._id) ) {
+                    for(let h = 0; h < isInstance.instanceUser[i].days.length; h++) {
+                        if(isInstance.instanceUser[i].days[h].date === nowDate) {
+                            isInstance.instanceUser[i].days[h].count++
+                            await isInstance.save();
                         }
                     }
                 }
             }
         }
         // 오늘 쓴 인증글이 없다면 필드 date count 추가
-        if(!isUserDate) {
+        if(!isConstructor && !isInstance) {
             console.log('인증글 없음!')
             await Project.findByIdAndUpdate(projectId, 
                 { $push: { "instanceUser.$[ele].days": { date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`} } },
                 { arrayFilters: [{"ele._id": user._id}], new: true }
             )
         }
+        // #### instance ####
+        
 
-        await Promise.all([
-            User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
-            Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true }),
-            Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true })
-        ])
-        res.status(201).json(write)
-        // res.status(201).end();
+        // await Promise.all([
+        //     User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
+        //     Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true }),
+        //     Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true })
+        // ])
+        // res.status(201).json(write)
+        res.status(201).end()
+
+        
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -117,7 +150,6 @@ router.patch('/edit/:writeId', async (req, res) => {
         if(writePublic) putData.writePublic = writePublic;
 
         const write = await Write.findByIdAndUpdate(writeId, putData, { new: true });
-
         res.status(201).json(write);
 
     } catch (err) {
@@ -136,16 +168,16 @@ router.delete('/', async (req, res) => {
 
         // 글삭제 시 ins에 있던 해당 일 count삭제
         const nowDate = `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`;
-        const isUserDate = await Project.findOne(
+        const isInstance = await Project.findOne(
             { $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
             ) 
-        // console.log('파인드?', isUserDate)
-        for(let i = 0; i < isUserDate.instanceUser.length; i++) {
-            if(isUserDate.instanceUser[i]._id.equals(userId) ) {
-                for(let h = 0; h < isUserDate.instanceUser[i].days.length; h++) {
-                    if(isUserDate.instanceUser[i].days[h].date === nowDate) {
-                        isUserDate.instanceUser[i].days[h].count--
-                        await isUserDate.save();
+        // console.log('파인드?', isInstance)
+        for(let i = 0; i < isInstance.instanceUser.length; i++) {
+            if(isInstance.instanceUser[i]._id.equals(userId) ) {
+                for(let h = 0; h < isInstance.instanceUser[i].days.length; h++) {
+                    if(isInstance.instanceUser[i].days[h].date === nowDate) {
+                        isInstance.instanceUser[i].days[h].count--
+                        await isInstance.save();
                     }
                 }
             }
