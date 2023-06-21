@@ -59,12 +59,13 @@ router.post('/', async (req, res) => {
         //     }], //days로 달력/잔디 같이씀
         // },],
 
-       
-        const nowDate = `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`;
+        const date = new Date();
+        const nowDate = `${date.getFullYear()}` + `${date.getMonth() + 1}` + `${date.getDate()}`;
         const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": user._id } ] }, )
         const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
+    
 
-        // #### constructor ####
+        // #### constructor ####  - 230621 테스트완료 (생성자 + 인스유저에 모두 있을 경우도 완료)
         // 오늘 쓴 인증글이 있다면 count만 ++
           if(isConstructor && isConstructorDate) {
             console.log('c 인증글 있음!')
@@ -80,18 +81,20 @@ router.post('/', async (req, res) => {
         if(isConstructor && !isConstructorDate) {
             console.log('c 인증글 없음!')
             await Project.findByIdAndUpdate(projectId, 
-                { $push: { "constructorUser.days": { date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`} } },
+                { $push: { "constructorUser.days": { date: nowDate} } },
                 { new: true }
             )
         }
         // #### constructor ####
-
+   
 
 
         // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
         const isInstance = await Project.findOne(
             { $and: [{ _id: projectId }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
             ) 
+
+        console.log('isInstance??', isInstance)
 
         // #### instance ####
         // 오늘 쓴 인증글이 있다면 count만 ++
@@ -113,20 +116,19 @@ router.post('/', async (req, res) => {
         if(!isConstructor && !isInstance) {
             console.log('인증글 없음!')
             await Project.findByIdAndUpdate(projectId, 
-                { $push: { "instanceUser.$[ele].days": { date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`} } },
+                { $push: { "instanceUser.$[ele].days": { date: nowDate} } },
                 { arrayFilters: [{"ele._id": user._id}], new: true }
             )
         }
         // #### instance ####
         
 
-        // await Promise.all([
-        //     User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
-        //     Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true }),
-        //     Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true })
-        // ])
-        // res.status(201).json(write)
-        res.status(201).end()
+        await Promise.all([
+            User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
+            Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true }),
+            Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true })
+        ])
+        res.status(201).json(write);
 
         
     } catch (err) {
@@ -165,23 +167,63 @@ router.patch('/edit/:writeId', async (req, res) => {
 router.delete('/', async (req, res) => {
     try {
         const { userId, writeId, projectId } = req.body;
-
+        const write = await Write.findById(writeId)
+        const deleteWriteDate = new Date(write.createdAt)
+       
         // 글삭제 시 ins에 있던 해당 일 count삭제
-        const nowDate = `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` + `${new Date().getDate()}`;
+        // 230621 생각해보니 현재 날짜가 아니라 작성한 날짜를 찾아야함.
+        const nowDate = `${deleteWriteDate.getFullYear()}` + `${deleteWriteDate.getMonth() + 1}` + `${deleteWriteDate.getDate()}`;
+
+        const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId } ] }, )
+        const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
+    
+        // 생성 시 0, 추가할때마다 +1
+        // 삭제 시 카운트가 0인경우 -1로.. -1이면 추가했던걸 삭제했다는 뜻
+
+        // #### constructor ####  - 
+        // 삭제할땐 글 카운트 -- 
+          if(isConstructor && isConstructorDate) {
+            console.log('c 인증글 있음!')
+            // query 찾으면 수정하자....일단 고 
+            for(let h = 0; h < isConstructorDate.constructorUser.days.length; h++) {
+                if(isConstructorDate.constructorUser.days[h].date === nowDate) {
+                    isConstructorDate.constructorUser.days[h].count--
+                    await isConstructorDate.save();
+                }
+            }
+        }
+
+        
+        // #### constructor ####
+   
+
+
+
+        // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
         const isInstance = await Project.findOne(
             { $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
             ) 
-        // console.log('파인드?', isInstance)
-        for(let i = 0; i < isInstance.instanceUser.length; i++) {
-            if(isInstance.instanceUser[i]._id.equals(userId) ) {
-                for(let h = 0; h < isInstance.instanceUser[i].days.length; h++) {
-                    if(isInstance.instanceUser[i].days[h].date === nowDate) {
-                        isInstance.instanceUser[i].days[h].count--
-                        await isInstance.save();
+
+            
+        // console.log('isInstance??', isInstance)
+
+        // #### instance ####
+        // 인스턴스 유저도 -- 
+        if(!isConstructor && isInstance) {
+            console.log('인증글 있음!')
+            // query 찾으면 수정하자....일단 고 
+            for(let i = 0; i < isInstance.instanceUser.length; i++) {
+                if(isInstance.instanceUser[i]._id.equals(userId) ) {
+                    for(let h = 0; h < isInstance.instanceUser[i].days.length; h++) {
+                        if(isInstance.instanceUser[i].days[h].date === nowDate) {
+                            isInstance.instanceUser[i].days[h].count--
+                            await isInstance.save();
+                        }
                     }
                 }
             }
         }
+        // #### instance ####
 
         await Promise.all([
             Write.findByIdAndRemove(writeId),
