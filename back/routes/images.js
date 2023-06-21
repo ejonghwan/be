@@ -41,7 +41,7 @@ router.post('/:path/:id', auth, upload.single("image"), async (req, res) => {
         image.save();
 
         if(path && path === 'userProfile') { await User.findByIdAndUpdate(id, { profileImage: { _id: image._id, key: image.key } }) } 
-        console.log(await User.findById(id))
+        // console.log(await User.findById(id))
         if(path && path === 'project') { await Project.findByIdAndUpdate(id, { projectImages: { _id: image._id, key: image.key } }) } 
         if(path && path === 'write') { await Write.findByIdAndUpdate(id, { writeImages: { _id: image._id, key: image.key } }) } 
         
