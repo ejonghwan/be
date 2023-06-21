@@ -4,10 +4,13 @@ import cors from 'cors'
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser';
+import ejs from "ejs";
+import path from 'path';
 
 
 
 // router
+import templateRoutes from './routes/template.js';
 import imagesRoutes from './routes/images.js';
 import usersRoutes from './routes/users.js';
 import emailRoutes from './routes/email.js';
@@ -24,6 +27,7 @@ import searchRoutes from './routes/search.js';
 
 const app = express();
 const PORT = 5000;
+const __dirname = path.resolve();
 
 //http://localhost:5000/uploads/ae791f20-ca35-4e95-919b-655d94791127.jpeg 이거 접근됨...이거 없음 접근안됨
 app.use('/uploads', express.static('uploads')) 
@@ -34,6 +38,8 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 dotenv.config()
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 
 
@@ -42,6 +48,7 @@ dotenv.config()
 mongoose.connect(process.env.MONGO_URI, {}).then(() => {
     try {
         console.log('mongodb connect');
+        app.use('/api/temp', templateRoutes);
         app.use('/api/images', imagesRoutes);
         app.use('/api/users', usersRoutes);
         app.use('/api/auth', emailRoutes);

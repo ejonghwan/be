@@ -197,15 +197,8 @@ router.delete('/', async (req, res) => {
         // #### constructor ####
    
 
-
-
         // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
-        const isInstance = await Project.findOne(
-            { $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
-            ) 
-
-            
-        // console.log('isInstance??', isInstance)
+        const isInstance = await Project.findOne({ $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }) 
 
         // #### instance ####
         // 인스턴스 유저도 -- 
