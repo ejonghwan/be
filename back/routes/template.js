@@ -27,24 +27,47 @@ router.get('/docs', async (req, res) => {
                     api : '/api/project', 
                     desc: '원하는 값만큼 로드',
                     queryString:'page={number}', 
-                    header: ['none', 'none2', 'none3'],
-                    body: ['none', 'none2'], 
+                    header: `
+none
+                    `,
+                    body: `
+
+ none
+
+                    `, 
                     success: '201: OK',
                     frontFailure: '400: Bed Request',
                     backFailure: '500: Bed Respose',
                 },
                 { 
-                    method : 'POST', 
+                    method : 'GET', 
                     mode: 'public', 
                     api : '/api/project', 
-                    desc: '프로젝트 생성',
-                    queryString:'none', 
-                    header: ['none', 'none2', 'none3'],
-                    body: ['none', 'none2'], 
+                    desc: '원하는 값만큼 로드',
+                    queryString:'page={number}', 
+                    header: `
+# X-access-token : 인증토큰입니다. 암호화하여 보내야합니다.
+# X-refresh-token : 인증토큰 만료 시 발급되는 리프레시 토큰입니다. (web cookie에 저장)
+                    `,
+                    body: `
+{
+    "constructorUser": { "_id": "6471f38fd20357b64ec124c9" }, 
+    "instanceUser":[], 
+    "title":"잔디 테스트", 
+    "content":"test project content", 
+    "projectPublic":"false",
+    "categorys": [
+        {"categoryName": "테테11"},
+        {"categoryName": "테테22"}
+    ],
+    "joinUser": [{ "_id": "640976509e564ae2dc71e4d8", "state": true }, { "_id": "636afeff7d63060fe3b583af", "state": false }]
+}
+                    `, 
                     success: '201: OK',
                     frontFailure: '400: Bed Request',
                     backFailure: '500: Bed Respose',
                 },
+               
                
             ] }
         ]

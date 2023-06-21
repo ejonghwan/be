@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- highlight -->
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs2015.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
     <title>Document</title>
 
     <style>
@@ -56,11 +66,21 @@
                         </li>
                         <li>
                             <span>header</span>
-                            <span><%= data[i].items[f].header %></span>
+            
+<div class="code">
+<pre>
+<code class="markdown"><%= data[i].items[f].header %></code>
+</pre>
+</div>
                         </li>
                         <li>
                             <span>body</span>
-                            <span><%= data[i].items[f].body %></span>
+<div class="code">
+<pre>
+<code class="json"><%= data[i].items[f].body %></code>
+</pre>
+</div>
+                            <!-- <span><%= data[i].items[f].body %></span> -->
                         </li>
                         <li>
                             <span><%= data[i].items[f].success %></span>
@@ -84,5 +104,7 @@
     <footer>
         <div class="b_inner"> hoho footer</div>
     </footer>
+
+
 </body>
 </html>
