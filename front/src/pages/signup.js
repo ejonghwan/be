@@ -128,9 +128,7 @@ useEffect(() => {
             // 이미지모델에 등록되면 어디에서 요청했는지에 따라 그 아이디값을 각 모델에 보냄
             // 이미지는 default 기본이미지 넣고 나중에 개인정보 수정에서 수정하는걸로 
            
-
             const user = await signupUser(singupData)
-
 
             if(statusCode(user.status, 2)) {
                 alert('회원 가입이 완료되었습니다. 기존 페이지는 닫아주세요')
@@ -150,7 +148,6 @@ useEffect(() => {
             navigate(-1)
         }
         cookies.remove('signup')
-        // console.log('ggggggggg', gender)
     }, [])
 
     useEffect(() => { //비번 강화 체크 
