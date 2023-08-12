@@ -1,9 +1,7 @@
 import React, { Fragment } from 'react'
 
 
-const CalenderReview = props => {
-
-    const { date } = props;
+const CalenderReview = ({ date }) => {
 
 
     return (
