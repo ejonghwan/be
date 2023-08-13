@@ -1,15 +1,18 @@
-import React from 'react';
-import Input from '../common/form/Input';
+import React, { useReducer } from 'react';
+import './Project.css'
+import ProjectItem from './ProjectItem';
 
-const Project = ({ type }) => {
+
+
+const Project = () => {
+
+    // const {  } = useReducer(project);
+    const project = [1,2,3]
     return (
-        <div>
-            {type === 'create' && (
-                <div>
-                    프로젝트 생성
-                    <button>+</button>
-                </div>
-            )}
+        <div className='project_Wrap'>
+           {project.map((item, idx) => {
+            return <ProjectItem />
+           })}
         </div>
     );
 };

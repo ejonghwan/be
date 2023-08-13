@@ -15,8 +15,7 @@ const Home = () => {
         <div>
             Home
            
-           <Project type={"create"}/>
-           <Project type={""}/>
+           <Project />
             
 
             <br />
