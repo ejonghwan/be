@@ -5,6 +5,7 @@ import ImageUploadForm from '../components/image/ImageUploadForm.js'
 import Auth from '../components/user/Auth.js'
 import LoginForm from '../components/user/LoginForm.js'
 import { Calender } from '../components/calender/Calender.js'
+import Project from '../components/project/Project.js';
 
 
 const Home = () => {
@@ -13,8 +14,9 @@ const Home = () => {
     return (
         <div>
             Home
-            
-
+           
+           <Project type={"create"}/>
+           <Project type={""}/>
             
 
             <br />

@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Layout from '../components/common/Layout.js'
 
-import Home from './home.js'
+import Main from './main.js'
 import About from './about.js'
 import Profile from './profile.js'
 import Signup from './signup.js'
@@ -22,7 +22,7 @@ const RoutesPage = () => {
                 {/* <ImageUploadForm /> */}
                 {/* <Context_test /> */}
                 <Routes>
-                    <Route path='/' element={<Home />}></Route>
+                    <Route path='/' element={<Main />}></Route>
                     <Route path='/about' element={<About />}></Route>
                     <Route path='/profile' element={<Profile />}></Route>
                     <Route path='/signup' element={<Signup />}></Route>

@@ -1,14 +1,20 @@
 :root[data-color=dark] {
     --main-bg-color: #0d1117;
     --header-bg-color: #161b22;
+
     --text-color1: rgb(194, 194, 194);
+
+    --bg-box-color1: #ddd; 
 }
 
 
 :root[data-color=light] {
     --main-bg-color: #fff;
     --header-bg-color: #fafafa;
+    
     --text-color1: #555;
+    
+    --bg-box-color1: #666; 
 
 }
 
