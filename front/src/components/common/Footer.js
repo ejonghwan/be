@@ -1,11 +1,10 @@
-import React from 'react';
 import './Footer.css'
 
 const Footer = () => {
     return (
         <footer id='footer'>
             <ul>
-                <li>hoho</li>
+                <li>footer</li>
             </ul>
         </footer>
     );

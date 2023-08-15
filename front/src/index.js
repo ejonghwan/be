@@ -8,8 +8,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ImageProvider } from './context/ImageContext.js'
 import { UserProvider, UserContext } from './context/UserContext.js'
-import RoutesPage from './pages/index.js'
 
+// css
+import './assets/css/reset.css'
+import './assets/css/global.css'
 
 import 'swiper/css';
 import 'swiper/css/virtual';

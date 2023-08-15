@@ -1,21 +1,31 @@
+@charset "utf-8";
+
+
+:root[data-color=light] {
+    --main-bg-color: #fff;
+    --header-bg-color: #bebebe;
+    
+    --text-color1: #555;
+    
+    --bg-box-color1: rgb(240, 240, 240); 
+    --bg-box-color2: #ddd; 
+    --bg-box-color3: #efefef;; 
+
+    --line-color1: #ddd;
+
+}
+
+
 :root[data-color=dark] {
     --main-bg-color: #0d1117;
     --header-bg-color: #161b22;
 
     --text-color1: rgb(194, 194, 194);
 
-    --bg-box-color1: #ddd; 
-}
+    --bg-box-color1: rgb(240, 240, 240); 
+    --bg-box-color2: #ddd; 
 
-
-:root[data-color=light] {
-    --main-bg-color: #fff;
-    --header-bg-color: #fafafa;
-    
-    --text-color1: #555;
-    
-    --bg-box-color1: #666; 
-
+    --line-color1: #ddd;
 }
 
 
@@ -24,11 +34,9 @@ html,
 body {
     width: 100%;
     height: 100%;
-    color: var(--text-color1);
-    background-color: var(--main-bg-color);
 }
 
-#root,
+#root, 
 .App {
     width: 100%;
     height: 100%;
@@ -55,22 +63,47 @@ body {
 }
 
 
+/* margin */
+.gapt_5 { margin-top: 5px; }
+.gapt_10 { margin-top: 10px; }
+.gapt_15 { margin-top: 15px; }
+.gapt_20 { margin-top: 20px; }
+.gapt_30 { margin-top: 30px; }
+.gapt_40 { margin-top: 40px; }
+.gapt_50 { margin-top: 50px; }
+.gap_5 { margin-bottom: 5px; }
+.gap_10 { margin-bottom: 10px; }
+.gap_15 { margin-bottom: 15px; }
+.gap_20 { margin-bottom: 20px; }
+.gap_30 { margin-bottom: 30px; }
+.gap_40 { margin-bottom: 40px; }
+.gap_50 { margin-bottom: 50px; }
 
-.wrap {
-    width: 100%;
-    padding: 0 20px;
+
+body {
+    font-family: "SpoqaHanSans";
+    font-weight: 400;
+    color: var(--text-color1);
+    background-color: var(--main-bg-color);
 }
 
-@media screen and (min-width: 760px) {
-    .wrap {
+
+.b_conts {
+    width: 960px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 30px 0;
+
+}
+
+
+@media screen and (max-width: 960px) {
+    .b_conts {
         width: 100%;
-        margin: 0 auto;
+        padding: 30px 20px;
     }
 }
 
-@media screen and (min-width: 960px) {
-    .wrap {
-        width: 1100px;
-        margin: 0 auto;
-    }
+@media screen and (max-width: 760px) {
+    .b_conts {}
 }

@@ -1,15 +1,22 @@
-import React, { Fragment, forwardRef } from 'react'
+import './Input.css';
 
-const Input = forwardRef((props, ref) => {
 
-    const { classN, id, type, required, placeholder, name, value, onChange, disabled, checked } = props;
-
-    // console.log(props)
+const Input = ({ id, className, type, required, placeholder, name, value, onChange, disabled, checked }) => {
     return (
-        <Fragment>
-            <input id={id} type={type} required={required} placeholder={placeholder} className={classN} value={value} name={name} onChange={onChange} disabled={disabled} checked={checked} ref={ref}/>
-        </Fragment>
-    )
-})
+        <input 
+            id={id} 
+            type={type}
+            required={required} 
+            placeholder={placeholder} 
+            className={className} 
+            value={value} 
+            name={name} 
+            onChange={onChange} 
+            disabled={disabled} 
+            checked={checked}
+        />
+    );
+};
 
 export default Input;
+

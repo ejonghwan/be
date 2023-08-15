@@ -1,0 +1,20 @@
+[class*=button_] {
+    display: inline-block;
+    position: relative;
+    padding: 15px 48px;
+    border: 1px solid transparent;
+    border-radius: 56px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 18px;
+    white-space: nowrap;
+    color: var(--text-color1);
+    background-color: var(--bg-box-color1);
+}
+
+
+.button_type1 {
+    color: var(--text-color1)
+}

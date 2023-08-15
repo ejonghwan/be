@@ -1,15 +1,18 @@
-import React, { Fragment } from 'react'
+import './Button.css';
 
+const Button = ({ id, className, type, disabled, onClick, children }) => {
 
-
-
-export const Button = props => {
-    const { classN, id, type, placeholder, value, onChange, disabled, onClick } = props;
-
-    // console.log(props)
     return (
-        <Fragment>
-            <input id={id} type={type} className={classN} value={value} onChange={onChange} onClick={onClick} disabled={disabled} />
-        </Fragment>
+        <button 
+            id={id} 
+            type={type} 
+            className={className} 
+            onClick={onClick} 
+            disabled={disabled}
+            >
+            {children}
+        </button>
     )
 }
+
+export default Button;

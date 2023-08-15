@@ -1,12 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext } from 'react';
+import UserRequest from '../../reducers/UserRequest.js';
+import { UserContext } from '../../context/UserContext.js';
+import { Link } from 'react-router-dom'
+import './LogoutForm.css';
+import Button from '../common/form/Button.js';
 
-// components
-// import { logoutUser } from '../../reducers/UserRequest.js'
-import UserRequest from '../../reducers/UserRequest.js'
 
-//context 
-import { UserContext } from '../../context/UserContext.js'
-import axios from 'axios';
 
 const LogoutForm = () => {
     const { logoutUser } = UserRequest();
@@ -19,14 +18,14 @@ const LogoutForm = () => {
       } catch(err) {
         console.err(err)
       }
-    }
-
+    };
 
 
     return (
-        <div>
-            <span>name: {state.user && state.user.name} </span>
-            <button onClick={handleLogout}>logout</button>
+        <div className='logout_form'>
+            <span>{state.user?.name} 님</span>
+            <div><Link to="/profile">프로필</Link></div>
+            <Button onClick={handleLogout}>로그아웃</Button>
         </div>
     );
 };

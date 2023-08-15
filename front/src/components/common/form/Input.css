@@ -1,0 +1,12 @@
+[class*=input_] {
+    width: 100%;
+    border: none;
+    background-color: var(--bg-box-color3);
+    padding: 10px 20px;
+    border-radius: 14px;
+    box-sizing: border-box;
+}
+
+.input_type1 {
+    
+}

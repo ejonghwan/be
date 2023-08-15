@@ -22,12 +22,7 @@ const Home = () => {
             <br />
             <br />
             <ImageUploadForm />
-            <Auth />
-            <br />
-            <br />
-            <br />
-            longinform
-            <LoginForm />
+          
             <br />
             <br />
             <Calender />

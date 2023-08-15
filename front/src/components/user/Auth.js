@@ -1,22 +1,13 @@
 import React, { useState, useCallback, useEffect, Fragment, useContext, useMemo } from 'react';
 import _debounce from 'lodash.debounce'
-
-
-// module
-import { useInput } from '../common/hooks/index.js'
-
-// components
-import Input from '../common/form/Input.js'
-import Label from '../common/form/Label.js'
-import Timer from '../../components/common/utils/Timer.js'
-
-// context
-import { UserContext } from '../../context/UserContext.js'
-// import { emailAuth } from '../../reducers/UserRequest.js'
-import UserRequest from '../../reducers/UserRequest.js'
-
-// util
-import { statusCode } from '../../utils/utils.js'
+import { useInput } from '../common/hooks/index'
+import Input from '../common/form/Input'
+import Label from '../common/form/Label'
+import Button from '../common/form/Button'
+import { UserContext } from '../../context/UserContext'
+// import { emailAuth } from '../../reducers/UserRequest'
+import UserRequest from '../../reducers/UserRequest'
+import { statusCode } from '../../utils/utils'
 
 
 const Auth = () => {
@@ -59,6 +50,7 @@ const Auth = () => {
                     <Label htmlFor="email" content="email" classN="label_t1"/>
                     <Input  
                         id="email" 
+                        className={'input_type1'}
                         type="email" 
                         required={true} 
                         placeholder="email" 
@@ -69,19 +61,11 @@ const Auth = () => {
                         onChange={handleEmail} 
                     />
                 </div>
-                <button>인증</button>
+                <Button className={"button_type1"}>인증메일 보내기</Button>
             </form>
             ) : (
             <div>
                 메일이 발송되었습니다<br />
-                {/* 타이머 삭제 */}
-                {/* {authState && <Timer  
-                    endSecond={180} 
-                    startingPoint={180} 
-                    countingName={''} 
-                    endMessage={'인증시간이 만료되었습니다'}
-                    callback={() => console.log('timer end')}
-                />} */}
             </div>
         )}
          {state.authNumberErrorMessage && <span>{state.authNumberErrorMessage}</span>}<br />

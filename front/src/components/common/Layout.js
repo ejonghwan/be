@@ -9,9 +9,7 @@ const Layout = ({ children }) => {
     return (
         <div id="main_wrap">
             <Header />
-            <Main>
-                {children}
-            </Main>
+            <Main>{children}</Main>
             <Footer />
         </div>
     );

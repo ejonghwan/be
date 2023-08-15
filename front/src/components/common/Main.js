@@ -4,7 +4,7 @@ const Main = ({children}) => {
 
     return (
         <main id="contents">
-            <div className='wrap'>
+            <div className='b_conts'>
                 {children}
             </div>
         </main>

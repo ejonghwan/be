@@ -6,9 +6,6 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// css
-import './assets/css/reset.css'
-import './assets/css/global.css'
 
 import RoutesPage from './pages/index.js'
 

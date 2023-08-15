@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import './Header.css'
 
@@ -34,22 +34,25 @@ const Header = () => {
     //   return '';
     // };
 
-
     
 
 
     return (
         <header id='header'>
+          <div className='b_conts'>
             <nav>
-                <ul>
-                    <li><Link to="/">home</Link></li>
-                    <li><Link to="/about">about</Link></li>
-                    <li><Link to="/profile">profile</Link></li>
-                    <li><Link to="/signup">signup</Link></li>
-                    <li><Link to="/style">style</Link></li>
+                <ul className='header_nav'>
+                    <li><Link to="/">Hobbyist</Link></li>
+                    <li><Link to="/about">내 프로젝트</Link></li>
+                    <li><Link to="/profile">프로필</Link></li>
+                    <li><Link to="/login">로그인</Link></li>
+                    <li><Link to="/signup">회원가입</Link></li>
+                    {/* <li><Link to="/signup">signup</Link></li> */}
+                    {/* <li><Link to="/style">style</Link></li> */}
                 </ul>
             </nav>
-            {state.isLogged && <LogoutForm />}
+            {state?.isLogged && <LogoutForm />}
+            </div>
         </header>
     );
 };
