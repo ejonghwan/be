@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const Main = ({children}) => {
+const Main = ({ children }) => {
 
     return (
         <main id="contents">

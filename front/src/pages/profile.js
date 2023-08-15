@@ -9,9 +9,10 @@ import FindIdQuestion from '../components/user/FindIdQuestion.js'
 import Secession from '../components/user/Secession.js'
 
 
-const Profile = () => {
+const Profile = ({ page }) => {
     return (
         <div>
+            <h2>{page}</h2>
             UserProfile
             <UserProfile />
             <br />

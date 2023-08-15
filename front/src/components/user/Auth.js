@@ -22,6 +22,7 @@ const Auth = () => {
         e.preventDefault();
         authMail();
     }
+
     const authMail = useMemo(() => _debounce(async e => {
         try {
             dispatch({ type: "LOADING", loadingMessage: "인증메일 보내는 중.." })
@@ -47,10 +48,10 @@ const Auth = () => {
             {!authState ? (
                 <form onSubmit={handleAuthMailSubmit}>
                 <div>
-                    <Label htmlFor="email" content="email" classN="label_t1"/>
+                    <Label htmlFor="email" content="회원가입 하시려면 메일 인증해주세요." classN="label_t1"/>
                     <Input  
                         id="email" 
-                        className={'input_type1'}
+                        className={'input_type1 gapt_10'}
                         type="email" 
                         required={true} 
                         placeholder="email" 
@@ -61,14 +62,14 @@ const Auth = () => {
                         onChange={handleEmail} 
                     />
                 </div>
-                <Button className={"button_type1"}>인증메일 보내기</Button>
+                <div className="align_c">
+                    <Button className={"button_type1 gapt_30"}>인증메일 보내기</Button>
+                </div>
             </form>
             ) : (
-            <div>
-                메일이 발송되었습니다<br />
-            </div>
+            <p>메일이 발송되었습니다</p>
         )}
-         {state.authNumberErrorMessage && <span>{state.authNumberErrorMessage}</span>}<br />
+         {state.authNumberErrorMessage && <span>{state.authNumberErrorMessage}</span>}
         </Fragment>
     )
 }

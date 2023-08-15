@@ -65,19 +65,14 @@ const App = () => {
     userLoad()
     userEmailLoad()
     dispatch({type: "ERROR_LOADING_CLEAR"})
-    // console.log(state.isLogged)
     
   }, [])
 
 
-  useEffect(() => {
-    // console.log(state)
-  }, [state])
  
   return (
       <div className="App"> 
         <RoutesPage />
-        {/* <div className="hoho" ref={html}>{}</div> */}
       </div>
   );
 }

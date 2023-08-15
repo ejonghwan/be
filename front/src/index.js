@@ -10,6 +10,7 @@ import { ImageProvider } from './context/ImageContext.js'
 import { UserProvider, UserContext } from './context/UserContext.js'
 
 // css
+import './assets/css/fonts.css'
 import './assets/css/reset.css'
 import './assets/css/global.css'
 
