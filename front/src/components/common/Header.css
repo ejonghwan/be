@@ -1,7 +1,7 @@
 
 #header {
     background-color: var(--header-bg-color); 
-    color: var(--text-color1); 
+    color: var(--text-color2); 
 }
 
 #header .header_nav {
@@ -10,12 +10,16 @@
 }
 
 #header .header_nav > li:first-child {
-    flex: 0 0 auto; 
     margin-right: auto;
+    padding-left: 0;
 
+}
+
+#header .header_nav > li:last-child {
+    padding-right: 0;
 }
 
 #header .header_nav > li {
     flex: 0 0 auto; 
-    margin-right: 5px; 
+    padding: 0 15px; 
 }

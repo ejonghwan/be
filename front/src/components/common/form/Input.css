@@ -1,10 +1,20 @@
-[class*=input_] {
+[class*=input_type] {
     width: 100%;
     border: none;
+    color: var(--text-color1);
     background-color: var(--bg-box-color3);
     padding: 15px 20px;
     border-radius: 18px;
     box-sizing: border-box;
+}
+
+.form_wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin: 0 auto;
+    width: 60vw;
 }
 
 .input_type1 {

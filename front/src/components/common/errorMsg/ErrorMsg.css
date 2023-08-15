@@ -1,0 +1,6 @@
+[class*=error_type] {
+    font-size: 1.6rem;
+    color: var(--text-error-color);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

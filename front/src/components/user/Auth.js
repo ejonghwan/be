@@ -63,7 +63,7 @@ const Auth = () => {
                     />
                 </div>
                 <div className="align_c">
-                    <Button className={"button_type1 gapt_30"}>인증메일 보내기</Button>
+                    <Button className={"button_type2 gapt_30"}>인증메일 보내기</Button>
                 </div>
             </form>
             ) : (

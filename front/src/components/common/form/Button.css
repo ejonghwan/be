@@ -1,4 +1,4 @@
-[class*=button_] {
+[class*=button_type] {
     display: inline-block;
     position: relative;
     padding: 15px 48px;
@@ -16,5 +16,11 @@
 
 
 .button_type1 {
-    color: var(--text-color1)
+    color: var(--text-color1);
+    background-color: var(--bg-box-color1);
+}
+
+.button_type2 {
+    color: var(--text-color-white);
+    background-color: var(--point-color);
 }

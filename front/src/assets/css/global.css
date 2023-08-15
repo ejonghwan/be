@@ -2,10 +2,14 @@
 
 
 :root[data-color=light] {
+
+    --point-color: #509af9;
     --main-bg-color: #fff;
-    --header-bg-color: #bebebe;
+    --header-bg-color: #efefef;
     
+    --text-color-white: #fff;
     --text-color1: #555;
+    --text-error-color: red;
     
     --bg-box-color1: rgb(240, 240, 240); 
     --bg-box-color2: #ddd; 
@@ -79,12 +83,19 @@ body {
 .gap_40 { margin-bottom: 40px; }
 .gap_50 { margin-bottom: 50px; }
 
-
+html {
+    font-size: 10px;
+}
 body {
     font-family: "SpoqaHanSans";
     font-weight: 400;
+    font-size: 1.4rem;
     color: var(--text-color1);
     background-color: var(--main-bg-color);
+}
+
+h1 {
+    font-weight: 500;
 }
 
 h2 {

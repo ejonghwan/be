@@ -1,19 +1,16 @@
-import React, { useReducer } from 'react';
-import './Project.css'
+import React, { Fragment } from 'react';
 import ProjectItem from './ProjectItem';
+
+import './Project.css'
 
 
 
 const Project = () => {
 
-    // const {  } = useReducer(project);
-    const project = [1,2,3]
     return (
-        <div className='project_Wrap'>
-           {project.map((item, idx) => {
-            return <ProjectItem />
-           })}
-        </div>
+        <Fragment>
+            <ProjectItem type={"create"}/>
+        </Fragment>
     );
 };
 

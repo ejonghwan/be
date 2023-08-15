@@ -6,7 +6,7 @@ const signupPage = ({ page }) => {
     return (
         <div>
             <h2>{page}</h2>
-            <div className='signup_page'>
+            <div className='form_wrap'>
                 <Auth />
             </div>
         </div>

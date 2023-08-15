@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom'
+import LoginUserInfo from '../user/LoginUserInfo'
 import './Header.css'
 
 // componenets
@@ -42,16 +43,17 @@ const Header = () => {
           <div className='b_conts'>
             <nav>
                 <ul className='header_nav'>
-                    <li><Link to="/">Hobbyist</Link></li>
+                    <li><Link to="/"><h1>HOBBYIST</h1></Link></li>
                     <li><Link to="/about">내 프로젝트</Link></li>
                     <li><Link to="/profile">프로필</Link></li>
-                    <li><Link to="/login">로그인</Link></li>
-                    <li><Link to="/signup">회원가입</Link></li>
+                    {!state?.isLogged && <li><Link to="/login">로그인</Link></li>}
+                    {!state?.isLogged && <li><Link to="/signup">회원가입</Link></li>}
                     {/* <li><Link to="/signup">signup</Link></li> */}
                     {/* <li><Link to="/style">style</Link></li> */}
                 </ul>
             </nav>
             {state?.isLogged && <LogoutForm />}
+            {state?.isLogged && <LoginUserInfo />}
             </div>
         </header>
     );

@@ -1,32 +1,28 @@
-import React, { useEffect } from 'react';
 
-// components
+
 import ImageUploadForm from '../components/image/ImageUploadForm.js'
-import Auth from '../components/user/Auth.js'
-import LoginForm from '../components/user/LoginForm.js'
 import { Calender } from '../components/calender/Calender.js'
 import Project from '../components/project/Project.js';
-
+import './home.css';
+import { Fragment } from 'react';
 
 const Home = () => {
 
 
     return (
-        <div>
-            Home
-           
-           <Project />
-            
-
-            <br />
-            <br />
+        <Fragment>
+            <ul className='project_wrap'>
+                {Array(4).fill().map((project, idx) => {
+                    return (
+                        <li key={idx}><Project /></li>
+                    )
+                })}
+            </ul>
             <br />
             <ImageUploadForm />
-          
-            <br />
             <br />
             <Calender />
-        </div>
+        </Fragment>
     );
 };
 
