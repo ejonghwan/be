@@ -1,11 +1,12 @@
 import { Fragment, useContext } from 'react';
+import { LuArchiveRestore } from "react-icons/lu";
 import { UserContext } from '../../context/UserContext.js'
+import { LuChevronDown } from "react-icons/lu";
 import LazyImage from '../image/LazyImage.js';
-
 import Popup from '../common/popup/Popup.js';
 import PopupButton from '../common/popup/PopupButton.js';
-import './LoginUserInfo.css';
 import LogoutForm from './LogoutForm.js';
+import './LoginUserInfo.css';
 
 
 const LoginUserInfo = () => {
@@ -19,7 +20,7 @@ const LoginUserInfo = () => {
             
             <PopupButton>
                 <ul className='user_profile_wrap'>
-                    <li className='user_profile_name'><strong>{name}</strong> 님</li>
+                    <li className='user_profile_name'><strong>{name}</strong> 님<LuChevronDown /></li>
                     <li>
                         <div className='user_profile_img'>
                             <LazyImage 
@@ -36,7 +37,7 @@ const LoginUserInfo = () => {
                 <ul className='popup_userinfo'>
                     <li><strong>{name}</strong> 님</li>
                     <li>{email}</li>
-                    <li>내 정보</li>
+                    <li><LuArchiveRestore />내 정보</li>
                     <li>내 글</li>
                     <li>내 댓글</li>
                     <li>내 습관</li>
