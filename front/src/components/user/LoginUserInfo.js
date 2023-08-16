@@ -5,11 +5,14 @@ import LazyImage from '../image/LazyImage.js';
 import Popup from '../common/popup/Popup.js';
 import PopupButton from '../common/popup/PopupButton.js';
 import './LoginUserInfo.css';
+import LogoutForm from './LogoutForm.js';
 
 
 const LoginUserInfo = () => {
     const {state, dispatch} = useContext(UserContext)
-    const { name, profileImage } = state.user;
+    const { name, profileImage, email } = state.user;
+
+    console.log('state?', state)
 
     return (
         <Fragment>
@@ -30,7 +33,20 @@ const LoginUserInfo = () => {
                 </ul>
             </PopupButton>
             <Popup className={'popup_type_small'}>
-                헤헤헤헤팝업팝업
+                <ul className='popup_userinfo'>
+                    <li><strong>{name}</strong> 님</li>
+                    <li>{email}</li>
+                    <li>내 정보</li>
+                    <li>내 글</li>
+                    <li>내 댓글</li>
+                    <li>내 습관</li>
+                    <li>좋아하는 습관</li>
+                    <li>신청한 습관</li>
+                    <li>테마</li>
+                    <li>이메일 변경</li>
+                    <li>비밀번호 변경</li>
+                    <li><LogoutForm /></li>
+                </ul>
             </Popup>
         </Fragment>
     );

@@ -1,4 +1,3 @@
-
 import Button from '../form/Button';
 import { useGlobalData } from '../../../context/UiContext';
 import './PopupButton.css';
