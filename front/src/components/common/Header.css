@@ -1,11 +1,12 @@
 
 #header {
-    background-color: var(--header-bg-color); 
+    /* background-color: var(--header-bg-color);  */
     color: var(--text-color2); 
 }
 
 #header .header_nav {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
 }
 
@@ -22,4 +23,5 @@
 #header .header_nav > li {
     flex: 0 0 auto; 
     padding: 0 15px; 
+    font-size: 1.6rem;
 }

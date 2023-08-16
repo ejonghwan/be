@@ -1,19 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom'
-import LoginUserInfo from '../user/LoginUserInfo'
-import './Header.css'
-
-// componenets
-import LogoutForm from '../../components/user/LogoutForm.js'
-
+import { Fragment, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import LoginUserInfo from '../user/LoginUserInfo';
+import LogoutForm from '../../components/user/LogoutForm.js';
 
 // import { logoutUser } from '../../reducers/UserRequest.js'
-import UserRequest from '../../reducers/UserRequest.js'
-
-//context 
-import { UserContext } from '../../context/UserContext.js'
-import axios from 'axios';
-
+import UserRequest from '../../reducers/UserRequest.js';
+import { UserContext } from '../../context/UserContext.js';
+import './Header.css';
 
 const Header = () => {
     const { logoutUser } = UserRequest();
@@ -43,18 +36,26 @@ const Header = () => {
           <div className='b_conts'>
             <nav>
                 <ul className='header_nav'>
-                    <li><Link to="/"><h1>HOBBYIST</h1></Link></li>
+                    <li><Link to="/"><h1 className='logo'>HOBBYIST</h1></Link></li>
                     <li><Link to="/about">내 프로젝트</Link></li>
                     <li><Link to="/profile">프로필</Link></li>
-                    {!state?.isLogged && <li><Link to="/login">로그인</Link></li>}
-                    {!state?.isLogged && <li><Link to="/signup">회원가입</Link></li>}
+                    {state?.isLogged ? (
+                       <Fragment>
+                        <li><LoginUserInfo /></li>
+                        {/* <li><LogoutForm /></li> */}
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        <li><Link to="/login">로그인</Link></li>
+                        <li><Link to="/signup">회원가입</Link></li>
+                      </Fragment>
+                    )}
                     {/* <li><Link to="/signup">signup</Link></li> */}
                     {/* <li><Link to="/style">style</Link></li> */}
                 </ul>
             </nav>
-            {state?.isLogged && <LogoutForm />}
-            {state?.isLogged && <LoginUserInfo />}
-            </div>
+            
+          </div>
         </header>
     );
 };

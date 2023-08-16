@@ -14,9 +14,16 @@
     justify-content: center;
     height: 100%;
     margin: 0 auto;
-    width: 60vw;
+    width: 50%;
 }
 
 .input_type1 {
     
+}
+
+
+@media screen and (max-width: 640px) {
+    .form_wrap {
+        width: 100%;
+    }
 }

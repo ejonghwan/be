@@ -24,3 +24,11 @@
     color: var(--text-color-white);
     background-color: var(--point-color);
 }
+
+.button_type3 {
+    color: var(--text-color1);
+    background-color: transparent;
+    padding: 0px;
+    font-size: inherit;
+    
+}

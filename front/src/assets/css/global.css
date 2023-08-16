@@ -96,12 +96,23 @@ body {
 
 h1 {
     font-weight: 500;
+    font-size: 1.8rem;
 }
 
 h2 {
     font-size: 20px;
     margin-bottom: 50px;
     font-weight: 500;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logo {
+    font-family: 'modak' !important;
 }
 
 .align_c {

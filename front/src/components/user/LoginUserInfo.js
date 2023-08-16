@@ -1,25 +1,32 @@
-import React, { useState, useCallback, useEffect, Fragment, useContext, useMemo } from 'react';
-
-// util
-import { timer, delay, initTime, statusCode } from '../../utils/utils.js'
-
-// context
+import { Fragment, useContext } from 'react';
 import { UserContext } from '../../context/UserContext.js'
+import LazyImage from '../image/LazyImage.js'
+import Button from '../common/form/Button.js';
+import './LoginUserInfo.css';
 
 
 const LoginUserInfo = () => {
-
     const {state, dispatch} = useContext(UserContext)
-    const { id, name, email } = state.user;
+    const { name, profileImage } = state.user;
+    console.log(state)
 
     return (
         <Fragment>
-            로그인정보
-            <ul>
-                <li>{id}</li>
-                <li>{name} 님</li>
-                <li>{email}</li>
-            </ul>
+            <Button className={'button_type3'}>
+                <ul className='user_profile_wrap'>
+                    <li className='user_profile_name'><strong>{name}</strong> 님</li>
+                    <li>
+                        <div className='user_profile_img'>
+                            <LazyImage 
+                                webpSrc={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${profileImage.key}`}
+                                imageSrc={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${profileImage.key}`}
+                                alt={"유저 프로필 이미지"}
+                                isSkeleton={true}
+                            />
+                        </div>
+                    </li>
+                </ul>
+            </Button>
         </Fragment>
     );
 };
