@@ -24,4 +24,33 @@
     flex: 0 0 auto; 
     padding: 0 15px; 
     font-size: 1.6rem;
+    position: relative;
+}
+
+
+/* line */
+/* #header .header_nav > li:first-child::after {
+    content: none;
+}
+#header .header_nav > li:last-child::after {
+    content: none;
+}
+
+#header .header_nav > li::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: var(--line-color2);;
+    width: 1px;
+    height: 10px;
+} */
+
+#header .header_nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
 }

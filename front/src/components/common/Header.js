@@ -9,17 +9,18 @@ import { UserContext } from '../../context/UserContext.js';
 import './Header.css';
 
 const Header = () => {
-    const { logoutUser } = UserRequest();
+    // const { logoutUser } = UserRequest();
     const { state, dispatch } = useContext(UserContext)
+  
     
-    const handleLogout = async () => {
-      try {
-        dispatch({ type: "LOADING", loadingMessage: "로그아웃 중.." })
-        const user = await logoutUser();
-      } catch(err) {
-        console.err(err)
-      }
-    }
+    // const handleLogout = async () => {
+    //   try {
+    //     dispatch({ type: "LOADING", loadingMessage: "로그아웃 중.." })
+    //     const user = await logoutUser();
+    //   } catch(err) {
+    //     console.err(err)
+    //   }
+    // }
 
 
     // 이거 새로고침에도 없어짐;; 브라우저 종료하면 로컬저장소 없애는거 해야됨
@@ -28,7 +29,6 @@ const Header = () => {
     //   return '';
     // };
 
-    
 
 
     return (
@@ -37,8 +37,8 @@ const Header = () => {
             <nav>
                 <ul className='header_nav'>
                     <li><Link to="/"><h1 className='logo'>HOBBYIST</h1></Link></li>
-                    <li><Link to="/about">내 프로젝트</Link></li>
-                    <li><Link to="/profile">프로필</Link></li>
+                    <li><Link to="/about">내 습관</Link></li>
+                    <li><Link to="/profile">내 정보</Link></li>
                     {state?.isLogged ? (
                        <Fragment>
                         <li><LoginUserInfo /></li>

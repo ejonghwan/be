@@ -16,6 +16,7 @@
     --bg-box-color3: #efefef;; 
 
     --line-color1: #ddd;
+    --line-color2: #c3c3c3;
 
 }
 
@@ -112,7 +113,10 @@ img {
 }
 
 .logo {
-    font-family: 'modak' !important;
+    /* font-family: 'modak' !important; */
+    font-family: 'Modak' !important;
+    color: var(--point-color);
+    font-size: 2.6rem;
 }
 
 .align_c {

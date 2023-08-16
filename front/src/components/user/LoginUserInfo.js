@@ -1,18 +1,20 @@
 import { Fragment, useContext } from 'react';
 import { UserContext } from '../../context/UserContext.js'
-import LazyImage from '../image/LazyImage.js'
-import Button from '../common/form/Button.js';
+import LazyImage from '../image/LazyImage.js';
+
+import Popup from '../common/popup/Popup.js';
+import PopupButton from '../common/popup/PopupButton.js';
 import './LoginUserInfo.css';
 
 
 const LoginUserInfo = () => {
     const {state, dispatch} = useContext(UserContext)
     const { name, profileImage } = state.user;
-    console.log(state)
 
     return (
         <Fragment>
-            <Button className={'button_type3'}>
+            
+            <PopupButton>
                 <ul className='user_profile_wrap'>
                     <li className='user_profile_name'><strong>{name}</strong> 님</li>
                     <li>
@@ -26,7 +28,10 @@ const LoginUserInfo = () => {
                         </div>
                     </li>
                 </ul>
-            </Button>
+            </PopupButton>
+            <Popup className={'popup_type_small'}>
+                헤헤헤헤팝업팝업
+            </Popup>
         </Fragment>
     );
 };

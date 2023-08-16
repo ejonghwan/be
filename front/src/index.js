@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ImageProvider } from './context/ImageContext.js'
 import { UserProvider, UserContext } from './context/UserContext.js'
+import { GlobalProvider } from './context/UiContext'
 
 // css
 import './assets/css/fonts.css'
@@ -30,7 +31,9 @@ root.render(
       <ToastContainer />
         <UserProvider>
           <ImageProvider>
-          <App />
+            <GlobalProvider>
+              <App />
+            </GlobalProvider>
           </ImageProvider>
         </UserProvider>
   </BrowserRouter>
