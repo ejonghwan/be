@@ -1,37 +1,20 @@
 import React, { Fragment, useState, useEffect, useCallback, useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
-
-
-// module
 import { useInput } from '../common/hooks/index.js'
-
-// components
 import Input from '../common/form/Input.js'
 import Label from '../common/form/Label.js'
-
-// context & request 
-// import { prevPasswordEditUser, findPasswordEditUser } from '../../reducers/UserRequest.js'
 import UserRequest from '../../reducers/UserRequest.js'
 import { UserContext } from '../../context/UserContext.js'
-
-
-// util
 import { statusCode, passwordChecked } from '../../utils/utils.js'
+import { HiMiniArrowPath } from "react-icons/hi2";
+import SuccessMsg from '../common/successMsg/SuccessMsg.js';
 
 
-const UserPasswordEdit = props => {
-
-
+const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     const { prevPasswordEditUser, findPasswordEditUser } = UserRequest();
     const { state, dispatch } = useContext(UserContext)
     const navigate = useNavigate();
-
-    
-
-    const { prevPasswordCheck, userId } = props;
-
-    console.log('props???', props)
 
     const [prevPassword, handlePrevPassword, setPrevPassword] = useInput('') 
     const [newPassword, handleNewPassword, setNewPassword] = useInput('') 
@@ -41,7 +24,6 @@ const UserPasswordEdit = props => {
     // 유효성 검사
     const [passwordProtected, setPasswordProtected] = useState(null)
     const [prevPasswordMatched, setPrevPasswordMatched] = useState(null)
-
     const [submitActive, setSubmitActive] = useState(false);
 
    
@@ -89,7 +71,6 @@ const UserPasswordEdit = props => {
     const newPasswordEdit = useMemo(() => _debounce(async() => {
         try {   
             if(!userId && !newPassword && !state && !passwordIsChecked) return console.error('정보 확인해주세요');
-            console.log('front??', userId)
             dispatch({ type: "LOADING", loadingMessage: "비번 변경중.." })
             const user = await findPasswordEditUser({
                 newPassword, 
@@ -112,6 +93,13 @@ const UserPasswordEdit = props => {
     }, 500), [newPassword, state, passwordIsChecked])
 
 
+    
+    useEffect(() => {
+        passwordChecked(newPassword) === true ? setPasswordProtected(true) : setPasswordProtected(false);
+        prevPassword && prevPassword === newPassword ? setPrevPasswordMatched(true) : setPrevPasswordMatched(false);
+    }, [newPassword])
+
+
     useEffect(() => {
         return () => {
             prevPasswordEdit.cancel();
@@ -119,51 +107,47 @@ const UserPasswordEdit = props => {
         }
     }, [])
 
-    useEffect(() => {
-        passwordChecked(newPassword) === true ? setPasswordProtected(true) : setPasswordProtected(false);
-        prevPassword && prevPassword === newPassword ? setPrevPasswordMatched(true) : setPrevPasswordMatched(false);
-    }, [newPassword])
-
 
     return (
-        <Fragment>
-            <br />
-            <br />
-            <br />
-            password change 
+        <div className='form_wrap'>
+            <h3 className='form_title gap_20'>
+                <HiMiniArrowPath />
+                <strong>새 비밀번호 설정</strong>
+            </h3>
+            <SuccessMsg className={"success_type align_l gap_15"}>
+                    아이디는 <i className='check_txt'>{userId}</i> 입니다.
+            </SuccessMsg>
              <form onSubmit={handlePasswordEditSubmit}>
                 {prevPasswordCheck && (
                     // props prevPassword가 true여야 얘 보임
                      <div>
-                        <Label htmlFor="prevPassword" content="이전 비밀번호" classN="label_t1"/>
+                        <Label htmlFor="prevPassword" content="이전 비밀번호" className={"label_type1"} />
                         <Input  
                             id="prevPassword" 
                             type="password" 
                             required={true} 
                             placeholder="prevPassword" 
-                            classN="input_text_t1"
+                            className={"input_type1"} 
                             name="prevPassword" 
                             value={prevPassword} 
                             evt="onChange" 
                             onChange={handlePrevPassword} 
                         />
-                        <button>view</button>
                     </div>
                 )}
                 <div>
-                    <Label htmlFor="newPassword" content="비밀번호" classN="label_t1"/>
+                    <Label htmlFor="newPassword" content="새로운 비밀번호" classN="label_t1"/>
                     <Input  
                         id="newPassword" 
                         type="password" 
                         required={true} 
-                        placeholder="newPassword" 
-                        classN="input_text_t1"
+                        placeholder="새로 설정할 비밀번호를 입력해주세요." 
+                        className={"input_type1"} 
                         name="newPassword" 
                         value={newPassword} 
                         evt="onChange" 
                         onChange={handleNewPassword} 
                     />
-                    <button>view</button>
                     {passwordProtected ? (
                         <p style={{color: "blue"}}>8~ 16글자 + 1개 이상의 숫자 + 1개 이상의 특수문자 + 온니 영문[o]</p>
                     ) : (
@@ -198,7 +182,7 @@ const UserPasswordEdit = props => {
                 <button className={submitActive ? 'checked' : 'none'} disabled={submitActive ? false : true}>비번변경</button>
             </form>
            {state.passwordEditErrorMessage &&  <p style={{color: 'red'}}>{state.passwordEditErrorMessage}</p>}
-        </Fragment>
+        </div>
     )
 }
 

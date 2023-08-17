@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext, useMemo } from 'react';
+import { useState, useEffect, useContext, Fragment } from 'react';
 import { useInput } from '../common/hooks/index.js'
 import _debounce from 'lodash.debounce'
 import Input from '../common/form/Input.js'
@@ -8,6 +8,10 @@ import UserPasswordEdit from './UserPasswordEdit.js'
 import { statusCode } from '../../utils/utils.js'
 import UserRequest from '../../reducers/UserRequest.js'
 import { UserContext } from '../../context/UserContext.js'
+import { HiOutlineAtSymbol } from "react-icons/hi2";
+import Button from '../common/form/Button.js';
+import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
+
 
 
 /*
@@ -84,75 +88,90 @@ const FindPassword = () => {
 
     return (
         <Fragment>
-            <form onSubmit={handleAuthNumberSubmit}>
-                <div>
-                    <Label htmlFor="userName" content="이름" classN="label_t1"/>
-                    <Input 
-                        id="userName" 
-                        type="text" 
-                        required={true} 
-                        placeholder="userName" 
-                        classN="input_text_t1" 
-                        name="userName" 
-                        value={name} 
-                        evt="onChange" 
-                        onChange={handleName} 
-                        disabled={authToggle && true}
-                    />
-                </div>
-                <div>
-                    <Label htmlFor="userEmail" content="이메일" classN="label_t1"/>
-                    <Input 
-                        id="userEmail" 
-                        type="email" 
-                        required={true} 
-                        placeholder="userEmail" 
-                        classN="input_text_t1" 
-                        name="userEmail" 
-                        value={email} 
-                        evt="onChange" 
-                        onChange={handleEmail} 
-                        disabled={authToggle && true}
-                    />
-                </div>
-                <button disabled={authToggle && true}>인증번호 보내기</button>
-                {state.mailAuthErrorMessage && <p style={{color: 'red'}}>{state.mailAuthErrorMessage}</p>}
-            </form>
+            <div className='form_wrap'>
+                <h3 className='form_title gap_20'>
+                    <HiOutlineAtSymbol />
+                    <strong>이메일 인증하기</strong>
+                </h3>
+                <form onSubmit={handleAuthNumberSubmit}>
+                    <div className='gap_20'>
+                        <Label htmlFor="userName" content="이름" className={"label_type1"} />
+                        <Input 
+                            id="userName" 
+                            type="text" 
+                            required={true} 
+                            placeholder="이름을 입력해주세요." 
+                            className={"input_type1"}
+                            name="userName" 
+                            value={name} 
+                            evt="onChange" 
+                            onChange={handleName} 
+                            disabled={authToggle && true}
+                        />
+                    </div>
+                    <div className='gap_20'>
+                        <Label htmlFor="userEmail" content="이메일" className={"label_type1"} />
+                        <Input 
+                            id="userEmail" 
+                            type="email" 
+                            required={true} 
+                            placeholder="인증메일을 받을 메일을 입력해주세요." 
+                            className={"input_type1"}
+                            name="userEmail" 
+                            value={email} 
+                            evt="onChange" 
+                            onChange={handleEmail} 
+                            disabled={authToggle && true}
+                        />
+                    </div>
+                    <div className='align_c gapt_30'>
+                        <Button className={'button_type2'} disabled={authToggle && true}>
+                            인증번호 보내기
+                        </Button>
+                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                            {state.mailAuthErrorMessage && <p>{state.mailAuthErrorMessage}</p>}
+                        </ErrorMsg>
+                    </div>
+                </form>
 
-            {resMsg && <div>{resMsg}</div>}
-            {authToggle && (
-                <form onSubmit={handleFindIdSubmit}>
-                  <div>
-                     <Label htmlFor="authNumber" content="메일로 인증번호가 전송되었습니다" classN="label_t1"/>
-                     <Input 
-                         id="authNumber" 
-                         type="text" 
-                         required={true} 
-                         placeholder="인증번호를 입력해주세요" 
-                         classN="input_text_t1" 
-                         name="authNumber" 
-                         value={authNumber} 
-                         evt="onChange" 
-                         onChange={handleAuthNumber} 
-                         disabled={authTimeout}
-                     />
-                     <Timer  
-                        endSecond={180} 
-                        startingPoint={180} 
-                        countingName={'인증번호를 입력해주세요'} 
-                        endMessage={'인증시간이 만료되었습니다'}
-                        callback={() => setAuthTimeout(true)}
-                    />
-                 </div>
-                 <button disabled={authTimeout}>메일 인증하기</button>
-                 {state.authNumberErrorMessage && <p style={{color: 'red'}}>{state.authNumberErrorMessage}</p>}
-             </form>
-            )}
-
-            <br /><br />
+                {authToggle && (
+                    <form onSubmit={handleFindIdSubmit}>
+                    <div>
+                        <Label htmlFor="authNumber" content="메일로 인증번호가 전송되었습니다." className={"label_type1"} />
+                        <Input 
+                            id="authNumber" 
+                            type="text" 
+                            required={true} 
+                            placeholder="인증번호를 입력해주세요." 
+                            className={"input_type1"}
+                            name="authNumber" 
+                            value={authNumber} 
+                            evt="onChange" 
+                            onChange={handleAuthNumber} 
+                            disabled={authTimeout}
+                        />
+                        <div className='gapt_20 align_c'>
+                            <Timer  
+                                endSecond={180} 
+                                startingPoint={180} 
+                                countingName={'인증번호를 입력해주세요.'} 
+                                endMessage={'인증시간이 만료되었습니다. 다시 시도하려면 새로고침 해주세요.'}
+                                callback={() => setAuthTimeout(true)}
+                            />
+                        </div>
+                    </div>
+                    <div className='align_c gapt_30'>
+                        <Button className={'button_type2'} disabled={authTimeout}>
+                            새 비밀번호로 변경하기
+                        </Button>
+                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                            {state.authNumberErrorMessage && <p>{state.authNumberErrorMessage}</p>}
+                        </ErrorMsg>
+                    </div>
+                </form>
+                )}
+            </div>
             {authcom && <UserPasswordEdit prevPasswordCheck={false} userId={resMsg}/>}
-            
-           
         </Fragment>
     )
 }

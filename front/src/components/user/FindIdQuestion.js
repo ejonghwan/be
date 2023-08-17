@@ -120,7 +120,7 @@ const FindIdQuestion = () => {
                 </div>
                 <div className='align_c gapt_30'>
                     <Button className={'button_type2'} disabled={authToggle && true}>
-                        인증번호 보내기
+                        아이디 찾기
                     </Button>
                     <ErrorMsg className={'error_type1 align_c gapt_30'}>
                         {state.authNumberErrorMessage && <p> {state.authNumberErrorMessage}</p>}

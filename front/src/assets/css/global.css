@@ -198,6 +198,14 @@ svg {
     text-align: center;
 }
 
+.align_l {
+    text-align: left;
+}
+
+.align_r {
+    text-align: right;
+}
+
 .b_conts {
     width: 960px;
     height: 100%;

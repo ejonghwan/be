@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useInput } from '../common/hooks/index.js';
 import UserRequest from '../../reducers/UserRequest.js';
 import _debounce from 'lodash.debounce';
@@ -32,14 +32,14 @@ const FindId = () => {
         e.preventDefault();
         authSubmit();
     }
-    const authSubmit = useMemo(() => _debounce(async() => {
+    const authSubmit = _debounce(async() => {
         try {
             const number = await nonLoginMemberAuthNumberRequest({ name, email }); 
             if(statusCode(number.status, 2)) return setAuthToggle(true) //성공 시 
         } catch(err) {
             console.error(err)
         }
-    }, 1000), [name, email])
+    }, 1000)
 
 
     /* 아이디 찾기 서브밋 */
@@ -71,7 +71,7 @@ const FindId = () => {
             authSubmit.cancel()
             findIdSubmit.cancel()
         }
-    }, [name, email, authNumber, resMsg])
+    }, [])
 
 
     return (
@@ -125,7 +125,7 @@ const FindId = () => {
             {authToggle && (
                 <form onSubmit={handleFindIdSubmit}>
                   <div className='gap_20'>
-                     <Label htmlFor="authNumber" content="메일로 인증번호가 전송되었습니다." className={"label_type1"}/>
+                     <Label htmlFor="authNumber" content="메일로 인증번호가 전송되었습니다." className={"label_type1"} />
                      <Input 
                          id="authNumber" 
                          type="text" 
