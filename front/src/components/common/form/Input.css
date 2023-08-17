@@ -34,7 +34,24 @@ input[type="number"]:disabled {
     width: 50%;
 }
 
+
+.form_wrap .form_title {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+}
+
+.form_wrap .form_title > svg {
+    margin-right: 8px;
+}
+
+
+
 .input_type1 {}
+
+
+
+
 
 
 @media screen and (max-width: 640px) {

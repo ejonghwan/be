@@ -8,14 +8,16 @@
 */
 
 :root[data-color=light] {
-    --point-color: #509af9;
+    /* --point-color: #509af9; */
+    --point-color: #448deb;
+    --point-color2: #cf1f1f;
     --main-bg-color: #fff;
     --header-bg-color: #f4f4f4;
     --hover-color: #f4f4f4;
     --icon-color: #666666;
     --scroll-color: #868686;
     --scroll-bg-color: #ffffff;
-    --disabled-bg-color: #e8f0fd;
+    --disabled-bg-color: #d9d9d9;
     --disabled-color: #919191;
     
     
@@ -39,6 +41,7 @@
 :root[data-color=dark] {
     
     --point-color: #509af9;
+    --point-color2: #cf1f1f;
     --main-bg-color: #fff;
     --header-bg-color: #f4f4f4;
     --hover-color: #f4f4f4;
@@ -180,6 +183,7 @@ svg {
 .check_txt {
     font-weight: 600;
     text-decoration: underline;
+    color: var(--point-color2);
 }
 
 .logo {

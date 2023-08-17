@@ -1,0 +1,55 @@
+
+select {
+    width: 100%;
+    border: none;
+    color: var(--text-color1);
+    background-color: var(--bg-box-color3);
+    padding: 15px 20px;
+    border-radius: 18px;
+    box-sizing: border-box;
+
+    -o-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+
+
+.selectbox_type1 {
+    position: relative;
+}
+.selectbox_type1 select {
+    border: 0 none;
+    outline: 0 none;
+    position: relative;
+    z-index: 3; 
+}
+.selectbox_type1 select option {
+    padding: 10px 10px !important;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: #222;
+    color: #fff;
+}
+.selectbox_type1 .svg_wrap {
+    position: absolute; 
+    top: 0; 
+    bottom: 0;
+    margin: auto;
+    right: 20px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+/* .selectbox_type1 .svg_wrap svg {
+    transition: .3s;
+}
+
+.selectbox_type1 select:focus + .svg_wrap svg {
+    transform: rotate(180deg);
+} */

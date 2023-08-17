@@ -1,21 +1,11 @@
-import React, { Fragment, useState, useEffect, useCallback, useContext, useMemo } from 'react';
-
-
-// module
+import React, { Fragment, useState, useEffect, useContext, useMemo } from 'react';
 import { useInput } from '../common/hooks/index.js'
 import _debounce from 'lodash.debounce'
-
-// components
 import Input from '../common/form/Input.js'
 import Label from '../common/form/Label.js'
 import Timer from '../../components/common/utils/Timer.js';
 import UserPasswordEdit from './UserPasswordEdit.js'
-
-// util 
 import { statusCode } from '../../utils/utils.js'
-
-// context & request 
-// import { findUserId, nonLoginMemberAuthNumberRequest } from '../../reducers/UserRequest.js'
 import UserRequest from '../../reducers/UserRequest.js'
 import { UserContext } from '../../context/UserContext.js'
 
@@ -28,7 +18,7 @@ import { UserContext } from '../../context/UserContext.js'
 const FindPassword = () => {
     
         const { findUserId, nonLoginMemberAuthNumberRequest } = UserRequest()
-        const {state, dispatch} = useContext(UserContext)
+        const { state } = useContext(UserContext)
 
         const [authNumber, handleAuthNumber, setAutnNumber] = useInput('');
         const [authToggle, setAuthToggle] = useState(false);
@@ -40,12 +30,12 @@ const FindPassword = () => {
 
         
 
-        /** 이메일인증 서브밋 */
+        //이메일인증 서브밋 
         const handleAuthNumberSubmit = e => {
             e.preventDefault();
             authSubmit();
         }
-        const authSubmit = useMemo(() => _debounce(async() => {
+        const authSubmit = _debounce(async() => {
             try {
                 const number = await nonLoginMemberAuthNumberRequest({ name, email }); 
                 if(statusCode(number.status, 2)) { //성공 시 
@@ -54,22 +44,20 @@ const FindPassword = () => {
             } catch(err) {
                 console.error(err)
             }
-        }, 1000), [name, email])
-        /** //이메일인증 서브밋 */
+        }, 1000)
     
     
-        /** 아이디 찾기 서브밋 */
+        ///아이디 찾기 서브밋
         const handleFindIdSubmit = async e => {
             e.preventDefault();
             findIdSubmit();
         }
-        const findIdSubmit = useMemo(() => _debounce(async() => {
+
+        const findIdSubmit = _debounce(async() => {
             try {
                 const findId = await findUserId({ authNumber }); 
                 // 여기선 쿠키 2개 보냄
                 
-                // console.log('?????????????????', findId)
-
                 if(statusCode(findId.status, 2)) { 
                     setAuthToggle(false);
                     setName('');
@@ -81,8 +69,7 @@ const FindPassword = () => {
             } catch(err) {
                 console.error(err)
             }
-        }, 1000), [authNumber])
-         /** //아이디 찾기 서브밋 */
+        }, 1000)
     
     
         useEffect(() => {
@@ -90,7 +77,7 @@ const FindPassword = () => {
                 authSubmit.cancel()
                 findIdSubmit.cancel()
             }
-        }, [name, email, authNumber, resMsg])
+        }, [])
     
     
 

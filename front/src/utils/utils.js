@@ -2,14 +2,11 @@
 
 export const questionData = [
     { questionType: 0, question: '질문을 선택해주세요' },
-    { questionType: 1, question: '질문2' },
-    { questionType: 2, question: '질문3' },
-    { questionType: 3, question: '질문4' },
-    { questionType: 4, question: '질문5' },
-    { questionType: 5, question: '질문6' },
-    { questionType: 6, question: '질문7' },
-    { questionType: 7, question: '질문8' },
-    { questionType: 8, question: '질문9' },
+    { questionType: 1, question: '가장 기억에 남는 장소는?' },
+    { questionType: 2, question: '좋아하는 색은?' },
+    { questionType: 3, question: '다른 이메일 주소는?' },
+    { questionType: 4, question: '보물 1호는?' },
+    { questionType: 5, question: '좋아하는 음식은?' },
 ]
 
 

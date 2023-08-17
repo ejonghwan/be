@@ -1,21 +1,23 @@
 import React, { Fragment, useState, useEffect, useContext, useMemo } from 'react';
-import { useInput } from '../common/hooks/index.js'
+import { useInput } from '../common/hooks/index.js';
 import UserRequest from '../../reducers/UserRequest.js';
 import _debounce from 'lodash.debounce';
-import Input from '../common/form/Input.js'
-import Label from '../common/form/Label.js'
-import Timer from '../../components/common/utils/Timer.js'
-import { UserContext } from '../../context/UserContext.js'
-import { statusCode } from '../../utils/utils.js'
+import Input from '../common/form/Input.js';
+import Label from '../common/form/Label.js';
+import Timer from '../../components/common/utils/Timer.js';
+import { UserContext } from '../../context/UserContext.js';
+import { statusCode } from '../../utils/utils.js';
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import SuccessMsg from '../common/successMsg/SuccessMsg.js';
+import { HiOutlineAtSymbol } from "react-icons/hi2";
+import './FindId.css';
 
 
 
 const FindId = () => {
-    const { findUserId, nonMemberAuthNumberRequest, nonLoginMemberAuthNumberRequest } = UserRequest();
-    const {state, dispatch} = useContext(UserContext);
+    const { findUserId, nonLoginMemberAuthNumberRequest } = UserRequest();
+    const { state } = useContext(UserContext);
 
     const [authNumber, handleAuthNumber, setAutnNumber] = useInput('');
     const [authToggle, setAuthToggle] = useState(false);
@@ -25,7 +27,7 @@ const FindId = () => {
     const [authTimeout, setAuthTimeout] = useState(false);
 
 
-    /** 이메일인증 서브밋 */
+    /* 이메일인증 서브밋 */
     const handleAuthNumberSubmit = e => {
         e.preventDefault();
         authSubmit();
@@ -38,15 +40,15 @@ const FindId = () => {
             console.error(err)
         }
     }, 1000), [name, email])
-    /** //이메일인증 서브밋 */
 
 
-    /** 아이디 찾기 서브밋 */
+    /* 아이디 찾기 서브밋 */
     const handleFindIdSubmit = async e => {
         e.preventDefault();
         findIdSubmit();
     }
-    const findIdSubmit = useMemo(() => _debounce(async() => {
+
+    const findIdSubmit = _debounce(async() => {
         try {
             const findId = await findUserId({ authNumber }); 
             // 여기선 쿠키 2개 보냄
@@ -61,8 +63,7 @@ const FindId = () => {
         } catch(err) {
             console.error(err)
         }
-    }, 1000), [authNumber])
-     /** //아이디 찾기 서브밋 */
+    }, 1000)
 
 
     useEffect(() => {
@@ -74,10 +75,14 @@ const FindId = () => {
 
 
     return (
-        <Fragment>
+        <div className='form_wrap'>
+            <h3 className='form_title gap_20'>
+                <HiOutlineAtSymbol />
+                <strong>이메일 인증으로 찾기</strong>
+            </h3>
             <form onSubmit={handleAuthNumberSubmit}>
                 <div className='gap_20'>
-                    <Label htmlFor="userName" content="이름" className={"label_type1"}/>
+                    <Label htmlFor="userName" content="이름" className={"label_type1"} />
                     <Input 
                         id="userName" 
                         type="text" 
@@ -92,7 +97,7 @@ const FindId = () => {
                     />
                 </div>
                 <div className='gap_20'>
-                    <Label htmlFor="userEmail" content="이메일" className={"label_type1"}/>
+                    <Label htmlFor="userEmail" content="이메일" className={"label_type1"} />
                     <Input 
                         id="userEmail" 
                         type="email" 
@@ -107,7 +112,7 @@ const FindId = () => {
                     />
                 </div>
                
-                <div className='align_c'>
+                <div className='align_c gapt_30'>
                     <Button className={'button_type2'} disabled={authToggle && true}>
                         인증번호 보내기
                     </Button>
@@ -116,7 +121,6 @@ const FindId = () => {
                     </ErrorMsg>
                 </div>
             </form>
-            {/* 829 여기 하다가 감. 인증 만료 시 다시찾기 클릭버튼  */}
 
             {authToggle && (
                 <form onSubmit={handleFindIdSubmit}>
@@ -134,17 +138,17 @@ const FindId = () => {
                          onChange={handleAuthNumber} 
                          disabled={authTimeout}
                      />
-                    <div className='gapt_20 align_c'>
-                        <Timer  
-                            endSecond={180} 
-                            startingPoint={180} 
-                            countingName={'인증번호를 입력해주세요.'} 
-                            endMessage={'인증시간이 만료되었습니다. 다시 시도하려면 새로고침 해주세요.'}
-                            callback={() => setAuthTimeout(true)}
-                        />
-                    </div>
                  </div >
-                 <div className='align_c'>
+                 <div className='gapt_20 align_c'>
+                    <Timer  
+                        endSecond={180} 
+                        startingPoint={180} 
+                        countingName={'인증번호를 입력해주세요.'} 
+                        endMessage={'인증시간이 만료되었습니다. 다시 시도하려면 새로고침 해주세요.'}
+                        callback={() => setAuthTimeout(true)}
+                    />
+                </div>
+                 <div className='align_c gapt_30'>
                     <Button className={'button_type2'} disabled={authTimeout}>
                         아이디 찾기
                     </Button>
@@ -152,6 +156,7 @@ const FindId = () => {
                         {state.authNumberErrorMessage && <p> {state.authNumberErrorMessage }</p>}
                     </ErrorMsg>
                  </div>
+               
              </form>
             )}
             
@@ -161,7 +166,7 @@ const FindId = () => {
                     아이디는 <i className='check_txt'>{resMsg.id}</i> 입니다.
                 </SuccessMsg>
             )}
-        </Fragment>
+        </div>
     )
 }
 
