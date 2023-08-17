@@ -21,8 +21,44 @@
 
 .popup_userinfo {
     width: 200px;
+    padding: 15px 0;
 }
 
-.react-icons {
-    vertical-align: text-top;
+.popup_userinfo .name > strong {
+    color: var(--point-color);
 }
+
+.popup_userinfo .email {
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+.popup_userinfo + .popup_userinfo {
+    border-top: 1px solid var(--line-color1);
+}
+
+.popup_userinfo > li {
+}
+
+.popup_userinfo > li svg {
+    width: 23px;
+    height: 23px;
+    margin-right: 15px;
+}
+
+.popup_userinfo > li .list {
+    display: inline-block;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    font-size: 1.5rem;
+}
+
+.popup_userinfo > li .list:hover {
+    background-color: var(--hover-color);
+} 
+
+
+
+

@@ -5,18 +5,21 @@
 
     --point-color: #509af9;
     --main-bg-color: #fff;
-    --header-bg-color: #efefef;
+    --header-bg-color: #f4f4f4;
+    --hover-color: #f4f4f4;
+    
     
     --text-color-white: #fff;
     --text-color1: #555;
     --text-error-color: red;
     
+    --bg-box-white: #fff;
     --bg-box-color1: rgb(240, 240, 240); 
     --bg-box-color2: #ddd; 
     --bg-box-color3: #efefef;; 
 
-    --line-color1: #ddd;
-    --line-color2: #c3c3c3;
+    --line-color1: #f4f4f4;
+    --line-color2: #ddd;
 
 }
 
@@ -106,6 +109,10 @@ h2 {
     font-weight: 500;
 }
 
+strong {
+    font-weight: 500;
+}
+
 img {
     width: 100%;
     height: 100%;
@@ -114,7 +121,8 @@ img {
 
 .logo {
     /* font-family: 'modak' !important; */
-    font-family: 'Modak' !important;
+    /* font-family: 'Modak' !important; */
+    font-family: 'Gugi' !important;
     color: var(--point-color);
     font-size: 2.6rem;
 }

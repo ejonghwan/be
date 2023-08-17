@@ -1,27 +1,11 @@
 import { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import LoginUserInfo from '../user/LoginUserInfo';
-import LogoutForm from '../../components/user/LogoutForm.js';
-
-// import { logoutUser } from '../../reducers/UserRequest.js'
-import UserRequest from '../../reducers/UserRequest.js';
 import { UserContext } from '../../context/UserContext.js';
 import './Header.css';
 
 const Header = () => {
-    // const { logoutUser } = UserRequest();
-    const { state, dispatch } = useContext(UserContext)
-  
-    
-    // const handleLogout = async () => {
-    //   try {
-    //     dispatch({ type: "LOADING", loadingMessage: "로그아웃 중.." })
-    //     const user = await logoutUser();
-    //   } catch(err) {
-    //     console.err(err)
-    //   }
-    // }
-
+    const { state, dispatch } = useContext(UserContext);
 
     // 이거 새로고침에도 없어짐;; 브라우저 종료하면 로컬저장소 없애는거 해야됨
     // window.onbeforeunload = function() {
@@ -42,7 +26,6 @@ const Header = () => {
                     {state?.isLogged ? (
                        <Fragment>
                         <li><LoginUserInfo /></li>
-                        {/* <li><LogoutForm /></li> */}
                       </Fragment>
                     ) : (
                       <Fragment>
