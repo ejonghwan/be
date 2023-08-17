@@ -20,7 +20,7 @@ const LoginUserInfo = () => {
             
             <PopupButton>
                 <ul className='user_profile_wrap'>
-                    <li className='user_profile_name'><strong>{name}&nbsp;</strong>님<HiOutlineArrowDownCircle /></li>
+                    <li className='user_profile_name'><strong>{name}&nbsp;</strong>님</li>
                     <li>
                         <div className='user_profile_img'>
                             <LazyImage 
@@ -31,6 +31,7 @@ const LoginUserInfo = () => {
                             />
                         </div>
                     </li>
+                    <li><HiOutlineArrowDownCircle /></li>
                 </ul>
             </PopupButton>
             <Popup className={'popup_type_small'}>

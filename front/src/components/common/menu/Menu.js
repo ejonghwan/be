@@ -25,7 +25,7 @@ const Menu = () => {
                     <li className='email'>{email}</li>
                 </ul>
                 <ul className='popup_userinfo'>
-                    <li><Link to="" className='list'><HiOutlineUser /><span>내 정보</span></Link></li>
+                    <li><Link to="/profile" className='list'><HiOutlineUser /><span>내 정보</span></Link></li>
                     <li><Link to="" className='list'><HiOutlineDocumentText /><span>내 글</span></Link></li>
                     <li><Link to="" className='list'><HiOutlineChatBubbleOvalLeftEllipsis /><span>내 댓글</span></Link></li>
                     <li><Link to="" className='list'><HiOutlineAtSymbol /><span>이메일 변경</span></Link></li>

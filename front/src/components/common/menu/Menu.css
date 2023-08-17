@@ -4,11 +4,16 @@
     padding: 15px 0;
 }
 
+.popup_userinfo .name {
+    padding-left: 10px;
+}
+
 .popup_userinfo .name > strong {
     color: var(--point-color);
 }
 
 .popup_userinfo .email {
+    padding-left: 10px;
     margin-top: 10px;
     padding-bottom: 10px;
 }
