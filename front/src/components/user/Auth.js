@@ -74,7 +74,7 @@ const Auth = () => {
                 <span>발송된 메일의 인증페이지로 회원가입을 진행해주세요.</span>
             </SuccessMsg>
         )}
-         <ErrorMsg className={'error_type1 align_c gapt_30'}>
+         <ErrorMsg className={'error_type1 align_c gapt_40'}>
             {state.authNumberErrorMessage && <span>{state.authNumberErrorMessage}</span>}
          </ErrorMsg>
 

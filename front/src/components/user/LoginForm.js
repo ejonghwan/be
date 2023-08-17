@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, Fragment, useContext, useMemo } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
 import { useInput } from '../common/hooks/index.js'
@@ -34,7 +34,7 @@ const LoginForm = () => {
     }
 
 
-    const submit = useMemo(() => _debounce(async () => {
+    const submit =_debounce(async () => {
         try {
             dispatch({ type: "LOADING", loadingMessage: "로그인 중.." })
             const user = await loginUser({ id: userId, password: userPassword })
@@ -50,16 +50,8 @@ const LoginForm = () => {
         } catch(err) {
             console.error('catch?', err)
         }
-    }, 500), [userId, userPassword])
+    }, 500)
 
-
- 
-    useEffect(() => {
-        return () => {
-         submit.cancel();
-        }
-     }, [userId, userPassword])
-  
 
     return (
         <div className="form_wrap">
@@ -92,7 +84,7 @@ const LoginForm = () => {
                         onChange={handlePassword} 
                     />
                 </div>
-                <div className='align_c'>
+                <div className='align_c gapt_40'>
                     <Button className={'button_type2'}>로그인</Button>
                 </div>
                 <ErrorMsg className={'error_type1 align_c gapt_30'}>{state.loginErrorMessage}</ErrorMsg>

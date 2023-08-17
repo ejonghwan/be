@@ -17,8 +17,6 @@
     border-top: 1px solid var(--line-color1);
 }
 
-.popup_userinfo > li {
-}
 
 .popup_userinfo > li svg {
     width: 23px;
@@ -33,6 +31,7 @@
     align-items: center;
     border-radius: 20px;
     font-size: 1.5rem;
+    font-weight: 500;
 }
 
 .popup_userinfo > li .list:hover {

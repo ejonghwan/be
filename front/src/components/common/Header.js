@@ -20,7 +20,7 @@ const Header = () => {
           <div className='b_conts'>
             <nav>
                 <ul className='header_nav'>
-                    <li><Link to="/"><h1 className='logo'>HOBBYIST</h1></Link></li>
+                    <li><Link to="/"><h1 className='logo'>HOBBYIST.</h1></Link></li>
                     <li><Link to="/about">내 습관</Link></li>
                     <li><Link to="/profile">내 정보</Link></li>
                     {state?.isLogged ? (

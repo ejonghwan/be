@@ -4,7 +4,7 @@ import './Popup.css';
 
 const Popup = ({ children, className }) => {
 
-    const { popOpen } = useGlobalData()
+    const { popOpen } = useGlobalData();
 
     return (
         <Fragment>

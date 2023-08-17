@@ -12,10 +12,8 @@ import Menu from '../common/menu/Menu.js';
 
 
 const LoginUserInfo = () => {
-    const {state } = useContext(UserContext)
+    const { state } = useContext(UserContext)
     const { name, profileImage } = state.user;
-
-    // console.log('state?', state)
 
     return (
         <Fragment>
