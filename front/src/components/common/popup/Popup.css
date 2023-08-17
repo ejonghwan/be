@@ -20,4 +20,5 @@
 
 .popup_type_small {
     right: 10px;
+    box-shadow: var(--box-shadow);
 }

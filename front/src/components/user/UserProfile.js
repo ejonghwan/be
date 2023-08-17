@@ -1,21 +1,12 @@
 import React, { Fragment, useState, useEffect, useCallback, useContext, useMemo, useRef } from 'react';
 import _debounce from 'lodash.debounce';
-
-// module
 import { useInput } from '../common/hooks/index.js';
-
-// components
 import Input from '../common/form/Input.js';
 import Label from '../common/form/Label.js';
 import Timer from '../common/utils/Timer.js';
 import ProfileImageEdit from '../user/ProfileImageEdit.js'
-
-// context & request 
-// import  { userInfoEditUser, emailEditUser, memberAuthNumberRequest } from '../../reducers/UserRequest.js';
 import UserRequest from '../../reducers/UserRequest.js';
 import { UserContext } from '../../context/UserContext.js';
-
-// util
 import { stringLengthChecked, statusCode  } from '../../utils/utils.js';
 
 
@@ -61,15 +52,14 @@ const UserProfile = () => {
         e.preventDefault();
         emailAuth();
     };
-    const emailAuth = useMemo(() => _debounce(async e => {
+    const emailAuth = _debounce(async e => {
         try {
             const res = await memberAuthNumberRequest({ email: userEmail, _id: state.user._id });
             if(statusCode(res.status, 2)) { setEditEmailAuthState(true); }
         } catch(err) {
             console.error(err);
         };
-    }, 500), [userEmail, timerNumber]);
-    // 이메일 수정 인증번호 요청 
+    }, 500)
 
 
     // 이메일 수정 요청  
@@ -77,7 +67,7 @@ const UserProfile = () => {
         e.preventDefault();
         emailEdit();
     }
-    const emailEdit = useMemo(() => _debounce(async () => {
+    const emailEdit = _debounce(async () => {
         try {
             const res = await emailEditUser({ email: userEmail, _id: state.user._id, authNumber: authNumber })
             if(statusCode(res.status, 2)) {
@@ -87,8 +77,7 @@ const UserProfile = () => {
         } catch(err) {
             console.error(err);
         }
-    },500), [userEmail, authNumber]);
-    // 이메일 수정 요청  
+    }, 500)
 
     
     // 회원정보 수정 요청
@@ -96,7 +85,7 @@ const UserProfile = () => {
         e.preventDefault();
         userInfo();
     };
-    const userInfo = useMemo(() => _debounce(async() => {
+    const userInfo = _debounce(async() => {
         try {
             const userInfo = {
                 name: userName, 
@@ -110,8 +99,7 @@ const UserProfile = () => {
         } catch(err) {
             console.error(err);
         };
-    }), [userName, userGender, userBirthday, userPhoneNumber]);
-    // 회원정보 수정 요청
+    }, 500)
 
 
     useEffect(() => {

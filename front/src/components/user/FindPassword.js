@@ -88,7 +88,7 @@ const FindPassword = () => {
 
     return (
         <Fragment>
-            <div className='form_wrap'>
+            <div className='form_wrap gap_20'>
                 <h3 className='form_title gap_20'>
                     <HiOutlineAtSymbol />
                     <strong>이메일 인증하기</strong>

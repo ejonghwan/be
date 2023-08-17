@@ -9,7 +9,7 @@
 }
 
 [class*=success_type] > span{
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     display: block;
     margin-top: 30px;
 }
@@ -23,4 +23,11 @@
     margin: auto;
     width: 500px;
     height: 200px;
+}
+
+
+/* 보조문구 */
+.success_type3 {
+    font-size: 1.4rem;
+    color: var(--text-success-color);
 }

@@ -7,8 +7,10 @@ import Label from '../common/form/Label.js'
 import UserRequest from '../../reducers/UserRequest.js'
 import { UserContext } from '../../context/UserContext.js'
 import { statusCode, passwordChecked } from '../../utils/utils.js'
-import { HiMiniArrowPath } from "react-icons/hi2";
+import { HiOutlineShieldExclamation } from "react-icons/hi2";
 import SuccessMsg from '../common/successMsg/SuccessMsg.js';
+import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
+import Button from '../common/form/Button.js';
 
 
 const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
@@ -26,8 +28,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     const [prevPasswordMatched, setPrevPasswordMatched] = useState(null)
     const [submitActive, setSubmitActive] = useState(false);
 
-   
-    
+
     // 인증이 모두 true인지
     useEffect(() => {
         newPassword === newPasswordCheck ? setPasswordIsChecked(true) : setPasswordIsChecked(false);
@@ -35,6 +36,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
         if(!prevPasswordCheck && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected) setSubmitActive(true)
         console.log(submitActive)
     }, [prevPasswordCheck, newPasswordCheck, prevPassword, newPassword, newPasswordCheck, passwordIsChecked, passwordProtected])
+
 
     // 요청
     const handlePasswordEditSubmit = useCallback(async e => {
@@ -66,7 +68,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
         }
     }, 500), [prevPassword, newPassword, state, passwordIsChecked])
 
-    
+
     // 비번 찾기
     const newPasswordEdit = useMemo(() => _debounce(async() => {
         try {   
@@ -93,7 +95,6 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     }, 500), [newPassword, state, passwordIsChecked])
 
 
-    
     useEffect(() => {
         passwordChecked(newPassword) === true ? setPasswordProtected(true) : setPasswordProtected(false);
         prevPassword && prevPassword === newPassword ? setPrevPasswordMatched(true) : setPrevPasswordMatched(false);
@@ -111,16 +112,16 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     return (
         <div className='form_wrap'>
             <h3 className='form_title gap_20'>
-                <HiMiniArrowPath />
+                <HiOutlineShieldExclamation />
                 <strong>새 비밀번호 설정</strong>
             </h3>
-            <SuccessMsg className={"success_type align_l gap_15"}>
-                    아이디는 <i className='check_txt'>{userId}</i> 입니다.
+            <SuccessMsg className={"success_type align_l gap_20"}>
+                아이디는 <i className='check_txt'>{userId}</i> 입니다.
             </SuccessMsg>
              <form onSubmit={handlePasswordEditSubmit}>
                 {prevPasswordCheck && (
                     // props prevPassword가 true여야 얘 보임
-                     <div>
+                     <div className='gap_20'>
                         <Label htmlFor="prevPassword" content="이전 비밀번호" className={"label_type1"} />
                         <Input  
                             id="prevPassword" 
@@ -135,8 +136,8 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                         />
                     </div>
                 )}
-                <div>
-                    <Label htmlFor="newPassword" content="새로운 비밀번호" classN="label_t1"/>
+                <div className='gap_20'>
+                    <Label htmlFor="newPassword" content="새로운 비밀번호" className={"label_type1"} />
                     <Input  
                         id="newPassword" 
                         type="password" 
@@ -148,40 +149,71 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                         evt="onChange" 
                         onChange={handleNewPassword} 
                     />
-                    {passwordProtected ? (
-                        <p style={{color: "blue"}}>8~ 16글자 + 1개 이상의 숫자 + 1개 이상의 특수문자 + 온니 영문[o]</p>
-                    ) : (
-                        <p style={{color: "red"}}>8~ 16글자 + 1개 이상의 숫자 + 1개 이상의 특수문자 + 온니 영문 [x]</p>
-                    )}
-                      {prevPasswordMatched && (
-                        <p style={{color: "red"}}>이전 비밀번호와 같습니다[x]</p>
-                    )}
+                    <div>
+                        {passwordProtected ? (
+                            <SuccessMsg className={"success_type3 align_l gapt_10"}>
+                                안전한 비밀번호입니다.
+                            </SuccessMsg>
+                        ) : (
+                            <ErrorMsg className={'error_type3 gapt_10'}>
+                                8~16글자에 숫자와 특수문자를 조합해주세요.
+                            </ErrorMsg>
+                        )}
+                        {/* {prevPasswordMatched && (
+                            <p style={{color: "red"}}>이전 비밀번호와 같습니다[x]</p>
+                        )} */}
+                        {/* <div className='align_c gapt_30'>
+                            <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                                {state.passwordEditErrorMessage &&  <p>{state.passwordEditErrorMessage}</p>}
+                            </ErrorMsg>
+                        </div> */}
+                    </div>
                 </div>
               
-                <div>
-                    <Label htmlFor="newPasswordCheck" content="비밀번호 체크" classN="label_t1"/>
+                <div className='gap_20'>
+                    <Label htmlFor="newPasswordCheck" content="새로운 비밀번호 체크" className={"label_type1"} />
                     <Input 
                         id="newPasswordCheck" 
                         type="password" 
                         required={true} 
                         placeholder="password" 
-                        classN="input_text_t1" 
+                        className={"input_type1"}
                         name="newPasswordCheck" 
                         value={newPasswordCheck} 
                         evt="onChange" 
                         onChange={handleNewPasswordCheck} 
                     />
-                    <button>view</button>
                     {newPasswordCheck && (
                         <div>
-                            {passwordIsChecked ? (<span>같음!!</span>) : (<span>같지아너!!</span>)}
-                        </div>
+                          {passwordIsChecked ? (
+                              <SuccessMsg className={"success_type3 align_l gapt_10"}>
+                                  새 비밀번호와 같습니다.
+                              </SuccessMsg>
+                          ) : (
+                              <ErrorMsg className={'error_type3 gapt_10'}>
+                                새 비밀번호가 같지 않습니다. 다시 확인해주세요.
+                              </ErrorMsg>
+                          )}
+                      </div>
                     )}
                 </div>
-             
-                <button className={submitActive ? 'checked' : 'none'} disabled={submitActive ? false : true}>비번변경</button>
+                <div className={`${submitActive ? 'checked' : 'none'} align_c gapt_30`}>
+                    <Button className={'button_type2'} disabled={submitActive ? false : true}>
+                        비밀번호 변경완료
+                    </Button>
+                    {prevPasswordMatched && (
+                        <ErrorMsg className={'error_type3 gapt_15'}>
+                            변경하기 전의 비밀번호와 같습니다. <br />다른 비밀번호로 입력해주세요.
+                        </ErrorMsg>
+                    )}
+                </div>
+               
             </form>
-           {state.passwordEditErrorMessage &&  <p style={{color: 'red'}}>{state.passwordEditErrorMessage}</p>}
+            <div className='align_c gapt_30'>
+                <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                    {state.passwordEditErrorMessage &&  <p>{state.passwordEditErrorMessage}</p>}
+                </ErrorMsg>
+            </div>
         </div>
     )
 }

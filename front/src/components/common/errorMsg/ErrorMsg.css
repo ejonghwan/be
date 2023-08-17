@@ -4,3 +4,11 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+
+
+/* 보조문구 */
+.error_type3 {
+    font-size: 1.3rem;
+    color: var(--text-error-color);
+}

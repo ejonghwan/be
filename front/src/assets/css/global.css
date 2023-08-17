@@ -19,11 +19,14 @@
     --scroll-bg-color: #ffffff;
     --disabled-bg-color: #d9d9d9;
     --disabled-color: #919191;
+    --box-shadow: 3px 7px 19px rgba(0,0,0,0.2);
     
     
     --text-color-white: #fff;
     --text-color1: #555;
+    --text-color2: #999;
     --text-error-color: red;
+    --text-success-color: #2e9e64;
     
     --bg-box-white: #fff;
     --bg-box-color1: rgb(240, 240, 240); 
