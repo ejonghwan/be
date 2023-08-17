@@ -62,7 +62,7 @@ const LoginForm = () => {
                         id="userId" 
                         type="text" 
                         required={true} 
-                        placeholder="id" 
+                        placeholder="아이디를 입력해주세요." 
                         className={"input_type1"}
                         name="userId" 
                         value={userId} 
@@ -76,7 +76,7 @@ const LoginForm = () => {
                         id="userPassword" 
                         type="password" 
                         required={true} 
-                        placeholder="password" 
+                        placeholder="비밀번호를 입력해주세요." 
                         className={"input_type1"}
                         name="userPassword" 
                         value={userPassword} 

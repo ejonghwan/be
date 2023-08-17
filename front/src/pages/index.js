@@ -27,7 +27,7 @@ const RoutesPage = () => {
                 <Route path='/signup' element={<Signup page={'회원가입'} />}></Route>
                 <Route path='/findid' element={<FindId page={'아이디 찾기'} />}></Route>
                 <Route path='/findpassword' element={<FindPassword page={'비밀번호 찾기'} />}></Route>
-                <Route path='/error' element={<Error />}></Route>
+                <Route path='/error' element={<Error page={'에러'}/>}></Route>
                 <Route path='/style/:id' element={<StyleGuide />}></Route>
             </Routes>
         </Layout>

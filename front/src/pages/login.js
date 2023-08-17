@@ -9,9 +9,9 @@ const login = ({ page }) => {
             <h2>{page}</h2>
             <LoginForm />
             <ul className='find_wrap'>
-                <li><HiMiniMagnifyingGlass /><Link to="/findid">아이디 찾기</Link></li>
-                <li><HiOutlineKey /><Link to="/findpassword" >비밀번호 찾기</Link></li>
-                <li><HiOutlineUserPlus /><Link to="/signup">회원가입</Link></li>
+                <li><HiMiniMagnifyingGlass /><Link to="/findid" className='hover_type1'>아이디 찾기</Link></li>
+                <li><HiOutlineKey /><Link to="/findpassword" className='hover_type1'>비밀번호 찾기</Link></li>
+                <li><HiOutlineUserPlus /><Link to="/signup" className='hover_type1'>회원가입</Link></li>
             </ul>
         </div>
     );

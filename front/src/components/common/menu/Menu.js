@@ -42,12 +42,12 @@ const Menu = () => {
                              <Button 
                                 className={'button_type3 list'} 
                                 onClick={() => handleThemaChange('light')}
-                            ><HiOutlineSun /><span>테마 변경</span></Button>
+                            ><HiOutlineSun /><span>밝은 테마</span></Button>
                         ) : (
                             <Button 
                                 className={'button_type3 list'} 
                                 onClick={() => handleThemaChange('dark')}
-                            ><HiOutlineMoon /><span>테마 변경</span></Button>
+                            ><HiOutlineMoon /><span>어두운 테마</span></Button>
                         )}
                     </li>
                     <li>

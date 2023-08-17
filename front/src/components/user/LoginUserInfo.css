@@ -5,7 +5,8 @@
 }
 
 .user_profile_name {
-    margin-right: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
     display: flex;
     align-items: center;
 }

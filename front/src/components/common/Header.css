@@ -22,7 +22,7 @@
 
 #header .header_nav > li {
     flex: 0 0 auto; 
-    padding: 0 15px; 
+    /* padding: 0 15px;  */
     font-size: 1.6rem;
     position: relative;
 }
@@ -49,8 +49,8 @@
     height: 10px;
 } */
 
-#header .header_nav > li > a {
+/* #header .header_nav > li > a {
     padding-top: 10px;
     padding-bottom: 10px;
     
-}
+} */

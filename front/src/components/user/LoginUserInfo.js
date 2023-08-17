@@ -1,14 +1,12 @@
 import { Fragment, useContext } from 'react';
 import { UserContext } from '../../context/UserContext.js'
-import { HiOutlineArrowDownCircle } from "react-icons/hi2";
+import { HiChevronDown } from "react-icons/hi2";
 import LazyImage from '../image/LazyImage.js';
 import Popup from '../common/popup/Popup.js';
 import PopupButton from '../common/popup/PopupButton.js';
 
 import './LoginUserInfo.css';
 import Menu from '../common/menu/Menu.js';
-
-
 
 
 const LoginUserInfo = () => {
@@ -20,7 +18,6 @@ const LoginUserInfo = () => {
             
             <PopupButton>
                 <ul className='user_profile_wrap'>
-                    <li className='user_profile_name'><strong>{name}&nbsp;</strong>님</li>
                     <li>
                         <div className='user_profile_img'>
                             <LazyImage 
@@ -31,7 +28,7 @@ const LoginUserInfo = () => {
                             />
                         </div>
                     </li>
-                    <li><HiOutlineArrowDownCircle /></li>
+                    <li className='user_profile_name'><strong>{name}&nbsp;</strong>님 &nbsp;<HiChevronDown /></li>
                 </ul>
             </PopupButton>
             <Popup className={'popup_type_small'}>

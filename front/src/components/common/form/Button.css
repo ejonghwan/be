@@ -32,3 +32,10 @@
     font-size: inherit;
     
 }
+
+
+button:disabled {
+    background: var(--disabled-bg-color);
+    color: var(--disabled-color);
+    pointer-events: none;
+}

@@ -39,48 +39,48 @@ const Auth = () => {
 
 
     useEffect(() => {
-        return () => {
-            authMail.cancel();
-        }
+        return () => authMail.cancel();
     }, [])
 
 
     return (
         <Fragment>
             {!authState ? (
-                <form onSubmit={handleAuthMailSubmit}>
-                    <div>
-                        <Label htmlFor="email" content="이메일" classN="label_t1"/>
-                        <Input  
-                            id="email" 
-                            className={'input_type1 gapt_10'}
-                            type="email" 
-                            required={true} 
-                            placeholder="email" 
-                            classN="input_text_t1" 
-                            name="email" 
-                            value={email} 
-                            evt="onChange" 
-                            onChange={handleEmail} 
-                        />
+                <Fragment>
+                    <form onSubmit={handleAuthMailSubmit}>
+                        <div>
+                            <Label htmlFor="email" content="이메일" classN="label_t1"/>
+                            <Input  
+                                id="email" 
+                                className={'input_type1 gapt_10'}
+                                type="email" 
+                                required={true} 
+                                placeholder="인증받을 이메일을 입력해주세요." 
+                                classN="input_text_t1" 
+                                name="email" 
+                                value={email} 
+                                evt="onChange" 
+                                onChange={handleEmail} 
+                            />
+                        </div>
+                        <div className="align_c">
+                            <Button className={"button_type2 gapt_30"}>인증메일 보내기</Button>
+                        </div>
+                    </form>
+                    <ErrorMsg className={'error_type1 align_c gapt_40'}>
+                        {state.authNumberErrorMessage && <span>{state.authNumberErrorMessage}</span>}
+                    </ErrorMsg>
+
+                    <div className="gapt_10">
+                        <p>※ 회원가입을 하시려면 메일 인증을 해주세요.</p>
                     </div>
-                    <div className="align_c">
-                        <Button className={"button_type2 gapt_30"}>인증메일 보내기</Button>
-                    </div>
-                </form>
+                </Fragment>
             ) : (
             <SuccessMsg className={'success_type1'}>
                 <strong>인증메일이 발송되었습니다.</strong>
                 <span>발송된 메일의 인증페이지로 회원가입을 진행해주세요.</span>
             </SuccessMsg>
         )}
-         <ErrorMsg className={'error_type1 align_c gapt_40'}>
-            {state.authNumberErrorMessage && <span>{state.authNumberErrorMessage}</span>}
-         </ErrorMsg>
-
-         <div className="gapt_10">
-            <p>※ 회원가입을 하시려면 메일 인증을 해주세요.</p>
-        </div>
         </Fragment>
     )
 }

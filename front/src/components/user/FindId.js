@@ -1,24 +1,16 @@
-import React, { Fragment, useState, useEffect, useCallback, useContext, useMemo } from 'react';
-
-
-// module
+import React, { Fragment, useState, useEffect, useContext, useMemo } from 'react';
 import { useInput } from '../common/hooks/index.js'
-// import { findUserId, nonMemberAuthNumberRequest, nonLoginMemberAuthNumberRequest } from '../../reducers/UserRequest.js'
 import UserRequest from '../../reducers/UserRequest.js';
 import _debounce from 'lodash.debounce';
-
-// components
 import Input from '../common/form/Input.js'
 import Label from '../common/form/Label.js'
 import Timer from '../../components/common/utils/Timer.js'
-
-
-// context & request 
-import { nmaeEditUser, emailEditUser } from '../../reducers/UserRequest.js'
 import { UserContext } from '../../context/UserContext.js'
-
-// util
 import { statusCode } from '../../utils/utils.js'
+import Button from '../common/form/Button.js';
+import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
+import SuccessMsg from '../common/successMsg/SuccessMsg.js';
+
 
 
 const FindId = () => {
@@ -84,14 +76,14 @@ const FindId = () => {
     return (
         <Fragment>
             <form onSubmit={handleAuthNumberSubmit}>
-                <div>
-                    <Label htmlFor="userName" content="이름" classN="label_t1"/>
+                <div className='gap_20'>
+                    <Label htmlFor="userName" content="이름" className={"label_type1"}/>
                     <Input 
                         id="userName" 
                         type="text" 
                         required={true} 
-                        placeholder="userName" 
-                        classN="input_text_t1" 
+                        placeholder="이름을 입력해주세요." 
+                        className={"input_type1"} 
                         name="userName" 
                         value={name} 
                         evt="onChange" 
@@ -99,14 +91,14 @@ const FindId = () => {
                         disabled={authToggle && true}
                     />
                 </div>
-                <div>
-                    <Label htmlFor="userEmail" content="이메일" classN="label_t1"/>
+                <div className='gap_20'>
+                    <Label htmlFor="userEmail" content="이메일" className={"label_type1"}/>
                     <Input 
                         id="userEmail" 
                         type="email" 
                         required={true} 
-                        placeholder="userEmail" 
-                        classN="input_text_t1" 
+                        placeholder="인증할 이메일을 입력해주세요." 
+                        className={"input_type1"} 
                         name="userEmail" 
                         value={email} 
                         evt="onChange" 
@@ -114,44 +106,61 @@ const FindId = () => {
                         disabled={authToggle && true}
                     />
                 </div>
-                {state.mailAuthErrorMessage && <p style={{color: "red"}}> {state.mailAuthErrorMessage }</p>}
-                <button disabled={authToggle && true}>인증번호 보내기</button>
+               
+                <div className='align_c'>
+                    <Button className={'button_type2'} disabled={authToggle && true}>
+                        인증번호 보내기
+                    </Button>
+                    <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                        {state.mailAuthErrorMessage && <p> {state.mailAuthErrorMessage }</p>}
+                    </ErrorMsg>
+                </div>
             </form>
             {/* 829 여기 하다가 감. 인증 만료 시 다시찾기 클릭버튼  */}
 
             {authToggle && (
                 <form onSubmit={handleFindIdSubmit}>
-                  <div>
-                     <Label htmlFor="authNumber" content="메일로 인증번호가 전송되었습니다" classN="label_t1"/>
+                  <div className='gap_20'>
+                     <Label htmlFor="authNumber" content="메일로 인증번호가 전송되었습니다." className={"label_type1"}/>
                      <Input 
                          id="authNumber" 
                          type="text" 
                          required={true} 
                          placeholder="인증번호를 입력해주세요" 
-                         classN="input_text_t1" 
+                         className={"input_type1"} 
                          name="authNumber" 
                          value={authNumber} 
                          evt="onChange" 
                          onChange={handleAuthNumber} 
                          disabled={authTimeout}
                      />
-                     <Timer  
-                        endSecond={180} 
-                        startingPoint={180} 
-                        countingName={'인증번호를 입력해주세요'} 
-                        endMessage={'인증시간이 만료되었습니다'}
-                        callback={() => setAuthTimeout(true)}
-                    />
+                    <div className='gapt_20 align_c'>
+                        <Timer  
+                            endSecond={180} 
+                            startingPoint={180} 
+                            countingName={'인증번호를 입력해주세요.'} 
+                            endMessage={'인증시간이 만료되었습니다. 다시 시도하려면 새로고침 해주세요.'}
+                            callback={() => setAuthTimeout(true)}
+                        />
+                    </div>
+                 </div >
+                 <div className='align_c'>
+                    <Button className={'button_type2'} disabled={authTimeout}>
+                        아이디 찾기
+                    </Button>
+                    <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                        {state.authNumberErrorMessage && <p> {state.authNumberErrorMessage }</p>}
+                    </ErrorMsg>
                  </div>
-                 {state.authNumberErrorMessage && <p style={{color: "red"}}> {state.authNumberErrorMessage }</p>}
-                 <button disabled={authTimeout}>아이디 찾기</button>
              </form>
             )}
-
-            <br /><br />
-            {resMsg.id && (<div>
-                <p>아이디 {resMsg.id}</p>
-            </div>)}
+            
+            {/* 성공시 */}
+            {resMsg.id && (
+                <SuccessMsg className={"success_type"}>
+                    아이디는 <i className='check_txt'>{resMsg.id}</i> 입니다.
+                </SuccessMsg>
+            )}
         </Fragment>
     )
 }

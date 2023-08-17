@@ -1,21 +1,11 @@
-import React, { Fragment, useState, useEffect, useCallback, useContext, useMemo, useRef } from 'react';
-
-
-// module
+import { Fragment, useState, useEffect, useCallback, useContext, useMemo, useRef } from 'react';
 import { useInput } from '../common/hooks/index.js'
-import _debounce from 'lodash.debounce'
-
-// components
+import _debounce from 'lodash.debounce';
 import Input from '../common/form/Input.js'
 import Label from '../common/form/Label.js'
-
-
-// context & request 
-// import { nmaeEditUser, emailEditUser, findUserIdQuestion } from '../../reducers/UserRequest.js'
 import UserRequest from '../../reducers/UserRequest.js'
 import { UserContext } from '../../context/UserContext.js'
 
-// util
 import { statusCode, questionData } from '../../utils/utils.js'
 
 
@@ -32,17 +22,15 @@ const FindIdQuestion = () => {
     const selectRef = useRef(null)
     const [resMsg, setResMsg] = useState({});
 
-    const handleQuestion = useCallback(e => {
-        setQuestionType(e.target.value)
-    }, [questionType, setQuestionType, authToggle])
 
-   
-    /** 아이디 찾기 서브밋 */
+    const handleQuestion = e => setQuestionType(e.target.value)
+
+    // 아이디찾기
     const handleFindIdSubmit = async e => {
         e.preventDefault();
         findIdSubmit();
     }
-    const findIdSubmit = useMemo(() => _debounce(async() => {
+    const findIdSubmit = _debounce(async() => {
         try {
             const findId = await findUserIdQuestion({ name, email, questionType, result }); 
             if(statusCode(findId.status, 2)) { //성공시
@@ -56,22 +44,18 @@ const FindIdQuestion = () => {
         } catch(err) {
             console.error(err)
         }
-    }, 1000), [name, email, questionType, result])
-     /** //아이디 찾기 서브밋 */
+    }, 1000)
 
 
     useEffect(() => {
-        // console.log(resMsg)
-        return () => {
-            findIdSubmit.cancel()
-        }
+        return () => findIdSubmit.cancel()
     }, [name, email, resMsg])
 
 
     return (
         <Fragment>
             <form onSubmit={handleFindIdSubmit}>
-                <div>
+                <div className='gap_20'>
                     <Label htmlFor="userName" content="이름" classN="label_t1"/>
                     <Input 
                         id="userName" 
@@ -86,7 +70,7 @@ const FindIdQuestion = () => {
                         disabled={authToggle && true}
                     />
                 </div>
-                <div>
+                <div className='gap_20'>
                     <Label htmlFor="userEmail" content="이메일" classN="label_t1"/>
                     <Input 
                         id="userEmail" 
@@ -101,7 +85,7 @@ const FindIdQuestion = () => {
                         disabled={authToggle && true}
                     />
                 </div>
-                <div>
+                <div className='gap_20'>
                     <Label htmlFor="question" content="질문" classN="label_t1"/>
                     <select name="question" onChange={handleQuestion} ref={selectRef}>
                         {questionData && questionData.map((data, idx) => {

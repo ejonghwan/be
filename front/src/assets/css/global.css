@@ -1,13 +1,22 @@
 @charset "utf-8";
 
+/* 
+    pc first 
+    pc: 980 up
+    tablet: 980 down
+    mobile: 640 down 
+*/
 
 :root[data-color=light] {
-
     --point-color: #509af9;
     --main-bg-color: #fff;
     --header-bg-color: #f4f4f4;
     --hover-color: #f4f4f4;
     --icon-color: #666666;
+    --scroll-color: #868686;
+    --scroll-bg-color: #ffffff;
+    --disabled-bg-color: #e8f0fd;
+    --disabled-color: #919191;
     
     
     --text-color-white: #fff;
@@ -28,17 +37,44 @@
 
 
 :root[data-color=dark] {
-    --main-bg-color: #0d1117;
-    --header-bg-color: #161b22;
-
-    --text-color1: rgb(194, 194, 194);
-
+    
+    --point-color: #509af9;
+    --main-bg-color: #fff;
+    --header-bg-color: #f4f4f4;
+    --hover-color: #f4f4f4;
+    --icon-color: #666666;
+    --scroll-color: #545151;
+    --scroll-bg-color: #0d1117;
+    
+    
+    --text-color-white: #fff;
+    --text-color1: #555;
+    --text-error-color: red;
+    
+    --bg-box-white: #fff;
     --bg-box-color1: rgb(240, 240, 240); 
     --bg-box-color2: #ddd; 
+    --bg-box-color3: #efefef;; 
 
-    --line-color1: #ddd;
+    --line-color1: #f4f4f4;
+    --line-color2: #ddd;
+
+    --mobile: 960px;
 }
 
+
+
+*::-webkit-scrollbar  { 
+    width: 7px; 
+}
+*::-webkit-scrollbar-thumb {
+    height: 10%; /* 스크롤바의 길이 */
+    background: var(--scroll-color); /* 스크롤바의 색상 */
+    border-radius: 2px;
+};   
+*::-webkit-scrollbar-track {
+    background: var(--scroll-bg-color);  /*스크롤바 뒷 배경 색상*/
+}
 
 
 html,
@@ -73,6 +109,19 @@ body {
     flex: 0 0 auto;
 }
 
+/* hover type1 */
+a.hover_type1,
+button.hover_type1 {
+    padding: 5px 15px;
+    border-radius: 10px;
+}
+
+a.hover_type1:hover, 
+button.hover_type1:hover {
+    background-color: var(--hover-color);
+} 
+
+
 
 /* margin */
 .gapt_5 { margin-top: 5px; }
@@ -102,7 +151,7 @@ body {
 }
 
 h1 {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.8rem;
 }
 
@@ -123,9 +172,14 @@ img {
 }
 
 svg {
-    width: 23px;
-    height: 23px;
+    width: 22px;
+    height: 22px;
     color: var(--icon-color);
+}
+
+.check_txt {
+    font-weight: 600;
+    text-decoration: underline;
 }
 
 .logo {

@@ -12,6 +12,19 @@ input::placeholder {
     color: #9f9f9f;
 }
 
+input[type="text"]:disabled,
+input[type="password"]:disabled,
+input[type="email"]:disabled, 
+input[type="checkbox"]:disabled,
+input[type="file"]:disabled, 
+input[type="radio"]:disabled, 
+input[type="number"]:disabled {
+    background: var(--disabled-bg-color);
+    color: var(--disabled-color);
+}
+
+
+
 .form_wrap {
     display: flex;
     flex-direction: column;
@@ -21,9 +34,7 @@ input::placeholder {
     width: 50%;
 }
 
-.input_type1 {
-    
-}
+.input_type1 {}
 
 
 @media screen and (max-width: 640px) {

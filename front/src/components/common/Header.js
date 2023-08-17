@@ -21,15 +21,15 @@ const Header = () => {
             <nav>
                 <ul className='header_nav'>
                     <li><Link to="/"><h1 className='logo'>HOBBYIST.</h1></Link></li>
-                    <li><Link to="/about">내 습관</Link></li>
+                    <li><Link to="/about" className='hover_type1'>내 습관</Link></li>
                     {state?.isLogged ? (
                        <Fragment>
                         <li><LoginUserInfo /></li>
                       </Fragment>
                     ) : (
                       <Fragment>
-                        <li><Link to="/login">로그인</Link></li>
-                        <li><Link to="/signup">회원가입</Link></li>
+                        <li><Link to="/login" className='hover_type1'>로그인</Link></li>
+                        <li><Link to="/signup" className='hover_type1'>회원가입</Link></li>
                       </Fragment>
                     )}
                     {/* <li><Link to="/signup">signup</Link></li> */}
