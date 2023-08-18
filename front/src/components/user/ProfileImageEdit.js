@@ -15,7 +15,7 @@ const ProfileImageEdit = () => {
     const handleProfileImageEdit = () => setProfileEdit(!profileEdit)
     useEffect(() => {
         if(uploadState) { setProfileEdit(!profileEdit) }
-    }, [state, uploadState, profileEdit])
+    }, [state, uploadState])
     
 
     return (

@@ -65,7 +65,7 @@ const Secession = () => {
                     />
                 </div>
                 <div className='align_c gapt_30'>
-                    <Button className={'button_type2'} disabled={!userPassword}>
+                    <Button className={'button_type5'} disabled={!userPassword}>
                         탈퇴하기
                     </Button>
                     <ErrorMsg className={'error_type1 align_c gapt_30'}>

@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
-
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { ImageProvider } from './context/ImageContext.js'
-import { UserProvider, UserContext } from './context/UserContext.js'
+import { UserProvider } from './context/UserContext.js'
 import { GlobalProvider } from './context/UiContext'
 
 // css
@@ -27,17 +23,14 @@ root.render(
     // <App />
   // </React.StrictMode>
 
-  <React.StrictMode>
     <BrowserRouter>
-        <ToastContainer />
-          <UserProvider>
-            <ImageProvider>
-              <GlobalProvider>
-                <App />
-              </GlobalProvider>
-            </ImageProvider>
-          </UserProvider>
+        <UserProvider>
+          <ImageProvider>
+            <GlobalProvider>
+              <App />
+            </GlobalProvider>
+          </ImageProvider>
+        </UserProvider>
     </BrowserRouter>
-  </React.StrictMode>
 );
 

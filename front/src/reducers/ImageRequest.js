@@ -5,11 +5,7 @@ import { UserContext } from '../context/UserContext.js'
 
 
 
-const host = process.env.REACT_APP_BACKEND_HOST
-
-// console.log('??????????????????????????', process.env.NODE_ENV) //이거 development
-// 오 리액트는 env 안깔아도 환경 되어있음 
-
+const host = process.env.REACT_APP_BACKEND_HOST;
 
 const useImageRequest = () => {
     const { imageState, imageDispatch } = useContext(ImageContext); 
@@ -19,15 +15,14 @@ const useImageRequest = () => {
     const imageUpload = async data => {
         try {
             const { file, name, _id, imgPublic, path } = data;
-
             const formData = new FormData();
             formData.append('image', file) //form data에 배열로 담김
             formData.append('name', name) 
             formData.append('_id', _id) 
             formData.append('public', imgPublic) 
-            console.log('front form: ', data)
             if(!formData) return;
 
+            console.log('imgrequest?', state)
             
             const image = await axios.post(`${host}/api/images/${encodeURIComponent(path)}/${_id}`, formData, {
                 headers: { 
@@ -35,14 +30,13 @@ const useImageRequest = () => {
                     'X-access-token': localStorage.getItem('X-access-token'),
                 },
                 withCredentials: true,
-                onUploadProgress: ProgressEvent => {
-                    // console.log(ProgressEvent)
+                // onUploadProgress: ProgressEvent => {
                     // setPersent( Math.round(100 * ProgressEvent.loaded / ProgressEvent.total) )
-                    setTimeout(() => {
+                    // setTimeout(() => {
                         // setPersent(0)
                         // setFileName(defaultFileName)
-                    }, 3000)
-                }
+                    // }, 3000)
+                // }
             })
 
             // image data는 image model 설계한대로 다 옴
@@ -58,7 +52,6 @@ const useImageRequest = () => {
         }
 
     }
- 
 
 
 

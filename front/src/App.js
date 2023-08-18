@@ -1,15 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { BrowserRouter, useSearchParams  } from 'react-router-dom';
-import axios from 'axios';
-
-// module
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
 import RoutesPage from './pages/index.js'
-
-// util
 import { getQueryString } from './utils/utils.js'
 
 
