@@ -1,22 +1,86 @@
-.imageDropBox {
-    border: 1px dashed #ddd;
-    background: rgb(117, 170, 170);
-    height: 100px;
+.image_dropBox {
+    /* background: var(--bg-box-black); */
+    height: 100%;
     display: flex;
     position: relative;
     justify-content: center;
     align-items: center;
     transition: all .3s;
+    /* opacity: 0.5; */
+    color: var(--text-color-white);
 }
 
-.imageDropBox input {
+.image_dropBox::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-box-black);
+    opacity: .5;
+}
+
+.profile_img_wrap > form {
+    width: 100%;
+    height: 100%;
+}
+
+.profile_img_wrap .compl_btn {
+    color: var(--text-color-white);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    text-align: center;
+}
+
+.profile_img_wrap .compl_btn::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-box-black);
+    opacity: .5;
+
+}
+
+
+.image_dropBox > input {
     opacity: .0;
-    width: 100%; height: 100%;;
+    width: 100%; 
+    height: 100%;;
     position: absolute;
     cursor: pointer;
 }
 
-.imageDropBox:hover {
-    background: black;
+.image_dropBox .profile_text {
+    color: var(--text-color-white);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    text-align: center;
+}
+
+.image_dropBox .profile_text > svg {
+    color: var(--text-color-white);
+    margin-bottom: 5px;
+}
+
+
+
+.image_dropBox:hover {
+    backdrop-filter: blur(1px);
     color: #fff;
+}
+
+.image_dropBox:hover::before {
+    opacity: .8;
 }

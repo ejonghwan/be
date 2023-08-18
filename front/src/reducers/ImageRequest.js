@@ -20,9 +20,7 @@ const useImageRequest = () => {
             formData.append('name', name) 
             formData.append('_id', _id) 
             formData.append('public', imgPublic) 
-            if(!formData) return;
-
-            console.log('imgrequest?', state)
+            if(!formData) return new Error('form data 없음.');
             
             const image = await axios.post(`${host}/api/images/${encodeURIComponent(path)}/${_id}`, formData, {
                 headers: { 

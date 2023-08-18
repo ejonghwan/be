@@ -6,8 +6,6 @@ const findid = ({ page }) => {
         <div>
             <h2>{page}</h2>
             <FindId />
-            <br />
-            <br />
             <FindIdQuestion />
         </div>
     );

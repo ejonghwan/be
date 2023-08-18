@@ -10,6 +10,8 @@
     height: 150px;
     border-radius: 50%;
     overflow: hidden;
+    position: absolute;
+    top: 0;
     
 }
 
@@ -26,10 +28,22 @@
     border-radius: 50%;
 }
 
+.profile_wrap .profile_btn.left {
+    right: auto;
+    left: 0;
+    z-index: 10;
+}
+
+.profile_wrap .profile_btn.left > button{
+    background-color: var(--text-success-color);
+}
+
+
 .profile_wrap .profile_btn > button{
     color: var(--text-color-white);
     background-color: #444;
     border: 4px solid var(--bg-box-white);
+    z-index: 10;
 }
 
 .profile_wrap .profile_btn > button > svg {

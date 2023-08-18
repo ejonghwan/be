@@ -57,7 +57,7 @@ const FindIdQuestion = () => {
 
 
     return (
-        <div className='form_wrap'>
+        <div className='form_wrap gapt_50'>
             <h3 className='form_title gap_20'>
                 <HiOutlineChatBubbleLeftEllipsis />
                 <strong>질문/답으로 찾기</strong>
