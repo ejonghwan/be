@@ -24,8 +24,8 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     const [passwordIsChecked, setPasswordIsChecked] = useState(false) 
     
     // 유효성 검사
-    const [passwordProtected, setPasswordProtected] = useState(null)
-    const [prevPasswordMatched, setPrevPasswordMatched] = useState(null)
+    const [passwordProtected, setPasswordProtected] = useState(null);
+    const [prevPasswordMatched, setPrevPasswordMatched] = useState(null);
     const [submitActive, setSubmitActive] = useState(false);
 
 
@@ -42,12 +42,11 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     const handlePasswordEditSubmit = useCallback(async e => {
         e.preventDefault();
         prevPasswordCheck ? prevPasswordEdit() : newPasswordEdit();
-
     }, [prevPassword, newPassword, state, passwordIsChecked])
 
 
     // 기존 비번 바꾸기
-    const prevPasswordEdit = useMemo(() => _debounce(async() => {
+    const prevPasswordEdit = _debounce(async() => {
         try {   
             if(!prevPassword || !newPassword || !state || !passwordIsChecked) throw new Error('정보 확인해주세요');
             dispatch({ type: "LOADING", loadingMessage: "비번 변경중.." })
@@ -66,11 +65,11 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
         } catch(err) {
             console.error(err)
         }
-    }, 500), [prevPassword, newPassword, state, passwordIsChecked])
+    }, 500)
 
 
     // 비번 찾기
-    const newPasswordEdit = useMemo(() => _debounce(async() => {
+    const newPasswordEdit = _debounce(async() => {
         try {   
             if(!userId && !newPassword && !state && !passwordIsChecked) return console.error('정보 확인해주세요');
             dispatch({ type: "LOADING", loadingMessage: "비번 변경중.." })
@@ -92,8 +91,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
             dispatch({ type: "USER_PASSWORD_EDIT_FAILUE", data: err.err })
             console.error(err)
         }
-    }, 500), [newPassword, state, passwordIsChecked])
-
+    }, 500)
 
     useEffect(() => {
         passwordChecked(newPassword) === true ? setPasswordProtected(true) : setPasswordProtected(false);
@@ -127,7 +125,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                             id="prevPassword" 
                             type="password" 
                             required={true} 
-                            placeholder="prevPassword" 
+                            placeholder="현재 비밀번호를 입력해주세요." 
                             className={"input_type1"} 
                             name="prevPassword" 
                             value={prevPassword} 
@@ -176,7 +174,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                         id="newPasswordCheck" 
                         type="password" 
                         required={true} 
-                        placeholder="password" 
+                        placeholder="위에 입력한 비밀번호를 다시 입력해주세요." 
                         className={"input_type1"}
                         name="newPasswordCheck" 
                         value={newPasswordCheck} 

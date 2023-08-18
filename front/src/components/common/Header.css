@@ -18,12 +18,11 @@
 
 #header .header_nav > li:last-child {
     padding-right: 0;
-    margin-left: 15px;
 }
 
 #header .header_nav > li {
     flex: 0 0 auto; 
-    /* padding: 0 15px;  */
+    padding: 0 5px; 
     font-size: 1.6rem;
     position: relative;
 }

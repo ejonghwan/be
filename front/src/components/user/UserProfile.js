@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback, useContext, useMemo, useRef } from 'react';
+import React, { Fragment, useState, useEffect, useCallback, useContext, useRef } from 'react';
 import _debounce from 'lodash.debounce';
 import { useInput } from '../common/hooks/index.js';
 import Input from '../common/form/Input.js';
@@ -26,7 +26,7 @@ const UserProfile = () => {
     const [authNumber, handleAuthNumber, setAuthNumber] = useInput('');
     
     const { userInfoEditUser, emailEditUser, memberAuthNumberRequest } = UserRequest();
-    const {state, dispatch} = useContext(UserContext);
+    const { state } = useContext(UserContext);
 
     const [timerNumber, setTimerNumber] = useState(false);
 

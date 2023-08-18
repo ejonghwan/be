@@ -13,25 +13,8 @@ const Profile = ({ page }) => {
     return (
         <div>
             <h2>{page}</h2>
-            UserProfile
             <UserProfile />
-            <br />
-            UserPasswordEdit
             <UserPasswordEdit prevPasswordCheck={true}/>
-            <br />
-            FindId
-            <FindId />
-            <br />
-            <br />
-            FindIdQeustion
-            <FindIdQuestion />
-            <br />
-            <br />
-            FindPassword
-            <FindPassword />
-            <br />
-            <br />
-            user delete
             <Secession />
         </div>
     );
