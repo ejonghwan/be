@@ -27,15 +27,17 @@ root.render(
     // <App />
   // </React.StrictMode>
 
-  <BrowserRouter>
-      <ToastContainer />
-        <UserProvider>
-          <ImageProvider>
-            <GlobalProvider>
-              <App />
-            </GlobalProvider>
-          </ImageProvider>
-        </UserProvider>
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+        <ToastContainer />
+          <UserProvider>
+            <ImageProvider>
+              <GlobalProvider>
+                <App />
+              </GlobalProvider>
+            </ImageProvider>
+          </UserProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 );
 

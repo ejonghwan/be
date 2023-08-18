@@ -1,6 +1,6 @@
 import { Fragment, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HiMiniArrowRightOnRectangle, HiOutlineUser, HiOutlineDocumentText, HiOutlineChatBubbleOvalLeftEllipsis, HiOutlineSquare3Stack3D, HiOutlineKey, HiOutlineHandThumbUp, HiMiniArrowLeftOnRectangle, HiOutlineSun, HiOutlineAtSymbol, HiOutlineMoon } from "react-icons/hi2";
+import { HiMiniArrowRightOnRectangle, HiOutlineDocumentText, HiOutlineChatBubbleOvalLeftEllipsis, HiOutlineSquare3Stack3D, HiOutlineKey, HiOutlineHandThumbUp, HiMiniArrowLeftOnRectangle, HiOutlineSun, HiOutlineAtSymbol, HiOutlineMoon, HiOutlineUserCircle } from "react-icons/hi2";
 import { UserContext } from '../../../context/UserContext';
 import LogoutForm from '../../user/LogoutForm';
 import './Menu.css';
@@ -25,7 +25,7 @@ const Menu = () => {
                     <li className='email'>{email}</li>
                 </ul>
                 <ul className='info_menu'>
-                    <li><Link to="/profile" className='list'><HiOutlineUser /><span>내 정보</span></Link></li>
+                    <li><Link to="/profile" className='list'><HiOutlineUserCircle /><span>내 정보</span></Link></li>
                     <li><Link to="" className='list'><HiOutlineDocumentText /><span>내 글</span></Link></li>
                     <li><Link to="" className='list'><HiOutlineChatBubbleOvalLeftEllipsis /><span>내 댓글</span></Link></li>
                     <li><Link to="/profile" className='list'><HiOutlineAtSymbol /><span>이메일 변경</span></Link></li>

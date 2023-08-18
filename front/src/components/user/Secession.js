@@ -44,7 +44,7 @@ const Secession = () => {
     useEffect(() => () => submit.cancel(), [])
 
     return (
-        <div className='form_wrap'>
+        <div className='form_wrap gapt_50'>
             <h3 className='form_title gap_20'>
                 <HiOutlineArrowRightOnRectangle />
                 <strong>회원탈퇴</strong>

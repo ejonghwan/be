@@ -19,7 +19,7 @@ const ProfileImageEdit = () => {
     
 
     return (
-        <Fragment>
+        <div className='gap_50'>
             {profileEdit ? (
                 <div className='profile_wrap'>
                     <div className='profile_img_wrap'>
@@ -46,7 +46,7 @@ const ProfileImageEdit = () => {
                    </div>
                 </div>
             )}
-        </Fragment>
+        </div>
     )
 }
 
