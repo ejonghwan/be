@@ -1,22 +1,15 @@
-import React, { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
 import { useInput } from '../common/hooks/index.js'
-
 import { statusCode } from '../../utils/utils.js'
-
 import Input from '../common/form/Input.js'
 import Label from '../common/form/Label.js'
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
-import LoginUserInfo from './LoginUserInfo.js';
-
-// context
 import { UserContext } from '../../context/UserContext.js'
-// import { loginUser, logoutUser } from '../../reducers/UserRequest.js'
 import UserRequest from '../../reducers/UserRequest.js'
-
-import './LoginForm.css';
 import Button from '../common/form/Button.js';
+import './LoginForm.css';
 
 
 const LoginForm = () => {

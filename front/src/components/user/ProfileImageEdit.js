@@ -1,49 +1,51 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
-
-// components
 import ImageUploadForm from '../image/ImageUploadForm.js' 
 import './ProfileImageEdit.css'
-
-
-// request && context
 import UserRequest from '../../reducers/UserRequest.js';
 import { UserContext } from '../../context/UserContext.js';
+import Button from '../common/form/Button.js';
+import { HiOutlineCamera, HiOutlineXMark } from "react-icons/hi2";
 
 
-const ProfileImageEdit = props => {
-    const { state, dispatch } = useContext(UserContext);
+const ProfileImageEdit = () => {
+    const { state } = useContext(UserContext);
     const [profileEdit, setProfileEdit] = useState(false);
-    const [uploadState, setUploadState] = useState(false)
+    const [uploadState, setUploadState] = useState(false);
 
-    const handleProfileImageEdit = e => {
-        setProfileEdit(!profileEdit)
-    }
-
+    const handleProfileImageEdit = () => setProfileEdit(!profileEdit)
     useEffect(() => {
-        // console.log(state)
-        // console.log('프로필 이미지 수정 컴포넌트? 업로드 상태', uploadState)
         if(uploadState) { setProfileEdit(!profileEdit) }
-    }, [state, uploadState])
+    }, [state, uploadState, profileEdit])
     
 
     return (
         <Fragment>
-            <br /><br />
-            프로필 이미지: <br />
             {profileEdit ? (
-                <Fragment>
-                    {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage.key}`} className="profileImage" />} 
+                <div className='profile_wrap'>
+                    <div className='profile_img_wrap'>
+                        {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage.key}`} className="profileImage" alt="내 프로필 이미지" />} 
+                    </div>
+                    <div className='profile_btn'>
+                        <Button className={'button_type4'} onClick={handleProfileImageEdit} >
+                            <span className='blind'>내 프로필 이미지 변경취소</span>
+                            <HiOutlineXMark />
+                        </Button>
+                    </div>
                     <ImageUploadForm noneSubmitBtn={false} path={"userProfile"} setUploadState={setUploadState} />
-                </Fragment>
+                </div>
             ) : (
-                <div>
-                    {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage.key}`} className="profileImage" />} 
+                <div className='profile_wrap'>
+                    <div className='profile_img_wrap'>
+                        {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage.key}`} className="profileImage" alt="내 프로필 이미지" />} 
+                    </div>
+                   <div className='profile_btn'>
+                        <Button className={'button_type4'} onClick={handleProfileImageEdit} >
+                            <span className='blind'>내 프로필 이미지 변경하기</span>
+                            <HiOutlineCamera />
+                        </Button>
+                   </div>
                 </div>
             )}
-            <button onClick={handleProfileImageEdit}>
-                {profileEdit ? "취소" : "프로필 이미지 설정"}
-            </button>
-            <br /><br />
         </Fragment>
     )
 }

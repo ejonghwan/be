@@ -1,33 +1,33 @@
 
-.popup_userinfo {
+.info_menu {
     width: 200px;
     padding: 15px 0;
 }
 
-.popup_userinfo .name {
+.info_menu .name {
     padding-left: 10px;
 }
 
-.popup_userinfo .name > strong {
+.info_menu .name > strong {
     color: var(--point-color);
 }
 
-.popup_userinfo .email {
+.info_menu .email {
     padding-left: 10px;
     margin-top: 10px;
     padding-bottom: 10px;
 }
 
-.popup_userinfo + .popup_userinfo {
+.info_menu + .info_menu {
     border-top: 1px solid var(--line-color1);
 }
 
 
-.popup_userinfo > li svg {
+.info_menu > li svg {
     margin-right: 15px;
 }
 
-.popup_userinfo > li .list {
+.info_menu > li .list {
     display: inline-block;
     padding: 10px 10px;
     display: flex;
@@ -37,7 +37,7 @@
     font-weight: 500;
 }
 
-.popup_userinfo > li .list:hover {
+.info_menu > li .list:hover {
     background-color: var(--hover-color);
 } 
 

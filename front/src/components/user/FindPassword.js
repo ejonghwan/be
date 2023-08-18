@@ -11,9 +11,6 @@ import { UserContext } from '../../context/UserContext.js'
 import { HiOutlineAtSymbol } from "react-icons/hi2";
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
-
-
-
 /*
     1. nonLoginMemberAuthNumberRequest 이름 메일번호 받아서 인증번호 날림 
     2. 인증번호 입력후 서브밋하면 findUserId으로 아뒤 받아옴 

@@ -15,7 +15,7 @@ import Button from '../common/form/Button.js';
 
 const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     const { prevPasswordEditUser, findPasswordEditUser } = UserRequest();
-    const { state, dispatch } = useContext(UserContext)
+    const { state, dispatch } = useContext(UserContext);
     const navigate = useNavigate();
 
     const [prevPassword, handlePrevPassword, setPrevPassword] = useInput('') 
@@ -114,7 +114,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                 <strong>새 비밀번호 설정</strong>
             </h3>
             <SuccessMsg className={"success_type align_l gap_20"}>
-                아이디는 <i className='check_txt'>{userId}</i> 입니다.
+                아이디는 <i className='check_txt'>{state.user.id ? state.user.id : userId}</i> 입니다.
             </SuccessMsg>
              <form onSubmit={handlePasswordEditSubmit}>
                 {prevPasswordCheck && (

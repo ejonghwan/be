@@ -43,7 +43,7 @@ const UserProfile = () => {
             setUserEmail('');
             setTimerNumber(false);
         };
-    }, [editUserInfoState, editEmailState, editEmailAuthState]);
+    }, [editUserInfoState, editEmailState, editEmailAuthState, setUserEmail]);
 
 
 
@@ -94,7 +94,7 @@ const UserProfile = () => {
                 phoneNumber: userPhoneNumber,
                 _id: state.user._id
             }
-            const res = await userInfoEditUser(userInfo);
+            await userInfoEditUser(userInfo);
             setEditUserInfoState(!editUserInfoState);
         } catch(err) {
             console.error(err);
@@ -124,15 +124,10 @@ const UserProfile = () => {
     
 
     return (
-        <Fragment>
-            <div>프로필</div>
+        <div className='form_wrap'>
             <ul>
-            <li>
-                {/* 수정 / 원래꺼 statㄷ에 넣어야함 */}
-                {/* user profile img */}
-                <ProfileImageEdit />
-            </li>
-            <li>
+                <li><ProfileImageEdit /></li>
+                <li>
                 {editEmailState ? (
                     <Fragment>
                         <form onSubmit={handleEmailAuth}>
@@ -142,7 +137,7 @@ const UserProfile = () => {
                                 type="email" 
                                 required={true} 
                                 placeholder={state.user.email}
-                                classN="input_text_t1" 
+                                className={"input_type1"}
                                 name="userEmail" 
                                 value={userEmail} 
                                 evt="onChange" 
@@ -171,7 +166,7 @@ const UserProfile = () => {
                                     type="text" 
                                     required={true} 
                                     placeholder="인증번호 입력"
-                                    classN="input_text_t1" 
+                                    className={"input_type1"}
                                     name="authNumber" 
                                     value={authNumber} 
                                     evt="onChange" 
@@ -179,8 +174,6 @@ const UserProfile = () => {
                                     disabled={!timerNumber ? false : true}
                                 />
                                 <button disabled={!timerNumber ? false : true}>이메일 변경하기</button>
-                               
-                                <br />
                                 <Timer  
                                     endSecond={180} 
                                     startingPoint={180} 
@@ -210,7 +203,7 @@ const UserProfile = () => {
                                     type="text" 
                                     required={true} 
                                     placeholder={state.user.name}
-                                    classN="input_text_t1" 
+                                    className={"input_type1"}
                                     name="userName" 
                                     value={userName} 
                                     evt="onChange" 
@@ -302,7 +295,7 @@ const UserProfile = () => {
                 <li>가입일: {state.user.createdAt}</li>
                 <li>수정일: {state.user.updatedAt}</li>
             </ul>
-        </Fragment>
+        </div>
     )
 }
 

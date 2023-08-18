@@ -20,23 +20,23 @@ const Menu = () => {
 
     return (
         <Fragment>
-            <ul className='popup_userinfo'>
+            <ul className='info_menu'>
                     <li className='name'>반가워요! <strong>{name}</strong> 님</li>
                     <li className='email'>{email}</li>
                 </ul>
-                <ul className='popup_userinfo'>
+                <ul className='info_menu'>
                     <li><Link to="/profile" className='list'><HiOutlineUser /><span>내 정보</span></Link></li>
                     <li><Link to="" className='list'><HiOutlineDocumentText /><span>내 글</span></Link></li>
                     <li><Link to="" className='list'><HiOutlineChatBubbleOvalLeftEllipsis /><span>내 댓글</span></Link></li>
-                    <li><Link to="" className='list'><HiOutlineAtSymbol /><span>이메일 변경</span></Link></li>
+                    <li><Link to="/profile" className='list'><HiOutlineAtSymbol /><span>이메일 변경</span></Link></li>
                     <li><Link to="/changepassword" className='list'><HiOutlineKey /><span>비밀번호 변경</span></Link></li>
                 </ul>
-                <ul className='popup_userinfo'>
+                <ul className='info_menu'>
                     <li><Link to="" className='list'><HiOutlineSquare3Stack3D /><span>내 습관</span></Link></li>
                     <li><Link to="" className='list'><HiOutlineHandThumbUp /><span>좋아하는 습관</span></Link></li>
                     <li><Link to="" className='list'><HiMiniArrowLeftOnRectangle /><span>신청한 습관</span></Link></li>
                 </ul>
-                <ul className='popup_userinfo'>
+                <ul className='info_menu'>
                     <li>
                         {thema ? (
                              <Button 

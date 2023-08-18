@@ -1,2 +1,26 @@
-.hoho {}
-.profileImage {width: 100px;}
+.profile_wrap {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.profile_wrap .profile_img_wrap {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    
+}
+
+.profile_wrap .profile_img_wrap > img {
+
+}
+
+.profile_wrap .profile_btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+}
