@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from '../components/common/Layout.js';
 import Home from './home.js';
@@ -10,16 +11,21 @@ import FindPassword from './findpassword.js';
 import ChangePassword from './changepassword.js';
 import Error from './error.js';
 import StyleGuide from './guide/styleGuide.js';
+import { UserContext } from './../context/UserContext.js';
+import Protected from './protected/protectedPage.js';
 
 
 
 const RoutesPage = () => {
+
+    const {state, dispatch} = useContext(UserContext);
+
     return (
         <Layout>
             <Routes>
                 <Route path='/' element={<Home />}></Route>
-                <Route path='/about' element={<About page={'어바웃'} />}></Route>
-                <Route path='/profile' element={<Profile page={'프로필'} />}></Route>
+                <Route path='/about' element={state.user.id ? <About page={'내 습관'} /> : <Protected page={'내 습관'}/>}></Route>
+                <Route path='/profile' element={state.user.id ? <Profile page={'프로필'} /> : <Protected page={'프로필'} />}></Route>
                 <Route path='/login' element={ <Login page={'로그인'}/>}></Route>
                 <Route path='/signup' element={<Signup page={'회원가입'} />}></Route>
                 <Route path='/findid' element={<FindId page={'아이디 찾기'} />}></Route>

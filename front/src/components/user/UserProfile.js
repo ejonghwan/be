@@ -8,6 +8,8 @@ import ProfileImageEdit from '../user/ProfileImageEdit.js'
 import UserRequest from '../../reducers/UserRequest.js';
 import { UserContext } from '../../context/UserContext.js';
 import { stringLengthChecked, statusCode  } from '../../utils/utils.js';
+import './UserProfile.css';
+import Button from '../common/form/Button.js';
 
 
 
@@ -15,7 +17,7 @@ const UserProfile = () => {
     const [editUserInfoState, setEditUserInfoState] = useState(false);
     const [editEmailState, setEditEmailState] = useState(false);
     const [editEmailAuthState, setEditEmailAuthState] = useState(false);
-    
+   
     const [userName, handleUserName, setUserName] = useInput('') ;
     const [userGender, handleUserGender, setUserGender] = useInput('') ;
     const [userBirthday, handleUserBirthday, setUserBirthday] = useInput('');
@@ -125,13 +127,13 @@ const UserProfile = () => {
 
     return (
         <div className='form_wrap'>
-            <ul>
-                <li><ProfileImageEdit /></li>
+            <ProfileImageEdit />
+            <ul className='Profile_info_wrap'>
                 <li>
                 {editEmailState ? (
                     <Fragment>
                         <form onSubmit={handleEmailAuth}>
-                            <Label htmlFor="userEmail" content="이메일 수정중" classN="label_t1"/>
+                            <Label htmlFor="userEmail" content="이메일 수정중" className={"label_type1"}/>
                             <Input 
                                 id="userEmail" 
                                 type="email" 
@@ -160,7 +162,7 @@ const UserProfile = () => {
                         {/* 인증 메일 보냈을 시 */}
                         {editEmailAuthState && (
                             <form onSubmit={handleEmailEdit}>
-                                <Label htmlFor="authNumber" content="인증번호 입력" classN="label_t1"/>
+                                <Label htmlFor="authNumber" content="인증번호 입력" className={"label_type1"}/>
                                 <Input 
                                     id="authNumber" 
                                     type="text" 
@@ -186,18 +188,26 @@ const UserProfile = () => {
                        </Fragment>
                     ) : (
                         <Fragment>
-                            이메일: {state.user.email} 
-                            <button type="button" name="email" onClick={handleToggle}>이메일 수정</button>
+                            <strong className='Profile_info_tit'>이메일</strong> 
+                            <div className='Profile_info_cont'>
+                                <p>{state.user.email}</p>
+                                <button type="button" name="email" onClick={handleToggle}>이메일 수정</button>
+                            </div>
                         </Fragment>
                     ) }
                      {state.mailEditErrorMessage && <p style={{color: 'red'}}>{state.mailEditErrorMessage}</p>}
                 </li>
-                <li>아이디: {state.user.id}</li>
+                <li>
+                    <strong className='Profile_info_tit'>아이디</strong>
+                    <div className='Profile_info_cont'>
+                        {state.user.id}
+                    </div>
+                </li>
                 {editUserInfoState ? (
                     <Fragment>
                         <form onSubmit={handleUserInfoEdit}>
                             <li>
-                                <Label htmlFor="userName" content="이름 수정중" classN="label_t1"/>
+                                <Label htmlFor="userName" content="이름 수정중" className={"label_type1"}/>
                                 <Input 
                                     id="userName" 
                                     type="text" 
@@ -213,12 +223,12 @@ const UserProfile = () => {
                             <li>
                                 <span>성별 수정중</span>
                                  <span>
-                                    <Label htmlFor="man" content="남자" classN="label_t1"/>
+                                    <Label htmlFor="man" content="남자" className={"label_type1"}/>
                                     <Input 
                                         id="man" 
                                         type="radio" 
                                         required={true} 
-                                        classN="" 
+                                        className={"input_type1"} 
                                         name="gender" 
                                         value="남" 
                                         evt="onChange" 
@@ -229,12 +239,12 @@ const UserProfile = () => {
                                     />
                                 </span>
                                 <span>
-                                    <Label htmlFor="woman" content="여자" classN="label_t1"/>
+                                    <Label htmlFor="woman" content="여자" className={"label_type1"}/>
                                     <Input 
                                         id="woman" 
                                         type="radio" 
                                         required={true} 
-                                        classN="" 
+                                        className={"input_type1"} 
                                         name="gender" 
                                         value="여" 
                                         evt="onChange" 
@@ -245,13 +255,13 @@ const UserProfile = () => {
                                 </span>
                             </li>
                             <li>
-                                <Label htmlFor="userBirthday" content="생일 수정중" classN="label_t1"/>
+                                <Label htmlFor="userBirthday" content="생일 수정중" className={"label_type1"}/>
                                 <Input 
                                     id="userBirthday" 
                                     type="text" 
                                     required={true} 
                                     placeholder={state.user.birthday}
-                                    classN="input_text_t1" 
+                                    className={"input_type1"}  
                                     name="userBirthday" 
                                     value={userBirthday} 
                                     evt="onChange" 
@@ -262,13 +272,13 @@ const UserProfile = () => {
                                 )}
                             </li>
                             <li>
-                                <Label htmlFor="phoneNumber" content="휴대폰번호 수정중" classN="label_t1"/>
+                                <Label htmlFor="phoneNumber" content="휴대폰번호 수정중" className={"label_type1"}/>
                                 <Input 
                                     id="phoneNumber" 
                                     type="text" 
                                     required={true} 
                                     placeholder={state.user.phoneNumber}
-                                    classN="input_text_t1" 
+                                    className={"input_type1"}  
                                     name="phoneNumber" 
                                     value={userPhoneNumber} 
                                     evt="onChange" 
@@ -285,15 +295,48 @@ const UserProfile = () => {
                     </Fragment>
                 ) : (
                     <Fragment>
-                        <li> 이름: {state.user.name}</li>
-                        <li>성별: {state.user.gender}</li>
-                        <li>생일: {state.user.birthday}</li>
-                        <li>전화번호: {state.user.phoneNumber}</li>
-                        <button type="button" name="userInfo" onClick={handleToggle}>개인정보 수정</button>
+                        <li>
+                            <strong>이름</strong>
+                            <div className='Profile_info_cont'>
+                                {state.user.name}
+                            </div>
+                        </li>
+                        <li>
+                            <strong>성별</strong>
+                            <div className='Profile_info_cont'>
+                                {state.user.gender}
+                            </div>
+                        </li>
+                        <li>
+                            <strong>생일</strong>
+                            <div className='Profile_info_cont'>
+                                {state.user.birthday}
+                            </div>
+                        </li>
+                        <li>
+                            <strong>생일</strong>
+                            <div className='Profile_info_cont'>
+                                {state.user.phoneNumber}
+                            </div>
+                        </li>
+                        <Button className={'button_type2'} name={'userInfo'} onClick={handleToggle} >
+                            개인정보 수정
+                        </Button>
+                        {/* disabled={ userName && userGender && userBirthday} */}
                     </Fragment>
                 )}
-                <li>가입일: {state.user.createdAt}</li>
-                <li>수정일: {state.user.updatedAt}</li>
+                <li>
+                    <strong>가입일</strong>
+                    <div className='Profile_info_cont'>
+                        {state.user.createdAt}
+                    </div>
+                </li>
+                <li>
+                    <strong>수정일</strong>
+                    <div className='Profile_info_cont'>
+                        {state.user.updatedAt}
+                    </div>
+                </li>
             </ul>
         </div>
     )

@@ -1,10 +1,7 @@
-
-
-import ImageUploadForm from '../components/image/ImageUploadForm.js'
-import { Calender } from '../components/calender/Calender.js'
+import { Fragment } from 'react';
+// import { Calender } from '../components/calender/Calender.js'
 import Project from '../components/project/Project.js';
 import './home.css';
-import { Fragment } from 'react';
 
 const Home = () => {
 
@@ -18,10 +15,7 @@ const Home = () => {
                     )
                 })}
             </ul>
-            <br />
-            <ImageUploadForm />
-            <br />
-            <Calender />
+            {/* <Calender /> */}
         </Fragment>
     );
 };

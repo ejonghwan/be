@@ -1,0 +1,8 @@
+.Profile_info_wrap > li {
+    
+}
+
+
+.Profile_info_wrap > li + li {
+    margin-top: 20px;
+}
