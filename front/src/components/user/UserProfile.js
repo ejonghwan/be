@@ -10,6 +10,7 @@ import { UserContext } from '../../context/UserContext.js';
 import { stringLengthChecked, statusCode  } from '../../utils/utils.js';
 import './UserProfile.css';
 import Button from '../common/form/Button.js';
+import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 
 
 
@@ -190,12 +191,18 @@ const UserProfile = () => {
                         <Fragment>
                             <strong className='Profile_info_tit'>이메일</strong> 
                             <div className='Profile_info_cont'>
-                                <p>{state.user.email}</p>
-                                <button type="button" name="email" onClick={handleToggle}>이메일 수정</button>
+                                <span>{state.user.email}</span>
+                                <Button className={'button_type_txt'} name="email" onClick={handleToggle}>
+                                    이메일 수정
+                                </Button>
                             </div>
                         </Fragment>
                     ) }
-                     {state.mailEditErrorMessage && <p style={{color: 'red'}}>{state.mailEditErrorMessage}</p>}
+                    {state.mailEditErrorMessage && 
+                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                            {state.mailEditErrorMessage}
+                        </ErrorMsg>
+                    }
                 </li>
                 <li>
                     <strong className='Profile_info_tit'>아이디</strong>
@@ -288,7 +295,7 @@ const UserProfile = () => {
                                     <p style={{color: "red"}}>휴대폰 번호 11자리로 입력해주세요 [x]</p>
                                 )}
                             </li>
-                            <button>개인정보 변경하기</button>
+                            <button disabled={ !userName && !userGender && !userBirthday}>개인정보 변경하기</button>
                             {state.infoEditErrorMessage && <p style={{color: 'red'}}>{state.infoEditErrorMessage}</p>}
                             <button type="button" name="userInfo" onClick={handleToggle}>취소</button>
                         </form>
@@ -296,48 +303,50 @@ const UserProfile = () => {
                 ) : (
                     <Fragment>
                         <li>
-                            <strong>이름</strong>
+                            <strong className='Profile_info_tit'>이름</strong>
                             <div className='Profile_info_cont'>
                                 {state.user.name}
                             </div>
                         </li>
                         <li>
-                            <strong>성별</strong>
+                            <strong className='Profile_info_tit'>성별</strong>
                             <div className='Profile_info_cont'>
                                 {state.user.gender}
                             </div>
                         </li>
                         <li>
-                            <strong>생일</strong>
+                            <strong className='Profile_info_tit'>생일</strong>
                             <div className='Profile_info_cont'>
                                 {state.user.birthday}
                             </div>
                         </li>
                         <li>
-                            <strong>생일</strong>
+                            <strong className='Profile_info_tit'>생일</strong>
                             <div className='Profile_info_cont'>
                                 {state.user.phoneNumber}
                             </div>
                         </li>
-                        <Button className={'button_type2'} name={'userInfo'} onClick={handleToggle} >
-                            개인정보 수정
-                        </Button>
-                        {/* disabled={ userName && userGender && userBirthday} */}
                     </Fragment>
                 )}
                 <li>
-                    <strong>가입일</strong>
+                    <strong className='Profile_info_tit'>가입일</strong>
                     <div className='Profile_info_cont'>
                         {state.user.createdAt}
                     </div>
                 </li>
                 <li>
-                    <strong>수정일</strong>
+                    <strong className='Profile_info_tit'>수정일</strong>
                     <div className='Profile_info_cont'>
                         {state.user.updatedAt}
                     </div>
                 </li>
             </ul>
+            <div className='align_c gapt_30'>
+                <Button className={'button_type2'} name={'userInfo'} onClick={handleToggle} >
+                    개인정보 수정
+                </Button>
+                {/* disabled={ userName && userGender && userBirthday} */}
+            </div>
         </div>
     )
 }

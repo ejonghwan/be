@@ -1,8 +1,19 @@
 .Profile_info_wrap > li {
-    
+    display: flex;
+    align-items: center;
 }
 
 
 .Profile_info_wrap > li + li {
     margin-top: 20px;
+}
+
+.Profile_info_wrap .Profile_info_tit {
+    flex: 0 0 auto;
+    width: 30%;
+}
+
+.Profile_info_wrap .Profile_info_cont {
+    flex: 1 0 auto;
+    width: 70%;
 }

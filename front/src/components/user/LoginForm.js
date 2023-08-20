@@ -34,7 +34,7 @@ const LoginForm = () => {
             if(statusCode(user.status, 2)) {
                 setUserId('')
                 setUserPassword('')
-                navigate('/')
+                // navigate('/')
                 // cookie 시간과 맞춰서 로그아웃
                 setTimeout(async () => {
                     await logoutUser();

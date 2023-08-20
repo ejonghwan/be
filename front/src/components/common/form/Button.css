@@ -45,6 +45,14 @@
     color: var(--text-color-white);
 }
 
+.button_type_txt {
+    padding: 0;
+    text-decoration: underline;
+    font-weight: 500;
+    color: var(--point-color);
+    font-size: inherit;
+}
+
 
 button:disabled {
     background: var(--disabled-bg-color);
