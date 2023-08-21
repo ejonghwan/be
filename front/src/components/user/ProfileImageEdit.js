@@ -1,10 +1,9 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { HiOutlineCamera, HiOutlineXMark } from "react-icons/hi2";
 import ImageUploadForm from '../image/ImageUploadForm.js' 
-import './ProfileImageEdit.css'
-import UserRequest from '../../reducers/UserRequest.js';
 import { UserContext } from '../../context/UserContext.js';
 import Button from '../common/form/Button.js';
-import { HiOutlineCamera, HiOutlineXMark } from "react-icons/hi2";
+import './ProfileImageEdit.css'
 
 
 const ProfileImageEdit = () => {

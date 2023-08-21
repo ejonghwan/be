@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
 import { useInput } from '../common/hooks/index.js'
 import { statusCode } from '../../utils/utils.js'
@@ -20,6 +20,7 @@ const LoginForm = () => {
     const { loginUser, logoutUser } = UserRequest();
     const {state, dispatch} = useContext(UserContext)
     const navigate  = useNavigate();
+    const location = useLocation();
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -34,11 +35,9 @@ const LoginForm = () => {
             if(statusCode(user.status, 2)) {
                 setUserId('')
                 setUserPassword('')
-                // navigate('/')
-                // cookie 시간과 맞춰서 로그아웃
-                setTimeout(async () => {
-                    await logoutUser();
-                }, 7200000)
+                
+                if(location.pathname === '/login') navigate('/'); // 로그인 창에선 메인으로
+                setTimeout(async () => await logoutUser(), 7200000) // cookie 시간과 맞춰서 로그아웃
             }
         } catch(err) {
             console.error('catch?', err)

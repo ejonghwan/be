@@ -144,6 +144,7 @@ button.hover_type1:hover {
 
 
 /* margin */
+.gapt_0 { margin-top: 0px; }
 .gapt_5 { margin-top: 5px; }
 .gapt_10 { margin-top: 10px; }
 .gapt_15 { margin-top: 15px; }
@@ -151,6 +152,7 @@ button.hover_type1:hover {
 .gapt_30 { margin-top: 30px; }
 .gapt_40 { margin-top: 40px; }
 .gapt_50 { margin-top: 50px; }
+.gap_0 { margin-bottom: 0px; }
 .gap_5 { margin-bottom: 5px; }
 .gap_10 { margin-bottom: 10px; }
 .gap_15 { margin-bottom: 15px; }
@@ -215,6 +217,7 @@ svg {
     font-size: 2.6rem;
 }
 
+
 .align_c {
     text-align: center;
 }
@@ -227,6 +230,10 @@ svg {
     text-align: right;
 }
 
+.flex {
+    display: flex;
+}
+
 .b_conts {
     width: 960px;
     height: 100%;
@@ -234,6 +241,11 @@ svg {
     padding: 30px 0;
 
 }
+
+form {
+    width: 100%;
+}
+
 
 
 @media screen and (max-width: 960px) {

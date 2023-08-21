@@ -5,8 +5,8 @@ import { UserContext } from '../../context/UserContext.js';
 import useImageRequest from '../../reducers/ImageRequest.js';
 import { statusCode } from '../../utils/utils.js';
 import { HiOutlineFolderOpen, HiMiniArrowPath } from "react-icons/hi2";
-import './ImageUploadForm.css';
 import Button from '../common/form/Button.js';
+import './ImageUploadForm.css';
 
 
 
@@ -17,9 +17,7 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
     const [fileName, setFileName] = useState("파일 선택");
     const [persent, setPersent] = useState(0);
     const [imageUrl, setImageUrl] = useState(null);
-    
     const [imageSubmitState, setImageSubmitState] = useState(false);
-    
     const { imageState, imageDispatch } = useContext(ImageContext);
     const { state } = useContext(UserContext);
 

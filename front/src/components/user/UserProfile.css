@@ -1,6 +1,7 @@
 .Profile_info_wrap > li {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 
@@ -16,4 +17,50 @@
 .Profile_info_wrap .Profile_info_cont {
     flex: 1 0 auto;
     width: 70%;
+}
+
+.Profile_info_wrap .btn {
+    margin-left: auto;
+    width: 70%;
+    
+}
+
+
+.update_form {
+    display: flex;
+    align-items: center;
+}
+
+.update_form > form {
+    width: 100%;
+}
+
+.update_form > label {
+    flex: 0 0 auto;
+    width: 30%;
+    margin-bottom: 0;
+}
+
+.update_form > input {
+    flex: 1 0 auto;
+    width: 70%;
+}
+
+
+.gender_wrap {
+    display: flex;
+}
+
+.gender_wrap .gender_item {
+    display: flex;
+    align-items: center;
+}
+
+.gender_wrap .gender_item + .gender_item {
+    margin-left: 15px;
+}
+
+.gender_wrap .gender_item > input[type="radio"] {
+    width: auto;
+    margin: 0 0 0 5px;
 }

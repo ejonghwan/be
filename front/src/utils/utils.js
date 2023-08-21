@@ -143,6 +143,16 @@ export const englishChecked = str => {
    return str.match(regexp) ? true : false;
 }
 
+/**
+ * 영문 체크 (온니 숫자만) 
+ * @param {Number} str - 체크할 인자
+ * @returns {Boolean} - 체크 후 불리언값 리턴
+ */
+export const onlyNumChecked = (str) => {
+    if(!str) return console.error('인자없음');
+    const regexp = /^[0-9]+$/;
+    return str.match(regexp) ? true : false;
+}
 
 /**
  * 영문 체크 (온니 영문만) 
