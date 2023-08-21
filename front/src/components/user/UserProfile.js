@@ -33,8 +33,8 @@ const UserProfile = () => {
     const { userInfoEditUser, emailEditUser, memberAuthNumberRequest } = UserRequest();
     const [timerNumber, setTimerNumber] = useState(false);
 
-    const womanRef = useRef(null) 
-    const manRef = useRef(null) 
+    // const womanRef = useRef(null) 
+    // const manRef = useRef(null) 
 
     const handleToggle = useCallback(e => {
         const { name } = e.target;
@@ -115,15 +115,15 @@ const UserProfile = () => {
         userBirthday && stringLengthChecked(userBirthday, 8) ? setBirthdayLengthChecked(false) : setBirthdayLengthChecked(true)
     }, [userBirthday]);
 
-    useEffect(() => {
-        if(state.user.gender === '남') {
-            setUserGender(manRef.current && manRef.current.defaultValue); //radio value
-            manRef.current && manRef.current.setAttribute('checked', true);
-        } else {
-            setUserGender(womanRef.current && womanRef.current.defaultValue); //radio value
-            womanRef.current && womanRef.current.setAttribute('checked', true)
-        }
-    }, [editUserInfoState]);
+    // useEffect(() => {
+    //     if(state.user.gender === '남') {
+    //         setUserGender(manRef.current && manRef.current.defaultValue); //radio value
+    //         manRef.current && manRef.current.setAttribute('checked', true);
+    //     } else {
+    //         setUserGender(womanRef.current && womanRef.current.defaultValue); //radio value
+    //         womanRef.current && womanRef.current.setAttribute('checked', true)
+    //     }
+    // }, [editUserInfoState]);
 
 
     
@@ -259,7 +259,7 @@ const UserProfile = () => {
                                                 value="남" 
                                                 evt="onChange" 
                                                 onChange={handleUserGender} 
-                                                ref={manRef}
+                                                // ref={manRef}
                                                 // checked={state.user.gender === '남' ? true : false}
                                                 // 이거 수정할떄 체크안됨 
                                             />
@@ -275,7 +275,7 @@ const UserProfile = () => {
                                                 value="여" 
                                                 evt="onChange" 
                                                 onChange={handleUserGender}
-                                                ref={womanRef} 
+                                                // ref={womanRef} 
                                                 // checked={state.user.gender === '여' ? true : false}
                                             />
                                         </div>

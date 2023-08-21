@@ -44,6 +44,7 @@ select {
     justify-content: center;
     align-items: center;
     z-index: 5;
+    pointer-events: none;
 }
 
 /* .selectbox_type1 .svg_wrap svg {

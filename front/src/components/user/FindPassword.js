@@ -152,7 +152,7 @@ const FindPassword = () => {
                                 endSecond={180} 
                                 startingPoint={180} 
                                 countingName={'인증번호를 입력해주세요.'} 
-                                endMessage={'인증시간이 만료되었습니다. 다시 시도하려면 새로고침 해주세요.'}
+                                endMessage={'인증시간이 만료되었습니다.\n다시 시도하려면 새로고침 해주세요.'}
                                 callback={() => setAuthTimeout(true)}
                             />
                         </div>

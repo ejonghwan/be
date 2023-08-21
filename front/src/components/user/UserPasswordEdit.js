@@ -169,7 +169,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                 </div>
               
                 <div className='gap_20'>
-                    <Label htmlFor="newPasswordCheck" content="새로운 비밀번호 체크" className={"label_type1"} />
+                    <Label htmlFor="newPasswordCheck" content="새로운 비밀번호 확인" className={"label_type1"} />
                     <Input 
                         id="newPasswordCheck" 
                         type="password" 

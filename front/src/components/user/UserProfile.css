@@ -1,6 +1,6 @@
 .Profile_info_wrap > li {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
 }
 
@@ -9,9 +9,14 @@
     margin-top: 20px;
 }
 
+.Profile_info_wrap > li:first-child .Profile_info_tit{
+    margin-top: 0px;
+}
+
 .Profile_info_wrap .Profile_info_tit {
     flex: 0 0 auto;
     width: 30%;
+    margin-top: 15px;
 }
 
 .Profile_info_wrap .Profile_info_cont {

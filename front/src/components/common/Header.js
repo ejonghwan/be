@@ -29,7 +29,7 @@ const Header = () => {
                     ) : (
                       <Fragment>
                         <li><Link to="/login" className='hover_type1'>로그인</Link></li>
-                        <li><Link to="/signup" className='hover_type1'>회원가입</Link></li>
+                        <li><Link to="/signuppage" className='hover_type1'>회원가입</Link></li>
                       </Fragment>
                     )}
                     {/* <li><Link to="/signup">signup</Link></li> */}

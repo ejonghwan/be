@@ -2,25 +2,19 @@ import React, { useState, useEffect, useCallback, useContext, useMemo } from 're
 import { useSearchParams, useNavigate, useLocation, createBrowserHistory } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
 import Cookies from 'universal-cookie';
- 
-
-
-// module
 import { useInput, useInputRadio } from '../components/common/hooks/index.js'
-
-// components
 import Input from '../components/common/form/Input.js'
 import Label from '../components/common/form/Label.js'
-// import ImageUploadForm from '../components/image/ImageUploadForm.js' 
-
-// context & request 
-// import { signupUser } from '../reducers/UserRequest.js'
 import UserRequest from '../reducers/UserRequest.js';
-// import ImageRequest from '../reducers/ImageRequest.js';
 import { UserContext } from '../context/UserContext.js';
-
-// util
-import { questionData, statusCode, passwordChecked, englishChecked, stringLengthChecked } from '../utils/utils.js'
+import { questionData, statusCode, passwordChecked, englishChecked, stringLengthChecked, onlyNumChecked } from '../utils/utils.js'
+import SuccessMsg from '../components/common/successMsg/SuccessMsg.js';
+import './signup.css';
+import ErrorMsg from '../components/common/errorMsg/ErrorMsg.js';
+import { HiOutlineChevronDown } from "react-icons/hi2";
+import Button from '../components/common/form/Button.js';
+import Use from '../components/common/terms/use.js'
+import Info from '../components/common/terms/info.js'
 
 
 // 회원가입 시 메일인증
@@ -39,17 +33,7 @@ import { questionData, statusCode, passwordChecked, englishChecked, stringLength
 
 
 
-
-
-// 카카오 네이버 로그인 추가 
-// https://lts0606.tistory.com/489
-
-// 로봇인증 추가
-
-// 2시간 지나면 로그아웃되는 로직 추가
-
-
-const Signup = () => {
+const Signup = ({ page }) => {
     
     const { signupUser } = UserRequest();
     // const { imageUpload } = ImageRequest();
@@ -60,7 +44,6 @@ const Signup = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const email = decodeURIComponent(searchParams.get('email'));
-
 
     const [userId, handleUserId] = useInput('') 
     const [userPassword, handlePassword] = useInput('') 
@@ -81,8 +64,6 @@ const Signup = () => {
     const [birthdayLengthChecked, setBirthdayLengthChecked] = useState(false)
     const [profileImage, setProfileImage] = useState(null)
   
-   
- 
 
     const handleTerms = useCallback(e => {
         // setTerms({
@@ -104,9 +85,6 @@ const Signup = () => {
         signup();
     }
 
-useEffect(() => {
-    console.log(profileImage)
-}, [])
    
 
     const signup = useMemo(() => _debounce(async() => {
@@ -159,7 +137,7 @@ useEffect(() => {
     }, [userId])
 
     useEffect(() => {
-        phoneNumber && stringLengthChecked(phoneNumber, 11) ? setPhoneNumberLengthChecked(false) : setPhoneNumberLengthChecked(true)
+        phoneNumber && onlyNumChecked(phoneNumber) ? setPhoneNumberLengthChecked(false) : setPhoneNumberLengthChecked(true)
     }, [phoneNumber]) 
 
     useEffect(() => {
@@ -168,7 +146,7 @@ useEffect(() => {
 
     useEffect(() => {
         userPassword && userPassword === userPasswordCheck ? setPasswordIsChecked(true) : setPasswordIsChecked(false);
-    }, [userPasswordCheck])
+    }, [userPasswordCheck, userPassword])
 
 
     useEffect(() => {
@@ -198,182 +176,269 @@ useEffect(() => {
             
         */
         <div>
-            
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <Label htmlFor="userEmail" content="이메일" classN="label_t1"/>
-                    <span>{email} / 인증완료</span>
-                </div>
-                <div>
-                    <Label htmlFor="userId" content="아이디" classN="label_t1"/>
-                    <Input  
-                        id="userId" 
-                        type="text" 
-                        required={true} 
-                        placeholder="id" 
-                        classN="input_text_t1" 
-                        name="userId" 
-                        value={userId} 
-                        evt="onChange" 
-                        onChange={handleUserId} 
-                    />
-                    {englishCheckedState && (<span style={{color: "red"}}>영문, 숫자 조합으로만 작성해주세요</span>)}
-                </div>
-                <div>
-                    <Label htmlFor="userPassword" content="비밀번호" classN="label_t1"/>
-                    <Input  
-                        id="userPassword" 
-                        type="password" 
-                        required={true} 
-                        placeholder="password" 
-                        classN="input_text_t1"
-                        name="userPassword" 
-                        value={userPassword} 
-                        evt="onChange" 
-                        onChange={handlePassword} 
-                    />
-                    <button type="button">view password</button>
-                    {passwordProtected ? (
-                        <p style={{color: "blue"}}>8~ 16글자 + 1개 이상의 숫자 + 1개 이상의 특수문자 + 온니 영문[o]</p>
-                    ) : (
-                        <p style={{color: "red"}}>8~ 16글자 + 1개 이상의 숫자 + 1개 이상의 특수문자 + 온니 영문 [x]</p>
-                    )}
-                </div>
-                <div>
-                    <Label htmlFor="userPasswordCheck" content="비밀번호 체크" classN="label_t1"/>
-                    <Input 
-                        id="userPasswordCheck" 
-                        type="password" 
-                        required={true} 
-                        placeholder="password" 
-                        classN="input_text_t1" 
-                        name="userPasswordCheck" 
-                        value={userPasswordCheck} 
-                        evt="onChange" 
-                        onChange={handlePasswordCheck} 
-                    />
-                    <button type="button">view password</button>
-                    { userPasswordCheck && (
-                        <div>
-                            {passwordIsChecked ? (<span>같음!!</span>) : (<span>같지아너!!</span>)}
+            <h2>{page}</h2>
+                <div className='form_wrap'>
+                
+                <form onSubmit={handleSubmit}>
+                    <ul className='Profile_info_wrap'>
+                        <li>
+                            <strong className='Profile_info_tit'>
+                                <Label htmlFor="userEmail" content="이메일" className={"label_type1"} />
+                            </strong>
+                            <div className='Profile_info_cont'>
+                                <span>{email}</span>
+                                <SuccessMsg className={"success_type3 align_l gapt_5"}>인증완료</SuccessMsg>
+                            </div>
+                        </li>
+                        <li>
+                            <strong className='Profile_info_tit'>
+                                <Label htmlFor="userId" content="아이디" className={"label_type1 gap_0"} />
+                            </strong>
+                            <div className='Profile_info_cont'>
+                                <Input  
+                                    id="userId" 
+                                    type="text" 
+                                    required={true} 
+                                    placeholder="아이디를 입력해주세요." 
+                                    className={"input_type1"}  
+                                    name="userId" 
+                                    value={userId} 
+                                    evt="onChange" 
+                                    onChange={handleUserId} 
+                                />
+                                {englishCheckedState && 
+                                    <ErrorMsg className={'error_type3'}>
+                                        영문, 숫자 조합으로만 작성해주세요.
+                                    </ErrorMsg>
+                                }
+                            </div>
+                        </li>
+                        <li>
+                            <strong className='Profile_info_tit'>
+                                <Label htmlFor="userPassword" content="비밀번호" className={"label_type1 gap_0"} />
+                            </strong>
+                            <div className='Profile_info_cont'>
+                                <Input  
+                                    id="userPassword" 
+                                    type="password" 
+                                    required={true} 
+                                    placeholder="비밀번호를 입력해주세요." 
+                                    className={"input_type1"}  
+                                    name="userPassword" 
+                                    value={userPassword} 
+                                    evt="onChange" 
+                                    onChange={handlePassword} 
+                                />
+                               {passwordProtected ? (
+                                    <SuccessMsg className={"success_type3 align_l gapt_10"}>
+                                        안전한 비밀번호입니다.
+                                    </SuccessMsg>
+                                ) : (
+                                    <ErrorMsg className={'error_type3 gapt_10'}>
+                                        8~16글자에 숫자와 특수문자를 조합해주세요.
+                                    </ErrorMsg>
+                                )}
+                            </div>
+                        </li>
+                        <li>
+                            <strong className='Profile_info_tit'>
+                                <Label htmlFor="userPasswordCheck" content="비밀번호 체크" className={"label_type1 gap_0"} />
+                            </strong>
+                            <div className='Profile_info_cont'>
+                                <Input 
+                                    id="userPasswordCheck" 
+                                    type="password" 
+                                    required={true} 
+                                    placeholder="비밀번호를 한번 더 입력해주세요." 
+                                    className={"input_type1"}  
+                                    name="userPasswordCheck" 
+                                    value={userPasswordCheck} 
+                                    evt="onChange" 
+                                    onChange={handlePasswordCheck} 
+                                />
+                                {passwordIsChecked ? (
+                                    <SuccessMsg className={"success_type3 align_l gapt_10"}>
+                                        비밀번호가 일치합니다.
+                                    </SuccessMsg>
+                                ) : (
+                                    <ErrorMsg className={'error_type3 gapt_10'}>
+                                        입력한 비밀번호와 일치하지 않습니다.
+                                    </ErrorMsg>
+                                )}
+                            </div>
+                        </li>
+                        <li>
+                            <strong className='Profile_info_tit'>
+                                <Label htmlFor="userName" content="이름" className={"label_type1 gap_0"} />
+                            </strong>
+                            <div className='Profile_info_cont'>
+                                <Input 
+                                    id="userName" 
+                                    type="text" 
+                                    required={true} 
+                                    placeholder="이름을 입력해주세요." 
+                                    className={"input_type1"} 
+                                    name="userName" 
+                                    value={userName} 
+                                    evt="onChange" 
+                                    onChange={handleUserName} 
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <strong className='Profile_info_tit'>
+                                <Label htmlFor="phoneNumber" content="전화번호" className={"label_type1 gap_0"} />
+                            </strong>
+                            <div className='Profile_info_cont'>
+                                <Input 
+                                    id="phoneNumber" 
+                                    type="tel" 
+                                    required={true} 
+                                    placeholder="전화번호를 입력해주세요." 
+                                    className={"input_type1"} 
+                                    name="phoneNumber" 
+                                    value={phoneNumber} 
+                                    evt="onChange" 
+                                    onChange={handlePhoneNumber} 
+                                />
+                                 {phoneNumberLengthChecked && (
+                                    <ErrorMsg className={'error_type3'}>
+                                        휴대폰 번호는 -없이 숫자만 입력해주세요.
+                                    </ErrorMsg>
+                                )}
+                            </div>
+                        </li>
+                        <li>
+                            <strong className='Profile_info_tit gapt_0'>성별</strong>
+                            <div className='Profile_info_cont gender_wrap'>
+                                <div className='gender_item'>
+                                    <Label htmlFor="man" content="남자" className={"label_type1 gap_0"} />
+                                    <Input 
+                                        id="man" 
+                                        type="radio" 
+                                        required={true} 
+                                        className={"input_type1"} 
+                                        name="gender" 
+                                        value="남" 
+                                        evt="onChange" 
+                                        onChange={handleGender} 
+                                        checked={true}
+                                    />
+                                </div>
+                                <div className='gender_item'>
+                                    <Label htmlFor="woman" content="여자" className={"label_type1 gap_0"} />
+                                    <Input 
+                                        id="woman" 
+                                        type="radio" 
+                                        required={true} 
+                                        className={"input_type1"} 
+                                        name="gender" 
+                                        value="여" 
+                                        evt="onChange" 
+                                        onChange={handleGender} 
+                                    />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <strong className='Profile_info_tit'>
+                                <Label htmlFor="birthday" content="생년월일" className={"label_type1 gap_0"} />
+                            </strong>
+                            <div className='Profile_info_cont'>
+                                <Input 
+                                    id="birthday" 
+                                    type="text" 
+                                    required={true} 
+                                    placeholder="생일을 입력해주세요. 19870907" 
+                                    className={"input_type1"} 
+                                    name="birthday" 
+                                    value={birthday} 
+                                    evt="onChange" 
+                                    onChange={handleBirthday} 
+                                />
+                                 {birthdayLengthChecked && (
+                                    <ErrorMsg className={'error_type3'}>
+                                        생일 8자리로 입력해주세요.
+                                    </ErrorMsg>
+                                )}
+                            </div>
+                        </li>   
+                        <li>
+                            <strong className='Profile_info_tit'>
+                                <Label htmlFor="question" content="질문" className={"label_type1 gap_0"} />
+                            </strong>
+                            <div className='Profile_info_cont'>
+                                <div className='selectbox_type1'>
+                                    <select name="question" onChange={handleQuestion}>
+                                        {   
+                                            questionData && questionData.map((data, idx) => {
+                                                return <option key={idx} value={data.questionType}>{data.question}</option>
+                                            })
+                                        }
+                                    </select>
+                                    <span class="svg_wrap"><HiOutlineChevronDown /></span>
+                                </div>
+
+                            </div>
+                        </li>   
+                        <li>
+                            <strong className='Profile_info_tit'>
+                                <Label htmlFor="result" content="답" className={"label_type1 gap_0"} />
+                            </strong>
+                            <div className='Profile_info_cont'>
+                                <div className='selectbox_type1'>
+                                    <Input 
+                                        id="result" 
+                                        type="text" 
+                                        required={true} 
+                                        placeholder="질문의 답을 입력해주세요." 
+                                        className={"input_type1"} 
+                                        name="result" 
+                                        value={result} 
+                                        evt="onChange" 
+                                        onChange={handleResult} 
+                                    />
+                                </div>
+                                
+                            </div>
+                        </li>   
+
+
+
+
+                    </ul>
+
+                    <div className='gapt_40'>
+                        <div className='use'>
+                            <strong>이용약관</strong>
+                            <div><Use /></div>
                         </div>
-                    ) }
-                </div>
-                <div>
-                    <Label htmlFor="userName" content="이름" classN="label_t1"/>
-                    <Input 
-                        id="userName" 
-                        type="text" 
-                        required={true} 
-                        placeholder="userName" 
-                        classN="input_text_t1" 
-                        name="userName" 
-                        value={userName} 
-                        evt="onChange" 
-                        onChange={handleUserName} 
-                    />
-                </div>
-                <div>
-                    <Label htmlFor="phoneNumber" content="전화번호" classN="label_t1"/>
-                    <Input 
-                        id="phoneNumber" 
-                        type="tel" 
-                        required={true} 
-                        placeholder="phoneNumber" 
-                        classN="input_text_t1" 
-                        name="phoneNumber" 
-                        value={phoneNumber} 
-                        evt="onChange" 
-                        onChange={handlePhoneNumber} 
-                    />
-                    {phoneNumberLengthChecked && (
-                        <p style={{color: "red"}}>휴대폰 번호 11자리로 입력해주세요 [x]</p>
-                    )}
-                </div>
-                <div>
-                    성별:
-                    <span>
-                        <Label htmlFor="man" content="남자" classN="label_t1"/>
+                        <div className='info'>
+                            <strong>개인정보 이용동의</strong>
+                            <div><Info /></div>
+                        </div>
+                        <p></p>
                         <Input 
-                            id="man" 
-                            type="radio" 
-                            required={true} 
-                            classN="" 
-                            name="gender" 
-                            value="남" 
-                            evt="onChange" 
-                            onChange={handleGender} 
-                            checked={true}
+                            id="userTerms" 
+                            type="checkbox"  
+                            classN="input_check_t1"
+                            onChange={handleTerms}
+                            name="hoho"
                         />
-                    </span>
-                    <span>
-                        <Label htmlFor="woman" content="여자" classN="label_t1"/>
-                         <Input 
-                            id="woman" 
-                            type="radio" 
-                            required={true} 
-                            classN="" 
-                            name="gender" 
-                            value="여" 
-                            evt="onChange" 
-                            onChange={handleGender} 
-                        />
-                    </span>
-                </div>
-                <div>
-                    <Label htmlFor="birthday" content="생년월일" classN="label_t1"/>
-                    <Input 
-                        id="birthday" 
-                        type="number" 
-                        required={true} 
-                        placeholder="19870907 8자리" 
-                        classN="input_text_t1" 
-                        name="birthday" 
-                        value={birthday} 
-                        evt="onChange" 
-                        onChange={handleBirthday} 
-                    />
-                    {birthdayLengthChecked && (
-                        <p style={{color: "red"}}>생일 8자리로 입력해주세요 [x]</p>
-                    )}
-                </div>
-                <div>
-                    <Label htmlFor="question" content="질문" classN="label_t1"/>
-                    <select name="question" onChange={handleQuestion}>
-                        {   
-                            questionData && questionData.map((data, idx) => {
-                                return <option key={idx} value={data.questionType}>{data.question}</option>
-                            })
-                        }
-                    </select>
-               
-                    <Label htmlFor="result" content="답" classN="label_t1"/>
-                    <Input 
-                        id="result" 
-                        type="text" 
-                        required={true} 
-                        placeholder="result" 
-                        classN="input_text_t1" 
-                        name="result" 
-                        value={result} 
-                        evt="onChange" 
-                        onChange={handleResult} 
-                    />
-                </div>
-                <div>
-                    <Label htmlFor="userTerms" content="가입 동의?" classN="label_t1"/>
-                    <Input 
-                        id="userTerms" 
-                        type="checkbox"  
-                        classN="input_check_t1"
-                        onChange={handleTerms}
-                        name="hoho"
-                    />
-                    {terms ? (<span>동의허심</span>) : (<span>동의는 필수</span>)}
-                </div>
-                <button type="submit" className={submitActive ? 'checked' : 'none'} disabled={submitActive ? false : true}>회원가입</button>
-            </form>
-            {state.signupErrorMessage && <p style={{color: "red"}}>{state.signupErrorMessage}</p>}
+                         <Label htmlFor="userTerms" content="약관에 동의하시겠습니까 ?" className={"label_type1"} />
+                        {terms ? (<span>동의허심</span>) : (<span>동의는 필수</span>)}
+                    </div>
+                   
+                    <div className='align_c gapt_30'>
+                        <Button className={`'button_type2' ${submitActive ? 'checked' : 'none'}`} disabled={submitActive ? false : true}>
+                            회원가입
+                        </Button>
+                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                            {state.signupErrorMessage && <p> {state.signupErrorMessage}</p>}
+                        </ErrorMsg>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

@@ -4,7 +4,8 @@ import Layout from '../components/common/Layout.js';
 import Home from './home.js';
 import About from './about.js';
 import Profile from './profile.js';
-import Signup from './signupPage.js';
+import Signup from './signup.js';
+import SignupPage from './signupPage.js';
 import Login from './login.js';
 import FindId from './findid.js';
 import FindPassword from './findpassword.js';
@@ -28,6 +29,7 @@ const RoutesPage = () => {
                 <Route path='/profile' element={state.user.id ? <Profile page={'내 정보'} /> : <Protected page={'내 정보'} />}></Route>
                 <Route path='/login' element={ <Login page={'로그인'}/>}></Route>
                 <Route path='/signup' element={<Signup page={'회원가입'} />}></Route>
+                <Route path='/signuppage' element={<SignupPage page={'회원가입'} />}></Route>
                 <Route path='/findid' element={<FindId page={'아이디 찾기'} />}></Route>
                 <Route path='/findpassword' element={<FindPassword page={'비밀번호 찾기'} />}></Route>
                 <Route path='/changepassword' element={<ChangePassword page={'비밀번호 변경'} />}></Route>
