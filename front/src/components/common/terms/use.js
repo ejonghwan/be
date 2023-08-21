@@ -1,7 +1,7 @@
-
+import './terms.css'
 const use = () => {
     return (
-        <div>
+        <div className='terms_use'>
         <strong>제 1 장 총칙</strong>
         <ul>
             <li>

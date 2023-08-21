@@ -101,7 +101,7 @@ const FindIdQuestion = () => {
                                 return <option key={idx} value={data.questionType}>{data.question}</option>
                             })}
                         </select>
-                        <span class="svg_wrap"><HiOutlineChevronDown /></span>
+                        <span className="svg_wrap"><HiOutlineChevronDown /></span>
                     </div>
                 </div>
                 <div className='gap_20'>

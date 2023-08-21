@@ -13,8 +13,9 @@ import './signup.css';
 import ErrorMsg from '../components/common/errorMsg/ErrorMsg.js';
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import Button from '../components/common/form/Button.js';
-import Use from '../components/common/terms/use.js'
-import Info from '../components/common/terms/info.js'
+import Use from '../components/common/terms/use.js';
+import Info from '../components/common/terms/info.js';
+import Acc from '../components/common/accordion/Accordion.js';
 
 
 // 회원가입 시 메일인증
@@ -84,6 +85,24 @@ const Signup = ({ page }) => {
         e.preventDefault();
         signup();
     }
+
+
+    const accData = [
+        {   
+            id:0,
+            header: <strong className="tit">이용 약관</strong>, 
+            body: <Use />,
+            done: false,
+        },
+        {
+            id:1,
+            header: <strong className="tit">개인정보 이용동의</strong>, 
+            body: <Info />,
+            done: false,
+           
+        },
+    ]
+
 
    
 
@@ -376,7 +395,7 @@ const Signup = ({ page }) => {
                                             })
                                         }
                                     </select>
-                                    <span class="svg_wrap"><HiOutlineChevronDown /></span>
+                                    <span className="svg_wrap"><HiOutlineChevronDown /></span>
                                 </div>
 
                             </div>
@@ -399,38 +418,36 @@ const Signup = ({ page }) => {
                                         onChange={handleResult} 
                                     />
                                 </div>
-                                
                             </div>
                         </li>   
-
-
-
-
                     </ul>
 
                     <div className='gapt_40'>
-                        <div className='use'>
-                            <strong>이용약관</strong>
-                            <div><Use /></div>
-                        </div>
-                        <div className='info'>
-                            <strong>개인정보 이용동의</strong>
-                            <div><Info /></div>
-                        </div>
-                        <p></p>
-                        <Input 
-                            id="userTerms" 
-                            type="checkbox"  
-                            classN="input_check_t1"
-                            onChange={handleTerms}
-                            name="hoho"
+                        <Acc 
+                            data={accData} 
+                            className={"acc"}
                         />
-                         <Label htmlFor="userTerms" content="약관에 동의하시겠습니까 ?" className={"label_type1"} />
-                        {terms ? (<span>동의허심</span>) : (<span>동의는 필수</span>)}
+                        <div className='terms'>
+                            <Input 
+                                id="userTerms" 
+                                type="checkbox"  
+                                className={"input_type1"} 
+                                onChange={handleTerms}
+                                name="hoho"
+                            />
+                            <Label htmlFor="userTerms" content="약관에 동의하시겠습니까 ?" className={"label_type1 gap_0"} />
+                        </div>
+                         
+                        
+                        {terms ? (
+                            <SuccessMsg className={"success_type3 align_l gapt_10"}>약관에 동의하셨습니다.</SuccessMsg>
+                        ) : (
+                            <ErrorMsg className={'error_type3 gapt_10'}>약관 동의는 필수입니다.</ErrorMsg>
+                        )}
                     </div>
                    
                     <div className='align_c gapt_30'>
-                        <Button className={`'button_type2' ${submitActive ? 'checked' : 'none'}`} disabled={submitActive ? false : true}>
+                        <Button className={`button_type2 ${submitActive ? 'checked' : 'none'}`} disabled={submitActive ? false : true}>
                             회원가입
                         </Button>
                         <ErrorMsg className={'error_type1 align_c gapt_30'}>

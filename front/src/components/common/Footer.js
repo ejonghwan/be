@@ -4,7 +4,8 @@ const Footer = () => {
     return (
         <footer id='footer'>
             <ul>
-                <li>footer</li>
+                <li>이용문의 </li>
+                <li>Copyright © HOBBYIST all rights reserved</li>
             </ul>
         </footer>
     );

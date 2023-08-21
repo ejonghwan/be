@@ -1,0 +1,17 @@
+.terms_use,
+.terms_info {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+
+.terms_use li + li,
+.terms_info li + li {
+    margin-top: 10px;
+}
+
+.terms_use strong,
+.terms_info strong {
+    display: block;
+    margin-bottom: 10px;
+}

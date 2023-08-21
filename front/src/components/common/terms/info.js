@@ -1,9 +1,9 @@
-import React from 'react';
+import './terms.css'
 
 const info = () => {
 
     return (
-       <div>
+       <div className='terms_info'>
             <strong>1. 개인정보의 수집항목 및 수집방법 </strong>
             <p>통계청 나라통계사이트에서는 기본적인 회원 서비스 제공을 위한 필수정보로 실명인증정보와 가입정보로 구분하여 다음의 정보를 수집하고 있습니다. 필수정보를 입력해주셔야 회원 서비스 이용이 가능합니다.</p>
             <ul>
