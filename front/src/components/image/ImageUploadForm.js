@@ -51,6 +51,7 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
             if(statusCode(number.status, 2)) {
                 setImageSubmitState(true) //성공 시
                 setUploadState(true)
+                alert('프로필 이미지가 변경되었습니다!')
                 return;
             } 
         } catch(err) {

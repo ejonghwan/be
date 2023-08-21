@@ -130,7 +130,7 @@ const Signup = ({ page }) => {
             if(statusCode(user.status, 2)) {
                 alert('회원 가입이 완료되었습니다. 기존 페이지는 닫아주세요')
                 // 로그인 페이지 만들면 로그인으로 
-                navigate('/')
+                navigate('/login')
             }
             // try 에러나면 catch로 가긴함
         } catch(err) {

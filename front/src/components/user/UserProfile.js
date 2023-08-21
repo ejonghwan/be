@@ -77,6 +77,8 @@ const UserProfile = () => {
             if(statusCode(res.status, 2)) {
                 setEditEmailState(!editEmailState);
                 setEditEmailAuthState(!editEmailAuthState);
+                setAuthNumber('')
+                alert(`이메일이 ${userEmail}으로 변경되었습니다!`)
             }
         } catch(err) {
             console.error(err);
