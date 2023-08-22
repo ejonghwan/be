@@ -28,7 +28,6 @@ const Project = ({ data }) => {
                 )}
             </div>
             <div>프로젝트 공개: {data?.projectPublic ? (<div>공개</div>) : (<div>비공개</div>) }</div>
-
         </Fragment>
     );
 };

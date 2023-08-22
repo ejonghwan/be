@@ -14,7 +14,9 @@ import Error from './error.js';
 import StyleGuide from './guide/styleGuide.js';
 import { UserContext } from './../context/UserContext.js';
 import Protected from './protected/protectedPage.js';
-import Project from './project.js';
+import Project from './project/project.js';
+import CreateProject from './project/createProject.js';
+
 
 
 
@@ -33,6 +35,11 @@ const RoutesPage = () => {
                 <Route path='/findid' element={<FindId page={'아이디 찾기'} />}></Route>
                 <Route path='/findpassword' element={<FindPassword page={'비밀번호 찾기'} />}></Route>
                 <Route path='/changepassword' element={<ChangePassword page={'비밀번호 변경'} />}></Route>
+
+
+
+                <Route path='/createproject' element={state.isLogged ? <CreateProject page={'새 습관 생성'} /> : <Protected page={'새 습관 생성'} />}></Route>
+
 
                 <Route path='/project:id' element={<Project page={'습관보기'} />}></Route>
                 <Route path='/error' element={<Error page={'에러'}/>}></Route>
