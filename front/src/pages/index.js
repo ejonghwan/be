@@ -27,7 +27,7 @@ const RoutesPage = () => {
         <Layout>
             <Routes>
                 <Route path='/' element={<Home />}></Route>
-                <Route path='/about' element={state.isLogged ? <About page={'내 습관'} /> : <Protected page={'내 습관'}/>}></Route>
+                <Route path='/projectlist' element={state.isLogged ? <About page={'친구들 습관보기'} /> : <Protected page={'친구들 습관보기'}/>}></Route>
                 <Route path='/profile' element={state.isLogged ? <Profile page={'내 정보'} /> : <Protected page={'내 정보'} />}></Route>
                 <Route path='/login' element={ <Login page={'로그인'}/>}></Route>
                 <Route path='/signup' element={<Signup page={'회원가입'} />}></Route>
