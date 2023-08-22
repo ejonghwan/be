@@ -146,7 +146,7 @@ router.post('/signup', async (req, res) => {
                     user.token = reftoken;
                     user.profileImage = { _id: "6369f7f0d94aae125a0bc833", key: "8e09735b-553e-4879-b94c-7a3a23a40ce4.jpeg" }; //기본이미지 일단 이거넣음. 임시
                     user.save().then(user => {
-                        console.log('프로필 이미지 전달되는지 확인 ?????????????????', user)
+                        // console.log('프로필 이미지 전달되는지 확인 ?????????????????', user)
                         res.status(201).end();
                     });
                 });

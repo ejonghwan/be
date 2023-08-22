@@ -1,6 +1,6 @@
 import { Fragment, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HiMiniArrowRightOnRectangle, HiOutlineDocumentText, HiOutlineChatBubbleOvalLeftEllipsis, HiOutlineSquare3Stack3D, HiOutlineKey, HiOutlineHandThumbUp, HiMiniArrowLeftOnRectangle, HiOutlineSun, HiOutlineAtSymbol, HiOutlineMoon, HiOutlineUserCircle } from "react-icons/hi2";
+import { HiMiniArrowRightOnRectangle, HiOutlineDocumentText, HiOutlineChatBubbleOvalLeftEllipsis, HiOutlineSquare3Stack3D, HiOutlineKey, HiOutlineHandThumbUp, HiMiniArrowLeftOnRectangle, HiOutlineSun, HiOutlineAtSymbol, HiOutlineMoon, HiOutlineUserCircle, HiMiniMoon } from "react-icons/hi2";
 import { UserContext } from '../../../context/UserContext';
 import LogoutForm from '../../user/LogoutForm';
 import './Menu.css';
@@ -42,12 +42,12 @@ const Menu = () => {
                              <Button 
                                 className={'button_type3 list'} 
                                 onClick={() => handleThemaChange('light')}
-                            ><HiOutlineSun /><span>밝은 테마</span></Button>
+                            ><HiOutlineSun /><span>밝은화면으로 보기</span></Button>
                         ) : (
                             <Button 
                                 className={'button_type3 list'} 
                                 onClick={() => handleThemaChange('dark')}
-                            ><HiOutlineMoon /><span>어두운 테마</span></Button>
+                            ><HiMiniMoon /><span>어두운화면으로 보기</span></Button>
                         )}
                     </li>
                     <li>

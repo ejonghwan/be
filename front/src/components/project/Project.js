@@ -9,6 +9,7 @@ const Project = ({ data }) => {
         <Fragment>
             <div>제목: {data?.title}</div>
             <div>소개: {data?.content}</div>
+            <div>습관장: {data?.constructorUser._id}{data?.constructorUser.rank}</div>
             <div>{data?.categorys?.map(item => <div key={item._id}>{item.categoryName}</div> )}</div>
             <div>생성일: {data?.createdAt}</div>
             <div>수정일: {data?.updatedAt}</div>
