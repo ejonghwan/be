@@ -28,10 +28,8 @@ const Secession = () => {
     const submit = _debounce(async () => {
         try {
             dispatch({ type: "LOADING", loadingMessage: "탈퇴 처리 중.." });
-            console.log('????')
             const user = await secession({ id: state.user.id, password: userPassword });
             if(statusCode(user.status, 2)) {
-                
                 // setUserId('');
                 setUserPassword('');
                 alert('탈퇴가 완료되었습니다.');

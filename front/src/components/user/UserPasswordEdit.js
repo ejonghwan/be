@@ -197,7 +197,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                 </div>
                 <div className={`${submitActive ? 'checked' : 'none'} align_c gapt_30`}>
                     <Button className={'button_type2'} disabled={submitActive ? false : true}>
-                        비밀번호 변경완료
+                        비밀번호 변경
                     </Button>
                     {prevPasswordMatched && (
                         <ErrorMsg className={'error_type3 gapt_15'}>
