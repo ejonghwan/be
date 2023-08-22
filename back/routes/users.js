@@ -379,7 +379,6 @@ router.post('/delete', auth, async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
         if(!passwordMatch) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다' });
 
-
         const projectList = await Project.find({ _id: user.projects });
         const categoryList = [];
         for(let i = 0; i < projectList.length; i++) {
@@ -390,7 +389,6 @@ router.post('/delete', auth, async (req, res) => {
             // 유저 삭제 시 유저가 만든 카테고리에 연결된 프로젝트 아이디 삭제
             await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": item._id } }, { new: true }) //후 ..삭제됐다!!!
         })
-
 
         // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트 - 테스트 완료
         if(user && passwordMatch) {
@@ -412,9 +410,9 @@ router.post('/delete', auth, async (req, res) => {
                     { new: true }
                 )
             ])
-            // 테스트 다 끝나면 활성화
-            // await User.deleteOne({ id: id });
-            // res.status(201).clearCookie('X-refresh-token').end();
+            // 테스트 다 끝나면 활성화 - 테스트완료
+            await User.deleteOne({ id: id });
+            res.status(201).clearCookie('X-refresh-token').end();
         }
 
         // 유저를 삭제하면 

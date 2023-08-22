@@ -13,7 +13,6 @@ import { HiOutlineArrowRightOnRectangle } from "react-icons/hi2";
 
 
 const Secession = () => {
-    
     const { secession } = UserRequest();
     const {state, dispatch} = useContext(UserContext);
     const navi = useNavigate();
@@ -28,12 +27,14 @@ const Secession = () => {
 
     const submit = _debounce(async () => {
         try {
-            dispatch({ type: "LOADING", loadingMessage: "로그인 중.." });
+            dispatch({ type: "LOADING", loadingMessage: "탈퇴 처리 중.." });
+            console.log('????')
             const user = await secession({ id: state.user.id, password: userPassword });
             if(statusCode(user.status, 2)) {
+                
                 // setUserId('');
                 setUserPassword('');
-                alert('탈퇴완료');
+                alert('탈퇴가 완료되었습니다.');
                 navi('/');
             };
         } catch(err) {
@@ -41,7 +42,7 @@ const Secession = () => {
         };
     }, 500);
 
-    useEffect(() => () => submit.cancel(), [])
+    useEffect(() => () => submit.cancel(), [submit])
 
     return (
         <div className='form_wrap gapt_50'>
