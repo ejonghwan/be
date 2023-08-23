@@ -38,8 +38,7 @@ const { Types } = mongoose.Schema;
 const ProjectSchema = new mongoose.Schema(
     {
         constructorUser: {
-            _id: { type: mongoose.Schema.Types.ObjectId, required: true, index: true, ref: 'user'},
-            id: { type: String, ref: 'user' },
+            _id: { type: Types.ObjectId, required: true, index: true, ref: 'user'},
             rank: { type: String, required: true, default: 'a'},
             days: [{ 
                 date: { type: String }, 
@@ -47,8 +46,7 @@ const ProjectSchema = new mongoose.Schema(
             }], //days로 달력/잔디 같이씀
         },
         instanceUser: [{
-            _id: { type: mongoose.Schema.Types.ObjectId, required: true, index: true, ref: 'user'},
-            id: { type: String, ref: 'user' },
+            _id: { type: Types.ObjectId, required: true, index: true, ref: 'user'},
             rank: { type: String, required: true, default: 'e'},
             days: [{ 
                 date: { type: String }, 

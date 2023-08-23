@@ -17,7 +17,15 @@ const router = express.Router();
 //@ access  private
 router.get('/', async (req, res) => {
     try {
-        const project = await Project.find();
+        const project = await Project.find().populate([
+            { path: 'constructorUser._id', select: 'id profileImage email' },
+            { path: 'instanceUser._id', select: 'id profileImage email' },
+            { path: 'joinUser._id', select: 'id profileImage email' },
+            { path: 'categorys._id', select: 'id profileImage email' },
+            { path: 'likeUser', select: 'id profileImage email' },
+            // { path: 'projectImages._id' }, 이미지는 안에 내장해둠
+            // { path: 'writes' } 글은 상세페이지에서만 가져오면 될듯
+        ]);
         res.status(200).json(project)
     } catch (err) {
         console.error('server:', err);
@@ -182,7 +190,6 @@ router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 �
                     { 'categorys.$[cate]._id' : findCategory._id }, // 아이디 추가 업데이트
                     { arrayFilters: [ {'cate.categoryName': findCategory.categoryName} ] }, // []중 어떤거를 업데이트할건지
                 ).exec();
-                
             }
             if(!findCategory) { // 카테고리가 없어서 새로운 카테고리 생성
                 newCategory = await new Category({ categoryName: categorys[i].categoryName, projects: newProject._id });
