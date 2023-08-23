@@ -1,8 +1,8 @@
 import './Icon.css';
 
-const Icon = ({ icon, className = '' }) => {
+const Icon = ({ icon, id, className = '', onClick }) => {
     return (
-        <div className={`aicon ${className}`}>
+        <div id={id} className={`aicon ${className}`} onClick={onClick}>
             {icon}
         </div>
     );

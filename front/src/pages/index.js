@@ -38,7 +38,7 @@ const RoutesPage = () => {
 
 
 
-                <Route path='/createproject' element={state.isLogged ? <CreateProject page={'새 습관 생성'} /> : <Protected page={'새 습관 생성'} />}></Route>
+                <Route path='/createproject' element={state.isLogged ? <CreateProject page={'새 습관 만들기'} /> : <Protected page={'새 습관 만들기'} />}></Route>
 
 
                 <Route path='/project:id' element={<Project page={'습관보기'} />}></Route>

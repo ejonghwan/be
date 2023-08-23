@@ -3,7 +3,17 @@
     flex-wrap: wrap;
 }
 
-
 .icon_list_wrap .icon_more {
-    gap: 50px;
+    width: 30px;
+    height: 30px;
+}
+
+.icon_list_wrap .icon_more.on > svg{
+    color: var(--point-color2);
+    transform: scale(1.2);
+}
+
+.icon_list_wrap .icon_more:hover > svg {
+    color: var(--point-color2);
+    transform: scale(1.2);
 }
