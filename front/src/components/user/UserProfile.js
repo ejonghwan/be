@@ -11,7 +11,7 @@ import { stringLengthChecked, statusCode, onlyNumChecked  } from '../../utils/ut
 import './UserProfile.css';
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
-import { HiOutlineFaceSmile } from "react-icons/hi2";
+import { PiBabyDuotone } from "react-icons/pi";
 
 
 
@@ -135,7 +135,7 @@ const UserProfile = () => {
         <div className='form_wrap'>
             <ProfileImageEdit />
             <h3 className='form_title gap_20'>
-                <HiOutlineFaceSmile />
+                <PiBabyDuotone />
                 <strong>개인정보</strong>
             </h3>
             <ul className='Profile_info_wrap'>

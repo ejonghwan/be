@@ -1,0 +1,62 @@
+
+
+.icon_wrap {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.icon_wrap .icon {
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+   border-radius: 50%;
+   background-color: var(--bg-box-color1);
+}
+
+.icon_wrap .icon > svg {
+    width: 50%;
+    height: 50%;
+    color: var(--text-color1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    text-align: center;
+}
+
+
+
+.icon_wrap:hover {
+    backdrop-filter: blur(1px);
+    color: #fff;
+}
+
+.icon_wrap:hover::before {
+    opacity: .8;
+}
+
+
+.icon_wrap .icon_btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.icon_wrap .icon_btn > button {
+    color: var(--text-color-white);
+    background-color: #444;
+    border: 4px solid var(--bg-box-white);
+    z-index: 10;
+}
+
+.icon_wrap .icon_btn > button > svg {
+    color: var(--text-color-white);
+} 
+
+

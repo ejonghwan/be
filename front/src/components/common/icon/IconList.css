@@ -1,0 +1,9 @@
+.icon_list_wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.icon_list_wrap .icon_more {
+    gap: 50px;
+}

@@ -2,16 +2,20 @@ import { useState } from 'react';
 import Input from '../common/form/Input';
 import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
-import { HiOutlineChatBubbleLeftEllipsis } from "react-icons/hi2";
 import Button from '../common/form/Button';
 import './CreateProjectDetail.css';
 import { useInput } from '../common/hooks';
-import { PiBookBookmarkDuotone, PiBookDuotone, PiBeerSteinDuotone, PiBalloonDuotone, PiBaseballDuotone, PiBarricadeDuotone, PiBowlFoodDuotone, PiCarDuotone, PiCarrotDuotone, PiChurchDuotone, PiDogDuotone, PiFileJsDuotone, PiFinnTheHumanDuotone, PiFilmReelDuotone, PiFlowerTulipDuotone, PiFlowerDuotone, PiGameControllerDuotone, PiFishSimpleDuotone, PiHighlighterCircleDuotone, PiInstagramLogoDuotone, PiMoneyDuotone, PiMusicNotesDuotone, PiMopedFrontDuotone, PiMicrophoneDuotone, PiPaintBrushDuotone, PiPaintBrushBroadDuotone, PiPlantDuotone, PiPottedPlantDuotone, PiWechatLogoDuotone, PiNotePencilDuotone, PiNeedleDuotone, PiHeartStraightDuotone,PiHeadphonesDuotone, PiHandshakeDuotone,PiGuitarDuotone,  PiGithubLogoDuotone, PiCloudSunDuotone, PiCatDuotone, PiCameraDuotone, PiButterflyDuotone, PiCakeDuotone, PiBugDuotone, PiBirdDuotone, PiBarbellDuotone, PiArmchairDuotone, PiBroomDuotone, PiBrandyDuotone, PiBicycleDuotone, PiBasketballDuotone, PiCoffeeDuotone, PiCodeDuotone, PiGearSixDuotone, PiHandHeartDuotone, PiPillDuotone, PiRoadHorizonDuotone, PiSkullDuotone, PiVideoDuotone, PiHeartDuotone, PiBathtubDuotone  } from "react-icons/pi";
+import { PiBookBookmarkDuotone, PiBookDuotone, PiBeerSteinDuotone, PiBalloonDuotone, PiBaseballDuotone, PiBarricadeDuotone, PiBowlFoodDuotone, PiCarDuotone, PiCarrotDuotone, PiChurchDuotone, PiDogDuotone, PiFileJsDuotone, PiFinnTheHumanDuotone, PiFilmReelDuotone, PiFlowerTulipDuotone, PiFlowerDuotone, PiGameControllerDuotone, PiFishSimpleDuotone, PiHighlighterCircleDuotone, PiInstagramLogoDuotone, PiMoneyDuotone, PiMusicNotesDuotone, PiMopedFrontDuotone, PiMicrophoneDuotone, PiPaintBrushDuotone, PiPaintBrushBroadDuotone, PiPlantDuotone, PiPottedPlantDuotone, PiWechatLogoDuotone, PiNotePencilDuotone, PiNeedleDuotone, PiHeartStraightDuotone,PiHeadphonesDuotone, PiHandshakeDuotone,PiGuitarDuotone,  PiGithubLogoDuotone, PiCloudSunDuotone, PiCatDuotone, PiCameraDuotone, PiButterflyDuotone, PiCakeDuotone, PiBugDuotone, PiBirdDuotone, PiBarbellDuotone, PiArmchairDuotone, PiBroomDuotone, PiBrandyDuotone, PiBicycleDuotone, PiBasketballDuotone, PiCoffeeDuotone, PiCodeDuotone, PiGearSixDuotone, PiHandHeartDuotone, PiPillDuotone, PiRoadHorizonDuotone, PiSkullDuotone, PiVideoDuotone, PiHeartDuotone, PiBathtubDuotone, PiChatDotsDuotone, PiMathOperationsDuotone, PiImageDuotone,  PiTentDuotone, PiWineDuotone  } from "react-icons/pi";
+import IconVisual from '../common/icon/IconVisual';
+import IconList from '../common/icon/IconList';
+
+
 
 
 const CreateProjectDetail = () => {
 
-    const ico = [<PiBookBookmarkDuotone />, <PiBookDuotone />, <PiBeerSteinDuotone />, <PiBalloonDuotone />, <PiBaseballDuotone />, <PiBarricadeDuotone />, <PiBowlFoodDuotone />, <PiCarDuotone />, <PiCarrotDuotone />, <PiChurchDuotone />, <PiDogDuotone />, <PiFileJsDuotone />, <PiFinnTheHumanDuotone />]
+    const ico = [<PiBookBookmarkDuotone />, <PiBookDuotone />, <PiBeerSteinDuotone />, <PiBalloonDuotone />, <PiBaseballDuotone />, <PiBarricadeDuotone />, <PiBowlFoodDuotone />, <PiCarDuotone />, <PiCarrotDuotone />, <PiChurchDuotone />, <PiDogDuotone />, <PiFileJsDuotone />, <PiFinnTheHumanDuotone />, <PiFilmReelDuotone />, 
+    <PiFlowerTulipDuotone />, <PiFlowerDuotone />, <PiGameControllerDuotone />, <PiFishSimpleDuotone />, <PiHighlighterCircleDuotone />, <PiInstagramLogoDuotone />, <PiMoneyDuotone />, <PiMusicNotesDuotone />, <PiMopedFrontDuotone />, <PiMicrophoneDuotone />, <PiPaintBrushDuotone />, <PiPaintBrushBroadDuotone />,<PiPlantDuotone />, <PiPottedPlantDuotone />, <PiWechatLogoDuotone />, <PiNotePencilDuotone />, <PiNeedleDuotone />, <PiHeartStraightDuotone />,<PiHeadphonesDuotone />, <PiHandshakeDuotone />,<PiGuitarDuotone />,  <PiGithubLogoDuotone />, <PiCloudSunDuotone />, <PiCatDuotone />, <PiCameraDuotone />, <PiButterflyDuotone />, <PiCakeDuotone />, <PiBugDuotone />, <PiBirdDuotone />, <PiBarbellDuotone />, <PiArmchairDuotone />, <PiBroomDuotone />, <PiBrandyDuotone />, <PiBicycleDuotone />, <PiBasketballDuotone />, <PiCoffeeDuotone />, <PiCodeDuotone />, <PiGearSixDuotone />, <PiHandHeartDuotone />, <PiPillDuotone />, <PiRoadHorizonDuotone />, <PiSkullDuotone />, <PiVideoDuotone />, <PiHeartDuotone />, <PiBathtubDuotone />, <PiChatDotsDuotone />, <PiMathOperationsDuotone />, <PiImageDuotone />, <PiTentDuotone />, <PiWineDuotone /> ]
 
     const [categorys, setCategorys] = useState([]);
     const [val, handler, setVal] = useInput({
@@ -28,13 +32,16 @@ const CreateProjectDetail = () => {
         <div className='form_wrap'>
 
             <h3 className='form_title gap_20'>
-                <HiOutlineChatBubbleLeftEllipsis />
+                <PiChatDotsDuotone />
                 <strong>새 습관 정보를 입력해주세요.</strong>
             </h3>
             <div>
-                
+                <IconVisual icon={<PiBookBookmarkDuotone />}/>
             </div>
-            {ico.map((item, idx) => <div key={idx}>{item}</div>)}
+            <div>
+                <IconList icons={ico}/>
+            </div>
+            
             <form onSubmit={handleCreateProjectSubmit}>
                 <div className='gap_20'>
                     <Label htmlFor="title" content="습관 이름을 정해주세요." className={"label_type1"}/>

@@ -9,7 +9,7 @@ import { UserContext } from '../../context/UserContext.js'
 import UserRequest from '../../reducers/UserRequest.js'
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
-import { HiOutlineArrowRightOnRectangle } from "react-icons/hi2";
+import { PiSignOutDuotone } from "react-icons/pi";
 
 
 const Secession = () => {
@@ -45,7 +45,7 @@ const Secession = () => {
     return (
         <div className='form_wrap gapt_50'>
             <h3 className='form_title gap_20'>
-                <HiOutlineArrowRightOnRectangle />
+                <PiSignOutDuotone />
                 <strong>회원탈퇴</strong>
             </h3>
             <form onSubmit={handleSubmit}>

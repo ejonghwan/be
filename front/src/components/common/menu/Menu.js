@@ -1,6 +1,6 @@
 import { Fragment, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PiChatCircleDotsDuotone, PiAlienDuotone, PiKeyDuotone, PiSunDuotone, PiSignOutDuotone, PiSignInDuotone, PiNoteDuotone, PiHeartDuotone, PiGameControllerDuotone, PiAtDuotone, PiMoonDuotone } from "react-icons/pi";
+import { PiChatCircleDotsDuotone, PiAlienDuotone, PiKeyDuotone, PiSunDuotone, PiSignOutDuotone, PiSignInDuotone, PiNoteDuotone, PiHeartDuotone, PiAtDuotone, PiMoonDuotone, PiStackDuotone } from "react-icons/pi";
 import { UserContext } from '../../../context/UserContext';
 import LogoutForm from '../../user/LogoutForm';
 import './Menu.css';
@@ -32,7 +32,7 @@ const Menu = () => {
                     <li><Link to="/changepassword" className='list'><PiKeyDuotone /><span>비밀번호 변경</span></Link></li>
                 </ul>
                 <ul className='info_menu'>
-                    <li><Link to="" className='list'><PiGameControllerDuotone /><span>내 습관</span></Link></li>
+                    <li><Link to="" className='list'><PiStackDuotone /><span>내 습관</span></Link></li>
                     <li><Link to="" className='list'><PiHeartDuotone /><span>좋아하는 습관</span></Link></li>
                     <li><Link to="" className='list'><PiSignInDuotone /><span>신청한 습관</span></Link></li>
                 </ul>
