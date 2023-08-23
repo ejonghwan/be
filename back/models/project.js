@@ -39,6 +39,7 @@ const ProjectSchema = new mongoose.Schema(
     {
         constructorUser: {
             _id: { type: mongoose.Schema.Types.ObjectId, required: true, index: true, ref: 'user'},
+            id: { type: String, ref: 'user' },
             rank: { type: String, required: true, default: 'a'},
             days: [{ 
                 date: { type: String }, 
@@ -47,6 +48,7 @@ const ProjectSchema = new mongoose.Schema(
         },
         instanceUser: [{
             _id: { type: mongoose.Schema.Types.ObjectId, required: true, index: true, ref: 'user'},
+            id: { type: String, ref: 'user' },
             rank: { type: String, required: true, default: 'e'},
             days: [{ 
                 date: { type: String }, 

@@ -16,9 +16,6 @@ import Category from '../models/category.js';
 const router = express.Router();
 
 
-
-
-
 //@ path    GET /api/users/load
 //@ doc     로드 유저
 //@ access  public
@@ -30,7 +27,6 @@ router.get('/load', auth, async (req, res) => {
             console.log('모두 만료돼서 디비 토큰 다시 저장하고 acc 다시 발급')
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(req.reftoken, salt,(err, hash) => {
-                    // res
                     res.cookie('X-refresh-token', hash, { expires: new Date(Date.now() + 7200000), httpOnly: true });
                     res.status(200).json(req.user);
                 });
@@ -255,7 +251,7 @@ router.post('/edit/password', auth, async (req, res) => {
 router.post('/find/password', async (req, res) => {
     try {
         const { _id, newPassword, newPasswordCheck } = req.body;
-        console.log('back body: ', req.body)
+        // console.log('back body: ', req.body)
         if(!_id && typeof _id !== 'string') return res.status(400).json({ message: 'is not _id' }) 
         if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: 'is not checked password' }) 
         if(newPassword !== newPasswordCheck) return res.status(400).json({ message: 'not password matched' })
