@@ -1,6 +1,6 @@
 import { Fragment, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HiMiniArrowRightOnRectangle, HiOutlineDocumentText, HiOutlineChatBubbleOvalLeftEllipsis, HiOutlineSquare3Stack3D, HiOutlineKey, HiOutlineHandThumbUp, HiMiniArrowLeftOnRectangle, HiOutlineSun, HiOutlineAtSymbol, HiOutlineMoon, HiOutlineUserCircle, HiMiniMoon } from "react-icons/hi2";
+import { PiChatCircleDotsDuotone, PiAlienDuotone, PiKeyDuotone, PiSunDuotone, PiSignOutDuotone, PiSignInDuotone, PiNoteDuotone, PiHeartDuotone, PiGameControllerDuotone, PiAtDuotone, PiMoonDuotone } from "react-icons/pi";
 import { UserContext } from '../../../context/UserContext';
 import LogoutForm from '../../user/LogoutForm';
 import './Menu.css';
@@ -25,16 +25,16 @@ const Menu = () => {
                     <li className='email'>{email}</li>
                 </ul>
                 <ul className='info_menu'>
-                    <li><Link to="/profile" className='list'><HiOutlineUserCircle /><span>내 정보</span></Link></li>
-                    <li><Link to="" className='list'><HiOutlineDocumentText /><span>내 글</span></Link></li>
-                    <li><Link to="" className='list'><HiOutlineChatBubbleOvalLeftEllipsis /><span>내 댓글</span></Link></li>
-                    <li><Link to="/profile" className='list'><HiOutlineAtSymbol /><span>이메일 변경</span></Link></li>
-                    <li><Link to="/changepassword" className='list'><HiOutlineKey /><span>비밀번호 변경</span></Link></li>
+                    <li><Link to="/profile" className='list'><PiAlienDuotone /><span>내 정보</span></Link></li>
+                    <li><Link to="" className='list'><PiNoteDuotone /><span>내 글</span></Link></li>
+                    <li><Link to="" className='list'><PiChatCircleDotsDuotone /><span>내 댓글</span></Link></li>
+                    <li><Link to="/profile" className='list'><PiAtDuotone /><span>이메일 변경</span></Link></li>
+                    <li><Link to="/changepassword" className='list'><PiKeyDuotone /><span>비밀번호 변경</span></Link></li>
                 </ul>
                 <ul className='info_menu'>
-                    <li><Link to="" className='list'><HiOutlineSquare3Stack3D /><span>내 습관</span></Link></li>
-                    <li><Link to="" className='list'><HiOutlineHandThumbUp /><span>좋아하는 습관</span></Link></li>
-                    <li><Link to="" className='list'><HiMiniArrowLeftOnRectangle /><span>신청한 습관</span></Link></li>
+                    <li><Link to="" className='list'><PiGameControllerDuotone /><span>내 습관</span></Link></li>
+                    <li><Link to="" className='list'><PiHeartDuotone /><span>좋아하는 습관</span></Link></li>
+                    <li><Link to="" className='list'><PiSignInDuotone /><span>신청한 습관</span></Link></li>
                 </ul>
                 <ul className='info_menu'>
                     <li>
@@ -42,17 +42,17 @@ const Menu = () => {
                              <Button 
                                 className={'button_type3 list'} 
                                 onClick={() => handleThemaChange('light')}
-                            ><HiOutlineSun /><span>밝은화면으로 보기</span></Button>
+                            ><PiSunDuotone /><span>밝은화면으로 보기</span></Button>
                         ) : (
                             <Button 
                                 className={'button_type3 list'} 
                                 onClick={() => handleThemaChange('dark')}
-                            ><HiMiniMoon /><span>어두운화면으로 보기</span></Button>
+                            ><PiMoonDuotone /><span>어두운화면으로 보기</span></Button>
                         )}
                     </li>
                     <li>
                         <div className='list'>
-                            <HiMiniArrowRightOnRectangle /><LogoutForm />
+                            <PiSignOutDuotone /><LogoutForm />
                         </div>
                     </li>
                 </ul>

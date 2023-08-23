@@ -6,7 +6,7 @@ import { HiOutlineChatBubbleLeftEllipsis } from "react-icons/hi2";
 import Button from '../common/form/Button';
 import './CreateProjectDetail.css';
 import { useInput } from '../common/hooks';
-import { PiBookBookmarkDuotone, PiBookDuotone, PiBeerSteinDuotone, PiBalloonDuotone, PiBaseballDuotone, PiBarricadeDuotone, PiBowlFoodDuotone, PiCarDuotone, PiCarrotDuotone, PiChurchDuotone, PiDogDuotone, PiFileJsDuotone, PiFinnTheHumanDuotone, PiFilmReelDuotone, PiFlowerTulipDuotone, PiFlowerDuotone, PiGameControllerDuotone, PiFishSimpleDuotone, PiHighlighterCircleDuotone, PiInstagramLogoDuotone, PiMoneyDuotone, PiMusicNotesDuotone, PiMopedFrontDuotone, PiMicrophoneDuotone, PiPaintBrushDuotone, PiPaintBrushBroadDuotone, PiPlantDuotone, PiPottedPlantDuotone } from "react-icons/pi";
+import { PiBookBookmarkDuotone, PiBookDuotone, PiBeerSteinDuotone, PiBalloonDuotone, PiBaseballDuotone, PiBarricadeDuotone, PiBowlFoodDuotone, PiCarDuotone, PiCarrotDuotone, PiChurchDuotone, PiDogDuotone, PiFileJsDuotone, PiFinnTheHumanDuotone, PiFilmReelDuotone, PiFlowerTulipDuotone, PiFlowerDuotone, PiGameControllerDuotone, PiFishSimpleDuotone, PiHighlighterCircleDuotone, PiInstagramLogoDuotone, PiMoneyDuotone, PiMusicNotesDuotone, PiMopedFrontDuotone, PiMicrophoneDuotone, PiPaintBrushDuotone, PiPaintBrushBroadDuotone, PiPlantDuotone, PiPottedPlantDuotone, PiWechatLogoDuotone, PiNotePencilDuotone, PiNeedleDuotone, PiHeartStraightDuotone,PiHeadphonesDuotone, PiHandshakeDuotone,PiGuitarDuotone,  PiGithubLogoDuotone, PiCloudSunDuotone, PiCatDuotone, PiCameraDuotone, PiButterflyDuotone, PiCakeDuotone, PiBugDuotone, PiBirdDuotone, PiBarbellDuotone, PiArmchairDuotone, PiBroomDuotone, PiBrandyDuotone, PiBicycleDuotone, PiBasketballDuotone, PiCoffeeDuotone, PiCodeDuotone, PiGearSixDuotone, PiHandHeartDuotone, PiPillDuotone, PiRoadHorizonDuotone, PiSkullDuotone, PiVideoDuotone, PiHeartDuotone, PiBathtubDuotone  } from "react-icons/pi";
 
 
 const CreateProjectDetail = () => {
@@ -34,7 +34,7 @@ const CreateProjectDetail = () => {
             <div>
                 
             </div>
-            {ico.map(item => <div>{item}</div>)}
+            {ico.map((item, idx) => <div key={idx}>{item}</div>)}
             <form onSubmit={handleCreateProjectSubmit}>
                 <div className='gap_20'>
                     <Label htmlFor="title" content="습관 이름을 정해주세요." className={"label_type1"}/>
