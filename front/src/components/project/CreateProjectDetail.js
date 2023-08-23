@@ -1,11 +1,23 @@
-import './CreateProjectDetail.css';
+import { useState } from 'react';
 import Input from '../common/form/Input';
 import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
 import { HiOutlineChatBubbleLeftEllipsis } from "react-icons/hi2";
 import Button from '../common/form/Button';
+import './CreateProjectDetail.css';
+import { useInput } from '../common/hooks';
+import { PiBookBookmarkDuotone, PiBookDuotone, PiBeerSteinDuotone, PiBalloonDuotone, PiBaseballDuotone, PiBarricadeDuotone, PiBowlFoodDuotone, PiCarDuotone, PiCarrotDuotone, PiChurchDuotone, PiDogDuotone, PiFileJsDuotone, PiFinnTheHumanDuotone, PiFilmReelDuotone, PiFlowerTulipDuotone, PiFlowerDuotone, PiGameControllerDuotone, PiFishSimpleDuotone, PiHighlighterCircleDuotone, PiInstagramLogoDuotone, PiMoneyDuotone, PiMusicNotesDuotone, PiMopedFrontDuotone, PiMicrophoneDuotone, PiPaintBrushDuotone, PiPaintBrushBroadDuotone, PiPlantDuotone, PiPottedPlantDuotone } from "react-icons/pi";
+
 
 const CreateProjectDetail = () => {
+
+    const ico = [<PiBookBookmarkDuotone />, <PiBookDuotone />, <PiBeerSteinDuotone />, <PiBalloonDuotone />, <PiBaseballDuotone />, <PiBarricadeDuotone />, <PiBowlFoodDuotone />, <PiCarDuotone />, <PiCarrotDuotone />, <PiChurchDuotone />, <PiDogDuotone />, <PiFileJsDuotone />, <PiFinnTheHumanDuotone />]
+
+    const [categorys, setCategorys] = useState([]);
+    const [val, handler, setVal] = useInput({
+        title: '',
+        content: '',
+    });
 
 
     const handleCreateProjectSubmit = e => {
@@ -14,10 +26,15 @@ const CreateProjectDetail = () => {
 
     return (
         <div className='form_wrap'>
+
             <h3 className='form_title gap_20'>
                 <HiOutlineChatBubbleLeftEllipsis />
                 <strong>새 습관 정보를 입력해주세요.</strong>
             </h3>
+            <div>
+                
+            </div>
+            {ico.map(item => <div>{item}</div>)}
             <form onSubmit={handleCreateProjectSubmit}>
                 <div className='gap_20'>
                     <Label htmlFor="title" content="습관 이름을 정해주세요." className={"label_type1"}/>
@@ -40,7 +57,7 @@ const CreateProjectDetail = () => {
                         id={"content"}
                         className={"textarea_type1"} 
                         value={""}
-                        placeholder={"#룰 - 영단어 2만개를 외워서 인증샷 혹은 게시물"}
+                        placeholder={"#룰 - 영단어 2만개를 외워서 게시판에 인증샷 남기기 "}
                     >
                         asdasd
                     </Textarea>

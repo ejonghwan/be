@@ -51,7 +51,7 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
             if(statusCode(number.status, 2)) {
                 setImageSubmitState(true) //성공 시
                 setUploadState(true)
-                alert('프로필 이미지가 변경되었습니다!')
+                alert('변경이 완료 되었습니다!')
                 return;
             } 
         } catch(err) {
@@ -78,7 +78,7 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
             {!noneSubmitBtn && imageUrl && (
                     <div className='profile_btn left'>
                     <Button className={'button_type4'} >
-                        <span className='blind'>내 프로필 이미지 변경</span>
+                        <span className='blind'>이미지 변경</span>
                         <HiMiniArrowPath />
                     </Button>
                 </div>

@@ -4,7 +4,7 @@ import './Project.css'
 
 
 const Project = ({ data }) => {
-    console.log(data)
+    // console.log(data)
     return (
         <Fragment>
             <div>제목: {data?.title}</div>

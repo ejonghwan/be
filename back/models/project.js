@@ -62,10 +62,11 @@ const ProjectSchema = new mongoose.Schema(
             _id: { type: Types.ObjectId, ref: 'category' },
             categoryName: { type: String, ref: 'category' }
         }],
-        projectImages: [{ 
-            _id: { type: Types.ObjectId, ref: 'image' }, 
-            key: { type: String, required: true } 
-        }],
+        // projectImages: [{ 
+        //     _id: { type: Types.ObjectId, ref: 'image' }, 
+        //     key: { type: String, required: true } 
+        // }],
+        projectImages:{ type: Number, default: 0 },
         joinUser: [{
             _id: { type: Types.ObjectId, ref: 'user', required: true, index: true, },
             state: { type: Boolean, required: true, default: false },
