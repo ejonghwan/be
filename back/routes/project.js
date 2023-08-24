@@ -169,9 +169,8 @@ router.patch('/delete/:projectId/:userId', async (req, res) => {
 //@ path    POST /api/project
 //@ doc     생성 프로젝 
 //@ access  private  (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.post('/', async (req, res) => { //프로젝트는 개인당 5개까지 생성가능하게??
+router.post('/', async (req, res) => {
     try {
-        // 221116 promise 디비 채워야됨 promise: { start: string default: today, end: string, projectLevel: "0"  }
         const { constructorUser, instanceUser, rank, title, content, write, projectPublic, categorys, joinUser, promise } = req.body; //joinUser 는 배열
         
         // 프로젝트 생성

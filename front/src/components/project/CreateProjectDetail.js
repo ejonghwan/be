@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Input from '../common/form/Input';
 import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 import './CreateProjectDetail.css';
-import { PiChatDotsDuotone, PiPlusCircleDuotone  } from "react-icons/pi";
+import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone  } from "react-icons/pi";
 import IconVisual from '../common/icon/IconVisual';
 import IconList from '../common/icon/IconList';
 import IconData from '../common/icon/IconData';
@@ -23,20 +23,37 @@ const CreateProjectDetail = () => {
     // likeUser x
 
     const [projectImages, setProjectImages] = useState(0)
-    const [categorys, setCategorys] = useState([{categoryName: 'ㅋㅋ'}, {categoryName: 'ghg'}]);
+    const [categoryValue, setCategoryValue] = useState('')
     const [joinUser, setJoinUser] = useState([]);
     const [val, setVal] = useState({
         title: '',
         content: '',
-        // categorys: [],
-        // joinUser: [],
+        categorys: [{categoryName: 'ㅋㅋ'}, {categoryName: 'ghg'}],
+        joinUser: [],
         projectPublic: false,
     });
+
 
     const handleValuesChange = e => {
         const {name, value} = e.target;
         setVal({...val, [name]: value})
     }
+
+
+    const handleCategoryClick = useCallback(() => {
+        let categoryResult = categoryValue.replace(/ /g,"").split('#').filter(item => {
+            return item !== null && item !== undefined && item !== '';
+           });
+        let inCategoryName = [];
+        for(let i = 0; i < categoryResult.length; i++) {
+            inCategoryName.push({ categoryName: categoryResult[i] })
+        }
+        setVal(prev => {
+            return {...prev, categorys: [...categorys, ...inCategoryName]}
+        })
+        setCategoryValue('')
+    }, [categoryValue])
+    
 
     const handleIconClick = idx => {
         // console.log(idx)
@@ -44,17 +61,13 @@ const CreateProjectDetail = () => {
     }
 
 
-    const { title, content, projectPublic } = val;
+    const { title, content, projectPublic, categorys } = val;
 
 
     useEffect(() => {
         console.log(val)
     }, [val])
     
-    useEffect(() => {
-        console.log(IconData)
-    }, [])
-
     const handleCreateProjectSubmit = e => {
         e.preventDefault();
     }
@@ -63,7 +76,7 @@ const CreateProjectDetail = () => {
         <div className='form_wrap'>
             
 
-            <h3 className='form_title gap_20'>
+            <h3 className='form_title gap_30'>
                 <PiChatDotsDuotone />
                 <strong>새 습관 정보를 입력해주세요.</strong>
             </h3>
@@ -75,7 +88,7 @@ const CreateProjectDetail = () => {
             </div>
             
             <form onSubmit={handleCreateProjectSubmit}>
-                <div className='gapt_30 gap_20'>
+                <div className='gapt_30 gap_30'>
                     <Label htmlFor="title" content="습관 이름을 정해주세요." className={"label_type1"}/>
                     <Input 
                         id="title" 
@@ -88,7 +101,7 @@ const CreateProjectDetail = () => {
                         onChange={handleValuesChange} 
                     />
                 </div>
-                <div className='gap_20'>
+                <div className='gap_30'>
                     <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>
                     <Textarea 
                         id={"content"}
@@ -102,27 +115,22 @@ const CreateProjectDetail = () => {
                     </Textarea>
                 </div>
 
-                <div className='gap_20'>
-                    <Label htmlFor="content" content="초대할 습관러" className={"label_type1"}/>
-                    <Input 
-                        id="title" 
-                        type="text" 
-                        required={true} 
-                        placeholder="아이디를 입력해주세요." 
-                        className={"input_type1"} 
-                        name="userName" 
-                        // value={name} 
-                        evt="onChange" 
-                        // onChange={handleName} 
-                        // disabled={authToggle && true}
+                <div className='gap_30'>
+                    <Search 
+                        id={''}
+                        placeholder={"검색할 친구를 입력해주세요."}
+                        isLabel={true}
+                        labelCont={"이 습관에 초대할 친구 검색"}
+                        isButton={true} 
+                        // buttonCont={`검색`}   
+                        buttonIcon={<PiUserCirclePlusDuotone />}
+                        buttonType={"button"}
+                        // buttonClick={}
                     />
                 </div>
-                <div className='gap_20'>
-                    <Label htmlFor="content" content="카테고리를 등록할 수 있어요." className={"label_type1"}/>
-                    {/* 이건 내일 카테고리 컴포넌트 만들자 */}
-                    <ul className='category_wrap'>{categorys.map((item, idx) => <li key={idx}>{`# ${item.categoryName}`}</li>)}</ul>
-
+                <div className='gap_30'>
                     <Search 
+                        id={'category'}
                         placeholder={"#공부 #영단어 #운동"}
                         isLabel={true}
                         labelCont={"카테고리를 등록할 수 있어요."}
@@ -130,20 +138,18 @@ const CreateProjectDetail = () => {
                         // buttonCont={`추가`}   
                         buttonIcon={<PiPlusCircleDuotone />}
                         buttonType={"button"}
-                        // buttonClick={}
+                        value={categoryValue}
+                        buttonClick={handleCategoryClick}
+                        onChange={e => setCategoryValue(e.target.value)}
                     />
 
-                    {/* 고려 */}
-                    <div className='flex'>
-                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                            {/* {state.authNumberErrorMessage && <p> {state.authNumberErrorMessage}</p>} */}
-                        </ErrorMsg>
-                    </div>
-
-
+                    {/* 이건 내일 카테고리 컴포넌트 만들자 */}
+                    <ul className='category_wrap gapt_10'>
+                        {val.categorys.map((item, idx) => <li key={idx}>{`# ${item.categoryName}`}</li>)}
+                    </ul>
                 </div>
 
-                <div className='gap_20'>
+                <div className='gap_30'>
                     <Label htmlFor="content" content="습관 공개" className={"label_type1"}/>
                     <div className='Profile_info_cont gender_wrap'>
                         <div className='gender_item'>
