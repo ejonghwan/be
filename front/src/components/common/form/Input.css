@@ -8,6 +8,7 @@
     box-sizing: border-box;
 }
 
+textarea::placeholder,
 input::placeholder {
     color: #9f9f9f;
 }

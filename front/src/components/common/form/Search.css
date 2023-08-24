@@ -1,0 +1,32 @@
+.search_inner {
+    position: relative;
+}
+.search_button_wrap {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5px;
+    height: 70%;
+}
+
+.search_button {
+    /* background-color: var(--point-color); */
+    /* color: var(--text-color-white); */
+    color: var(--point-color);
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 10px;
+    border-radius: 15px;
+}
+
+.search_button_wrap:hover .search_button{
+    background-color: var(--hover-color2);
+}
+
+.search_button svg {
+    /* color: var(--text-color-white); */
+    color: var(--point-color);
+    width: 30px;
+    height: 30px;
+}
