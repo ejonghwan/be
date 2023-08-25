@@ -26,8 +26,10 @@
     margin-left: 10px;
     display: flex;
     align-items: center;
+    transition: transform .5s;
 }
 
 .user_profile_icon.on > svg {
     color: var(--point-color);
+    transform: rotate(45deg);
 }

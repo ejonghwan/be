@@ -4,7 +4,7 @@ import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 import './CreateProjectDetail.css';
-import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone  } from "react-icons/pi";
+import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone, PiXCircleDuotone  } from "react-icons/pi";
 import IconVisual from '../common/icon/IconVisual';
 import IconList from '../common/icon/IconList';
 import IconData from '../common/icon/IconData';
@@ -13,6 +13,7 @@ import Search from '../common/form/Search';
 import Tags from '../common/tag/Tags';
 import SearchRequest from '../../reducers/SearchRequest';
 import { SearchContext } from '../../context/SearchContext';
+import _debounce from 'lodash.debounce';
 
 const CreateProjectDetail = () => {
 
@@ -61,9 +62,16 @@ const CreateProjectDetail = () => {
         setCategoryValue('')
     }, [categoryValue])
 
+   
+
+    const handleSearchCange = e => {
+        setJoinUserValue(e.target.value)
+        handleJoinUserSearch()
+    }
+
     // 유저 검색
-    const handleJoinUserSearchClick = async () => {
-        // console.log(userSearch)
+    const handleJoinUserSearch = useCallback(_debounce(async () => {
+        // useCallback을 사용하면서 joinUserValue를 구독하지 않아, 서치인풋이 리렌더링이 되어도 이 함수의 주소값의 변화가 없음. 중요. debounce 사용하면서 디바운스 계속 호출되던 이슈. 
         try {
             const res = await userSearch(joinUserValue);
             console.log('view ?', res)
@@ -72,7 +80,10 @@ const CreateProjectDetail = () => {
             console.err(err)
           }
         setIsUserSearchResult(true)
-    }
+    }, 1500), [])
+
+     // 유저검색창 엑스버튼
+     const handleUserValueReset = () => setJoinUserValue('');
     
     // 생성
     const handleCreateProjectSubmit = e => {
@@ -133,18 +144,18 @@ const CreateProjectDetail = () => {
 
                 <div className='gap_30'>
                     <Search 
-                        id={''}
+                        id={'search'}
                         placeholder={"검색할 친구의 이름을 입력해주세요."}
                         isLabel={true}
                         labelCont={"이 습관에 초대할 친구 이름 검색"}
                         isButton={true} 
                         value={joinUserValue}
                         // buttonCont={`검색`}   
-                        buttonIcon={<PiUserCirclePlusDuotone />}
+                        buttonIcon={joinUserValue && <PiXCircleDuotone />}
                         buttonType={"button"}
                         isSearchResult={isUserSearchResult}
-                        buttonClick={handleJoinUserSearchClick}
-                        onChange={e => setJoinUserValue(e.target.value)}
+                        buttonClick={handleUserValueReset}
+                        onChange={handleSearchCange}
                     />
                 </div>
                 <div className='gap_30'>

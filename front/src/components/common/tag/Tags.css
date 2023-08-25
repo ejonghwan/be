@@ -7,9 +7,11 @@
 .tag_wrap > li {
     flex: 0 0 auto;
     border: 1px solid var(--tag-color);
-    padding: 4px 8px;
+    padding: 6px 10px;
     border-radius: 10px;
     color: var(--tag-color);
+    font-size: 1.3rem;
+
 }
 
 .tag_wrap > li > span {
