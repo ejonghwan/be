@@ -66,14 +66,16 @@ const CreateProjectDetail = () => {
 
     const handleSearchCange = e => {
         setJoinUserValue(e.target.value)
-        handleJoinUserSearch()
+        handleJoinUserSearch(e.target.value) 
+        //그리고 useCallback 안에서는 state를 구독하지 않기 때문에 변화 값을 인자로 넘겨줘야함 
     }
 
     // 유저 검색
-    const handleJoinUserSearch = useCallback(_debounce(async () => {
+    const handleJoinUserSearch = useCallback(_debounce(async (userName) => {
         // useCallback을 사용하면서 joinUserValue를 구독하지 않아, 서치인풋이 리렌더링이 되어도 이 함수의 주소값의 변화가 없음. 중요. debounce 사용하면서 디바운스 계속 호출되던 이슈. 
         try {
-            const res = await userSearch(joinUserValue);
+            console.log('????????????', userName)
+            const res = await userSearch(userName);
             console.log('view ?', res)
             SearchDispatch({ type: "LOADING", loadingMessage: "유저 검색중.." })
           } catch(err) {
