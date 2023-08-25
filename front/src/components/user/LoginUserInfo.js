@@ -4,6 +4,7 @@ import { PiCirclesFourDuotone } from "react-icons/pi";
 import LazyImage from '../image/LazyImage.js';
 import Popup from '../common/popup/Popup.js';
 import PopupButton from '../common/popup/PopupButton.js';
+import { useGlobalState } from '../../context/UiContext.js';
 
 import './LoginUserInfo.css';
 import Menu from '../common/menu/Menu.js';
@@ -12,6 +13,7 @@ import Menu from '../common/menu/Menu.js';
 const LoginUserInfo = () => {
     const { state } = useContext(UserContext)
     const { name, profileImage } = state.user;
+    const { popOpen } = useGlobalState();
 
     return (
         <Fragment>
@@ -29,7 +31,7 @@ const LoginUserInfo = () => {
                         </div>
                     </li>
                     <li className='user_profile_name'><strong>{name}</strong>님
-                        <div className='user_profile_icon'><PiCirclesFourDuotone /></div>
+                        <div className={`user_profile_icon ${popOpen ? 'on' : ''}`}><PiCirclesFourDuotone /></div>
                     </li>
                 </ul>
             </PopupButton>

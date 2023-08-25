@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
-import { useGlobalData } from '../../../context/UiContext';
+import { useGlobalState } from '../../../context/UiContext';
 import './Popup.css';
 
 const Popup = ({ children, className }) => {
 
-    const { popOpen } = useGlobalData();
+    const { popOpen } = useGlobalState();
 
     return (
         <Fragment>

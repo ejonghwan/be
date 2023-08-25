@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { ImageProvider } from './context/ImageContext.js'
-import { UserProvider } from './context/UserContext.js'
-import { GlobalProvider } from './context/UiContext'
+import { ImageProvider } from './context/ImageContext';
+import { UserProvider } from './context/UserContext';
+import { GlobalProvider } from './context/UiContext';
+import { SearchProvider } from './context/SearchContext';
 
 // css
 import './assets/css/fonts.css'
@@ -26,9 +27,11 @@ root.render(
     <BrowserRouter>
         <UserProvider>
           <ImageProvider>
-            <GlobalProvider>
-              <App />
-            </GlobalProvider>
+            <SearchProvider>
+              <GlobalProvider>
+                <App />
+              </GlobalProvider>
+            </SearchProvider>
           </ImageProvider>
         </UserProvider>
     </BrowserRouter>

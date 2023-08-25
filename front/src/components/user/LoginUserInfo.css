@@ -20,10 +20,14 @@
 }
 
 
-.user_profile_icon > svg{
+.user_profile_icon > svg {
     width: 30px;
     height: 30px;
     margin-left: 10px;
     display: flex;
     align-items: center;
+}
+
+.user_profile_icon.on > svg {
+    color: var(--point-color);
 }

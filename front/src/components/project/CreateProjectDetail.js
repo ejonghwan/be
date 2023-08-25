@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Input from '../common/form/Input';
 import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
@@ -11,8 +11,13 @@ import IconData from '../common/icon/IconData';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import Search from '../common/form/Search';
 import Tags from '../common/tag/Tags';
+import SearchRequest from '../../reducers/SearchRequest';
+import { SearchContext } from '../../context/SearchContext';
 
 const CreateProjectDetail = () => {
+
+    const { userSearch } = SearchRequest();
+    const { SearchState, SearchDispatch } = useContext(SearchContext)
 
     // constructorUser 생성자는 stats.user로 넘기고
     // instanceUser 초대할 유저\
@@ -56,10 +61,22 @@ const CreateProjectDetail = () => {
         setCategoryValue('')
     }, [categoryValue])
 
-    const handleJoinUserSearchClick = e => {
+    // 유저 검색
+    const handleJoinUserSearchClick = async e => {
+        // console.log(userSearch)
+        try {
+            const res = await userSearch();
+            SearchDispatch({ type: "LOADING", loadingMessage: "로그아웃 중.." })
+          } catch(err) {
+            console.err(err)
+          }
         setIsUserSearchResult(true)
     }
     
+    // 생성
+    const handleCreateProjectSubmit = e => {
+        e.preventDefault();
+    }
 
     const handleIconClick = idx => setProjectImages(idx);
     const { title, content, projectPublic, categorys } = val;
@@ -69,9 +86,6 @@ const CreateProjectDetail = () => {
         console.log(val)
     }, [val])
     
-    const handleCreateProjectSubmit = e => {
-        e.preventDefault();
-    }
 
     return (
         <div className='form_wrap'>

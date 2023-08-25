@@ -1,17 +1,17 @@
 import Button from '../form/Button';
-import { useGlobalData } from '../../../context/UiContext';
+import { useGlobalState } from '../../../context/UiContext';
 import './PopupButton.css';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 
 const PopupButton = ({ children }) => {
 
-    const { popOpen, setPopopen } = useGlobalData();
+    const { popOpen, setPopopen } = useGlobalState();
     
-    const handlePopOpen = e => {
-        if(e.target.closest('.popup.button_type3')) setPopopen(true)
-        if(!e.target.closest('#popup') && popOpen) setPopopen(false)
-      }
+    const handlePopOpen = useCallback(e => {
+      if(e.target.closest('.popup.button_type3')) setPopopen(true)
+      if(!e.target.closest('#popup') && popOpen) setPopopen(false)
+    }, [popOpen, setPopopen])
 
       useEffect(() => {
         window.addEventListener('click', handlePopOpen)
