@@ -25,7 +25,7 @@ const CreateProjectDetail = () => {
 
     const [projectImages, setProjectImages] = useState(0)
     const [categoryValue, setCategoryValue] = useState('')
-    const [joinUser, setJoinUser] = useState([]);
+    const [joinUserValue, setJoinUserValue] = useState('');
     const [isUserSearchResult, setIsUserSearchResult] = useState(false)
     const [val, setVal] = useState({
         title: '',
@@ -123,11 +123,13 @@ const CreateProjectDetail = () => {
                         isLabel={true}
                         labelCont={"이 습관에 초대할 친구 이름 검색"}
                         isButton={true} 
+                        value={joinUserValue}
                         // buttonCont={`검색`}   
                         buttonIcon={<PiUserCirclePlusDuotone />}
                         buttonType={"button"}
                         isSearchResult={isUserSearchResult}
                         buttonClick={handleJoinUserSearchClick}
+                        onChange={e => setJoinUserValue(e.target.value)}
                     />
                 </div>
                 <div className='gap_30'>
@@ -147,7 +149,7 @@ const CreateProjectDetail = () => {
 
                     {/* 이건 내일 카테고리 컴포넌트 만들자 */}
                     <ul className='category_wrap gapt_10'>
-                        <Tags tags={val.categorys.map(tag => tag)} isLink={true}/>
+                        <Tags tags={val.categorys.map(tag => tag)} isLink={false}/>
                     </ul>
                 </div>
 

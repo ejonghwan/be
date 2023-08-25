@@ -1,22 +1,11 @@
 import { useContext } from 'react'
-import axios from 'axios'
 import { UserContext } from '../context/UserContext.js'
-
-/*
-    reducer에서 request 뺀 이유. 
-    request action에서는 어차피 로딩 상태값만 변경해서 LOADING만 공통으로 쓰고  (그래서 클리어 액션 사용)
-    request 자체는 UserReqeust파일 자체에서 함. 
-
-    흐름. 
-    1. 화면에서 dispatch({ type: "LOADING", loadingMessage: "로그인 중.." }) 디스패치
-    2. 리듀서에서 액션 실행되며 이 파일안에서 loginUser 함수 실행
-    3. 함수 자체에서 비동기 처리할거 하고 SUCCESS or FAILUE 디스패치 
-    4. 리듀서에서 처리된 데이터를 화면에 다시 뿌림
-*/
+import axios from 'axios'
 
 
 const host = process.env.REACT_APP_BACKEND_HOST;
-const UserRequest = () => {
+
+const SearchRequest = () => {
     const { dispatch } = useContext(UserContext); 
 
    // 회원가입 유저
@@ -437,7 +426,7 @@ const UserRequest = () => {
     }
 }
 
-export default UserRequest;
+export default SearchRequest;
 
 
 
