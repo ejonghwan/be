@@ -62,11 +62,12 @@ const CreateProjectDetail = () => {
     }, [categoryValue])
 
     // 유저 검색
-    const handleJoinUserSearchClick = async e => {
+    const handleJoinUserSearchClick = async () => {
         // console.log(userSearch)
         try {
-            const res = await userSearch();
-            SearchDispatch({ type: "LOADING", loadingMessage: "로그아웃 중.." })
+            const res = await userSearch(joinUserValue);
+            console.log('view ?', res)
+            SearchDispatch({ type: "LOADING", loadingMessage: "유저 검색중.." })
           } catch(err) {
             console.err(err)
           }

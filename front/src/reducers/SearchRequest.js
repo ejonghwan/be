@@ -9,21 +9,22 @@ const SearchRequest = () => {
     const { dispatch } = useContext(UserContext); 
 
    // 유저 검색
-     const userSearch = async data => {
+     const userSearch = async userName => {
         try {
-            const { email } = data;
-            if(!email || typeof email !== 'string') throw new Error('checked email');
-        
+            console.log('userName?', userName)
+            if(!userName || typeof userName !== 'string') throw new Error('넘어온 이름값이 잘못되었습니다');
+            let encodeName = encodeURIComponent(userName);
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
             }
-            const res = await axios.post(`${host}/api/auth`, data, config);
+            const res = await axios.get(`${host}/api/search/user/${encodeName}`, config);
+            console.log('reqsut?', res);
             return res;
         } catch(err) {
             console.error(err);
-            dispatch({ type: "AUTH_NUMBER_FAILUE", data: err.response.data.message });
-            return err.response;
+            // dispatch({ type: "AUTH_NUMBER_FAILUE", data: err.response.data.message });
+            // return err.response;
         }
     }
 

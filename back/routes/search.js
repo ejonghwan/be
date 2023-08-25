@@ -51,8 +51,6 @@ router.get('/:searchText', async (req, res) => {
 //@ access  public
 router.get('/user/:user', async (req, res) => {
     try {
-        
-        // front에서 보낼 때 encodeURIComponent("룰루")
         const { user } = req.params;
 
         const findUser = await User.find({
@@ -69,9 +67,15 @@ router.get('/user/:user', async (req, res) => {
                 }
             }
         ]
-        });
+        }).populate({ path: 'id' });
+        /* 
+            퍼퓰 
+            id: "jjongrrr"
+            name
+            
+        */
  
-         console.log('findUser result', findUser)
+        //  console.log('findUser result', findUser)
          res.status(200).json(findUser);
 
     } catch (err) {
@@ -80,6 +84,7 @@ router.get('/user/:user', async (req, res) => {
     }
 })
 
+// 카테고리 검색 하나 만들자
 
 
 
