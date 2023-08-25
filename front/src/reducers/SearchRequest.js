@@ -1,17 +1,16 @@
 import { useContext } from 'react'
-import { UserContext } from '../context/UserContext.js'
+import { SearchContext } from '../context/SearchContext';
 import axios from 'axios'
 
 
 const host = process.env.REACT_APP_BACKEND_HOST;
 
 const SearchRequest = () => {
-    const { dispatch } = useContext(UserContext); 
+    const { SearchDispatch } = useContext(SearchContext); 
 
    // 유저 검색
      const userSearch = async userName => {
         try {
-            console.log('userName?', userName)
             if(!userName || typeof userName !== 'string') throw new Error('넘어온 이름값이 잘못되었습니다');
             let encodeName = encodeURIComponent(userName);
             const config = {
@@ -19,12 +18,11 @@ const SearchRequest = () => {
                 withCredentials: true,
             }
             const res = await axios.get(`${host}/api/search/user/${encodeName}`, config);
-            console.log('reqsut?', res);
-            return res;
+            SearchDispatch({ type: "USER_SEARCH_SUCCESS", data: res.data });
+
         } catch(err) {
             console.error(err);
-            // dispatch({ type: "AUTH_NUMBER_FAILUE", data: err.response.data.message });
-            // return err.response;
+            // SearchDispatch({ type: "USER_SEARCH_FAILUE", data: err.response.data.message });
         }
     }
 

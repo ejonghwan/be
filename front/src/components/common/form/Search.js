@@ -3,7 +3,7 @@ import Label from "./Label";
 import Button from "./Button";
 import './Search.css';
 
-const Search = ({ id, className, type, placeholder, name, value, onChange, isLabel = false, labelCont, isButton = false, buttonCont, buttonType, buttonClick, buttonIcon, isSearchResult = false }) => {
+const Search = ({ id, className, type, placeholder, name, value, onChange, isLabel = false, labelCont, isButton = false, buttonCont, buttonType, buttonClick, buttonIcon, isSearchResult = false, children }) => {
     return (
         <div className="search_wrap">
             {isLabel && <Label htmlFor={id} content={labelCont} className={`label_type1 search_label ${className}`} /> } 
@@ -26,7 +26,7 @@ const Search = ({ id, className, type, placeholder, name, value, onChange, isLab
 
             {isSearchResult && (
                 <div className="search_result">
-                    asdasdas
+                    {children}
                 </div>
             )}
         </div>

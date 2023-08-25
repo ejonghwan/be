@@ -14,6 +14,11 @@
     background-color: var(--bg-box-color1);
 }
 
+.button_reset {
+    border: none;
+    cursor: pointer;
+}
+
 .btn_wrap {
     width: 100%;
 }

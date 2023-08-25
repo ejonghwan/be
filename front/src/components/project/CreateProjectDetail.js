@@ -1,10 +1,10 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { Fragment, useCallback, useContext, useEffect, useState } from 'react';
 import Input from '../common/form/Input';
 import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 import './CreateProjectDetail.css';
-import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone, PiXCircleDuotone  } from "react-icons/pi";
+import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone, PiXCircleDuotone, PiSmileyXEyesDuotone  } from "react-icons/pi";
 import IconVisual from '../common/icon/IconVisual';
 import IconList from '../common/icon/IconList';
 import IconData from '../common/icon/IconData';
@@ -14,6 +14,7 @@ import Tags from '../common/tag/Tags';
 import SearchRequest from '../../reducers/SearchRequest';
 import { SearchContext } from '../../context/SearchContext';
 import _debounce from 'lodash.debounce';
+import NoData from '../common/notData/NoData';
 
 const CreateProjectDetail = () => {
 
@@ -29,8 +30,8 @@ const CreateProjectDetail = () => {
     // joinUser: [{ _id }]
     // likeUser x
 
-    const [projectImages, setProjectImages] = useState(0)
-    const [categoryValue, setCategoryValue] = useState('')
+    const [projectImages, setProjectImages] = useState(0);
+    const [categoryValue, setCategoryValue] = useState('');
     const [joinUserValue, setJoinUserValue] = useState('');
     const [isUserSearchResult, setIsUserSearchResult] = useState(false)
     const [val, setVal] = useState({
@@ -70,24 +71,31 @@ const CreateProjectDetail = () => {
         //그리고 useCallback 안에서는 state를 구독하지 않기 때문에 변화 값을 인자로 넘겨줘야함 
     }
 
+
     // 유저 검색
     const handleJoinUserSearch = useCallback(_debounce(async (userName) => {
         // useCallback을 사용하면서 joinUserValue를 구독하지 않아, 서치인풋이 리렌더링이 되어도 이 함수의 주소값의 변화가 없음. 중요. debounce 사용하면서 디바운스 계속 호출되던 이슈. 
+        console.log('de')
         try {
-            console.log('????????????', userName)
-            const res = await userSearch(userName);
-            console.log('view ?', res)
-            SearchDispatch({ type: "LOADING", loadingMessage: "유저 검색중.." })
+            if(userName === '') return setIsUserSearchResult(false);
+            console.log(userName)
+            SearchDispatch({ type: "SEARCH_REQUEST" })
+            await userSearch(userName);
           } catch(err) {
             console.err(err)
           }
         setIsUserSearchResult(true)
-    }, 1500), [])
+    }, 500), [])
+
 
      // 유저검색창 엑스버튼
-     const handleUserValueReset = () => setJoinUserValue('');
+     const handleUserValueReset = () => {
+        setJoinUserValue('');
+        setIsUserSearchResult(false);
+     };
     
-    // 생성
+
+    // 습관 생성
     const handleCreateProjectSubmit = e => {
         e.preventDefault();
     }
@@ -97,8 +105,10 @@ const CreateProjectDetail = () => {
 
 
     useEffect(() => {
-        console.log(val)
+        // console.log(val)
     }, [val])
+
+    
     
 
     return (
@@ -158,7 +168,25 @@ const CreateProjectDetail = () => {
                         isSearchResult={isUserSearchResult}
                         buttonClick={handleUserValueReset}
                         onChange={handleSearchCange}
-                    />
+                    >
+                        
+                        {SearchState.loading ? (
+                            <div>유저 검색중...</div>
+                        ) : (
+                            <ul className='search_result_user'>
+                                {SearchState.userSearch?.map(((user, idx) => <li key={idx} className='search_result_user_item'>{
+                                    <button type='button' className='button_reset' title={`${user.id}님 친구추가`}>
+                                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="" className='user_img'/>
+                                        <strong className='user_name'>{user.name}</strong>
+                                        <span className='user_id'>{user.id}</span>
+                                        <PiPlusCircleDuotone />
+                                    </button>
+                                }</li>))}
+                            </ul>
+                        )}
+                        {!SearchState.loading && SearchState.userSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"검색한 친구는 회원이 아닙니다."} subText={" 다시 검색해보세요."}/>}
+                       
+                    </Search>
                 </div>
                 <div className='gap_30'>
                     <Search 
@@ -174,8 +202,6 @@ const CreateProjectDetail = () => {
                         buttonClick={handleCategoryClick}
                         onChange={e => setCategoryValue(e.target.value)}
                     />
-
-                    {/* 이건 내일 카테고리 컴포넌트 만들자 */}
                     <ul className='category_wrap gapt_10'>
                         <Tags tags={val.categorys.map(tag => tag)} isLink={false}/>
                     </ul>
