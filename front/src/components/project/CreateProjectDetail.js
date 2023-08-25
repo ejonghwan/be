@@ -10,6 +10,7 @@ import IconList from '../common/icon/IconList';
 import IconData from '../common/icon/IconData';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import Search from '../common/form/Search';
+import Tags from '../common/tag/Tags';
 
 const CreateProjectDetail = () => {
 
@@ -25,6 +26,7 @@ const CreateProjectDetail = () => {
     const [projectImages, setProjectImages] = useState(0)
     const [categoryValue, setCategoryValue] = useState('')
     const [joinUser, setJoinUser] = useState([]);
+    const [isUserSearchResult, setIsUserSearchResult] = useState(false)
     const [val, setVal] = useState({
         title: '',
         content: '',
@@ -53,14 +55,13 @@ const CreateProjectDetail = () => {
         })
         setCategoryValue('')
     }, [categoryValue])
+
+    const handleJoinUserSearchClick = e => {
+        setIsUserSearchResult(true)
+    }
     
 
-    const handleIconClick = idx => {
-        // console.log(idx)
-        setProjectImages(idx)
-    }
-
-
+    const handleIconClick = idx => setProjectImages(idx);
     const { title, content, projectPublic, categorys } = val;
 
 
@@ -118,14 +119,15 @@ const CreateProjectDetail = () => {
                 <div className='gap_30'>
                     <Search 
                         id={''}
-                        placeholder={"검색할 친구를 입력해주세요."}
+                        placeholder={"검색할 친구의 이름을 입력해주세요."}
                         isLabel={true}
-                        labelCont={"이 습관에 초대할 친구 검색"}
+                        labelCont={"이 습관에 초대할 친구 이름 검색"}
                         isButton={true} 
                         // buttonCont={`검색`}   
                         buttonIcon={<PiUserCirclePlusDuotone />}
                         buttonType={"button"}
-                        // buttonClick={}
+                        isSearchResult={isUserSearchResult}
+                        buttonClick={handleJoinUserSearchClick}
                     />
                 </div>
                 <div className='gap_30'>
@@ -145,7 +147,7 @@ const CreateProjectDetail = () => {
 
                     {/* 이건 내일 카테고리 컴포넌트 만들자 */}
                     <ul className='category_wrap gapt_10'>
-                        {val.categorys.map((item, idx) => <li key={idx}>{`# ${item.categoryName}`}</li>)}
+                        <Tags tags={val.categorys.map(tag => tag)} isLink={true}/>
                     </ul>
                 </div>
 
