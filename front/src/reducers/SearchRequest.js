@@ -22,7 +22,7 @@ const SearchRequest = () => {
 
         } catch(err) {
             console.error(err);
-            // SearchDispatch({ type: "USER_SEARCH_FAILUE", data: err.response.data.message });
+            SearchDispatch({ type: "USER_SEARCH_FAILUE", data: err.response.data.message });
         }
     }
 

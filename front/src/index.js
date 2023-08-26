@@ -6,6 +6,7 @@ import { ImageProvider } from './context/ImageContext';
 import { UserProvider } from './context/UserContext';
 import { GlobalProvider } from './context/UiContext';
 import { SearchProvider } from './context/SearchContext';
+import { ProjectProvider } from './context/ProjectContext';
 
 // css
 import './assets/css/fonts.css'
@@ -26,13 +27,15 @@ root.render(
 
     <BrowserRouter>
         <UserProvider>
-          <ImageProvider>
-            <SearchProvider>
-              <GlobalProvider>
-                <App />
-              </GlobalProvider>
-            </SearchProvider>
-          </ImageProvider>
+          <ProjectProvider>
+            <ImageProvider>
+              <SearchProvider>
+                <GlobalProvider>
+                  <App />
+                </GlobalProvider>
+              </SearchProvider>
+            </ImageProvider>
+          </ProjectProvider>
         </UserProvider>
     </BrowserRouter>
 );

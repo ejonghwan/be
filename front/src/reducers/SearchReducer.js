@@ -37,7 +37,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    // signupErrorMessage: action.data,
+                    signupErrorMessage: action.data,
                 }
 
 

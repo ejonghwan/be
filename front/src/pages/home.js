@@ -13,7 +13,9 @@ const Home = () => {
     return (
         <Fragment>
             <ul className='project_wrap'>
-                {state.user.projects?.map(project => <li key={project._id}><Project data={project} /></li>)}
+                {state.user.projects?.map(project => (
+                    <li key={project._id}><Project data={project} /></li>
+                ))}
                 <li><CreateProject /></li>
             </ul>
             {/* <Calender /> */}

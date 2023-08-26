@@ -13,13 +13,15 @@ import Search from '../common/form/Search';
 import Tags from '../common/tag/Tags';
 import SearchRequest from '../../reducers/SearchRequest';
 import { SearchContext } from '../../context/SearchContext';
+import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
 
 const CreateProjectDetail = () => {
 
     const { userSearch } = SearchRequest();
-    const { SearchState, SearchDispatch } = useContext(SearchContext)
+    const { SearchState, SearchDispatch } = useContext(SearchContext);
+    const { ProjectState, ProjectDispatch } = useContext(ProjectContext);
 
     // constructorUser 생성자는 stats.user로 넘기고
     // instanceUser 초대할 유저\
@@ -126,7 +128,8 @@ const CreateProjectDetail = () => {
 
 
     useEffect(() => {
-        // console.log(submitData)
+        console.log(submitData)
+        console.log(ProjectState)
     }, [submitData])
 
     
