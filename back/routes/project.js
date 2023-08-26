@@ -34,6 +34,30 @@ router.get('/', async (req, res) => {
 })
 
 
+//@ path    GET /api/project/:projectId
+//@ doc     로드 프로젝 (특정)
+//@ access  public
+router.get('/:projectId', async (req, res) => {
+    try {
+        const { projectId } = req.params;
+        const project = await Project.findById(projectId).populate([
+            { path: 'constructorUser._id', select: 'id profileImage email' },
+            { path: 'instanceUser._id', select: 'id profileImage email' },
+            { path: 'joinUser._id', select: 'id profileImage email' },
+            { path: 'categorys._id', select: 'id profileImage email' },
+            { path: 'likeUser', select: 'id profileImage email' },
+            // { path: 'projectImages._id' }, 이미지는 안에 내장해둠
+            // { path: 'writes' } 글은 상세페이지에서만 가져오면 될듯
+        ]);
+        res.status(200).json(project)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
+
 // 1. 내가 만든 프로젝트  (이건 데이터들 내장 갯수제한 )  
 // 2. 내가 가입한 프로젝트 나눠야겠구나  (이건 데이터들 몇개만 내려주고 더 요청하면 내려줌 갯수제한 없음)
 // 3. 초대에 수락해야 조인프로젝트 db에 추가되게...

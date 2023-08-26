@@ -1,14 +1,17 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
+import LoadProject from '../../components/project/LoadProject';
 
-const ProjectDetail = () => {
 
-    const { _id } = useParams()
+const ProjectDetail = ({ page }) => {
+
+    const { _id } = useParams();
     
 
     return (
         <div>
+            <h2>{page}</h2>
             projectDetail {_id}
+            <LoadProject projectId={_id}/>
         </div>
     );
 };

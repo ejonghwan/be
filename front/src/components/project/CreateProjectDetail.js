@@ -58,7 +58,6 @@ const CreateProjectDetail = () => {
 
     const handleValuesChange = e => {
         const {name, value} = e.target;
-        console.log(name, value)
         setSubmitData({...submitData, [name]: value})
     }
 
@@ -94,7 +93,6 @@ const CreateProjectDetail = () => {
         // useCallback을 사용하면서 joinUserValue를 구독하지 않아, 서치인풋이 리렌더링이 되어도 이 함수의 주소값의 변화가 없음. 중요. debounce 사용하면서 디바운스 계속 호출되던 이슈. 
         try {
             if(userName === '') return setIsUserSearchResult(false);
-            console.log(userName)
             SearchDispatch({ type: "SEARCH_REQUEST" })
             await userSearch(userName);
           } catch(err) {
@@ -133,7 +131,7 @@ const CreateProjectDetail = () => {
             e.preventDefault();
             ProjectDispatch({ type: "PROJECT_REQUEST" });
             const data = await createProject(submitData);
-
+            alert(`${title} 습관이 생성 되었습니다!`)
             navigate(`/project/detail/${data._id}`);
           
 
@@ -151,9 +149,9 @@ const CreateProjectDetail = () => {
     };
     const { title, content, projectPublic, categorys } = submitData;
 
-    useEffect(() => {
-        console.log(ProjectState.createProject._id)
-    }, [projectImages])
+    // useEffect(() => {
+    //     console.log(ProjectState.createProject._id)
+    // }, [projectImages])
 
     
     return (
