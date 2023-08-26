@@ -1,4 +1,5 @@
 import { Fragment, useCallback, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '../common/form/Input';
 import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
@@ -27,6 +28,7 @@ const CreateProjectDetail = () => {
     const { state } = useContext(UserContext);
     const { SearchState, SearchDispatch } = useContext(SearchContext);
     const { ProjectState, ProjectDispatch } = useContext(ProjectContext);
+    const navigate = useNavigate()
 
     // constructorUser 생성자는 stats.user로 넘기고
     // instanceUser 초대할 유저\
@@ -44,12 +46,13 @@ const CreateProjectDetail = () => {
     const [joinUserList, setJoinUserList] = useState([]); //뿌리기 위해 여기서만 사용
     const [isUserSearchResult, setIsUserSearchResult] = useState(false)
     const [submitData, setSubmitData] = useState({ 
-        constructorUser: {_id: state.user._id},
+        constructorUser: { _id: state.user._id },
         title: '',
         content: '',
         categorys: [], //{categoryName: ''}
         joinUser: [],
         projectPublic: true,
+        projectImages: projectImages,
     });
 
 
@@ -126,24 +129,33 @@ const CreateProjectDetail = () => {
 
     // 습관 생성
     const handleCreateProjectSubmit = async e => { 
-        e.preventDefault();
-        console.log(submitData)
-        ProjectDispatch({ type: "PROJECT_REQUEST" })
-        await createProject(submitData)
+        try {
+            e.preventDefault();
+            ProjectDispatch({ type: "PROJECT_REQUEST" });
+            const data = await createProject(submitData);
+
+            navigate(`/project/detail/${data._id}`);
+          
+
+            console.log('실패하면 오나 ?');
+            
+        } catch(err) {
+            console.log('view err?', err);
+        }
+        
     }
 
-    const handleIconClick = idx => setProjectImages(idx);
+    const handleIconClick = idx => {
+        setProjectImages(idx)
+        setSubmitData(prev => ({ ...prev, projectImages: idx }))
+    };
     const { title, content, projectPublic, categorys } = submitData;
 
-
     useEffect(() => {
-        console.log(submitData)
-        console.log(ProjectState)
-    }, [submitData])
+        console.log(ProjectState.createProject._id)
+    }, [projectImages])
 
     
-    
-
     return (
         <div className='form_wrap'>
             

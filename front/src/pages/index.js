@@ -14,8 +14,9 @@ import Error from './error.js';
 import StyleGuide from './guide/styleGuide.js';
 import { UserContext } from './../context/UserContext.js';
 import Protected from './protected/protectedPage.js';
-import Project from './project/project.js';
-import CreateProject from './project/createProject.js';
+import Project from './project/Project.js';
+import CreateProject from './project/CreateProject.js';
+import ProjectDetail from './project/ProjectDetail.js';
 
 
 
@@ -39,6 +40,7 @@ const RoutesPage = () => {
 
 
                 <Route path='/createproject' element={state.isLogged ? <CreateProject page={'새 습관 만들기'} /> : <Protected page={'새 습관 만들기'} />}></Route>
+                <Route path='/project/detail/:_id' element={state.isLogged ? <ProjectDetail page={'습관 상세보기'} /> : <Protected page={'습관 상세보기'} />}></Route>
 
 
                 <Route path='/project:id' element={<Project page={'습관보기'} />}></Route>

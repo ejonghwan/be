@@ -1,7 +1,7 @@
 import CreateProjectDetail from "../../components/project/CreateProjectDetail";
 
 
-const createProject = ({ page }) => {
+const CreateProject = ({ page }) => {
     return (
         <div>
             <h2>{page}</h2>
@@ -10,4 +10,4 @@ const createProject = ({ page }) => {
     );
 };
 
-export default createProject;
+export default CreateProject;

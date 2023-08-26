@@ -1,7 +1,7 @@
 // import {} from 'react';
 
 
-const project = () => {
+const Project = () => {
     return (
         <div>
             page
@@ -9,4 +9,4 @@ const project = () => {
     );
 };
 
-export default project;
+export default Project;

@@ -2,7 +2,7 @@ export const ProjectIntialState = {
     successMessage: '',
     errorMessage: '',
     loading: false,
-    project: [],
+    createProject: {},
 }
 
 
@@ -28,7 +28,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    project: action.data,
+                    createProject: action.data,
                 }
 
             case "PROJECT_CREATE_FAILUE" : 
