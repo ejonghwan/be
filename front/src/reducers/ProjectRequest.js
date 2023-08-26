@@ -12,17 +12,17 @@ const ProjectRequest = () => {
      const createProject = async data => {
         try {
             console.log('saga?', data)
-            if(!userName || typeof userName !== 'string') throw new Error('넘어온 이름값이 잘못되었습니다');
+            // if(!userName || typeof userName !== 'string') throw new Error('넘어온 이름값이 잘못되었습니다');
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
             }
-            // const res = await axios.get(`${host}/api/Project/user/${encodeName}`, config);
-            // ProjectDispatch({ type: "USER_Project_SUCCESS", data: res.data });
+            const res = await axios.post(`${host}/api/project`, data ,config);
+            ProjectDispatch({ type: "PROJECT_CREATE_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
-            // ProjectDispatch({ type: "USER_Project_FAILUE", data: err.response.data.message });
+            ProjectDispatch({ type: "PROJECT_CREATE_FAILUE", data: err.response.data.message });
         }
     }
     return {

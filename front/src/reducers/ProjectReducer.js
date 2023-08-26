@@ -35,7 +35,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    // signupErrorMessage: action.data,
+                    signupErrorMessage: action.data,
                 }
             default: return { state }
     }

@@ -12,14 +12,19 @@ import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import Search from '../common/form/Search';
 import Tags from '../common/tag/Tags';
 import SearchRequest from '../../reducers/SearchRequest';
+import ProjectRequest from '../../reducers/ProjectRequest';
+import { UserContext } from '../../context/UserContext';
 import { SearchContext } from '../../context/SearchContext';
 import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
 
+
 const CreateProjectDetail = () => {
 
     const { userSearch } = SearchRequest();
+    const { createProject } = ProjectRequest();
+    const { state } = useContext(UserContext);
     const { SearchState, SearchDispatch } = useContext(SearchContext);
     const { ProjectState, ProjectDispatch } = useContext(ProjectContext);
 
@@ -32,12 +37,14 @@ const CreateProjectDetail = () => {
     // joinUser: [{ _id }]
     // likeUser x
 
+
     const [projectImages, setProjectImages] = useState(0);
     const [categoryValue, setCategoryValue] = useState(''); 
     const [joinUserValue, setJoinUserValue] = useState(''); // 인풋값
     const [joinUserList, setJoinUserList] = useState([]); //뿌리기 위해 여기서만 사용
     const [isUserSearchResult, setIsUserSearchResult] = useState(false)
     const [submitData, setSubmitData] = useState({ 
+        constructorUser: {_id: state.user._id},
         title: '',
         content: '',
         categorys: [], //{categoryName: ''}
@@ -101,9 +108,9 @@ const CreateProjectDetail = () => {
     
      const handleAddFriend = ({ name, _id }) => () => {
         for(let i = 0; i < joinUserList.length; i++) {
-            if(submitData.joinUser[i].match(_id)) return alert('이미 추가한 친구입니다.')
+            if(submitData.joinUser[i]._id.match(_id)) return alert('이미 추가한 친구입니다.')
         }
-        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.concat(_id) }));
+        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.concat({ _id: _id }) }));
         setJoinUserList(prev => [...prev, { name: name, _id: _id }]);
         setJoinUserValue('');
         setIsUserSearchResult(false);
@@ -112,15 +119,17 @@ const CreateProjectDetail = () => {
     const handleJoinUserDelete = tagName => {
         let getId = joinUserList.filter(user => user.name === tagName)[0]._id;
         setJoinUserList(prev => prev.filter(user => user.name !== tagName));
-        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.filter(_id => _id !== getId) }))
+        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.filter(user => user._id !== getId) }))
 
     }
 
 
     // 습관 생성
-    const handleCreateProjectSubmit = e => { 
+    const handleCreateProjectSubmit = async e => { 
         e.preventDefault();
         console.log(submitData)
+        ProjectDispatch({ type: "PROJECT_REQUEST" })
+        await createProject(submitData)
     }
 
     const handleIconClick = idx => setProjectImages(idx);
