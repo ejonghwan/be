@@ -17,3 +17,9 @@
 .tag_wrap > li > span {
     font-size: 10px;
 }
+
+
+.tag_wrap .no_link {
+    display: flex;
+    align-items: center;
+}

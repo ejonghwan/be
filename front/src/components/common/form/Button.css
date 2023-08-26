@@ -86,3 +86,37 @@ button:disabled {
     color: var(--disabled-color);
     pointer-events: none;
 }
+
+
+.button_delete {
+    padding: 10px;
+    position: relative;
+    background-color: var(--bg-box-color1);
+    border-radius: 50%;
+    margin-left: 3px;
+   
+}
+
+.button_delete::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    background-color: var(--text-color2);
+    width: 1px;
+    height: 9px;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.button_delete::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    background-color: var(--text-color2);
+    width: 1px;
+    height: 9px;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
