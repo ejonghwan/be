@@ -48,7 +48,7 @@ const CreateProjectDetail = () => {
         setVal({...val, [name]: value})
     }
 
-
+    const handleCategoryReset = () => setCategoryValue('');
     const handleCategoryClick = useCallback(() => {
         let categoryResult = categoryValue.replace(/ /g,"").split('#').filter(item => {
             return item !== null && item !== undefined && item !== '';
@@ -162,16 +162,14 @@ const CreateProjectDetail = () => {
                         labelCont={"이 습관에 초대할 친구 이름 검색"}
                         isButton={true} 
                         value={joinUserValue}
-                        // buttonCont={`검색`}   
-                        buttonIcon={joinUserValue && <PiXCircleDuotone />}
                         buttonType={"button"}
                         isSearchResult={isUserSearchResult}
-                        buttonClick={handleUserValueReset}
                         onChange={handleSearchCange}
+                        handleInputReset={handleUserValueReset}
                     >
                         
                         {SearchState.loading ? (
-                            <div>유저 검색중...</div>
+                            <div>친구 검색중...</div>
                         ) : (
                             <ul className='search_result_user'>
                                 {SearchState.userSearch?.map(((user, idx) => <li key={idx} className='search_result_user_item'>{
@@ -201,6 +199,7 @@ const CreateProjectDetail = () => {
                         value={categoryValue}
                         buttonClick={handleCategoryClick}
                         onChange={e => setCategoryValue(e.target.value)}
+                        handleInputReset={handleCategoryReset}
                     />
                     <ul className='category_wrap gapt_10'>
                         <Tags tags={val.categorys.map(tag => tag)} isLink={false}/>

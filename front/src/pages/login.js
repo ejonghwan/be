@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
+import FindList from '../components/user/FindList';
 import LoginForm from '../components/user/LoginForm';
-import { HiOutlineKey, HiOutlineUserPlus, HiMiniMagnifyingGlass } from "react-icons/hi2";
 import './login.css';
 
 const login = ({ page }) => {
@@ -8,11 +7,7 @@ const login = ({ page }) => {
         <div>
             <h2>{page}</h2>
             <LoginForm />
-            <ul className='find_wrap'>
-                <li><HiMiniMagnifyingGlass /><Link to="/findid" className='hover_type1'>아이디 찾기</Link></li>
-                <li><HiOutlineKey /><Link to="/findpassword" className='hover_type1'>비밀번호 찾기</Link></li>
-                <li><HiOutlineUserPlus /><Link to="/signuppage" className='hover_type1'>회원가입</Link></li>
-            </ul>
+            <FindList />
         </div>
     );
 };
