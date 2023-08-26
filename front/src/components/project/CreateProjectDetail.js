@@ -38,14 +38,15 @@ const CreateProjectDetail = () => {
     const [submitData, setSubmitData] = useState({ 
         title: '',
         content: '',
-        categorys: [{categoryName: 'ㅋㅋ'}, {categoryName: 'aa'}, {categoryName: 'bb'}, {categoryName: 'cc'}],
+        categorys: [], //{categoryName: ''}
         joinUser: [],
-        projectPublic: false,
+        projectPublic: true,
     });
 
 
     const handleValuesChange = e => {
         const {name, value} = e.target;
+        console.log(name, value)
         setSubmitData({...submitData, [name]: value})
     }
 
@@ -117,6 +118,7 @@ const CreateProjectDetail = () => {
     // 습관 생성
     const handleCreateProjectSubmit = e => { 
         e.preventDefault();
+        console.log(submitData)
     }
 
     const handleIconClick = idx => setProjectImages(idx);
@@ -124,7 +126,7 @@ const CreateProjectDetail = () => {
 
 
     useEffect(() => {
-        console.log(submitData)
+        // console.log(submitData)
     }, [submitData])
 
     
@@ -194,7 +196,7 @@ const CreateProjectDetail = () => {
                                 {SearchState.userSearch?.map(((user, idx) => <li key={idx} className='search_result_user_item'>{
                                     <button type='button' 
                                         className='button_reset' 
-                                        title={`${user.id}님 친구추가`} 
+                                        title={`${user.id}님 초대`} 
                                         onClick={handleAddFriend({ name: user.name, _id: user._id })}
                                     >
                                         <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="" className='user_img'/>
@@ -207,9 +209,6 @@ const CreateProjectDetail = () => {
                         )}
                         {!SearchState.loading && SearchState.userSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"검색한 친구는 회원이 아닙니다."} subText={" 다시 검색해보세요."}/>}
                     </Search>
-                    <div>추가한 친구 
-                        {joinUserList?.map(user => <div key={user._id}>{user.name}</div>)}
-                    </div>
                     <div className='category_wrap gapt_10'>
                         <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete}/>
                     </div>
@@ -237,37 +236,33 @@ const CreateProjectDetail = () => {
                 <div className='gap_30'>
                     <Label htmlFor="content" content="습관 공개" className={"label_type1"}/>
                     <div className='Profile_info_cont gender_wrap'>
-                        <div className='gender_item'>
-                            <Label htmlFor="man" content="남자" className={"label_type1 gap_0"} />
-                            <Input 
-                                id="man" 
-                                type="radio" 
-                                required={true} 
-                                className={"input_type1"} 
-                                name="gender" 
-                                value="남" 
-                                onChange={handleValuesChange} 
-                                checked={true}
-                            />
-                        </div>
-                        <div className='gender_item'>
-                            <Label htmlFor="woman" content="여자" className={"label_type1 gap_0"} />
-                            <Input 
-                                id="woman" 
-                                type="radio" 
-                                required={true} 
-                                className={"input_type1"} 
-                                name="gender" 
-                                value="여"
-                                onChange={handleValuesChange} 
-                            />
-                        </div>
+                        <Input 
+                            id="public" 
+                            type="radio" 
+                            required={true} 
+                            className={"input_type1"} 
+                            name="projectPublic" 
+                            value={true}
+                            onChange={handleValuesChange} 
+                            defaultChecked={true}
+                        />
+                         <Label htmlFor="public" content="공개" className={"label_type1 gap_0"} />
+                        <Input 
+                            id="private" 
+                            type="radio" 
+                            required={true} 
+                            className={"input_type1"} 
+                            name="projectPublic" 
+                            value={false}
+                            onChange={handleValuesChange} 
+                        />
+                         <Label htmlFor="private" content="비공개" className={"label_type1 gap_0"} />
                     </div>
                         
                 </div>
 
                 <div className='align_c gapt_30'>
-                    <Button className={'button_type2'} disabled={true}>습관 생성</Button>
+                    <Button className={'button_type2'} >습관 생성</Button>
                     {/* <ErrorMsg className={'error_type1 align_c gapt_30'}>
                         {state.authNumberErrorMessage && <p> {state.authNumberErrorMessage}</p>}
                     </ErrorMsg>

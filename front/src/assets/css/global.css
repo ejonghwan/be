@@ -21,7 +21,7 @@
     --disabled-bg-color: #d9d9d9;
     --disabled-color: #919191;
     --box-shadow: 3px 7px 24px rgba(0,0,0,0.3);
-    --tag-color: #93bde7;
+    --tag-color: #55a5f4;
     
     
     --text-color-white: #fff;
@@ -35,6 +35,7 @@
     --bg-box-color1: rgb(240, 240, 240); 
     --bg-box-color2: #ddd; 
     --bg-box-color3: #efefef;; 
+    --bg-box-color4: #444; 
 
     --line-color1: #f4f4f4;
     --line-color2: #ddd;

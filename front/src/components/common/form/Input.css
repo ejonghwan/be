@@ -47,10 +47,36 @@ input[type="number"]:disabled {
 }
 
 
-
-.input_type1 {}
-
-
+/* radio */
+input[type=radio]{
+	width: 0;
+  height: 0;
+  position: absolute;
+  left: -9999px;
+}
+input[type=radio] + label{
+  margin: 0;
+  padding: 0.55em 1.3em;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  border: solid 1px var(--line-color2);
+  background-color: var(--text-color-white);
+  line-height: 140%;
+  text-align: center;
+  box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  transition: border-color .15s ease-out,  color .25s ease-out,  background-color .15s ease-out, box-shadow .15s ease-out;
+  cursor: pointer;
+  border-radius: 18px;
+  margin-right: 5px;
+}
+input[type=radio]:checked + label{
+	background-color: var(--bg-box-color4);
+  color: #FFF;
+  box-shadow: 0 0 10px rgba(102, 179, 251, 0.5);
+  border-color: var(--bg-box-color4);
+  z-index: 1;
+}
 
 
 
