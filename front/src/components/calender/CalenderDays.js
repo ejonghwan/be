@@ -1,7 +1,8 @@
+import { memo, useMemo } from 'react';
 
 const CalenderDays = () => {
     const days = [];
-    const date = ['Sun', 'Mon', 'Thu', 'Wed', 'Thrs', 'Fri', 'Sat'];
+    const date = useMemo(() => ['Sun', 'Mon', 'Thu', 'Wed', 'Thrs', 'Fri', 'Sat'], []);
 
     for (let i = 0; i < 7; i++) {
         days.push(
@@ -15,4 +16,4 @@ const CalenderDays = () => {
 };
 
 
-export default CalenderDays;
+export default memo(CalenderDays);

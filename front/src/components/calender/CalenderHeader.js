@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { format } from 'date-fns';
 
 import { Virtual, Navigation } from 'swiper';
@@ -11,8 +11,6 @@ const CalenderHeader = props => {
     const { currentMonth, prevMonth, nextMonth, prevYears, nextYears, y, m, slideState } = props;
     // 스와이프 이벤트 정리 
     // https://velog.io/@rhtjdrhkd123/20220516-swiper-events-%EC%A0%95%EB%A6%AC
-
-    // 여기 밖은 마운트 되기 전
     const mswiper = useRef(null);
     const yswiper = useRef(null);
     const [touch, setTouch] = useState(false);
@@ -28,12 +26,8 @@ const CalenderHeader = props => {
 
 
     useEffect(() => {
-        // console.log('m', m);
         mswiper.current.swiper.slideTo(m - 1);
         yswiper.current.swiper.slideTo(Math.abs(y - 1972));
-
-        console.log(mswiper.current.swiper.navigationNext)
-
     }, [slideState])
   
 
@@ -132,4 +126,4 @@ const CalenderHeader = props => {
     );
 };
 
-export default CalenderHeader
+export default memo(CalenderHeader);

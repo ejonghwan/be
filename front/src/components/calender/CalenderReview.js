@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, memo } from 'react'
 
 
 const CalenderReview = ({ date }) => {
@@ -13,4 +13,4 @@ const CalenderReview = ({ date }) => {
     )
 }
 
-export default CalenderReview;
+export default memo(CalenderReview);

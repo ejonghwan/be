@@ -1,26 +1,19 @@
-import React, { useState, useEffect, Fragment, useRef } from 'react';
+import React, { useState, useEffect, Fragment, useRef, useCallback } from 'react';
 // import { Icon } from '@iconify/react';
 import { format, addMonths, subMonths, addYears, subYears } from 'date-fns';
 // import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 // import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
-
 import { Virtual, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-
-import './Calender.css'
-
-// components
 import CalenderHeader from './CalenderHeader.js';
 import CalenderDays from './CalenderDays.js';
 import CalenderCells from './CalenderCells.js';
 import CalenderReview from './CalenderReview.js';
+import './Calender.css'
 
 
 
-export const Calender = () => {
-
-
+const Calender = () => {
 
     useEffect(() => {
         // console.log('format', format(hoho, 'M')) //지금시간에서 특정 추출해주는거 
@@ -58,12 +51,12 @@ export const Calender = () => {
         setCurrentMonth(addYears(currentMonth, 1));
     };
 
-    const onDateClick = (day) => {
+    const onDateClick = useCallback(day => {
         if(format(day, 'M') < format(currentMonth, 'M')) prevMonth();  
         if(format(day, 'M') > format(currentMonth, 'M')) nextMonth();
         setSelectedDate(day);
         setDate(format(day, 'yy/MM/dd'));
-    };
+    }, [currentMonth])
 
     
     const slides = Array.from({ length: 1000 }).map(
@@ -129,8 +122,4 @@ export const Calender = () => {
     );
 };
 
-
-
-
-// N채널 노노
-// DR.MOS
+export default Calender;
