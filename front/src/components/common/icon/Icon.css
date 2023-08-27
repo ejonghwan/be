@@ -1,4 +1,12 @@
 .aicon {
+    
+}
+
+.aicon.link {
+    cursor: pointer;
+}
+
+.aicon.center {
     cursor: pointer;
     display: flex;
     align-items: center;

@@ -3,7 +3,7 @@ export const ProjectIntialState = {
     errorMessage: '',
     loading: false,
     createProject: {},
-    loadProject: {},
+    project: {},
 }
 
 
@@ -44,7 +44,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    loadProject: action.data,
+                    project: action.data,
                 }
 
             case "A_PROJECT_LOAD_FAILUE" : 

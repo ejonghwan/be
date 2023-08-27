@@ -30,16 +30,6 @@ const CreateProjectDetail = () => {
     const { ProjectState, ProjectDispatch } = useContext(ProjectContext);
     const navigate = useNavigate()
 
-    // constructorUser 생성자는 stats.user로 넘기고
-    // instanceUser 초대할 유저\
-    // title
-    // content
-    // projectPublic 
-    // categorys: [{ categoryName }]
-    // joinUser: [{ _id }]
-    // likeUser x
-
-
     const [projectImages, setProjectImages] = useState(0);
     const [categoryValue, setCategoryValue] = useState(''); 
     const [joinUserValue, setJoinUserValue] = useState(''); // 인풋값
@@ -134,13 +124,11 @@ const CreateProjectDetail = () => {
             alert(`${title} 습관이 생성 되었습니다!`)
             navigate(`/project/detail/${data._id}`);
           
-
             console.log('실패하면 오나 ?');
             
         } catch(err) {
             console.log('view err?', err);
         }
-        
     }
 
     const handleIconClick = idx => {
@@ -149,9 +137,6 @@ const CreateProjectDetail = () => {
     };
     const { title, content, projectPublic, categorys } = submitData;
 
-    // useEffect(() => {
-    //     console.log(ProjectState.createProject._id)
-    // }, [projectImages])
 
     
     return (

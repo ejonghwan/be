@@ -10,7 +10,6 @@ const ProjectDetail = ({ page }) => {
     return (
         <div>
             <h2>{page}</h2>
-            projectDetail {_id}
             <LoadProject projectId={_id}/>
         </div>
     );

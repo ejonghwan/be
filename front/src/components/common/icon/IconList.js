@@ -10,7 +10,7 @@ const IconList = ({ icons, onClick, current }) => {
                     icon={item} 
                     id={idx} 
                     key={idx} 
-                    className={`icon_more ${idx === current && 'on'}`} 
+                    className={`icon_more link ${idx === current && 'on'}`} 
                     onClick={() => onClick(idx)} 
                 />
             )}

@@ -1,5 +1,4 @@
 import Button from '../form/Button';
-import { PiCirclesFourDuotone, PiSquaresFourDuotone } from "react-icons/pi";
 import './IconVisual.css';
 
 const IconVisual = ({ icon }) => {
