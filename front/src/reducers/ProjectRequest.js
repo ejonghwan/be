@@ -24,7 +24,7 @@ const ProjectRequest = () => {
             console.error(err);
             ProjectDispatch({ type: "PROJECT_CREATE_FAILUE", data: err.response.data.message });
         }
-    }
+    } 
 
 
     // 프로젝트 로드

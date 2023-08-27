@@ -330,33 +330,29 @@ const Signup = ({ page }) => {
                         <li>
                             <strong className='Profile_info_tit gapt_0'>성별</strong>
                             <div className='Profile_info_cont gender_wrap'>
-                                <div className='gender_item'>
-                                    <Label htmlFor="man" content="남자" className={"label_type1 gap_0"} />
-                                    <Input 
-                                        id="man" 
-                                        type="radio" 
-                                        required={true} 
-                                        className={"input_type1"} 
-                                        name="gender" 
-                                        value="남" 
-                                        evt="onChange" 
-                                        onChange={handleGender} 
-                                        checked={true}
-                                    />
-                                </div>
-                                <div className='gender_item'>
-                                    <Label htmlFor="woman" content="여자" className={"label_type1 gap_0"} />
-                                    <Input 
-                                        id="woman" 
-                                        type="radio" 
-                                        required={true} 
-                                        className={"input_type1"} 
-                                        name="gender" 
-                                        value="여" 
-                                        evt="onChange" 
-                                        onChange={handleGender} 
-                                    />
-                                </div>
+                                <Input 
+                                    id="man" 
+                                    type="radio" 
+                                    required={true} 
+                                    className={"input_type1"} 
+                                    name="gender" 
+                                    value="남" 
+                                    evt="onChange" 
+                                    onChange={handleGender} 
+                                    defaultChecked={true}
+                                />
+                                <Label htmlFor="man" content="남성" className={"label_type1 gap_0"} />
+                                <Input 
+                                    id="woman" 
+                                    type="radio" 
+                                    required={true} 
+                                    className={"input_type1"} 
+                                    name="gender" 
+                                    value="여" 
+                                    evt="onChange" 
+                                    onChange={handleGender} 
+                                />
+                                <Label htmlFor="woman" content="여성" className={"label_type1 gap_0"} />
                             </div>
                         </li>
                         <li>
