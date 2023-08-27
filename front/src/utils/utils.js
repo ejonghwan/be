@@ -125,7 +125,6 @@ export const statusCode = (statusCode, matched) => {
  */
 export const passwordChecked = (password) => {
    if(typeof password !== 'string') return console.error('문자열 아님')
-   console.log('ufn', password)
    const regexp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+])(?!.*[^a-zA-z0-9$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/g;
    return password.match(regexp) ? true : false;
 }

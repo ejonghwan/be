@@ -23,7 +23,7 @@ const UserProfile = () => {
     const [editEmailAuthState, setEditEmailAuthState] = useState(false);
    
     const [userName, handleUserName, setUserName] = useInput(state.user.name) ;
-    const [userGender, handleUserGender, setUserGender] = useInput('') ;
+    const [userGender, handleUserGender, setUserGender] = useInput(state.user.gender) ;
     const [userBirthday, handleUserBirthday, setUserBirthday] = useInput(state.user.birthday);
     const [birthdayLengthChecked, setBirthdayLengthChecked] = useState(false)
     const [userPhoneNumber, handleUserPhoneNumber] = useInput(state.user.phoneNumber) ;
@@ -255,37 +255,30 @@ const UserProfile = () => {
                                 <li>
                                     <strong className='Profile_info_tit'>성별</strong>
                                     <div className='Profile_info_cont gender_wrap'>
-                                        <div className='gender_item'>
-                                            <Label htmlFor="man" content="남자" className={"label_type1 gap_0"}/>
-                                            <Input 
-                                                id="man" 
-                                                type="radio" 
-                                                required={true} 
-                                                className={"input_type1"} 
-                                                name="gender" 
-                                                value="남" 
-                                                evt="onChange" 
-                                                onChange={handleUserGender} 
-                                                // ref={manRef}
-                                                // checked={state.user.gender === '남' ? true : false}
-                                                // 이거 수정할떄 체크안됨 
-                                            />
-                                        </div>
-                                        <div className='gender_item'>
-                                            <Label htmlFor="woman" content="여자" className={"label_type1 gap_0"}/>
-                                            <Input 
-                                                id="woman" 
-                                                type="radio" 
-                                                required={true} 
-                                                className={"input_type1"} 
-                                                name="gender" 
-                                                value="여" 
-                                                evt="onChange" 
-                                                onChange={handleUserGender}
-                                                // ref={womanRef} 
-                                                // checked={state.user.gender === '여' ? true : false}
-                                            />
-                                        </div>
+                                        <Input 
+                                            id="man" 
+                                            type="radio" 
+                                            required={true} 
+                                            className={"input_type1"} 
+                                            name="gender" 
+                                            value="남" 
+                                            evt="onChange" 
+                                            onChange={handleUserGender} 
+                                            defaultChecked={state.user.gender === '남' && true}
+                                        />
+                                         <Label htmlFor="man" content="남성" className={"label_type1 gap_0"}/>
+                                        <Input 
+                                            id="woman" 
+                                            type="radio" 
+                                            required={true} 
+                                            className={"input_type1"} 
+                                            name="gender" 
+                                            value="여" 
+                                            evt="onChange" 
+                                            onChange={handleUserGender}
+                                            defaultChecked={state.user.gender === '여' && true}
+                                        />
+                                        <Label htmlFor="woman" content="여성" className={"label_type1 gap_0"}/>
                                     </div>
                                 </li>
                                 <li>
