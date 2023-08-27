@@ -126,7 +126,6 @@ router.post('/', async (req, res) => {
         await Promise.all([
             User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
             Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true }),
-            Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true })
         ])
         res.status(201).json(write);
 

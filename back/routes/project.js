@@ -47,7 +47,7 @@ router.get('/:projectId', async (req, res) => {
             { path: 'categorys._id', select: 'id profileImage email' },
             { path: 'likeUser', select: 'id profileImage email' },
             // { path: 'projectImages._id' }, 이미지는 안에 내장해둠
-            { path: 'writes', select: 'user title likeCount commentCount', populate: { path: "user._id", select: 'id name' } } //객체 2뎁스 퍼퓰. 이거 꼭 기억
+            { path: 'writes', select: 'user title content likeCount commentCount', populate: { path: "user._id", select: 'id name' } } //객체 2뎁스 퍼퓰. 이거 꼭 기억
         ]);
         res.status(200).json(project)
     } catch (err) {
