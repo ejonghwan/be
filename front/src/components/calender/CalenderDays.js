@@ -1,8 +1,8 @@
-import { memo, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 
 const CalenderDays = () => {
     const days = [];
-    const date = useMemo(() => ['Sun', 'Mon', 'Thu', 'Wed', 'Thrs', 'Fri', 'Sat'], []);
+    const date = useCallback(() => ['Sun', 'Mon', 'Thu', 'Wed', 'Thrs', 'Fri', 'Sat'], []);
 
     for (let i = 0; i < 7; i++) {
         days.push(

@@ -9,7 +9,7 @@ import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
 // https://date-fns.org/v2.28.0/docs/subYears
 
 
-const CalenderCells = ({ currentMonth, selectedDate, onDateClick, setOriginDate, project }) => {
+const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => {
 
         // console.log(project,'???')
 
@@ -42,8 +42,8 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, setOriginDate,
                                     return isSameDay(day, new Date(item)) ?  `zzzzzzzzzzzzzzz` : ``;}).join(' ')}`}
                         key={day}
                         // onClick={() => onDateClick(parse(cloneDay))}
-                        onClick={() => onDateClick(cloneDay)}
-                        data-day={new Date(cloneDay)}
+                        onClick={() => onDateClick(cloneDay, new Date(cloneDay))}
+                        // data-day={new Date(cloneDay)}
                     >
                         <span
                             className={

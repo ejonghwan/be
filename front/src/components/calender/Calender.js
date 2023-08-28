@@ -33,7 +33,7 @@ const Calender = ({ project }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [slideState, setSlideState] = useState(false);
     const [date, setDate] = useState(null);
-    const [originDate, setOriginDate] = useState(null);
+    const [originDate, setOriginDate] = useState('')
     const calenderSwiper = useRef(null);
 
 
@@ -51,12 +51,12 @@ const Calender = ({ project }) => {
         setCurrentMonth(addYears(currentMonth, 1));
     };
 
-    const onDateClick = useCallback(day => {
+    const onDateClick = useCallback((day, originDate) => {
         if(format(day, 'M') < format(currentMonth, 'M')) prevMonth();  
         if(format(day, 'M') > format(currentMonth, 'M')) nextMonth();
         setSelectedDate(day);
         setDate(format(day, 'yy/MM/dd'));
-        // setOriginDate()
+        setOriginDate(originDate)
     }, [currentMonth])
 
     
@@ -110,7 +110,6 @@ const Calender = ({ project }) => {
                                     currentMonth={currentMonth}
                                     selectedDate={selectedDate}
                                     onDateClick={onDateClick}
-                                    setOriginDate={setOriginDate}
                                     project={project}
                                 />
                             </SwiperSlide>
@@ -120,7 +119,7 @@ const Calender = ({ project }) => {
                 <button className="mprev" onClick={prevMonth}>prev</button>
                 <button className="mnext" onClick={nextMonth}>next</button>
             </div>
-            {date && <CalenderReview date={date} originDate={originDate} project={project} />}
+            {date && <CalenderReview date={date} project={project} originDate={originDate} />}
         </Fragment>
     );
 };
