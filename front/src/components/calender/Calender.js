@@ -13,8 +13,7 @@ import './Calender.css'
 
 
 
-const Calender = () => {
-
+const Calender = ({ project }) => {
     useEffect(() => {
         // console.log('format', format(hoho, 'M')) //지금시간에서 특정 추출해주는거 
         // console.log('addMonths', addMonths(hoho, 3))  //지금부터 다음달 다다음달 
@@ -34,6 +33,7 @@ const Calender = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [slideState, setSlideState] = useState(false);
     const [date, setDate] = useState(null);
+    const [originDate, setOriginDate] = useState(null);
     const calenderSwiper = useRef(null);
 
 
@@ -56,6 +56,7 @@ const Calender = () => {
         if(format(day, 'M') > format(currentMonth, 'M')) nextMonth();
         setSelectedDate(day);
         setDate(format(day, 'yy/MM/dd'));
+        // setOriginDate()
     }, [currentMonth])
 
     
@@ -109,6 +110,8 @@ const Calender = () => {
                                     currentMonth={currentMonth}
                                     selectedDate={selectedDate}
                                     onDateClick={onDateClick}
+                                    setOriginDate={setOriginDate}
+                                    project={project}
                                 />
                             </SwiperSlide>
                         )
@@ -117,7 +120,7 @@ const Calender = () => {
                 <button className="mprev" onClick={prevMonth}>prev</button>
                 <button className="mnext" onClick={nextMonth}>next</button>
             </div>
-            {date && <CalenderReview date={date} />}
+            {date && <CalenderReview date={date} originDate={originDate} project={project} />}
         </Fragment>
     );
 };

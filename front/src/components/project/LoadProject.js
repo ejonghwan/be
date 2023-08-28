@@ -47,7 +47,7 @@ const LoadProject = ({ projectId }) => {
 
             <div>
                 달력
-                <Calender />
+                <Calender project={project} />
             </div>
 
 

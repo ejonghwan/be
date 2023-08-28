@@ -11,7 +11,13 @@ const ProjectRequest = () => {
     // 프로젝트 생성
      const createProject = async data => {
         try {
-            // if(!userName || typeof userName !== 'string') throw new Error('넘어온 이름값이 잘못되었습니다');
+            const { title, content, projectPublic, categorys, joinUser, constructorUser } = data;
+            if(!title || typeof title !== 'string') throw new Error('넘어온 제목값이 잘못되었습니다');
+            if(!content || typeof content !== 'string') throw new Error('넘어온 내용값이 잘못되었습니다');
+            if(!projectPublic || typeof projectPublic !== 'boolean') throw new Error('넘어온 공개여부값이 잘못되었습니다');
+            if(!categorys || !Array.isArray(categorys)) throw new Error('넘어온 카테고리값이 잘못되었습니다');
+            if(!joinUser || !Array.isArray(joinUser)) throw new Error('넘어온 초대유저값이 잘못되었습니다');
+            if(!constructorUser || typeof constructorUser !== 'object') throw new Error('넘어온 생성자값이 잘못되었습니다');
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,

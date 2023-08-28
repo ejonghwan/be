@@ -9,7 +9,9 @@ import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
 // https://date-fns.org/v2.28.0/docs/subYears
 
 
-const CalenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
+const CalenderCells = ({ currentMonth, selectedDate, onDateClick, setOriginDate, project }) => {
+
+        // console.log(project,'???')
 
         const monthStart = startOfMonth(currentMonth); //이달의 시작 9/1
         const monthEnd = endOfMonth(monthStart); //이달의 끝 9/30
@@ -35,15 +37,13 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
                             !isSameMonth(day, monthStart) ? 'disabled' : isSameDay(day, selectedDate)
                                 ? 'selected' : format(currentMonth, 'M') !== format(day, 'M')
                                 ? 'not-valid'
-                                : 'valid'} 
-                                ${isSameDay(day, new Date()) ? `today` : ``}
-                                ${testc.map(item => {
-                                    return isSameDay(day, new Date(item)) ?  `zzzzzzzzzzzzzzz` : ``;
-                                }).join(' ')}
-                            `}
+                                : 'valid'} ${isSameDay(day, new Date()) ? `today` : ``} ${testc.map(item => {
+                                    // console.log(isSameDay(day, new Date()))
+                                    return isSameDay(day, new Date(item)) ?  `zzzzzzzzzzzzzzz` : ``;}).join(' ')}`}
                         key={day}
                         // onClick={() => onDateClick(parse(cloneDay))}
                         onClick={() => onDateClick(cloneDay)}
+                        data-day={new Date(cloneDay)}
                     >
                         <span
                             className={
