@@ -6,6 +6,7 @@ import Icon from '../common/icon/Icon';
 import WriteListItem from '../write/WriteListItem';
 import Calender from '../../components/calender/Calender';
 import { UserContext } from '../../context/UserContext';
+import UserThumItem from '../common/userThum/UserThumItem';
 
 
 
@@ -47,6 +48,7 @@ const LoadProject = ({ projectId }) => {
                     
                     <div>
                         참여유저
+                        <UserThumItem users={project.instanceUser} />
                     </div>
                      <div>
                         달력

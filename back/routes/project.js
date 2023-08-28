@@ -18,11 +18,11 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const project = await Project.find().populate([
-            { path: 'constructorUser._id', select: 'id profileImage email' },
-            { path: 'instanceUser._id', select: 'id profileImage email' },
-            { path: 'joinUser._id', select: 'id profileImage email' },
-            { path: 'categorys._id', select: 'id profileImage email' },
-            { path: 'likeUser', select: 'id profileImage email' },
+            { path: 'constructorUser._id', select: 'id profileImage email name' },
+            { path: 'instanceUser._id', select: 'id profileImage email name' },
+            { path: 'joinUser._id', select: 'id profileImage email name' },
+            { path: 'categorys._id', select: 'id profileImage email name' },
+            { path: 'likeUser', select: 'id profileImage email name' },
             // { path: 'projectImages._id' }, 이미지는 안에 내장해둠
             // { path: 'writes' } 
         ]);
@@ -41,11 +41,11 @@ router.get('/:projectId', async (req, res) => {
     try {
         const { projectId } = req.params;
         const project = await Project.findById(projectId).populate([
-            { path: 'constructorUser._id', select: 'id profileImage email' },
-            { path: 'instanceUser._id', select: 'id profileImage email' },
-            { path: 'joinUser._id', select: 'id profileImage email' },
-            { path: 'categorys._id', select: 'id profileImage email' },
-            { path: 'likeUser', select: 'id profileImage email' },
+            { path: 'constructorUser._id', select: 'id profileImage email name' },
+            { path: 'instanceUser._id', select: 'id profileImage email name' },
+            { path: 'joinUser._id', select: 'id profileImage email name' },
+            { path: 'categorys._id', select: 'id profileImage email name' },
+            { path: 'likeUser', select: 'id profileImage email name' },
             // { path: 'projectImages._id' }, 이미지는 안에 내장해둠
             { path: 'writes', select: 'user title content likeCount commentCount createdAt updatedAt', populate: { path: "user._id", select: 'id name' } } //객체 2뎁스 퍼퓰. 이거 꼭 기억
         ]);
