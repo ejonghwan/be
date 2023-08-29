@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from 'react'
+import React, { Fragment, memo, useCallback, useEffect } from 'react'
 
 
 const CalenderReview = ({ date, project, originDate }) => {
@@ -11,9 +11,10 @@ const CalenderReview = ({ date, project, originDate }) => {
     const handleCalcTime = date => {
         const year = new Date(date).getFullYear();
         const month = new Date(date).getMonth() + 1;
-        const day = new Date(date).getDay();
-        return `${year} ${month} ${day}`
+        const day = new Date(date).getDate();
+        return `${year} ${month} ${day}`;
     }
+
 
 
     return (

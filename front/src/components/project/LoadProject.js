@@ -45,10 +45,9 @@ const LoadProject = ({ projectId }) => {
             project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0 ? 
             (
                 <Fragment>
-                    
                     <div>
                         참여유저
-                        <UserThumItem users={project.instanceUser} />
+                        <UserThumItem users={project.instanceUser} isText={true} />
                     </div>
                      <div>
                         달력
@@ -58,10 +57,6 @@ const LoadProject = ({ projectId }) => {
                         모든 인증글 보기 
                         <WriteListItem project={project} />
                     </div>
-
-
-
-                   
                 </Fragment>
             ) : (
                 <div>이 습관 가입 신청하기</div>
@@ -73,11 +68,8 @@ const LoadProject = ({ projectId }) => {
             (
                 <Fragment>
                     <div>
-                        초대 한 유저 
-                    </div>
-
-                    <div>
-                        신청한 유저
+                        초대 한 유저 & 신청한 유저
+                        <UserThumItem users={project.joinUser} isText={true} isButton={true} buttonName={'초대'}/>
                     </div>
                 </Fragment>
             )}   

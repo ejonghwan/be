@@ -37,21 +37,14 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                             !isSameMonth(day, monthStart) ? 'disabled' : isSameDay(day, selectedDate)
                                 ? 'selected' : format(currentMonth, 'M') !== format(day, 'M')
                                 ? 'not-valid'
-                                : 'valid'} ${isSameDay(day, new Date()) ? `today` : ``} ${testc.map(item => {
-                                    // console.log(isSameDay(day, new Date()))
-                                    return isSameDay(day, new Date(item)) ?  `zzzzzzzzzzzzzzz` : ``;}).join(' ')}`}
+                                : 'valid'} ${isSameDay(day, new Date()) ? `today` : ``} ${testc.map(item =>  isSameDay(day, new Date(item)) ?  `zzzzzzzzzzzzzzz` : ``).join(' ')}`}
                         key={day}
                         // onClick={() => onDateClick(parse(cloneDay))}
                         onClick={() => onDateClick(cloneDay, new Date(cloneDay))}
+                        tabIndex="0"
                         // data-day={new Date(cloneDay)}
                     >
-                        <span
-                            className={
-                                format(currentMonth, 'M') !== format(day, 'M')
-                                    ? 'text not-valid'
-                                    : ''
-                            }
-                        >
+                        <span className={format(currentMonth, 'M') !== format(day, 'M') ? 'day text not-valid' : 'day'}>
                             {formattedDate}
                         </span>
                     </div>,
