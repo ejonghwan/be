@@ -116,8 +116,8 @@ const Calender = ({ project }) => {
                         )
                     })}
                 </Swiper>
-                <button className="mprev" onClick={prevMonth}>prev</button>
-                <button className="mnext" onClick={nextMonth}>next</button>
+                {/* <button className="mprev" onClick={prevMonth}>prev</button>
+                <button className="mnext" onClick={nextMonth}>next</button> */}
             </div>
             {date && <CalenderReview date={date} project={project} originDate={originDate} />}
         </Fragment>

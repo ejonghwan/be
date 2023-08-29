@@ -42,6 +42,24 @@
     margin-right: 0;
 }
 
+
+/* 진행중인 습관에 인증글이 있으면. */
+.calendar .body .constructor,
+.calendar .body .instance {
+    position: relative;
+}
+.calendar .body .constructor::before,
+.calendar .body .instance::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: red;
+    border-radius: 50%;
+}
+
 .calendar .col > .day {
     display: block;
     padding: 5px 0;
@@ -60,16 +78,18 @@
 }
 
 .calendar .col.today > span.day::before {
-    content:'';
-     width: 5px; 
-     height: 5px; 
-     display: inline-block;
-     font-weight: bold; 
-     background-color: rgb(255, 24, 24); 
-     border-radius: 50%; 
+    content:'To day';
+     /* width: 5px;  */
+     /* height: 5px;  */
+     /* display: inline-block; */
+     /* font-weight: bold;  */
+     font-size: 1rem;
+     font-weight: 400;
+     /* background-color: rgb(255, 24, 24);  */
+     /* border-radius: 50%;  */
      position: absolute; 
-     top: 9px;
-     left: 22px;
+     top: 5px;
+     right: 0px;
      margin: 0 auto;
 }
 
@@ -136,7 +156,14 @@
 }
 
 .calendar .yy { 
-    padding: 5px 0;
+    /* padding: 5px 0; */
+    position: relative;
+    width: 240px;
+    margin: 0 auto 10px;
+}
+
+.calendar .yy .swiper-wrapper {
+    align-items: flex-end;
 }
 
 .calendar .yy .swiper-slide.swiper-slide-visible {
@@ -146,32 +173,50 @@
 .calendar .yy .swiper-slide.swiper-slide-visible.swiper-slide-active {
     font-weight: bold; 
     opacity: 1;
+    font-size: 1.6rem;
 }
 
-.calendar .yy .swiper-button-prev {
-    top: 50%;
+.calendar .yy .button_type_arrow_l {
+    position: absolute;
+    top: -2px;
+    left: -20px;
 }
 
-.calendar .yy .swiper-button-next {
-    top: 50%;
+.calendar .yy .button_type_arrow_r  {
+    position: absolute;
+    top: -2px;
+    right: -20px;
 }
 
 .calendar .mm {
-    margin-bottom: 30px; 
-    padding: 5px 0;
+    /* padding: 5px 0; */
+    position: relative;
+    width: 200px;
+    margin: 0 auto 50px;
 }
+
+.calendar .mm .swiper-wrapper {
+    align-items: flex-end;
+}
+
 .calendar .mm .swiper-slide.swiper-slide-visible {
     opacity: .5; 
 }
 .calendar .mm .swiper-slide.swiper-slide-visible.swiper-slide-active {
     font-weight: bold; 
     opacity: 1; 
+    /* color: var(--point-color); */
+    font-size: 1.6rem;
 }
-.calendar .mm .swiper-button-prev {
-    top: 50%;
+.calendar .mm .button_type_arrow_l {
+    position: absolute;
+    top: -2px;
+    left: -20px;
 }
-.calendar .mm .swiper-button-next {
-    top: 50%;
+.calendar .mm .button_type_arrow_r  {
+    position: absolute;
+    top: -2px;
+    right: -20px;
 }
 
 

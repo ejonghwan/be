@@ -80,6 +80,68 @@
 }
 
 
+.button_type_arrow_r,
+.button_type_arrow_l  {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--bg-box-white);
+}
+
+.button_type_arrow_r::before {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 7px;
+    transform-origin: right center;
+    left: 6px;
+    transform: rotate(45deg) translate(0);
+}
+
+.button_type_arrow_r::after {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 7px;
+    transform-origin: right center;
+    left: 6px;
+    transform: rotate(-45deg) translateX(0);
+}
+
+.button_type_arrow_l::before {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 7px;
+    transform-origin: left center;
+    right: 6px;
+    transform: rotate(45deg) translate(0);
+}
+
+.button_type_arrow_l::after {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 7px;
+    transform-origin: left center;
+    right: 6px;
+    transform: rotate(-45deg) translateX(0);
+}
+
 
 button:disabled {
     background: var(--disabled-bg-color);
@@ -94,7 +156,6 @@ button:disabled {
     background-color: var(--bg-box-color1);
     border-radius: 50%;
     margin-left: 3px;
-   
 }
 
 .button_delete::after {

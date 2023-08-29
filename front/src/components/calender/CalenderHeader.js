@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 
 import { Virtual, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Button from '../common/form/Button';
 
 
 const CalenderHeader = props => {
@@ -34,11 +35,11 @@ const CalenderHeader = props => {
 
     return (
         <div className="header row">
-            <div className="col col-start">
+            {/* <div className="col col-start">
                 <span className="text">
                     {format(currentMonth, 'yyyy')} <span className="text month">{format(currentMonth, 'M')}월</span>
                 </span>
-            </div>
+            </div> */}
             <div className="col col-end">
                 {/* <Icon icon="bi:arrow-left-circle-fill" onClick={prevMonth} />
                 <Icon icon="bi:arrow-right-circle-fill" onClick={nextMonth} /> */}
@@ -49,7 +50,7 @@ const CalenderHeader = props => {
                         // direction={"vertical"}
                         modules={[Virtual, Navigation]} 
                         spaceBetween={0} 
-                        slidesPerView={8} 
+                        slidesPerView={3} 
                         centeredSlides={true}
                         virtual
                         autoHeight={false}
@@ -75,13 +76,17 @@ const CalenderHeader = props => {
                         {yy.map((item, index) => {
                             return (
                                 <SwiperSlide key={item} virtualIndex={index}>
-                                    {item}
+                                    {item} 년
                                 </SwiperSlide>
                             )
                         })}
                     </Swiper>
-                    <button className="yprev" onClick={prevYears}>prev</button>
-                    <button className="ynext" onClick={nextYears}>next</button>
+                    <Button type={'button'} className='button_type_arrow_l yprev' onClick={prevYears}>
+                        <span className='blind'>이전 년도 보기</span>
+                    </Button>
+                    <Button type={'button'} className='button_type_arrow_r ynext' onClick={nextYears}>
+                        <span className='blind'>다음 년도 보기</span>
+                    </Button>
                 </div>
 
                 <div className="mm">
@@ -89,7 +94,7 @@ const CalenderHeader = props => {
                         // direction={"vertical"}
                         modules={[Virtual, Navigation]} 
                         spaceBetween={0} 
-                        slidesPerView={8} 
+                        slidesPerView={3} 
                         centeredSlides={true}
                         virtual
                         autoHeight={false}
@@ -113,13 +118,17 @@ const CalenderHeader = props => {
                         {mm.map((item, index) => {
                             return (
                                 <SwiperSlide key={item} virtualIndex={index}>
-                                    {index + 1}
+                                    {index + 1}월
                                 </SwiperSlide>
                             )
                         })}
                     </Swiper>
-                    <button className="mprev" onClick={prevMonth}>prev</button>
-                    <button className="mnext" onClick={nextMonth}>next</button>
+                    <Button type={'button'} className='button_type_arrow_l mprev' onClick={prevMonth}>
+                        <span className='blind'>이전 월 보기</span>
+                    </Button>
+                    <Button type={'button'} className='button_type_arrow_r mnext' onClick={nextMonth}>
+                        <span className='blind'>다음 월 보기</span>
+                    </Button>
                 </div>
             </div>
         </div>

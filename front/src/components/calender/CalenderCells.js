@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, Fragment, memo, useRef } from 'react';
-// import { Icon } from '@iconify/react';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
@@ -22,7 +21,6 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
         let days = [];
         let day = startDate;
         let formattedDate = '';
-        let testc = ["2023, 08, 07", "2023, 08, 08", "2022, 10, 15", "2022, 10, 16", "2022, 11, 15", "2022, 11, 16", "2022, 11, 17", "2022, 11, 18", "2022, 11, 19", "2022, 11, 20", "2022, 11, 21", "2022, 11, 22", ]
     
 
         while (day <= endDate) {
@@ -37,7 +35,7 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                             !isSameMonth(day, monthStart) ? 'disabled' : isSameDay(day, selectedDate)
                                 ? 'selected' : format(currentMonth, 'M') !== format(day, 'M')
                                 ? 'not-valid'
-                                : 'valid'} ${isSameDay(day, new Date()) ? `today` : ``} ${testc.map(item =>  isSameDay(day, new Date(item)) ?  `zzzzzzzzzzzzzzz` : ``).join(' ')}`}
+                                : 'valid'} ${isSameDay(day, new Date()) ? `today` : ``} ${project.constructorUser.days?.map(userDay => isSameDay(day, new Date(userDay.date)) ? `constructor`:``).join(' ')} ${project.instanceUser?.map(user => user.days?.map((userDay, idx) => isSameDay(day, new Date(userDay.date)) ? `instance` : ``).join(' ')).join(' ')} `}
                         key={day}
                         // onClick={() => onDateClick(parse(cloneDay))}
                         onClick={() => onDateClick(cloneDay, new Date(cloneDay))}
