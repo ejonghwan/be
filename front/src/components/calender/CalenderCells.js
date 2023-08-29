@@ -46,11 +46,17 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                     >
                         {
                             project.constructorUser.days?.map(userDay => (
-                                <div>
-                                    {console.log('day???', day, new Date(userDay.date))}
-                                    {isSameDay(day, new Date(userDay.date)) ? <span>섬데이</span> : <span>아님</span>}
-                                </div>
+                                <Fragment>
+                                    {isSameDay(day, new Date(userDay.date)) && <span key={project.constructorUser._id.id}>{project.constructorUser._id.id}</span>}
+                                </Fragment>
                             ))
+                        }
+                        {
+                            project.instanceUser?.map(user => user.days?.map(userDay => (
+                                <Fragment>
+                                    {isSameDay(day, new Date(userDay.date)) && <span key={user._id.id}>{user._id.id}</span>}
+                                </Fragment>
+                            )))
                         }
                         <span className={format(currentMonth, 'M') !== format(day, 'M') ? 'day text not-valid' : 'day'}>
                             {formattedDate}
