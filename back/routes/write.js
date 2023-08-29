@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
         // },],
 
         const date = new Date();
-        const nowDate = `${date.getFullYear()}` + `${date.getMonth() + 1}` + `${date.getDate()}`;
+        const nowDate = `${date.getFullYear()}-` + `${date.getMonth() + 1}-` + `${date.getDate()}`;
         const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": user._id } ] }, )
         const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
     

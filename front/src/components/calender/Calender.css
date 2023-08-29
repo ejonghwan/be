@@ -29,13 +29,12 @@
     width: 14.285714285714286%; 
     text-align: center;  
     border:none; 
-    padding: 20px;
+    padding: 40px 20px;
     background-color: var(--bg-box-white);
 }
 
 .calendar .body .col {
     border-radius: 18px;
-    padding: 40px; 
     display: flex;
     justify-content: center;
     cursor: pointer;
@@ -160,6 +159,6 @@
 @media screen and (max-width: 640px) {
     .calendar .days .col,
     .calendar .body .col {
-        padding: 20px; 
+        padding: 10px; 
     }
 }

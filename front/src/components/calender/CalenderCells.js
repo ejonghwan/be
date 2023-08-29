@@ -11,7 +11,7 @@ import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
 
 const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => {
 
-        // console.log(project,'???')
+        console.log(project,'???')
 
         const monthStart = startOfMonth(currentMonth); //이달의 시작 9/1
         const monthEnd = endOfMonth(monthStart); //이달의 끝 9/30
@@ -44,6 +44,14 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                         tabIndex="0"
                         // data-day={new Date(cloneDay)}
                     >
+                        {
+                            project.constructorUser.days?.map(userDay => (
+                                <div>
+                                    {console.log('day???', day, new Date(userDay.date))}
+                                    {isSameDay(day, new Date(userDay.date)) ? <span>섬데이</span> : <span>아님</span>}
+                                </div>
+                            ))
+                        }
                         <span className={format(currentMonth, 'M') !== format(day, 'M') ? 'day text not-valid' : 'day'}>
                             {formattedDate}
                         </span>
