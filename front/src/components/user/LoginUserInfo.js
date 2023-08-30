@@ -3,7 +3,7 @@ import { UserContext } from '../../context/UserContext.js'
 import { PiCirclesFourDuotone, PiSquaresFourDuotone } from "react-icons/pi";
 import LazyImage from '../image/LazyImage.js';
 import Popup from '../common/popup/Popup.js';
-import PopupButton from '../common/popup/PopupButton.js';
+import MenuButton from '../common/popup/MenuButton.js';
 import { useGlobalState } from '../../context/UiContext.js';
 
 import './LoginUserInfo.css';
@@ -13,12 +13,11 @@ import Menu from '../common/menu/Menu.js';
 const LoginUserInfo = () => {
     const { state } = useContext(UserContext)
     const { name, profileImage } = state.user;
-    const { popOpen } = useGlobalState();
+    const { menuOpen } = useGlobalState();
 
     return (
         <Fragment>
-            
-            <PopupButton className={'menu'} matched={'menu'}>
+            <MenuButton className={'menu'}>
                 <ul className='user_profile_wrap'>
                     <li>
                         <div className='user_profile_img'>
@@ -31,13 +30,11 @@ const LoginUserInfo = () => {
                         </div>
                     </li>
                     <li className='user_profile_name'><strong>{name}</strong>님
-                        <div className={`user_profile_icon ${popOpen.isPop && popOpen.matched === 'menu' ? 'on' : ''}`}><PiSquaresFourDuotone /></div>
+                        <div className={`user_profile_icon ${menuOpen ? 'on' : ''}`}><PiSquaresFourDuotone /></div>
                     </li>
                 </ul>
-            </PopupButton>
-            <Popup className={'popup_type_small menu'}>
-                <Menu />
-            </Popup>
+            </MenuButton> 
+            <Menu />
         </Fragment>
     );
 };

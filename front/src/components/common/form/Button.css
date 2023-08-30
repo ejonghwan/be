@@ -79,6 +79,40 @@
     font-size: inherit;
 }
 
+/* x 버튼 */
+.button_type_close {
+    position: relative;
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+}
+
+.button_type_close::before {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    transform-origin: center center;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.button_type_close::after {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    transform-origin: center center;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 
 .button_type_arrow_r,
 .button_type_arrow_l  {
@@ -181,3 +215,38 @@ button:disabled {
     height: 9px;
     transform: translate(-50%, -50%) rotate(45deg);
 }
+
+
+
+
+
+
+
+/* x 버튼 */
+/* .button_type_close {
+    position: relative;
+}
+
+.button_type_close::before {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    left: 50%;
+    transform: rotate(45deg) translate(-50%, -50%);
+}
+
+.button_type_close::after {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    left: 50%;
+    transform: rotate(-45deg) translate(-50%, -50%);
+} */
