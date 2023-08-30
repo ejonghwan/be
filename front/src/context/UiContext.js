@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 export const GlobalContext = createContext();
 
 export function GlobalProvider({ children }) {
-	const [popOpen, setPopopen] = useState(false);
+	const [popOpen, setPopopen] = useState({ isPop: false, matched: '', data: null });
 	return <GlobalContext.Provider value={{ popOpen, setPopopen }}>{children}</GlobalContext.Provider>;
 }
 

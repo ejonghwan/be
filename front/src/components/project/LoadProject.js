@@ -47,7 +47,7 @@ const LoadProject = ({ projectId }) => {
                 <Fragment>
                     <div>
                         참여유저
-                        <UserThumItem users={project.instanceUser} isText={true} />
+                        <UserThumItem users={project.instanceUser} isText={true} className={'vertical'} />
                     </div>
                      <div>
                         달력

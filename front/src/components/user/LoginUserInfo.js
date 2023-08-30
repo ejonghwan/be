@@ -18,7 +18,7 @@ const LoginUserInfo = () => {
     return (
         <Fragment>
             
-            <PopupButton>
+            <PopupButton className={'menu'} matched={'menu'}>
                 <ul className='user_profile_wrap'>
                     <li>
                         <div className='user_profile_img'>
@@ -31,11 +31,11 @@ const LoginUserInfo = () => {
                         </div>
                     </li>
                     <li className='user_profile_name'><strong>{name}</strong>님
-                        <div className={`user_profile_icon ${popOpen ? 'on' : ''}`}><PiSquaresFourDuotone /></div>
+                        <div className={`user_profile_icon ${popOpen.isPop && popOpen.matched === 'menu' ? 'on' : ''}`}><PiSquaresFourDuotone /></div>
                     </li>
                 </ul>
             </PopupButton>
-            <Popup className={'popup_type_small'}>
+            <Popup className={'popup_type_small menu'}>
                 <Menu />
             </Popup>
         </Fragment>

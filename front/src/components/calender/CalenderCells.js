@@ -10,7 +10,7 @@ import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
 
 const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => {
 
-        console.log(project,'???')
+        // console.log(project,'???')
 
         const monthStart = startOfMonth(currentMonth); //이달의 시작 9/1
         const monthEnd = endOfMonth(monthStart); //이달의 끝 9/30

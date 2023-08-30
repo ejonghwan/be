@@ -76,15 +76,15 @@ const CalenderHeader = props => {
                         {yy.map((item, index) => {
                             return (
                                 <SwiperSlide key={item} virtualIndex={index}>
-                                    {item} 년
+                                    {item}년
                                 </SwiperSlide>
                             )
                         })}
                     </Swiper>
-                    <Button type={'button'} className='button_type_arrow_l yprev' onClick={prevYears}>
+                    <Button type={'button'} className='button_type_arrow_l yprev hover_type1' onClick={prevYears}>
                         <span className='blind'>이전 년도 보기</span>
                     </Button>
-                    <Button type={'button'} className='button_type_arrow_r ynext' onClick={nextYears}>
+                    <Button type={'button'} className='button_type_arrow_r ynext hover_type1' onClick={nextYears}>
                         <span className='blind'>다음 년도 보기</span>
                     </Button>
                 </div>
@@ -123,10 +123,10 @@ const CalenderHeader = props => {
                             )
                         })}
                     </Swiper>
-                    <Button type={'button'} className='button_type_arrow_l mprev' onClick={prevMonth}>
+                    <Button type={'button'} className='button_type_arrow_l mprev hover_type1' onClick={prevMonth}>
                         <span className='blind'>이전 월 보기</span>
                     </Button>
-                    <Button type={'button'} className='button_type_arrow_r mnext' onClick={nextMonth}>
+                    <Button type={'button'} className='button_type_arrow_r mnext hover_type1' onClick={nextMonth}>
                         <span className='blind'>다음 월 보기</span>
                     </Button>
                 </div>

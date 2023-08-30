@@ -21,10 +21,27 @@
 .user_thum_wrap .user_thum_id {
     display: block;
     font-size: 1.3rem;
-    color: var(--icon-color);
+    color: var(--text-color2);
 }
 
-.user_thum_wrap .user_thum_name{
+.user_thum_wrap .user_thum_name {
     display: block;
     margin-top: 5px;
+    font-weight: 500;
+}
+
+
+/* .user_thum_wrap.horizon {} */
+.user_thum_wrap.vertical > li {
+    text-align: center;
+    flex-direction: column;
+    
+}
+
+.user_thum_wrap.vertical > li .user_thum_name {
+    margin-top: 5px;
+}
+
+.user_thum_wrap.vertical > li .user_thum_id {
+    margin-top: 0px;
 }

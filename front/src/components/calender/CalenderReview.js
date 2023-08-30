@@ -2,17 +2,17 @@ import React, { Fragment, memo, useCallback, useEffect } from 'react'
 
 
 const CalenderReview = ({ date, project, originDate }) => {
-    const handleCalcTime = date => {
+
+    const handleCalcTime = useCallback(date => {
         const year = new Date(date).getFullYear();
         const month = new Date(date).getMonth() + 1;
         const day = new Date(date).getDate();
         return `${year} ${month} ${day}`;
-    }
+    }, [])
+
     return (
         <Fragment>
-            <br /><br />
-            dateNumber: {date} - 
-            <br />
+            {date} - 
             캘린더 리뷰어페이지
             
             {project.writes

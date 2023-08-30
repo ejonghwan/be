@@ -44,12 +44,12 @@
 
 
 /* 진행중인 습관에 인증글이 있으면. */
-.calendar .body .constructor,
-.calendar .body .instance {
+.calendar .body .constructor .day,
+.calendar .body .instance .day{
     position: relative;
 }
-.calendar .body .constructor::before,
-.calendar .body .instance::before {
+.calendar .body .constructor .day::before,
+.calendar .body .instance .day::before {
     content: '';
     width: 10px;
     height: 10px;
@@ -63,6 +63,7 @@
 .calendar .col > .day {
     display: block;
     padding: 5px 0;
+    color: var(--text-color1);
     /* display: flex; */
     /* align-items: center; */
     /* justify-content: center; */
@@ -70,6 +71,7 @@
     /* height: 50px; */
     /* border-radius: 50%; */
 }
+
 
 
 .calendar .col.today > span.day {
@@ -221,9 +223,9 @@
 
 
 
-.calendar .zzzzzzzzzzzzzzz {
+/* .calendar .zzzzzzzzzzzzzzz {
     background-color: rgb(191, 219, 255);
-}
+} */
 
 
 
