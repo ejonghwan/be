@@ -17,6 +17,7 @@
 .button_reset {
     border: none;
     cursor: pointer;
+    background-color: var(--bg-color-white);
 }
 
 .btn_wrap {

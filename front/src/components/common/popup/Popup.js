@@ -1,26 +1,49 @@
-import { Fragment, useRef, useState, memo, forwardRef, useImperativeHandle } from 'react';
-import { useGlobalState } from '../../../context/UiContext';
-import './Popup.css';
+import { Fragment, useState, memo, forwardRef, useImperativeHandle, useEffect, useCallback } from 'react';
 import Button from '../form/Button';
+import './Popup.css';
 
 const Popup = forwardRef(({ children, className, isHead = false, title, closeClick, dimd = false }, ref) => {
 
-    // const { popOpen, setPopopen } = useGlobalState();
-    const [Open, setOpen] = useState(false);
+    const [popOpen, setPopOpen] = useState(false);
 
     useImperativeHandle(ref, () => {
 		return { 
-			open: () => { 
-				// setPopopen({ ...popOpen, isOpen: true });
-                setOpen(true)
+			popupOpen: () => { 
+                setPopOpen(true)
 			 }, 
-			 close: () => {
-				// setPopopen({ ...popOpen, isOpen: false })
-                setOpen(false)
+			 popupClose: () => {
+                handlePopClose()
+                // setPopOpen(false)
 			 },
 		};
 	});
 
+    const handlePopClose = () => {
+		// document.body.style.overflow = '';
+		document.body.classList.remove('popup_active');
+		setPopOpen(false)
+	}
+
+	useEffect(() => {
+		if(popOpen) {
+			// document.body.style.overflow = 'hidden';
+			document.body.classList.add('popup_active');
+		}
+	}, [popOpen])
+
+    // 딤드 없을 경우 다른곳을 눌러도 팝업 닫히기 나중에 해결해야됨
+    // const handleClickClose = useCallback(e => {
+    //     console.log(e.target, popOpen)
+    //     if(e.target.classList.contains('popup')) {
+    //         setPopOpen(false)
+    //     }
+    //     // setPopOpen(false)
+    // }, [popOpen, setPopOpen])
+
+    // useEffect(() => {
+    //     window.addEventListener('click', handleClickClose)
+    //     return () => window.removeEventListener('click', handleClickClose)
+    // }, [])
 
     return (
         <Fragment>
@@ -39,11 +62,12 @@ const Popup = forwardRef(({ children, className, isHead = false, title, closeCli
                 </div> 
             </div>
             { popOpen.isOpen && dimd && <div className='dimd'></div>} */}
-
             {/* {popOpen.isOpen && ( */}
-            {Open && (
+
+            
+            {popOpen && (
                 <Fragment>
-                    <div id='popup' className={`${className}`}>
+                    <div id='popup' className={`popup ${className}`}>
                         {isHead && (
                             <div className='popup_head'>
                                 <strong>{title}</strong>
@@ -56,7 +80,7 @@ const Popup = forwardRef(({ children, className, isHead = false, title, closeCli
                             {children}
                         </div> 
                     </div>
-                    { Open && dimd && <div className='dimd'></div>}
+                    { popOpen && dimd && <div className='dimd' onClick={handlePopClose}></div>}
                 </Fragment>
             )}
          </Fragment>
