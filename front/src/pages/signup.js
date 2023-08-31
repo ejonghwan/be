@@ -194,7 +194,7 @@ const Signup = ({ page }) => {
             6. 이전비번이랑 동일한지 
             
         */
-        <div>
+        <div className='b_conts'>
             <h2>{page}</h2>
                 <div className='form_wrap'>
                 

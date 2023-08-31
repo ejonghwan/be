@@ -25,7 +25,7 @@ const UserThumItem = ({ users = [], className = '', isText, isButton = false, bu
                         </div>
                         {isText && (
                             <div className='user_thum_txtwrap'>
-                                <Button type={'button'} className={'button_reset hover_type1'} onClick={() => handleIndex(idx)}>
+                                <Button type={'button'} className={'button_reset hover_type3'} onClick={() => handleIndex(idx)}>
                                     <span className='user_thum_id'>{user._id.id}</span>
                                     <span className='user_thum_name'>{user._id.name} 님</span>
                                 </Button>

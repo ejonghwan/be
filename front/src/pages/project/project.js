@@ -3,7 +3,7 @@
 
 const Project = () => {
     return (
-        <div>
+        <div className="b_conts">
             page
         </div>
     );

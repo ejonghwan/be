@@ -2,9 +2,7 @@
 const Main = ({ children }) => {
     return (
         <main id="contents">
-            <div className='b_conts'>
-                {children}
-            </div>
+            {children}
         </main>
     );
 };

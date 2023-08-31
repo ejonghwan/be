@@ -2,7 +2,7 @@ import FindPassword from '../components/user/FindPassword';
 
 const findpassword = ({ page }) => {
     return (
-        <div>
+        <div className='b_conts'>
             <h2>{page}</h2>
             <FindPassword />
         </div>

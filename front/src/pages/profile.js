@@ -3,7 +3,7 @@ import Secession from '../components/user/Secession.js';
 
 const Profile = ({ page }) => {
     return (
-        <div>
+        <div className='b_conts'>
             <h2>{page}</h2>
             <UserProfile />
             <Secession />

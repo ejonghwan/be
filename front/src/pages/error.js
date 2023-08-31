@@ -2,7 +2,7 @@
 
 const Error = ({ page }) => {
     return (
-        <div>
+        <div className='b_conts'>
             <h2>{page}</h2>
             error
             토큰시간만료

@@ -1,0 +1,11 @@
+.write_list_wrap {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -5px;
+}
+
+.write_list_wrap > li {
+    width: calc(25% - 10px);
+    margin: 5px;
+    background-color: var(--bg-box-color1);
+}

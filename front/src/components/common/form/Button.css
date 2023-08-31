@@ -11,7 +11,7 @@
     font-size: 1.5rem;
     white-space: nowrap;
     color: var(--text-color1);
-    background-color: var(--bg-box-color1);
+    /* background-color: var(--bg-box-color1); */
 }
 
 .button_reset {
@@ -122,8 +122,14 @@
     height: 20px;
     padding: 0;
     border-radius: 50%;
-    background-color: var(--bg-box-white);
+    /* background-color: var(--bg-box-white); */
 }
+
+.button_type_arrow_r:disabled,
+.button_type_arrow_l:disabled {
+    opacity: .5;
+    background-color: transparent;
+} 
 
 .button_type_arrow_r::before {
     background-color: var(--arrow-color);

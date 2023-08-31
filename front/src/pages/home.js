@@ -5,14 +5,14 @@ import Project from '../components/project/Project.js';
 import CreateProject from '../components/project/CreateProject.js';
 import './home.css';
 
-const Home = () => {
+const Home = ({ page }) => {
 
     const { state } = useContext(UserContext);
     // console.log('home?', state.user.projects)
-
+    
     return (
-        <Fragment>
-            <h3>내 습관</h3>
+        <div className='b_conts'>
+            <h2><span className='blind'>{page}</span></h2>
             <ul className='project_wrap'>
                 {state.user.projects?.map(project => (
                     <li key={project._id}><Project data={project} /></li>
@@ -26,7 +26,7 @@ const Home = () => {
             디비에서 좋아요 표시 많은거 뽑아서 습관 목록
 
             <h3>달력 일자로 ? </h3>
-        </Fragment>
+        </div>
     );
 };
 

@@ -1,7 +1,7 @@
 
 const About = ({ page }) => {
     return (
-        <div>
+        <div className='b_conts'>
             <h2>{page}</h2>
             projectlist
         </div>

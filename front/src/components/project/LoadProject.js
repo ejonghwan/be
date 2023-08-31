@@ -31,19 +31,16 @@ const LoadProject = ({ projectId }) => {
     }, [])
 
     return (
-        <section>
-
+        <Fragment>
             {/* 모두 보임 */}
             <div>
                 <IconVisual icon={IconData[project.userCount]} />
                 {/* <Icon icon={IconData[project.userCount]} /> */}
             </div>
-
             <div className='align_c gapt_30'>
                 <p className='project_sub_title'>우리의 목표!</p>
                 <h3 className='project_title'>{project.title}</h3>
             </div>
-
             <div className='align_c gapt_30'>
                 <p className='project_sub_title'>관련 내용</p>
                 <div className='project_content'>{project.content}</div>
@@ -54,15 +51,15 @@ const LoadProject = ({ projectId }) => {
             project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0 ? 
             (
                 <Fragment>
-                     <div className='gapt_50'>
-                        <Calender project={project} />
+                    <div className='gapt_50'>
+                            <Calender project={project} />
                     </div>
                     <div className='part_user'>
-                        <h3 className='project_title gapt_50 gap_10'>습관에 참여한 친구들</h3>
+                        <h3 className='gapt_50 gap_10'>습관에 참여한 친구들</h3>
                         <UserThumItem users={project.instanceUser} isText={true} className={'vertical'} matched={'part_user'}/>
                     </div>
                     <div>
-                        <h3 className='project_title gapt_50 gap_10'>습관 인증글</h3>
+                        <h3 className='gapt_50 gap_10'>습관 인증글</h3>
                         <WriteListItem project={project} />
                     </div>
                 </Fragment>
@@ -83,9 +80,7 @@ const LoadProject = ({ projectId }) => {
                     </div>
                 </Fragment>
             )}   
-            
-           
-        </section>
+        </Fragment>
     );
 };
 

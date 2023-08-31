@@ -4,7 +4,7 @@ import './login.css';
 
 const login = ({ page }) => {
     return (
-        <div>
+        <div className='b_conts'>
             <h2>{page}</h2>
             <LoginForm />
             <FindList />

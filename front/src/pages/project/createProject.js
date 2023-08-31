@@ -3,7 +3,7 @@ import CreateProjectDetail from "../../components/project/CreateProjectDetail";
 
 const CreateProject = ({ page }) => {
     return (
-        <div>
+        <div className="b_conts">
             <h2>{page}</h2>
             <CreateProjectDetail />
         </div>

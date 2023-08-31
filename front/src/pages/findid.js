@@ -3,7 +3,7 @@ import FindIdQuestion from '../components/user/FindIdQuestion';
 
 const findid = ({ page }) => {
     return (
-        <div>
+        <div className='b_conts'>
             <h2>{page}</h2>
             <FindId />
             <FindIdQuestion />

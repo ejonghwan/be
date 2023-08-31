@@ -27,7 +27,7 @@ const RoutesPage = () => {
     return (
         <Layout>
             <Routes>
-                <Route path='/' element={<Home />}></Route>
+                <Route path='/' element={<Home page={'메인페이지'}/>}></Route>
                 <Route path='/projectlist' element={state.isLogged ? <About page={'친구들 습관보기'} /> : <Protected page={'친구들 습관보기'}/>}></Route>
                 <Route path='/profile' element={state.isLogged ? <Profile page={'내 정보'} /> : <Protected page={'내 정보'} />}></Route>
                 <Route path='/login' element={ <Login page={'로그인'}/>}></Route>
@@ -41,6 +41,9 @@ const RoutesPage = () => {
 
                 <Route path='/createproject' element={state.isLogged ? <CreateProject page={'새 습관 만들기'} /> : <Protected page={'새 습관 만들기'} />}></Route>
                 <Route path='/project/detail/:_id' element={state.isLogged ? <ProjectDetail page={'습관 상세보기'} /> : <Protected page={'습관 상세보기'} />}></Route>
+
+                <Route path='/write/list/user/:_id' element={state.isLogged ? <ProjectDetail page={'글 모음'} /> : <Protected page={'글 모음'} />}></Route>
+                <Route path='/write/detail/:_id' element={state.isLogged ? <ProjectDetail page={'글 상세보기'} /> : <Protected page={'글 상세보기'} />}></Route>
 
 
                 <Route path='/project:id' element={<Project page={'습관보기'} />}></Route>

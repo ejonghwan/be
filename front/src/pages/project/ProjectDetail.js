@@ -6,7 +6,7 @@ const ProjectDetail = ({ page }) => {
     const { _id } = useParams();
     
     return (
-        <div>
+        <div className='b_conts'>
             <h2>{page}</h2>
             <LoadProject projectId={_id}/>
         </div>

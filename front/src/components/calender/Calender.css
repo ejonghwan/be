@@ -1,5 +1,21 @@
+.calendar {
+    box-shadow: var(--box-shadow);
+    border-radius: 6px;
+    font-weight: 400;
+}
+
 .calendar .header  {
     text-align: center; 
+    padding: 35px 0;
+    margin-bottom: 30px;
+    background-color: var(--point-color);
+    color: var(--text-color-white);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.calendar .body {
+    padding: 0px 30px 20px;
 }
 
 
@@ -8,7 +24,9 @@
     font-size: 1.2rem;
     color: var(--text-color2);
     margin-bottom: 30px;
+    padding: 0 30px;
 }
+
 .calendar .body .row { 
     display: flex;
     align-items: flex-start;
@@ -160,8 +178,8 @@
 .calendar .yy { 
     /* padding: 5px 0; */
     position: relative;
-    width: 240px;
-    margin: 0 auto 10px;
+    width: 320px;
+    margin: 0 auto 0px;
 }
 
 .calendar .yy .swiper-wrapper {
@@ -175,26 +193,29 @@
 .calendar .yy .swiper-slide.swiper-slide-visible.swiper-slide-active {
     font-weight: bold; 
     opacity: 1;
-    font-size: 1.6rem;
+    font-size: 2.2rem;
+    font-weight: 400;
 }
 
 .calendar .yy .button_type_arrow_l {
     position: absolute;
-    top: -2px;
+    top: 10px;
     left: -20px;
+  
 }
 
 .calendar .yy .button_type_arrow_r  {
     position: absolute;
-    top: -2px;
+    top: 10px;
     right: -20px;
+
 }
 
 .calendar .mm {
     /* padding: 5px 0; */
     position: relative;
-    width: 200px;
-    margin: 0 auto 50px;
+    width: 320px;
+    margin: 0 auto;
 }
 
 .calendar .mm .swiper-wrapper {
@@ -208,18 +229,33 @@
     font-weight: bold; 
     opacity: 1; 
     /* color: var(--point-color); */
-    font-size: 1.6rem;
+    font-size: 2.2rem;
+    font-weight: 400;
 }
 .calendar .mm .button_type_arrow_l {
     position: absolute;
-    top: -2px;
+    top: 10px;
     left: -20px;
+    
 }
 .calendar .mm .button_type_arrow_r  {
     position: absolute;
-    top: -2px;
+    top: 10px;
     right: -20px;
+    
 }
+
+.calendar .mm .button_type_arrow_r::before, 
+.calendar .mm .button_type_arrow_r::after, 
+.calendar .mm .button_type_arrow_l::before,
+.calendar .mm .button_type_arrow_l::after, 
+.calendar .yy .button_type_arrow_r::before, 
+.calendar .yy .button_type_arrow_r::after, 
+.calendar .yy .button_type_arrow_l::before,
+.calendar .yy .button_type_arrow_l::after {
+    background-color: #fff;
+}
+
 
 
 
