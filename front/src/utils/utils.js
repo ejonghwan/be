@@ -64,15 +64,40 @@ export const changeDate = (totalNumber, viewTime) => {
     if(typeof totalNumber !== 'number') return console.error('넘버로 넣어줭')
     let day = Math.floor(Math.floor(Math.floor(totalNumber / 60) / 60) / 24);
     let hour = Math.floor(Math.floor(totalNumber / 60) / 60) % 24;
-    let minute = Math.floor(totalNumber / 60) % 60
-    let second = totalNumber % 60
+    let minute = Math.floor(totalNumber / 60) % 60;
+    let second = totalNumber % 60;
 
     switch(viewTime) {
-        case 'day': return `${day}일 ${hour}시간 ${minute}분 ${second}초`
-        case 'hour': return `${hour}시간 ${minute}분 ${second}초`
-        case 'minute': return `${minute}분 ${second}초`
-        case 'second': return `${second}초`
-        default: return `${day}일 ${hour}시간 ${minute}분 ${second}초`
+        case 'day': return `${day}일 ${hour}시간 ${minute}분 ${second}초`;
+        case 'hour': return `${hour}시간 ${minute}분 ${second}초`;
+        case 'minute': return `${minute}분 ${second}초`;
+        case 'second': return `${second}초`;
+        default: return `${day}일 ${hour}시간 ${minute}분 ${second}초`;
+    }
+}
+
+/** 
+ * 게시물에 들어가는 날짜 변환
+ * @param {number} date - 변환하고 싶은 날짜
+ * @param {string} viewTime - case: year, month, day, hour, minute, second ~까지
+ * @returns {string} date object
+ */
+export const changeViewDate = (date, viewTime) => {
+    const year = new Date(date).getFullYear();
+    const month = new Date(date).getMonth() + 1;
+    const day = new Date(date).getDate();
+    const hour = new Date(date).getHours();
+    const minute = new Date(date).getMinutes();
+    const second = new Date(date).getSeconds();
+
+    switch(viewTime) {
+        case 'year': return `${year}년`;
+        case 'month': return `${year}년 ${month}월`
+        case 'day': return `${year}년 ${month}월 ${day}일`;
+        case 'hour': return `${year}년 ${month}월 ${day}일 ${hour}시`;
+        case 'minute': return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
+        case 'second': return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분 ${second}초`;
+        default: return `${year}년 ${month}월 ${day}일`;
     }
 }
 
@@ -165,6 +190,8 @@ export const onlyNumChecked = (str) => {
     if(!arg && typeof arg !== 'number') return console.error('타입 확인')
     return arg.length === len ? true : false;
 }
+
+
 
 
 

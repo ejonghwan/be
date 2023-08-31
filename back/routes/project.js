@@ -18,8 +18,8 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const project = await Project.find().populate([
-            { path: 'constructorUser._id', select: 'id profileImage email name' },
-            { path: 'instanceUser._id', select: 'id profileImage email name' },
+            { path: 'constructorUser._id', select: 'id profileImage email name createdAt' },
+            { path: 'instanceUser._id', select: 'id profileImage email name createdAt' },
             { path: 'joinUser._id', select: 'id profileImage email name' },
             { path: 'categorys._id', select: 'id profileImage email name' },
             { path: 'likeUser', select: 'id profileImage email name' },
@@ -41,8 +41,8 @@ router.get('/:projectId', async (req, res) => {
     try {
         const { projectId } = req.params;
         const project = await Project.findById(projectId).populate([
-            { path: 'constructorUser._id', select: 'id profileImage email name' },
-            { path: 'instanceUser._id', select: 'id profileImage email name' },
+            { path: 'constructorUser._id', select: 'id profileImage email name createdAt' },
+            { path: 'instanceUser._id', select: 'id profileImage email name createdAt' },
             { path: 'joinUser._id', select: 'id profileImage email name' },
             { path: 'categorys._id', select: 'id profileImage email name' },
             { path: 'likeUser', select: 'id profileImage email name' },
