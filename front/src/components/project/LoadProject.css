@@ -1,0 +1,35 @@
+.part_user .user_thum_wrap {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    padding-bottom: 10px;
+}
+
+.project_sub_title {
+    margin-bottom: 5px;
+    color: var(--text-color2);
+}
+
+.project_title {
+    font-size: 2rem;
+    /* color: var(--point-color); */
+    color: var(--text-color0);
+}
+
+.project_content {
+    font-size: 1.6rem;
+    padding: 20px;
+    background-color: var(--bg-box-color1);
+    border-radius: 18px;
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+
+
+@media screen and (max-width: 640px) {
+    .part_user .user_thum_wrap {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+    }
+}

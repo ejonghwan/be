@@ -7,6 +7,9 @@ import WriteListItem from '../write/WriteListItem';
 import Calender from '../../components/calender/Calender';
 import { UserContext } from '../../context/UserContext';
 import UserThumItem from '../common/userThum/UserThumItem';
+import Button from '../common/form/Button';
+import IconVisual from '../common/icon/IconVisual';
+import './LoadProject.css';
 
 
 
@@ -28,16 +31,22 @@ const LoadProject = ({ projectId }) => {
     }, [])
 
     return (
-        <div>
+        <section>
 
             {/* 모두 보임 */}
             <div>
-                <Icon icon={IconData[project.userCount]}/>
-                <h3>{project.title}</h3>
+                <IconVisual icon={IconData[project.userCount]} />
+                {/* <Icon icon={IconData[project.userCount]} /> */}
             </div>
 
-            <div>
-                내용{project.content}
+            <div className='align_c gapt_30'>
+                <p className='project_sub_title'>우리의 목표!</p>
+                <h3 className='project_title'>{project.title}</h3>
+            </div>
+
+            <div className='align_c gapt_30'>
+                <p className='project_sub_title'>관련 내용</p>
+                <div className='project_content'>{project.content}</div>
             </div>
 
             {/* 습관에 가입한 유저만 보임 */}
@@ -45,25 +54,26 @@ const LoadProject = ({ projectId }) => {
             project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0 ? 
             (
                 <Fragment>
-                    <div>
-                        참여유저
-                        <UserThumItem users={project.instanceUser} isText={true} className={'vertical'} matched={'part_user'}/>
-                    </div>
-                     <div>
-                        달력
+                     <div className='gapt_50'>
                         <Calender project={project} />
                     </div>
+                    <div className='part_user'>
+                        <h3 className='project_title gapt_50 gap_10'>습관에 참여한 친구들</h3>
+                        <UserThumItem users={project.instanceUser} isText={true} className={'vertical'} matched={'part_user'}/>
+                    </div>
                     <div>
-                        모든 인증글 보기 
+                        <h3 className='project_title gapt_50 gap_10'>습관 인증글</h3>
                         <WriteListItem project={project} />
                     </div>
                 </Fragment>
             ) : (
-                <div>이 습관 가입 신청하기</div>
+                <div className='align_c'>
+                    <Button className={'button_type2'}>습관 가입신청</Button>
+                </div>
             )}
 
 
-            {/* 아래 두개는 프로젝트에 있는 아이디랑 로그인한 유저랑 같을떄만 노출 */}
+            {/* 습관 생성자가 로그인했을때만 보임 */}
             {state.user?._id === project.constructorUser?._id._id && 
             (
                 <Fragment>
@@ -75,7 +85,7 @@ const LoadProject = ({ projectId }) => {
             )}   
             
            
-        </div>
+        </section>
     );
 };
 

@@ -26,6 +26,7 @@
     
     
     --text-color-white: #fff;
+    --text-color0: #222;
     --text-color1: #555;
     --text-color2: #999;
     --text-error-color: red;
@@ -78,12 +79,13 @@
 
 *::-webkit-scrollbar  { 
     width: 7px; 
+    height: 7px;
     /* height: 100%; */
 }
 *::-webkit-scrollbar-thumb {
-    /* height: 50%; */
+    height: 20%;
     background: var(--scroll-color); /* 스크롤바의 색상 */
-    border-radius: 2px;
+    border-radius: 4px;
 };   
 *::-webkit-scrollbar-track {
     background: var(--scroll-bg-color);  /*스크롤바 뒷 배경 색상*/
@@ -188,6 +190,7 @@ body {
     font-size: 1.4rem;
     color: var(--text-color1);
     background-color: var(--main-bg-color);
+    line-height: 1.4;
 }
 
 h1 {

@@ -111,7 +111,6 @@ const CreateProjectDetail = () => {
         let getId = joinUserList.filter(user => user.name === tagName)[0]._id;
         setJoinUserList(prev => prev.filter(user => user.name !== tagName));
         setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.filter(user => user._id !== getId) }))
-
     }
 
 
@@ -141,8 +140,6 @@ const CreateProjectDetail = () => {
     
     return (
         <div className='form_wrap'>
-            
-
             <h3 className='form_title gap_30'>
                 <PiChatDotsDuotone />
                 <strong>새 습관 정보를 입력해주세요.</strong>
