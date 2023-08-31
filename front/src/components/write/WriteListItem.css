@@ -8,4 +8,61 @@
     width: calc(25% - 10px);
     margin: 5px;
     background-color: var(--bg-box-color1);
+    border-radius: 18px;
+    transition: transform .2s;
+}
+
+.write_list_wrap > li:hover {
+    box-shadow: var(--box-shadow);
+    transform: translateY(-2px);
+}
+
+.write_list_item {
+    display: block;
+    padding: 20px
+}
+
+
+.write_list_user_wrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.write_list_user_wrap .img_wrap {
+    border-radius: 40%;
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    margin-right: 8px;
+}
+
+
+.write_list_like_wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.write_list_like_wrap .hart_ico {
+    display: flex;
+    align-items: center;
+    color: red;
+    font-size: 1.2rem;
+}
+
+.write_list_like_wrap .hart_ico > svg {
+    color: red;
+    line-height: 0;
+    margin-right: 2px;
+}
+
+
+.write_list_createdat {
+    font-size: 1.2rem;
+}
+
+.write_list_title ,
+.write_list_conts  {
+    font-size: 1.3rem;
 }

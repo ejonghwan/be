@@ -52,7 +52,7 @@ const LoadProject = ({ projectId }) => {
             (
                 <Fragment>
                     <div className='gapt_50'>
-                            <Calender project={project} />
+                        <Calender project={project} />
                     </div>
                     <div className='part_user'>
                         <h3 className='gapt_50 gap_10'>습관에 참여한 친구들</h3>
@@ -60,7 +60,7 @@ const LoadProject = ({ projectId }) => {
                     </div>
                     <div>
                         <h3 className='gapt_50 gap_10'>습관 인증글</h3>
-                        <WriteListItem project={project} />
+                        <WriteListItem writes={project.writes.reverse()} />
                     </div>
                 </Fragment>
             ) : (
@@ -76,7 +76,7 @@ const LoadProject = ({ projectId }) => {
                 <Fragment>
                     <div>
                         초대 한 유저 & 신청한 유저
-                        <UserThumItem users={project.joinUser} isText={true} isButton={true} buttonName={'초대'}/>
+                        <UserThumItem users={project.joinUser} isText={true} isButton={true} buttonName={'초대'} className={'vertical'}/>
                     </div>
                 </Fragment>
             )}   
