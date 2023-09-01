@@ -4,10 +4,8 @@ import { UserContext } from '../../context/UserContext';
 import UserRequest from '../../reducers/UserRequest';
 import Button from '../common/form/Button';
 import _debounce from 'lodash.debounce';
-import './LikeProject.css';
-
-
 import InfoState from '../common/infoState/InfoState';
+import './LikeProject.css';
 
 const LikeProject = ({ projectId, userId }) => {
 
