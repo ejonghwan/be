@@ -29,7 +29,7 @@ const CalenderHeader = props => {
     useEffect(() => {
         mswiper.current.swiper.slideTo(m - 1);
         yswiper.current.swiper.slideTo(Math.abs(y - 1972));
-    }, [slideState])
+    }, [slideState, currentMonth])
   
 
 

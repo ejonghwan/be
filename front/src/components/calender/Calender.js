@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment, useRef, useCallback } from 'react';
-import { format, addMonths, subMonths, addYears, subYears } from 'date-fns';
+import { format, addMonths, subMonths, addYears, subYears, daysInWeek } from 'date-fns';
 // import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays, subDays, parse } from 'date-fns';
 import { Virtual, Navigation } from 'swiper';
@@ -31,42 +31,21 @@ const Calender = ({ project }) => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [slideState, setSlideState] = useState(false);
-    const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
     const [originDate, setOriginDate] = useState('')
     const calenderSwiper = useRef(null);
 
-
-    const prevYears = () => {
-        setCurrentMonth(subYears(currentMonth, 1));
-    };
-    const nextYears = () => {
-        setCurrentMonth(addYears(currentMonth, 1));
-    };
-
-    const prevMonth = () => {
-        setCurrentMonth(subMonths(currentMonth, 1));
-    };
-    const nextMonth = () => {
-        setCurrentMonth(addMonths(currentMonth, 1));
-    };
-
-    const prevDay = () => {
-        setCurrentMonth(subDays(currentMonth, 1));
-        setDate( format(subDays(currentMonth, 1), 'yyyy-MM-dd')  )
-    };
-    const nextDay = () => {
-        setCurrentMonth(addDays(currentMonth, 1));
-        setDate( format(addDays(currentMonth, 1), 'yyyy-MM-dd') )
-    };
-
-
-
+    const prevYears = () => setCurrentMonth(subYears(currentMonth, 1));
+    const nextYears = () => setCurrentMonth(addYears(currentMonth, 1));
+    const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
+    const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+    const prevDay = () => setCurrentMonth(subDays(currentMonth, 1));
+    const nextDay = () => setCurrentMonth(addDays(currentMonth, 1));
 
     const onDateClick = (day, originDate) => {
         if(format(day, 'M') < format(currentMonth, 'M')) prevMonth();  
         if(format(day, 'M') > format(currentMonth, 'M')) nextMonth();
         setSelectedDate(day);
-        setDate(format(day, 'yyyy-MM-dd'));
+        setCurrentMonth(day)
         setOriginDate(originDate)
     }
 
@@ -133,13 +112,12 @@ const Calender = ({ project }) => {
             {/* {date && <CalenderReview date={date} project={project} originDate={originDate} />} */}
             <CalenderReview 
                 currentMonth={currentMonth}
-                date={date} 
                 project={project} 
                 originDate={originDate} 
                 prevDay={prevDay}
                 nextDay={nextDay}
                 onDateClick={onDateClick}
-                setDate={setDate}
+                slideState={slideState}
             />
                  
         </Fragment>
