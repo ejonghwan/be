@@ -12,6 +12,7 @@ export const UserIntialState = {
     mailAuthErrorMessage: '',
     authNumberErrorMessage: '',
     imageErrorMessage: '',
+    globalErrorMessage: '',
     loading: '',
     user: {},
 }
@@ -38,6 +39,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     authNumberErrorMessage: '',
                     mailAuthErrorMessage: '',
                     imageErrorMessage: '',
+                    globalErrorMessage: '',
                 }
 
             
@@ -210,7 +212,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     loading: false,
                     user: {
                         ...state.user,
-                        // likeProject: [action.data, ...likeProject]
+                        likeProject: [action.data, ...state.user.likeProject]
                     }
                 }
 
@@ -218,6 +220,25 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
+                    globalErrorMessage: action.data
+                }
+
+
+            case "PROJECT_UNLIKE_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    user: {
+                        ...state.user,
+                        likeProject: state.user.likeProject.filter(id => id !== action.data)
+                    }
+                }
+
+            case "PROJECT_UNLIKE_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                    globalErrorMessage: action.data
                 }
 
 

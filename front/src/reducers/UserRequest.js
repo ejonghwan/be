@@ -418,6 +418,57 @@ const UserRequest = () => {
         };
     }
 
+    // 프로젝트 좋아요
+    const projectLike = async data => {
+        try {
+            const accToken = localStorage.getItem('X-access-token')
+            if(!accToken) throw new Error('토큰 만료. 로그인해주세요');
+
+            const { projectId, userId } = data;
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'X-access-token': accToken,
+                },
+                withCredentials: true,
+            };
+            const like = await axios.patch(`${host}/api/project/like`, data, config); 
+            dispatch({ type: "PROJECT_LIKE_SUCCESS", data: like.data });
+
+        } catch(err) {
+            console.error(err);
+            dispatch({ type: "PROJECT_LIKE_FAILUE", data: err.response.data.message })
+        };
+    }
+
+      // 프로젝트 좋아요 취소
+      const projectUnlike = async data => {
+        try {
+            const accToken = localStorage.getItem('X-access-token')
+            if(!accToken) throw new Error('토큰 만료. 로그인해주세요');
+
+            const { projectId, userId } = data;
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'X-access-token': accToken,
+                },
+                withCredentials: true,
+            };
+            const unlike = await axios.patch(`${host}/api/project/unlike`, data, config); 
+            dispatch({ type: "PROJECT_UNLIKE_SUCCESS", data: unlike.data });
+
+        } catch(err) {
+            console.error(err);
+            dispatch({ type: "PROJECT_UNLIKE_FAILUE", data: err.response.data.message })
+        };
+    }
+
+
     return {
         emailAuth, 
         signupUser, 
@@ -434,6 +485,8 @@ const UserRequest = () => {
         findUserId,
         findUserIdQuestion,
         secession,
+        projectLike,
+        projectUnlike,
     }
 }
 

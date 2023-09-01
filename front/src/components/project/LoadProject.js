@@ -24,8 +24,7 @@ const LoadProject = ({ projectId }) => {
     
     const handleLoadProject = async e => {
         ProjectDispatch({ type: "PROJECT_REQUEST" });
-        const data = await loadProject(projectId);
-        console.log(data)
+        await loadProject(projectId);
     }
 
     useEffect(() => {
