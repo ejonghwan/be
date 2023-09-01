@@ -203,6 +203,24 @@ const UserReducer = (state = UserIntialState, action) => {
                     imageErrorMessage: action.data,
                 }
 
+
+            case "PROJECT_LIKE_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    user: {
+                        ...state.user,
+                        // likeProject: [action.data, ...likeProject]
+                    }
+                }
+
+            case "PROJECT_LIKE_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                }
+
+
             
 
             default: return { state }

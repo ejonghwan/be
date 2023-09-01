@@ -36,7 +36,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    signupErrorMessage: action.data,
+                    errorMessage: action.data,
                 }
 
 
@@ -51,8 +51,15 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    signupErrorMessage: action.data,
+                    errorMessage: action.data,
                 }
+
+
+            
+
+
+
+
             default: return { state }
     }
 }

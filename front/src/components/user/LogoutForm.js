@@ -18,7 +18,7 @@ const LogoutForm = () => {
         await logoutUser();
         setPopopen(false);
       } catch(err) {
-        console.err(err)
+        console.log(err)
       }
     };
 

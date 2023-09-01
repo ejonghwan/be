@@ -22,7 +22,6 @@ const LoadProject = ({ projectId }) => {
     const { state } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
     
-
     const handleLoadProject = async e => {
         ProjectDispatch({ type: "PROJECT_REQUEST" });
         const data = await loadProject(projectId);
@@ -36,7 +35,7 @@ const LoadProject = ({ projectId }) => {
     return (
         <Fragment>
             <div className='align_c gapt_30'>
-                <LikeProject />
+                <LikeProject projectId={projectId} userId={state.user._id}/>
                 {state.user?._id === project.constructorUser?._id._id && (
                     <span className=''>
                         <Button className={'button_type4'}>
