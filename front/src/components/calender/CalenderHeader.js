@@ -41,10 +41,6 @@ const CalenderHeader = props => {
                 </span>
             </div> */}
             <div className="col col-end">
-                {/* <Icon icon="bi:arrow-left-circle-fill" onClick={prevMonth} />
-                <Icon icon="bi:arrow-right-circle-fill" onClick={nextMonth} /> */}
-                {/* <button onClick={prevMonth}>prev</button> */}
-                {/* <button onClick={nextMonth}>next</button> */}
                 <div className="yy">
                     <Swiper ref={yswiper}
                         // direction={"vertical"}

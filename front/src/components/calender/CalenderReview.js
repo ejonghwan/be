@@ -13,7 +13,7 @@ import Button from '../common/form/Button';
 
 
 
-const CalenderReview = ({ project, originDate, prevDay, nextDay, onDateClick, currentMonth, slideState }) => {
+const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, slideState }) => {
 
     /* 
         다음에 보면 까먹을까봐 정리
@@ -24,7 +24,7 @@ const CalenderReview = ({ project, originDate, prevDay, nextDay, onDateClick, cu
         슬라이드 변경시킴.
         스와이프가 이전으로 넘기면-  다음으로 넘기면+ 해줌
 
-        # 이 컴포넌트에선
+        이 컴포넌트에선
         1. 이번달의 총 날짜를  setEndDay 에 셋팅
         2. 이번달 날짜들의 버츄얼 슬라이드를 사용하기 위해 setVirtualEndNum에 이번 달 총 날짜(endDay)를 배열로 셋팅해둠. 
         3. 그 배열을 스와이프에 적용. 
@@ -34,17 +34,13 @@ const CalenderReview = ({ project, originDate, prevDay, nextDay, onDateClick, cu
    
     */
 
-    console.log('rev?', project)
     const dswiper = useRef(null);
     const monthStart = startOfMonth(currentMonth); //이달의 시작 9/1
     const monthEnd = endOfMonth(monthStart); //이달의 끝 9/30
-    // const startDate = startOfWeek(monthStart); //달력의 시작 8/28
-    // const endDate = endOfWeek(monthEnd); //달력의 끝 10/1
 
     const [touch, setTouch] = useState(false);
     const [endDay, setEndDay] = useState(new Date(monthEnd).getDate() + 1)
     const [virtualEndNum, setVirtualEndNum] = useState([]);
-    const [filterWrite, setFilterWrite] = useState([]);
 
 
     const handleCalcTime = useCallback(date => {
@@ -54,14 +50,7 @@ const CalenderReview = ({ project, originDate, prevDay, nextDay, onDateClick, cu
         return `${year} ${month} ${day}`;
     }, [])
 
-    // useEffect(() => {
-        // mswiper.current.swiper.slideTo(m - 1);
-        // yswiper.current.swiper.slideTo(Math.abs(y - 1972));
-        // console.log(12312321)
-    // }, [slideState])
-
     useEffect(() => {
-        console.log('onda')
         dswiper.current.swiper.slideTo(new Date(currentMonth).getDate() - 1)
     }, [onDateClick])
 
@@ -75,19 +64,11 @@ const CalenderReview = ({ project, originDate, prevDay, nextDay, onDateClick, cu
 
     // 현재날짜를 달력에서 클릭 했을 때 이 날짜로 이동
     useEffect(() => {
-        onDateClick(currentMonth)
+        onDateClick(currentMonth, )
     }, [currentMonth])
 
 
-    useEffect(() => {
-        setFilterWrite(() => project.writes?.filter(write => handleCalcTime(write.createdAt) === handleCalcTime(originDate)).reverse())
-    }, [onDateClick])
-
-    useEffect(() => {
-        // console.log(filterWrite)
-    }, [filterWrite])
-
-
+   
 
     return (
         <article>
@@ -121,35 +102,25 @@ const CalenderReview = ({ project, originDate, prevDay, nextDay, onDateClick, cu
 
                     {virtualEndNum.map((item, idx) => {
 
-                        
                         return (
                             <SwiperSlide key={idx} virtualIndex={idx}>
-                                {/* {console.log('item??', item)} */}
-                                {/* <div>idx???? : {item}</div> */}
                                 <strong className='review_title'>{changeViewDate(currentMonth)}</strong>
-
-                                asd,mand,man,mdn,adm
-                                { console.log('jsx', filterWrite) }
-                                { console.log('item', item) }
-                                {item[0].content}
-                                {/* <WriteListItem 
+                                <WriteListItem 
                                     writes={
                                         item?.filter(write => 
-                                            handleCalcTime(write.createdAt) === handleCalcTime(originDate)).reverse()
+                                            handleCalcTime(write.createdAt) === handleCalcTime(currentMonth)).reverse()
                                     } 
-                                /> */}
-
-                                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                                />
 
                                 {/* 인증글 없을 때 */}
-                                {/* {project.writes?.filter(write => 
-                                    handleCalcTime(write.createdAt) === handleCalcTime(originDate)).length === 0 && 
+                                {project.writes?.filter(write => 
+                                    handleCalcTime(write.createdAt) === handleCalcTime(currentMonth)).length === 0 && 
                                     <NoData 
                                         icon={<PiSmileyXEyesDuotone />} 
                                         title={'오늘은 인증글이 없습니다.'} 
                                         subText={'인증글을 남겨주세요.'} 
                                     />
-                                } */}
+                                }
     
                             </SwiperSlide>
                         )

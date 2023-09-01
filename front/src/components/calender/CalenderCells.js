@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, Fragment, memo, useRef } from 'react';
+import { Fragment, memo } from 'react';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
@@ -9,8 +9,6 @@ import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
 
 
 const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => {
-
-        // console.log(project,'???')
 
         const monthStart = startOfMonth(currentMonth); //이달의 시작 9/1
         const monthEnd = endOfMonth(monthStart); //이달의 끝 9/30
