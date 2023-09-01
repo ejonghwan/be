@@ -34,7 +34,7 @@ const CalenderReview = ({ project, originDate, prevDay, nextDay, onDateClick, cu
    
     */
 
-    // console.log('rev?', project)
+    console.log('rev?', project)
     const dswiper = useRef(null);
     const monthStart = startOfMonth(currentMonth); //이달의 시작 9/1
     const monthEnd = endOfMonth(monthStart); //이달의 끝 9/30
@@ -68,7 +68,7 @@ const CalenderReview = ({ project, originDate, prevDay, nextDay, onDateClick, cu
     useEffect(() => {
         setVirtualEndNum(() => Array.from({ length: endDay }).map((el, index) => {
             // 이번달의 마지막 넘버를 구해서 버츄얼 슬라이드에 적용할 배열 생성
-            return index + 1;
+            return project?.writes;
         }))
         setEndDay(new Date(monthEnd).getDate())
     }, [endDay, onDateClick]) // 변경될때마다 엔드데이 재셋팅
@@ -113,38 +113,33 @@ const CalenderReview = ({ project, originDate, prevDay, nextDay, onDateClick, cu
                     onSlideChange={(swiper) => {
                         if(swiper.activeIndex > swiper.previousIndex && touch) nextDay();
                         if(swiper.activeIndex < swiper.previousIndex && touch) prevDay();
-                        // setTimeout(() => {
-                        //     if(swiper.activeIndex > swiper.previousIndex && touch) nextDay();
-                        //     if(swiper.activeIndex < swiper.previousIndex && touch) prevDay();
-                        //     // console.log('??', new Date(date), 'aaa', currentMonth)
-                        //     // onDateClick(new Date(currentMonth))
-                        // }, 1000);
-
                     }}
                     onSwiper={(swiper) => {
                         swiper.previousIndex = 500
                     }}
                 >
 
-                    {virtualEndNum.map((item, index) => {
+                    {virtualEndNum.map((item, idx) => {
 
                         
                         return (
-                            <SwiperSlide key={item} virtualIndex={index}>
+                            <SwiperSlide key={idx} virtualIndex={idx}>
                                 {/* {console.log('item??', item)} */}
-                                <div>idx???? : {item}</div>
+                                {/* <div>idx???? : {item}</div> */}
                                 <strong className='review_title'>{changeViewDate(currentMonth)}</strong>
 
                                 asd,mand,man,mdn,adm
-                                {console.log('jsx', filterWrite && filterWrite)}
-                                {filterWrite.map(write => <div>write? {write.title}</div>)}
-
+                                { console.log('jsx', filterWrite) }
+                                { console.log('item', item) }
+                                {item[0].content}
                                 {/* <WriteListItem 
                                     writes={
-                                        project.writes?.filter(write => 
+                                        item?.filter(write => 
                                             handleCalcTime(write.createdAt) === handleCalcTime(originDate)).reverse()
                                     } 
                                 /> */}
+
+                                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
                                 {/* 인증글 없을 때 */}
                                 {/* {project.writes?.filter(write => 

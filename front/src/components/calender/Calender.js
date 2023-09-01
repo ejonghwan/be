@@ -45,8 +45,8 @@ const Calender = ({ project }) => {
         if(format(day, 'M') < format(currentMonth, 'M')) prevMonth();  
         if(format(day, 'M') > format(currentMonth, 'M')) nextMonth();
         setSelectedDate(day);
-        setCurrentMonth(day)
-        setOriginDate(originDate)
+        setCurrentMonth(day);
+        setOriginDate(originDate);
     }
 
     
