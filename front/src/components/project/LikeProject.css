@@ -1,0 +1,11 @@
+.project_like {
+
+}
+
+.project_like.active {
+    background: #fff0bf;
+}
+.project_like.active > svg{
+    /* color: #f2ff02; */
+    color: var(--point-color2);
+}

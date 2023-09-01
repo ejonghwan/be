@@ -42,7 +42,8 @@
 
 .profile_wrap .profile_btn > button{
     color: var(--text-color-white);
-    background-color: #444;
+    /* background-color: #444; */
+    background-color: var(--point-color);
     border: 4px solid var(--bg-box-white);
     z-index: 10;
 }
