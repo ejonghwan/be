@@ -5,7 +5,7 @@ import Popup from '../popup/Popup';
 import './UserThum.css';
 
 
-const UserThumItem = ({ users = [], className = '', isText, isButton = false, buttonName, buttonType, onClick, align = 'horizon', imgStyle}) => {
+const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, buttonName buttonType, onClick*/ buttons = [], align = 'horizon', imgStyle}) => {
 
     const [selectIdx, setSelectIdx] = useState(0)
     const userInfoRef = useRef(null);
@@ -32,7 +32,8 @@ const UserThumItem = ({ users = [], className = '', isText, isButton = false, bu
                             </div>
                         )}
 
-                        {isButton && <Button className={`button_type_txt ${className}`} buttonType={buttonType} onClick={onClick}>{buttonName}</Button>}
+                        {/* {isButton. && <Button className={`button_type_txt ${className}`} buttonType={buttonType} onClick={onClick}>{buttonName}</Button>} */}
+                        {buttons.length > 0 && buttons.map((item, idx) => <div key={idx} className={`user_button_wrap`}>{item}</div>)}
                     </li>
                 ))}
             </ul>

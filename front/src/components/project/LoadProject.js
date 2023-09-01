@@ -9,7 +9,10 @@ import { UserContext } from '../../context/UserContext';
 import UserThumItem from '../common/userThum/UserThumItem';
 import Button from '../common/form/Button';
 import IconVisual from '../common/icon/IconVisual';
+import { PiStarDuotone, PiGearDuotone } from "react-icons/pi";
+import LikeProject from '../project/LikeProject';
 import './LoadProject.css';
+
 
 
 
@@ -32,8 +35,19 @@ const LoadProject = ({ projectId }) => {
 
     return (
         <Fragment>
+            <div className='align_c gapt_30'>
+                <LikeProject />
+                {state.user?._id === project.constructorUser?._id._id && (
+                    <span className=''>
+                        <Button className={'button_type4'}>
+                            <PiGearDuotone />
+                            <span className='blind'>이 습관 수정</span>
+                        </Button>
+                    </span>
+                )}
+            </div>
             {/* 모두 보임 */}
-            <div>
+            <div className='gapt_10'>
                 <IconVisual icon={IconData[project.userCount]} />
                 {/* <Icon icon={IconData[project.userCount]} /> */}
             </div>
@@ -51,6 +65,9 @@ const LoadProject = ({ projectId }) => {
             project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0 ? 
             (
                 <Fragment>
+                     <div className='align_c gapt_30'>
+                        <Button className={'button_type2'}>오늘 습관 인증</Button>
+                    </div>
                     <div className='gapt_50'>
                         <Calender project={project} />
                     </div>
@@ -59,7 +76,7 @@ const LoadProject = ({ projectId }) => {
                         <UserThumItem users={project.instanceUser} isText={true} className={'vertical'} matched={'part_user'}/>
                     </div>
                     <div>
-                        <h3 className='gapt_50 gap_10'>습관 인증글</h3>
+                        <h3 className='gapt_50 gap_10'>모든 습관 인증글</h3>
                         <WriteListItem writes={project.writes.reverse()} />
                     </div>
                 </Fragment>
@@ -75,8 +92,12 @@ const LoadProject = ({ projectId }) => {
             (
                 <Fragment>
                     <div>
-                        초대 한 유저 & 신청한 유저
-                        <UserThumItem users={project.joinUser} isText={true} isButton={true} buttonName={'초대'} className={'vertical'}/>
+                        <h3 className='gapt_50 gap_10'>초대 한 친구 & 신청한 친구</h3>
+                        <UserThumItem 
+                            users={project.joinUser} 
+                            isText={true} 
+                            className={'vertical'} 
+                            buttons={[ <Button onClick={() => console.log('aa')}>aa</Button>, <Button onClick={() => console.log('bb')}>bb</Button>, <Button onClick={() => console.log('cc')}>cc</Button> ]}/>
                     </div>
                 </Fragment>
             )}   

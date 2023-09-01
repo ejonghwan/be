@@ -13,7 +13,7 @@
     --point-color2: #cf1f1f;
     --main-bg-color: #fff;
     --header-bg-color: #f4f4f4;
-    --hover-color: #f4f4f4;
+    --hover-color: #f2f2f2;
     --hover-color2:rgb(226, 226, 226);
     --hover-color3:rgba(9, 9, 9, 0.258);
     --hover-color4:#fff;
@@ -37,7 +37,8 @@
     --bg-box-white: #fff;
     --bg-box-black: #000000;
     --bg-box-color0: #fafafa; 
-    --bg-box-color1: rgb(240, 240, 240); 
+    /* --bg-box-color1: rgb(240, 240, 240);  */
+    --bg-box-color1: #ededed;
     --bg-box-color2: #ddd; 
     --bg-box-color3: #efefef;; 
     --bg-box-color4: #444; 
@@ -168,7 +169,7 @@ button.hover_type1:hover {
 a.hover_type2,
 button.hover_type2 {
     padding: 5px 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     
 }
 

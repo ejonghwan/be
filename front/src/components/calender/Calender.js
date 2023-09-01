@@ -55,7 +55,7 @@ const Calender = ({ project }) => {
 
     return (
         <Fragment>
-            <div className="calendar">
+            <article className="calendar">
                 <CalenderHeader
                     currentMonth={currentMonth}
                     prevMonth={prevMonth}
@@ -104,8 +104,8 @@ const Calender = ({ project }) => {
                         )
                     })}
                 </Swiper>
-            </div>
-            
+            </article>
+
             <CalenderReview 
                 currentMonth={currentMonth}
                 project={project} 
@@ -113,6 +113,7 @@ const Calender = ({ project }) => {
                 nextDay={nextDay}
                 onDateClick={onDateClick}
                 slideState={slideState}
+                className={'review'}
             />
                  
         </Fragment>

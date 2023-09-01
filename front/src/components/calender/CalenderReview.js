@@ -13,7 +13,7 @@ import Button from '../common/form/Button';
 
 
 
-const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, slideState }) => {
+const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, slideState, className = '' }) => {
 
     /* 
         다음에 보면 까먹을까봐 정리
@@ -71,7 +71,7 @@ const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, 
    
 
     return (
-        <article>
+        <article className={`write_auth_wrap ${className}`}>
 
                 <Swiper
                     ref={dswiper}
@@ -104,7 +104,7 @@ const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, 
 
                         return (
                             <SwiperSlide key={idx} virtualIndex={idx}>
-                                <strong className='review_title'>{changeViewDate(currentMonth)}</strong>
+                                
                                 <WriteListItem 
                                     writes={
                                         item?.filter(write => 
@@ -126,13 +126,16 @@ const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, 
                         )
                     })}
             </Swiper>
-        
-            <Button type={'button'} className='button_type_arrow_l button_reset dprev hover_type2' onClick={prevDay}>
-                <span className='blind'>어제 보기</span>
-            </Button>
-            <Button type={'button'} className='button_type_arrow_r button_reset dnext hover_type2' onClick={nextDay}>
-                <span className='blind'>다음날 보기</span>
-            </Button>
+                    
+            <div className='write_auth_btn_wrap'>
+                <strong className='review_title'>{changeViewDate(currentMonth)}</strong>
+                <Button type={'button'} className='button_type_arrow_l button_reset dprev hover_type2' onClick={prevDay}>
+                    <span className='blind'>어제 보기</span>
+                </Button>
+                <Button type={'button'} className='button_type_arrow_r button_reset dnext hover_type2' onClick={nextDay}>
+                    <span className='blind'>다음날 보기</span>
+                </Button>
+            </div>
         </article>
     )
 }
