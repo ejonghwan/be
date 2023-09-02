@@ -40,7 +40,7 @@ const CreateProjectDetail = () => {
         title: '',
         content: '',
         categorys: [], //{categoryName: ''}
-        joinUser: [], //이거 잘못함. 조인 유저에 넣는게 아니라.... 
+        joinUser: [], //이건 플젝 joinUser에 들어가는게 아니라 User디비에 joinProject로 들어감
         projectPublic: true,
         projectImages: projectImages,
     });

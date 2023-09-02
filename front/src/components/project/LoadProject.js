@@ -9,7 +9,7 @@ import { UserContext } from '../../context/UserContext';
 import UserThumItem from '../common/userThum/UserThumItem';
 import Button from '../common/form/Button';
 import IconVisual from '../common/icon/IconVisual';
-import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone } from "react-icons/pi";
+import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone } from "react-icons/pi";
 import LikeProject from '../project/LikeProject';
 import Tags from '../common/tag/Tags';
 import './LoadProject.css';
@@ -37,6 +37,7 @@ const LoadProject = ({ projectId }) => {
     }
 
     const handleInviteProject = async e => {
+        e.preventDefault();
         try {
             let userId = e.target.parentNode.dataset.userid;
             ProjectDispatch({ type: "PROJECT_REQUEST" });
@@ -47,6 +48,7 @@ const LoadProject = ({ projectId }) => {
     }
 
     const handleRejectProject = async e => {
+        e.preventDefault();
         try {
             let userId = e.target.parentNode.dataset.userid;
             ProjectDispatch({ type: "PROJECT_REQUEST" });
@@ -55,8 +57,6 @@ const LoadProject = ({ projectId }) => {
             console.log(err)
         }
     }
-
-
 
 
     useEffect(() => {
@@ -104,11 +104,19 @@ const LoadProject = ({ projectId }) => {
                     </div>
                     <div className='part_user'>
                         <h3 className='gapt_50 gap_10'>습관에 참여한 친구들</h3>
-                        <UserThumItem users={project.instanceUser} isText={true} className={'vertical'} matched={'part_user'}/>
+                        {project.instanceUser && project.instanceUser.length > 0 ? (
+                            <UserThumItem users={project.instanceUser} isText={true} className={'vertical'} matched={'part_user'}/>
+                        ) : (
+                            <NoData icon={<PiUsersDuotone />} title={"이 습관을 같이 하는 친구가 없습니다."} />
+                        )}
                     </div>
                     <div>
                         <h3 className='gapt_50 gap_10'>모든 습관 인증글</h3>
-                        <WriteListItem writes={project.writes.reverse()} />
+                        {project.writes.length > 0 ? (
+                             <WriteListItem writes={project.writes.reverse()} />
+                        ) : (
+                            <NoData icon={<PiPencilSimpleSlashDuotone />} title={"인증글이 하나도 없습니다."} />
+                        )}
                     </div>
                 </Fragment>
             ) : (
@@ -129,8 +137,33 @@ const LoadProject = ({ projectId }) => {
             {state.user?._id === project.constructorUser?._id._id && 
             (
             <Fragment>
+                {/* 초대한 친구는 false 이고 버튼없애야함 */}
                 <div>
-                    <h3 className='gapt_50 gap_10'>초대/신청 친구</h3>
+                    <h3 className='gapt_50 gap_10'>초대한 친구 : 초대한 친구는 false 이고 버튼없애야함</h3>
+                    {project.joinUser && project.joinUser.length > 0 ? (
+                        <UserThumItem 
+                            users={project.joinUser} 
+                            isText={true} 
+                            className={'vertical'} 
+                            buttons={[ 
+                                <Button type={'button'} className={'button_type6 in'} onClick={handleInviteProject}>수락</Button>, 
+                                <Button type={'button'} className={'button_type6 out'} onClick={handleRejectProject}>거절</Button>
+                                ]}
+                            />
+                    ) : (
+                        <NoData icon={<PiSmileyXEyesDuotone />} title={"이 습관에 신청한 유저가 없습니다."} />
+                    )}
+                </div>
+            </Fragment>
+            )}   
+
+            {/* 습관 생성자가 로그인했을때만 보임 */}
+            {state.user?._id === project.constructorUser?._id._id && 
+            (
+            <Fragment>
+                {/* 신청한 친구는 true??? 이고 있어야함 */}
+                <div>
+                    <h3 className='gapt_50 gap_10'>신청한 친구 : 신청한 친구는 true??? 이고 있어야함</h3>
                     {project.joinUser && project.joinUser.length > 0 ? (
                         <UserThumItem 
                             users={project.joinUser} 

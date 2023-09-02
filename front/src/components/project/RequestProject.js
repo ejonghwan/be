@@ -11,7 +11,8 @@ const RequestProject = ({ btnTxt, className = '', projectId, userId}) => {
 
     // 가입신청하면 joinUser에 false로 등록됨. false면 가입신청 하고 수락을 기다리는 중 
 
-    const handleRequestProject = async () => {
+    const handleRequestProject = async e => {
+        e.preventDefault();
         if(!window.confirm('이 습관에 정말 가입하시겠습니까?')) return;
         try {
             ProjectDispatch({ type: "PROJECT_REQUEST" });

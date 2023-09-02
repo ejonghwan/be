@@ -15,10 +15,10 @@ const Tags = ({ className = '', tags = [], isLink = false, handleDelete }) => {
                     return (
                         <li key={idx}>
                             {isLink ? 
-                                <Link to={`/${tag}`}>{`# ${tag}`}</Link> 
+                                <Link to={`/${tag.categoryName}`}>{`# ${tag.categoryName}`}</Link> 
                                 : 
                                 (<div className='no_link'>
-                                    {tag}
+                                    {tag.categoryName}
                                     <button type="button" className='button_reset button_delete' onClick={() => handleDelete(tag)}>
                                         <span className='blind'>{`${tag} 없애기`}</span>
                                     </button>
