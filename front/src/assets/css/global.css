@@ -340,6 +340,10 @@ form {
     -webkit-box-orient: vertical;
 }
 
+.color_red {
+    color: var(--point-color2);
+}
+
 
 
 @media screen and (max-width: 960px) {

@@ -33,7 +33,13 @@ const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, 
                         )}
 
                         {/* {isButton. && <Button className={`button_type_txt ${className}`} buttonType={buttonType} onClick={onClick}>{buttonName}</Button>} */}
-                        {buttons.length > 0 && buttons.map((item, idx) => <div key={idx} className={`user_button_wrap`}>{item}</div>)}
+                        {buttons.length > 0 && (
+                            <div className='user_button_wrap' data-userid={user._id._id}>
+                                {buttons.map((item, idx) => (
+                                    <Fragment key={idx}>{item}</Fragment>
+                                ))}
+                            </div>
+                        )}
                     </li>
                 ))}
             </ul>

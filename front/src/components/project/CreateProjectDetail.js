@@ -40,7 +40,7 @@ const CreateProjectDetail = () => {
         title: '',
         content: '',
         categorys: [], //{categoryName: ''}
-        joinUser: [],
+        joinUser: [], //이거 잘못함. 조인 유저에 넣는게 아니라.... 
         projectPublic: true,
         projectImages: projectImages,
     });

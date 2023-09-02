@@ -59,6 +59,17 @@
     color: var(--text-color-white);
 }
 
+/* 정말 작은 버튼 */
+.button_type6 {
+    background-color: var(--point-color);
+    color: var(--text-color-white);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 1.3rem;
+}
+
+
+
 /* 텍스트 버튼 */
 .button_type_txt {
     padding: 0;

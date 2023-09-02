@@ -128,7 +128,7 @@ router.patch('/join/accept/:projectId/:userId', async (req, res) => {
             User.findByIdAndUpdate(userId, { "joinProjects.$[ele].state": true }, { arrayFilters: [{"ele._id": projectId}], new: true })
         ])
         // console.log(project, user)
-        res.status(200).json(project)
+        res.status(200).json({ projectId, userId })
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -146,7 +146,7 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
             User.findByIdAndUpdate(userId, { $pull: { "joinProjects": { _id: projectId } } }, { new: true })
         ])
         // console.log( 'project', project, 'user', user)
-        res.status(200).json(project)
+        res.status(200).json({ projectId, userId })
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

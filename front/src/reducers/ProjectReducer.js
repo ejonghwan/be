@@ -69,7 +69,52 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     project: {...state.project, likeCount: state.project.likeCount - 1}
                 }
 
+            case "PROJECT_REQUEST_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    // project: action.data,
+                }
+
+            case "PROJECT_REQUEST_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                    errorMessage: action.data,
+                }
+
             
+            case "PROJECT_INVITE_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    // project: action.data,
+                }
+
+            case "PROJECT_INVITE_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                    errorMessage: action.data,
+                }
+
+
+            case "PROJECT_REJECT_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    // project: action.data,
+                }
+
+            case "PROJECT_REJECT_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                    errorMessage: action.data,
+                }
+
+
+
 
 
             

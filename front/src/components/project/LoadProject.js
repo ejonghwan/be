@@ -9,30 +9,62 @@ import { UserContext } from '../../context/UserContext';
 import UserThumItem from '../common/userThum/UserThumItem';
 import Button from '../common/form/Button';
 import IconVisual from '../common/icon/IconVisual';
-import { PiStarDuotone, PiGearDuotone } from "react-icons/pi";
+import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone } from "react-icons/pi";
 import LikeProject from '../project/LikeProject';
+import Tags from '../common/tag/Tags';
 import './LoadProject.css';
+import NoData from '../common/notData/NoData';
+import RequestProject from './RequestProject';
+
 
 
 
 
 const LoadProject = ({ projectId }) => {
 
-    const { loadProject } = ProjectRequest();
+    const { loadProject, inviteProject, rejectProject } = ProjectRequest();
     const { state } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
     
-    const handleLoadProject = async e => {
-        ProjectDispatch({ type: "PROJECT_REQUEST" });
-        await loadProject(projectId);
+    const handleLoadProject = async () => {
+        try {
+            ProjectDispatch({ type: "PROJECT_REQUEST" });
+            await loadProject(projectId);
+        } catch(err) {
+            console.log(err)
+        }
     }
+
+    const handleInviteProject = async e => {
+        try {
+            let userId = e.target.parentNode.dataset.userid;
+            ProjectDispatch({ type: "PROJECT_REQUEST" });
+            await inviteProject({ projectId, userId});
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    const handleRejectProject = async e => {
+        try {
+            let userId = e.target.parentNode.dataset.userid;
+            ProjectDispatch({ type: "PROJECT_REQUEST" });
+            await rejectProject({ projectId, userId });
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+
+
 
     useEffect(() => {
         handleLoadProject();
     }, [])
 
     return (
+        // 로드프로젝은 로그인 한 사람만 볼 수 있음
         <Fragment>
             <div className='align_c gapt_30'>
                 {state.user?._id === project.constructorUser?._id._id && (
@@ -59,7 +91,7 @@ const LoadProject = ({ projectId }) => {
                 <div className='project_content'>{project.content}</div>
             </div>
 
-            {/* 습관에 가입한 유저만 보임 */}
+            {/* 습관에 가입한 유저 + 생성자만 보임 */}
             {state.user?._id === project.constructorUser?._id._id || 
             project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0 ? 
             (
@@ -80,8 +112,15 @@ const LoadProject = ({ projectId }) => {
                     </div>
                 </Fragment>
             ) : (
-                <div className='align_c'>
-                    <Button className={'button_type2'}>습관 가입신청</Button>
+                <div className='align_c gapt_30'>
+                    {project.joinUser?.filter(userId => userId._id._id === state.user._id).length > 0 ? (
+                        <Fragment>
+                            <Button className={'button_type2'} disabled={true}>습관 가입신청</Button>
+                            <p className='align_c gapt_15 color_red'>이미 가입신청 하셔서 진행 중 입니다.</p>
+                        </Fragment>
+                    ) : (
+                        <RequestProject className={'button_type2'} btnTxt={'습관 가입신청'} projectId={projectId} userId={state.user._id} />
+                    )}
                 </div>
             )}
 
@@ -89,17 +128,38 @@ const LoadProject = ({ projectId }) => {
             {/* 습관 생성자가 로그인했을때만 보임 */}
             {state.user?._id === project.constructorUser?._id._id && 
             (
-                <Fragment>
-                    <div>
-                        <h3 className='gapt_50 gap_10'>초대 한 친구 & 신청한 친구</h3>
+            <Fragment>
+                <div>
+                    <h3 className='gapt_50 gap_10'>초대/신청 친구</h3>
+                    {project.joinUser && project.joinUser.length > 0 ? (
                         <UserThumItem 
                             users={project.joinUser} 
                             isText={true} 
                             className={'vertical'} 
-                            buttons={[ <Button onClick={() => console.log('aa')}>aa</Button>, <Button onClick={() => console.log('bb')}>bb</Button>, <Button onClick={() => console.log('cc')}>cc</Button> ]}/>
-                    </div>
-                </Fragment>
+                            buttons={[ 
+                                <Button type={'button'} className={'button_type6 in'} onClick={handleInviteProject}>수락</Button>, 
+                                <Button type={'button'} className={'button_type6 out'} onClick={handleRejectProject}>거절</Button>
+                                ]}
+                            />
+                    ) : (
+                        <NoData icon={<PiSmileyXEyesDuotone />} title={"이 습관에 신청한 유저가 없습니다."} />
+                    )}
+                </div>
+            </Fragment>
             )}   
+
+            {/* 카테고리. 모두 보임 */}
+            <div className='gapt_30'>
+                <Tags tags={project.categorys} isLink={true} />
+            </div>
+            
+
+            {/* 습관에 가입한 유저만 */}
+            {project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0 && (
+                 <div className='align_c gapt_30'>
+                    <Button className={'button_type5'}>이 습관 탈퇴하기</Button>
+                </div>
+            )}
         </Fragment>
     );
 };

@@ -58,6 +58,21 @@
 }
 
 
+.user_button_wrap {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+
+.user_button_wrap .out {
+    background-color: var(--bg-box-white);
+    color: var(--text-color2);
+    border: 1px solid var(--line-color2);
+}
+
+
+
 .popup .user_thum_imgwrap {
     width: 150px;
     height: 150px;
@@ -87,3 +102,4 @@
     margin-top: 18px;
     margin-bottom: 18px;
 }
+

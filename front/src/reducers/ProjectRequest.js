@@ -51,6 +51,71 @@ const ProjectRequest = () => {
         }
     }
 
+    
+    // 프로젝트 신청
+    const requestProject = async data => {
+        try {
+            const { projectId, userId } = data;
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+
+            console.log(data)
+            const res = await axios.patch(`${host}/api/project/join/${projectId}/${userId}`, config);
+            ProjectDispatch({ type: "PROJECT_REQUEST_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err.response.data.message });
+        }
+    }
+
+    // 프로젝트 초대수락
+    const inviteProject = async data => {
+        try {
+            const { projectId, userId } = data;
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+
+            console.log(data)
+            const res = await axios.patch(`${host}/api/project/join/accept/${projectId}/${userId}`, config);
+            ProjectDispatch({ type: "PROJECT_INVITE_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            ProjectDispatch({ type: "PROJECT_INVITE_FAILUE", data: err.response.data.message });
+        }
+    }
+
+
+    // 프로젝트 초대수락
+     const rejectProject = async data => {
+        try {
+            const { projectId, userId } = data;
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+            console.log(data)
+            const res = await axios.patch(`${host}/api/project/join/reject/${projectId}/${userId}`, config);
+            ProjectDispatch({ type: "PROJECT_REJECT_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            ProjectDispatch({ type: "PROJECT_REJECT_FAILUE", data: err.response.data.message });
+        }
+    }
+
+
 
 
 
@@ -59,6 +124,11 @@ const ProjectRequest = () => {
     return {
         createProject, 
         loadProject,
+        requestProject,
+        inviteProject,
+        rejectProject,
+        
+
     }
 }
 
