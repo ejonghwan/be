@@ -17,6 +17,7 @@
     --hover-color2:rgb(226, 226, 226);
     --hover-color3:rgba(9, 9, 9, 0.258);
     --hover-color4:#fff;
+    --hover-color5: #f6fbff;
     --icon-color: #666666;
     --scroll-color: #868686;
     --scroll-bg-color: #ffffff;
@@ -221,6 +222,7 @@ body {
     color: var(--text-color1);
     background-color: var(--main-bg-color);
     line-height: 1.4;
+    overflow-x: hidden;
 }
 
 h1 {

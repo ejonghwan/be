@@ -15,10 +15,11 @@ const LikeProject = ({ projectId, userId }) => {
     const [like, setLike] = useState(null)
 
     const handleProjectLike = async e => {
+        e.preventDefault();
         try {
             if(!state.isLogged) return alert('좋아요를 하려면 로그인을 먼저 해주세요.')
             e.preventDefault();
-            likeApi()
+            likeApi(like)
             setLike(!like)
         } catch(err) {
             console.log(err)
@@ -26,10 +27,11 @@ const LikeProject = ({ projectId, userId }) => {
     } 
 
     const handleProjectUnlike = async e => {
+        e.preventDefault();
         try {
             if(!state.isLogged) return alert('좋아요를 취소 하려면 로그인을 먼저 해주세요.')
             e.preventDefault();
-            likeApi()
+            likeApi(like)
             setLike(!like)
         } catch(err) {
             console.log(err)
@@ -38,39 +40,44 @@ const LikeProject = ({ projectId, userId }) => {
 
 
     // like state는 바로 번경되더라도 실제 요청은 1.5초 후에 클릭되는 상태에 따라 가게 debouce 작업. 
-    const likeApi = useCallback(_debounce(async () => {
+    const likeApi = useCallback(_debounce(async (like) => {
+
         dispatch({ type: "LOADING" })
-        if(like) await projectUnlike({ projectId, userId });
-        if(!like) await projectLike({ projectId, userId });
-    }, 1500), [])
+        if(like) {
+            await projectUnlike({ projectId, userId });
+        } else {
+            await projectLike({ projectId, userId });
+        }
+
+    }, 2000), []);
+
 
 
     useEffect(() => {
         // 렌더링 시작 시 넘어온 likeProject값과 스토어 내정보 likeProject가 같으면 상태변경
         state.user.likeProject.map(project => {
             if(project === projectId) setLike(true)
+            if(project !== projectId) setLike(false)
         })
-    }, [])
-
+    }, []);
 
     return (
         <span className=''>
             {like && (
-                <Button className={`button_type4 project_like ${like && 'active'}`} onClick={handleProjectUnlike}>
-                    {like && <InfoState text={'좋아요 추가!'} /> }
+                <Button type={'button'} className={`button_type4 project_like like ${like && 'active'}`} onClick={handleProjectUnlike}>
+                    {like && <InfoState text={'좋아요!'} /> }
                     <PiHeartDuotone />
                     <span className='blind'>이 습관 즐겨찾기 및 좋아요</span>
                 </Button>
             )}
 
             {!like && (
-                <Button className={`button_type4 project_like ${like && 'active'}`} onClick={handleProjectLike}>
+                <Button type={'button'} className={`button_type4 project_like unlike ${like && 'active'}`} onClick={handleProjectLike}>
                     {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
                     <PiHeartDuotone />
                     <span className='blind'>이 습관 즐겨찾기 및 좋아요 취소</span>
                 </Button>
             )}
-
         </span>
     );
 };
