@@ -1,17 +1,18 @@
-import { useState, useContext, useEffect, useCallback } from 'react';
+import { useState, useContext, useEffect, useCallback, Fragment } from 'react';
 import { PiStarDuotone, PiHeartDuotone } from "react-icons/pi";
 import { UserContext } from '../../context/UserContext';
+import { ProjectContext } from '../../context/ProjectContext';
 import UserRequest from '../../reducers/UserRequest';
 import Button from '../common/form/Button';
 import _debounce from 'lodash.debounce';
 import InfoState from '../common/infoState/InfoState';
 import './LikeProject.css';
 
-const LikeProject = ({ projectId, userId }) => {
+const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
 
     const { projectLike, projectUnlike }  = UserRequest();
     const { state, dispatch } = useContext(UserContext);
-    console.log(projectId, userId)
+    const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
     const [like, setLike] = useState(null)
 
     const handleProjectLike = async e => {
@@ -41,15 +42,19 @@ const LikeProject = ({ projectId, userId }) => {
 
     // like state는 바로 번경되더라도 실제 요청은 1.5초 후에 클릭되는 상태에 따라 가게 debouce 작업. 
     const likeApi = useCallback(_debounce(async (like) => {
-
-        dispatch({ type: "LOADING" })
-        if(like) {
-            await projectUnlike({ projectId, userId });
-        } else {
-            await projectLike({ projectId, userId });
+        try {
+            dispatch({ type: "LOADING" })
+            if(like) {
+                await projectUnlike({ projectId, userId });
+                ProjectDispatch({ type: "PROJECT_LIKE_DEC_SUCCESS" })
+            } else {
+                await projectLike({ projectId, userId });
+                ProjectDispatch({ type: "PROJECT_LIKE_INC_SUCCESS" })
+            }
+        } catch(err) {
+            console.log(err)
         }
-
-    }, 2000), []);
+    }, 1000), []);
 
 
 
@@ -62,23 +67,26 @@ const LikeProject = ({ projectId, userId }) => {
     }, []);
 
     return (
-        <span className=''>
-            {like && (
-                <Button type={'button'} className={`button_type4 project_like like ${like && 'active'}`} onClick={handleProjectUnlike}>
-                    {like && <InfoState text={'좋아요!'} /> }
-                    <PiHeartDuotone />
-                    <span className='blind'>이 습관 즐겨찾기 및 좋아요</span>
-                </Button>
-            )}
+        <Fragment>
+            <span className={`project_like_wrap ${className}`}>
+                {like && (
+                    <Button type={'button'} className={`button_type4 project_like ico_hover_type1 like ${like && 'active'}`} onClick={handleProjectUnlike}>
+                        {like && <InfoState text={'좋아요!'} /> }
+                        <PiHeartDuotone />
+                        <span className='blind'>이 습관 즐겨찾기 및 좋아요</span>
+                    </Button>
+                )}
 
-            {!like && (
-                <Button type={'button'} className={`button_type4 project_like unlike ${like && 'active'}`} onClick={handleProjectLike}>
-                    {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
-                    <PiHeartDuotone />
-                    <span className='blind'>이 습관 즐겨찾기 및 좋아요 취소</span>
-                </Button>
-            )}
-        </span>
+                {!like && (
+                    <Button type={'button'} className={`button_type4 project_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleProjectLike}>
+                        {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
+                        <PiHeartDuotone />
+                        <span className='blind'>이 습관 즐겨찾기 및 좋아요 취소</span>
+                    </Button>
+                )}
+                 <span className='like_count'>{projectLikeLen}</span>
+            </span>
+        </Fragment>
     );
 };
 

@@ -231,7 +231,8 @@ const UserReducer = (state = UserIntialState, action) => {
                     user: {
                         ...state.user,
                         likeProject: state.user.likeProject.filter(id => id !== action.data)
-                    }
+                    },
+                    
                 }
 
             case "PROJECT_UNLIKE_FAILUE" : 

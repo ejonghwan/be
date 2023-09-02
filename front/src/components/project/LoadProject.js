@@ -21,6 +21,7 @@ const LoadProject = ({ projectId }) => {
     const { loadProject } = ProjectRequest();
     const { state } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
+
     
     const handleLoadProject = async e => {
         ProjectDispatch({ type: "PROJECT_REQUEST" });
@@ -34,10 +35,9 @@ const LoadProject = ({ projectId }) => {
     return (
         <Fragment>
             <div className='align_c gapt_30'>
-                <LikeProject projectId={projectId} userId={state.user._id}/>
                 {state.user?._id === project.constructorUser?._id._id && (
                     <span className=''>
-                        <Button className={'button_type4'}>
+                        <Button className={'button_type4 ico_hover_type2'}>
                             <PiGearDuotone />
                             <span className='blind'>이 습관 수정</span>
                         </Button>
@@ -45,7 +45,8 @@ const LoadProject = ({ projectId }) => {
                 )}
             </div>
             {/* 모두 보임 */}
-            <div className='gapt_10'>
+            <div className='gapt_10 pos_rel'>
+                <LikeProject projectId={projectId} userId={state.user._id} projectLikeLen={project.likeCount} className={'detail'} />
                 <IconVisual icon={IconData[project.userCount]} />
                 {/* <Icon icon={IconData[project.userCount]} /> */}
             </div>

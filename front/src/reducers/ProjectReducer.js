@@ -55,6 +55,23 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
 
+            case "PROJECT_LIKE_INC_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    project: {...state.project, likeCount: state.project.likeCount + 1}
+                }
+
+            case "PROJECT_LIKE_DEC_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    project: {...state.project, likeCount: state.project.likeCount - 1}
+                }
+
+            
+
+
             
 
 
