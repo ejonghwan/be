@@ -79,7 +79,7 @@ const LoadProject = ({ projectId }) => {
             {/* 모두 보임 */}
             <div className='gapt_10 pos_rel'>
                 <LikeProject projectId={projectId} userId={state.user._id} projectLikeLen={project.likeCount} className={'detail'} />
-                <IconVisual icon={IconData[project.userCount]} />
+                <IconVisual icon={IconData[project.projectImages]} />
                 {/* <Icon icon={IconData[project.userCount]} /> */}
             </div>
             <div className='align_c gapt_30'>
