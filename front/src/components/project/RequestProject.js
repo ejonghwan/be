@@ -16,7 +16,7 @@ const RequestProject = ({ btnTxt, className = '', projectId, userId}) => {
         if(!window.confirm('이 습관에 정말 가입하시겠습니까?')) return;
         try {
             ProjectDispatch({ type: "PROJECT_REQUEST" });
-            await requestProject({ projectId, userId });
+            await requestProject({ projectId, userId, state: true });
             
         } catch(err) {
             console.log(err)

@@ -89,22 +89,54 @@ projectDB: joinUser / userDB: joinProjects state값에 따라 두곳에서 임�
 
 
 
-//@ path    PATCH /api/project/join/:projectId/:userId
-//@ doc     프로젝트 초대 & 가입신청
+//@ path    PATCH /api/project/join/invite/:projectId/:userId
+//@ doc     프로젝트 초대
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.patch('/join/:projectId/:userId', async (req, res) => {
+// router.patch('/join/:projectId/:userId/:state', async (req, res) => {
+router.patch('/join/invite/:projectId/:userId', async (req, res) => {
     try {
-        const { projectId, userId } = req.params;
+        const { projectId, userId, state } = req.params;
         const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
         if(isUser.joinUser.length >= 1) { 
             // 만약 초대리스트를 내려준다면 ...이건 프론트에서 체크해서 아예 요청 안보내는게 나을듯.
-            return res.status(401).json({ message: "이미 진행 중" })
+            return res.status(401).json({ message: "이미 진행 중" });
         }
+
+        // 230903 수정. joinUser 유저 -> 플젝 신청하면 state: true (플젝안 버튼 보임. 유저안 버튼 안보임)
+        // 230903 수정. joinUser 플젝 -> 유저 초대하면 state: false (플젝안 버튼 안보임. 유저안 버튼보임)
+        // 위 구분값으로 초대한 유저는 거절 수락 버튼 없앰
+        const [project, user] = await Promise.all([
+            Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId, state: true } } }, { new: true }),
+            User.findByIdAndUpdate(userId, { $push: { "joinProjects": { _id: projectId } } }, { new: true })
+        ]);
+        res.status(200).json(project);
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
+//@ path    PATCH /api/project/join/:projectId/:userId
+//@ doc     프로젝트 가입신청
+//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
+// router.patch('/join/:projectId/:userId/:state', async (req, res) => {
+router.patch('/join/:projectId/:userId', async (req, res) => {
+    try {
+        const { projectId, userId, state } = req.params;
+        const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
+        if(isUser.joinUser.length >= 1) { 
+            // 만약 초대리스트를 내려준다면 ...이건 프론트에서 체크해서 아예 요청 안보내는게 나을듯.
+            return res.status(401).json({ message: "이미 진행 중" });
+        }
+
+        // 230903 수정. joinUser 플젝 -> 유저 초대하면 state: false (플젝안 버튼 안보임. 유저안 버튼보임)
+        // 위 구분값으로 초대한 유저는 거절 수락 버튼 없앰
         const [project, user] = await Promise.all([
             Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId } } }, { new: true }),
             User.findByIdAndUpdate(userId, { $push: { "joinProjects": { _id: projectId } } }, { new: true })
-        ])
-        res.status(200).json(project)
+        ]);
+        res.status(200).json(project);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -113,13 +145,11 @@ router.patch('/join/:projectId/:userId', async (req, res) => {
 
 
 
+
 //@ path    PATCH /api/project/join/accept/:projectId/:userId
 //@ doc     프로젝트 수락
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
 router.patch('/join/accept/:projectId/:userId', async (req, res) => {
-    // 221116 수락할때 promise 디비 채워야됨 - 모드설정해서 이건 못하면 걍 프로젝트 닫히는걸로... 프로젝트 생성할때 프로젝트에 1개만 넣자. 
-    // 거짓으로 하고 싶어도 그것도 의지가 있을 때 얘기...니깐 
-    // 230222 위 기능은 그냥 안하거나 검토
     try {
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
