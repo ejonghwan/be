@@ -155,12 +155,18 @@ router.patch('/join/accept/:projectId/:userId', async (req, res) => {
     try {
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
-            Project.findByIdAndUpdate(projectId, { $pull: { "joinUser": { _id: userId } } }, { new: true }),
+            Project.findByIdAndUpdate(projectId, { $pull: { "joinUser": { _id: userId } } }, { new: true }).populate([
+                { path: 'constructorUser._id', select: 'id profileImage email name createdAt' },
+                { path: 'instanceUser._id', select: 'id profileImage email name createdAt' },
+                { path: 'joinUser._id', select: 'id profileImage email name createdAt' },
+                { path: 'categorys._id', select: 'id profileImage email name' },
+                { path: 'likeUser', select: 'id profileImage email name createdAt' },
+                { path: 'writes', select: 'user title content likeCount commentCount createdAt updatedAt', populate: { path: "user._id", select: 'id name profileImage' } } 
+            ]),
             Project.findByIdAndUpdate(projectId, { $push: { "instanceUser": { _id: userId } } }, { new: true }),
             User.findByIdAndUpdate(userId, { "joinProjects.$[ele].state": true }, { arrayFilters: [{"ele._id": projectId}], new: true })
         ])
-        // console.log(project, user)
-        res.status(200).json({ projectId, userId })
+        res.status(200).json(project)
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

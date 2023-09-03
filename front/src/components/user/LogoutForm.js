@@ -10,13 +10,13 @@ import Button from '../common/form/Button.js';
 const LogoutForm = () => {
     const { logoutUser } = UserRequest();
     const { dispatch } = useContext(UserContext);
-    const { setPopopen } = useGlobalState();
+    const { setMenuOpen } = useGlobalState();
     
     const handleLogout = async () => {
       try {
         dispatch({ type: "LOADING", loadingMessage: "로그아웃 중.." })
         await logoutUser();
-        setPopopen(false);
+        setMenuOpen(false);
       } catch(err) {
         console.log(err)
       }

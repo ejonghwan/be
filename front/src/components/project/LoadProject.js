@@ -121,14 +121,47 @@ const LoadProject = ({ projectId }) => {
                 </Fragment>
             ) : (
                 <div className='align_c gapt_30'>
+                    {/* 가입 신청을 한 유저 */}
                     {project.joinUser?.filter(userId => userId._id._id === state.user._id).length > 0 ? (
                         <Fragment>
                             <Button className={'button_type2'} disabled={true}>습관 가입신청</Button>
-                            <p className='align_c gapt_15 color_red'>이미 가입신청 하셔서 진행 중 입니다.</p>
+                            <p className='align_c gapt_15 color_red'>이미 가입이 진행 중 입니다.</p>
                         </Fragment>
                     ) : (
                         <RequestProject className={'button_type2'} btnTxt={'습관 가입신청'} projectId={projectId} userId={state.user._id} />
                     )}
+
+                    {/* 방장에게 초대가 온 유저인 경우 */}
+                    <div className='gapt_30'>
+                        {
+                            // project.joinUser?.map((joinUser, idx) => {
+                            //     if(state.user._id === joinUser._id._id && joinUser.state) {
+                            //         return (
+                            //             <div key={idx}>
+                            //                 이 프로젝트 장에게서 초대요청이 왔습니다.
+                            //                 <div className='user_button_wrap' data-userid={state.user._id}>
+                            //                     <Button type={'button'} className={'button_type6 in'} onClick={handleInviteProject}>수락</Button>, 
+                            //                     <Button type={'button'} className={'button_type6 out'} onClick={handleRejectProject}>거절</Button>
+                            //                 </div>
+                            //             </div>
+                            //         )
+                            //     }
+                            // }) 
+
+                            project.joinUser?.filter(joinUser => state.user._id === joinUser._id._id && joinUser.state).length > 0 && (
+                                <div>
+                                    이 프로젝트 장에게서 초대요청이 왔습니다.
+                                    <div className='user_button_wrap' data-userid={state.user._id}>
+                                        <Button type={'button'} className={'button_type6 in'} onClick={handleInviteProject}>수락</Button>
+                                        <Button type={'button'} className={'button_type6 out'} onClick={handleRejectProject}>거절</Button>
+                                    </div>
+                                </div>
+                            )
+                              
+                           
+                        }
+                    </div>
+                    
                 </div>
             )}
 

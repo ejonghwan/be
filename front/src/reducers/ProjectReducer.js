@@ -69,8 +69,8 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     project: {...state.project, likeCount: state.project.likeCount - 1}
                 }
 
+            
             case "PROJECT_REQUEST_SUCCESS": 
-            console.log(action.data)
                 return {
                     ...state,
                     loading: false,
@@ -90,7 +90,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    project: { ...state.project, joinUser: [ ...action.data ] },
+                    project: { ...state.project, ...action.data }, //이거해야됨 내일.!! project에 그대로넣으면 그 안에있는 애들은 불변성 안지켜져서 안바뀜. 모두 복사해서 넣어야됨 ...
                 }
 
             case "PROJECT_INVITE_FAILUE" : 
