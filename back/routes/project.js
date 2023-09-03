@@ -20,9 +20,9 @@ router.get('/', async (req, res) => {
         const project = await Project.find().populate([
             { path: 'constructorUser._id', select: 'id profileImage email name createdAt' },
             { path: 'instanceUser._id', select: 'id profileImage email name createdAt' },
-            { path: 'joinUser._id', select: 'id profileImage email name' },
+            { path: 'joinUser._id', select: 'id profileImage email name createdAt' },
             { path: 'categorys._id', select: 'id profileImage email name' },
-            { path: 'likeUser', select: 'id profileImage email name' },
+            { path: 'likeUser', select: 'id profileImage email name createdAt' },
             // { path: 'projectImages._id' }, 이미지는 안에 내장해둠
             // { path: 'writes' } 
         ]);
@@ -43,9 +43,9 @@ router.get('/:projectId', async (req, res) => {
         const project = await Project.findById(projectId).populate([
             { path: 'constructorUser._id', select: 'id profileImage email name createdAt' },
             { path: 'instanceUser._id', select: 'id profileImage email name createdAt' },
-            { path: 'joinUser._id', select: 'id profileImage email name' },
+            { path: 'joinUser._id', select: 'id profileImage email name createdAt' },
             { path: 'categorys._id', select: 'id profileImage email name' },
-            { path: 'likeUser', select: 'id profileImage email name' },
+            { path: 'likeUser', select: 'id profileImage email name createdAt' },
             // { path: 'projectImages._id' }, 이미지는 안에 내장해둠
             { path: 'writes', select: 'user title content likeCount commentCount createdAt updatedAt', populate: { path: "user._id", select: 'id name profileImage' } } //객체 2뎁스 퍼퓰. 이거 꼭 기억
         ]);
@@ -105,10 +105,12 @@ router.patch('/join/invite/:projectId/:userId', async (req, res) => {
         // 230903 수정. joinUser 플젝 -> 유저 초대하면 state: false (플젝안 버튼 안보임. 유저안 버튼보임)
         // 위 구분값으로 초대한 유저는 거절 수락 버튼 없앰
         const [project, user] = await Promise.all([
-            Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId, state: true } } }, { new: true }),
+            Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId, state: true } } }, { new: true }).populate([
+                { path: 'joinUser._id', select: 'id profileImage email name createdAt' }
+            ]),
             User.findByIdAndUpdate(userId, { $push: { "joinProjects": { _id: projectId } } }, { new: true })
         ]);
-        res.status(200).json(project);
+        res.status(200).json(project.joinUser);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -119,10 +121,9 @@ router.patch('/join/invite/:projectId/:userId', async (req, res) => {
 //@ path    PATCH /api/project/join/:projectId/:userId
 //@ doc     프로젝트 가입신청
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-// router.patch('/join/:projectId/:userId/:state', async (req, res) => {
 router.patch('/join/:projectId/:userId', async (req, res) => {
     try {
-        const { projectId, userId, state } = req.params;
+        const { projectId, userId } = req.params;
         const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
         if(isUser.joinUser.length >= 1) { 
             // 만약 초대리스트를 내려준다면 ...이건 프론트에서 체크해서 아예 요청 안보내는게 나을듯.
@@ -132,10 +133,12 @@ router.patch('/join/:projectId/:userId', async (req, res) => {
         // 230903 수정. joinUser 플젝 -> 유저 초대하면 state: false (플젝안 버튼 안보임. 유저안 버튼보임)
         // 위 구분값으로 초대한 유저는 거절 수락 버튼 없앰
         const [project, user] = await Promise.all([
-            Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId } } }, { new: true }),
+            Project.findByIdAndUpdate(projectId, { $push: { "joinUser": { _id: userId } } }, { new: true }).populate([
+                { path: 'joinUser._id', select: 'id profileImage email name createdAt' }
+            ]),
             User.findByIdAndUpdate(userId, { $push: { "joinProjects": { _id: projectId } } }, { new: true })
         ]);
-        res.status(200).json(project);
+        res.status(200).json(project.joinUser);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

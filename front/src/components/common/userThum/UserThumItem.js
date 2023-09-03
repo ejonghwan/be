@@ -53,7 +53,6 @@ const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, 
                     <span className='user_thum_id'>{users[selectIdx]._id.id}</span>
                     <span className='user_thum_email'>{users[selectIdx]._id.email}</span>
                     <span className='user_thum_createdat'>가입일 {changeViewDate(users[selectIdx]._id.createdAt, 'hour')}</span>
-                    {console.log(users)}
                 </div>
             </Popup>
 

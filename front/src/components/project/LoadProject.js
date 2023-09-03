@@ -141,9 +141,11 @@ const LoadProject = ({ projectId }) => {
                 {/* 그리고 이건 유저쪽에도 초대가 온 프로젝트 표시해야함 */}
                 <div>
                     <h3 className='gapt_50 gap_10'>초대한 친구</h3>
-                    {project.joinUser && project.joinUser.length > 0 ? (
+                    {project.joinUser && 
+                    project.joinUser?.length > 0 &&
+                    project.joinUser?.filter(user => user.state === true).length > 0 ? (
                         <UserThumItem 
-                            users={project.joinUser.filter(user => user.state === true)} 
+                            users={project.joinUser?.filter(user => user.state === true)} 
                             isText={true} 
                             className={'vertical'} 
                         />
@@ -161,9 +163,11 @@ const LoadProject = ({ projectId }) => {
                 {/* 신청한 친구는 false 이고 있어야함 */}
                 <div>
                     <h3 className='gapt_50 gap_10'>신청한 친구</h3>
-                    {project.joinUser && project.joinUser.length > 0 ? (
+                    {project.joinUser && 
+                    project.joinUser?.length > 0 && 
+                    project.joinUser?.filter(user => user.state === false).length > 0 ? (
                         <UserThumItem 
-                            users={project.joinUser.filter(user => user.state === false)} 
+                            users={project.joinUser?.filter(user => user.state === false)} 
                             isText={true} 
                             className={'vertical'} 
                             buttons={[ 

@@ -70,10 +70,11 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
             case "PROJECT_REQUEST_SUCCESS": 
+            console.log(action.data)
                 return {
                     ...state,
                     loading: false,
-                    // project: action.data,
+                    project: { ...state.project, joinUser: [ ...action.data ] },
                 }
 
             case "PROJECT_REQUEST_FAILUE" : 
@@ -84,11 +85,12 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
             
+            // 230904 초대 아직 상태변경 테스트 안함. 이건 프로젝트 수정클릭 -> 유저초대 할때 테스트해보기
             case "PROJECT_INVITE_SUCCESS": 
                 return {
                     ...state,
                     loading: false,
-                    // project: action.data,
+                    project: { ...state.project, joinUser: [ ...action.data ] },
                 }
 
             case "PROJECT_INVITE_FAILUE" : 
@@ -103,7 +105,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    // project: action.data,
+                    project: {...state.project, joinUser: [...state.project.joinUser.filter(user => user._id._id !== action.data.userId)]},
                 }
 
             case "PROJECT_REJECT_FAILUE" : 
