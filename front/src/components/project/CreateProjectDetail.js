@@ -40,7 +40,7 @@ const CreateProjectDetail = () => {
         title: '',
         content: '',
         categorys: [], //{categoryName: ''}
-        joinUser: [], //이건 플젝 joinUser에 들어가는게 아니라 User디비에 joinProject로 들어감
+        joinUser: [],
         projectPublic: true,
         projectImages: projectImages,
     });
@@ -101,7 +101,7 @@ const CreateProjectDetail = () => {
         for(let i = 0; i < joinUserList.length; i++) {
             if(submitData.joinUser[i]._id.match(_id)) return alert('이미 추가한 친구입니다.')
         }
-        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.concat({ _id: _id }) }));
+        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.concat({ _id: _id, state: true }) }));
         setJoinUserList(prev => [...prev, { name: name, _id: _id }]);
         setJoinUserValue('');
         setIsUserSearchResult(false);
@@ -120,10 +120,11 @@ const CreateProjectDetail = () => {
             e.preventDefault();
             ProjectDispatch({ type: "PROJECT_REQUEST" });
             const data = await createProject(submitData);
+
             alert(`${title} 습관이 생성 되었습니다!`)
             navigate(`/project/detail/${data._id}`);
           
-            console.log('실패하면 오나 ?');
+            console.log('실패하면 오나 ?', submitData);
             
         } catch(err) {
             console.log('view err?', err);
@@ -214,7 +215,7 @@ const CreateProjectDetail = () => {
                         {!SearchState.loading && SearchState.userSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"검색한 친구는 회원이 아닙니다."} subText={" 다시 검색해보세요."}/>}
                     </Search>
                     <div className='category_wrap gapt_10'>
-                        <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete}/>
+                        <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete} contentName={"친구"} isNoData={false}/>
                     </div>
                 </div>
                 <div className='gap_30'>

@@ -92,10 +92,9 @@ projectDB: joinUser / userDB: joinProjects state값에 따라 두곳에서 임�
 //@ path    PATCH /api/project/join/invite/:projectId/:userId
 //@ doc     프로젝트 초대
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-// router.patch('/join/:projectId/:userId/:state', async (req, res) => {
 router.patch('/join/invite/:projectId/:userId', async (req, res) => {
     try {
-        const { projectId, userId, state } = req.params;
+        const { projectId, userId } = req.params;
         const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
         if(isUser.joinUser.length >= 1) { 
             // 만약 초대리스트를 내려준다면 ...이건 프론트에서 체크해서 아예 요청 안보내는게 나을듯.

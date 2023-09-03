@@ -52,10 +52,10 @@ const ProjectRequest = () => {
     }
 
     
-    // 프로젝트 신청
-    const requestProject = async data => {
+    // 프로젝트 초대
+    const requestInviteProject = async data => {
         try {
-            const { projectId, userId, state } = data;
+            const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
             const config = {
@@ -64,7 +64,28 @@ const ProjectRequest = () => {
             }
 
             console.log(data)
-            const res = await axios.patch(`${host}/api/project/join/${projectId}/${userId}/${state}`, config);
+            const res = await axios.patch(`${host}/api/join/project/join/invite/${projectId}/${userId}`, config);
+            ProjectDispatch({ type: "PROJECT_REQUEST_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err.response.data.message });
+        }
+    }
+
+     // 프로젝트 가입신청
+     const requestProject = async data => {
+        try {
+            const { projectId, userId } = data;
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+
+            console.log(data)
+            const res = await axios.patch(`${host}/api/project/join/${projectId}/${userId}`, config);
             ProjectDispatch({ type: "PROJECT_REQUEST_SUCCESS", data: res.data });
 
         } catch(err) {
@@ -125,6 +146,7 @@ const ProjectRequest = () => {
         createProject, 
         loadProject,
         requestProject,
+        requestInviteProject,
         inviteProject,
         rejectProject,
         

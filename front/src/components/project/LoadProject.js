@@ -137,19 +137,16 @@ const LoadProject = ({ projectId }) => {
             {state.user?._id === project.constructorUser?._id._id && 
             (
             <Fragment>
-                {/* 초대한 친구는 false 이고 버튼없애야함 */}
+                {/* 초대한 친구는 true 이고 버튼없애야함 */}
+                {/* 그리고 이건 유저쪽에도 초대가 온 프로젝트 표시해야함 */}
                 <div>
-                    <h3 className='gapt_50 gap_10'>초대한 친구 : 초대한 친구는 false 이고 버튼없애야함</h3>
+                    <h3 className='gapt_50 gap_10'>초대한 친구</h3>
                     {project.joinUser && project.joinUser.length > 0 ? (
                         <UserThumItem 
-                            users={project.joinUser} 
+                            users={project.joinUser.filter(user => user.state === true)} 
                             isText={true} 
                             className={'vertical'} 
-                            buttons={[ 
-                                <Button type={'button'} className={'button_type6 in'} onClick={handleInviteProject}>수락</Button>, 
-                                <Button type={'button'} className={'button_type6 out'} onClick={handleRejectProject}>거절</Button>
-                                ]}
-                            />
+                        />
                     ) : (
                         <NoData icon={<PiSmileyXEyesDuotone />} title={"이 습관에 신청한 유저가 없습니다."} />
                     )}
@@ -161,12 +158,12 @@ const LoadProject = ({ projectId }) => {
             {state.user?._id === project.constructorUser?._id._id && 
             (
             <Fragment>
-                {/* 신청한 친구는 true??? 이고 있어야함 */}
+                {/* 신청한 친구는 false 이고 있어야함 */}
                 <div>
-                    <h3 className='gapt_50 gap_10'>신청한 친구 : 신청한 친구는 true??? 이고 있어야함</h3>
+                    <h3 className='gapt_50 gap_10'>신청한 친구</h3>
                     {project.joinUser && project.joinUser.length > 0 ? (
                         <UserThumItem 
-                            users={project.joinUser} 
+                            users={project.joinUser.filter(user => user.state === false)} 
                             isText={true} 
                             className={'vertical'} 
                             buttons={[ 
