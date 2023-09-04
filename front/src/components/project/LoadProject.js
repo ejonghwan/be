@@ -152,8 +152,8 @@ const LoadProject = ({ projectId }) => {
                                 <div>
                                     이 프로젝트 장에게서 초대요청이 왔습니다.
                                     <div className='user_button_wrap' data-userid={state.user._id}>
-                                        <Button type={'button'} className={'button_type6 in'} onClick={handleInviteProject}>수락</Button>
-                                        <Button type={'button'} className={'button_type6 out'} onClick={handleRejectProject}>거절</Button>
+                                        <Button type={'button'} className={'button_type2 in'} onClick={handleInviteProject}>수락</Button>
+                                        <Button type={'button'} className={'button_type_cancel out'} onClick={handleRejectProject}>거절</Button>
                                     </div>
                                 </div>
                             )

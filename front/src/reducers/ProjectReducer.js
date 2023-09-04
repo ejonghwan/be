@@ -29,7 +29,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    createProject: action.data,
+                    project: action.data,
                 }
 
             case "PROJECT_CREATE_FAILUE" : 
@@ -85,12 +85,12 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
             
-            // 230904 초대 아직 상태변경 테스트 안함. 이건 프로젝트 수정클릭 -> 유저초대 할때 테스트해보기
             case "PROJECT_INVITE_SUCCESS": 
+                console.log(action.data)
                 return {
                     ...state,
                     loading: false,
-                    project: { ...state.project, ...action.data }, //이거해야됨 내일.!! project에 그대로넣으면 그 안에있는 애들은 불변성 안지켜져서 안바뀜. 모두 복사해서 넣어야됨 ...
+                    project: action.data
                 }
 
             case "PROJECT_INVITE_FAILUE" : 
