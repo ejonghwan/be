@@ -120,14 +120,12 @@ const CreateProjectDetail = () => {
             e.preventDefault();
             ProjectDispatch({ type: "PROJECT_REQUEST" });
             const data = await createProject(submitData);
-
-            alert(`${title} 습관이 생성 되었습니다!`)
-            navigate(`/project/detail/${data._id}`);
-          
-            console.log('실패하면 오나 ?', submitData);
-            
+            if(data) {
+                alert(`${title} 습관이 생성 되었습니다!`)
+                navigate(`/project/detail/${data._id}`);
+            }
         } catch(err) {
-            console.log('view err?', err);
+            console.log(err);
         }
     }
 
@@ -174,6 +172,7 @@ const CreateProjectDetail = () => {
                         className={"textarea_type1"} 
                         value={content}
                         onChange={handleValuesChange}
+                        required={true} 
                         placeholder={"#룰1 - 영단어 2만개를 외워서 게시판에 인증샷 남기기\n#룰2 - 못하면 못잠"}
                     >
                         {content}
@@ -198,20 +197,23 @@ const CreateProjectDetail = () => {
                             <div>친구 검색중...</div>
                         ) : (
                             <ul className='search_result_user'>
-                                {SearchState.userSearch?.map(((user, idx) => <li key={idx} className='search_result_user_item'>{
+                                {SearchState.userSearch?.filter(user => user.id !== state.user.id).map(((user, idx) => <li key={idx} className='search_result_user_item'>{
                                     <button type='button' 
                                         className='button_reset' 
                                         title={`${user.id}님 초대`} 
                                         onClick={handleAddFriend({ name: user.name, _id: user._id })}
                                     >
-                                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="" className='user_img'/>
+                                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="유저 프로필 이미지" className='user_img'/>
                                         <strong className='user_name'>{user.name}</strong>
                                         <span className='user_id'>{user.id}</span>
-                                        <PiPlusCircleDuotone />
+                                        <span className='button_reset button_plus'>
+                                            <span className='blind'>{`친구추가된 목록에서 ${user.name} 없애기`}</span>
+                                        </span>
                                     </button>
                                 }</li>))}
                             </ul>
                         )}
+                        {/* 검색 결과가 없는 경우 */}
                         {!SearchState.loading && SearchState.userSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"검색한 친구는 회원이 아닙니다."} subText={" 다시 검색해보세요."}/>}
                     </Search>
                     <div className='category_wrap gapt_10'>
@@ -268,12 +270,11 @@ const CreateProjectDetail = () => {
 
                 <div className='align_c gapt_30'>
                     <Button className={'button_type2'} >습관 생성</Button>
-                    {/* <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                        {state.authNumberErrorMessage && <p> {state.authNumberErrorMessage}</p>}
-                    </ErrorMsg>
-                    <SuccessMsg className={"success_type"}>
-                        아이디는 <i className='check_txt'>{resMsg.id}</i> 입니다.
-                    </SuccessMsg> */}
+                    {ProjectState.errorMessage && (
+                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                            {ProjectState.errorMessage }
+                        </ErrorMsg>
+                    )}
                 </div>
             </form>
         </div>

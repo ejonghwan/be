@@ -236,6 +236,39 @@ button:disabled {
 
 
 
+.button_plus {
+    padding: 10px;
+    position: relative;
+    background-color: var(--bg-box-color1);
+    border-radius: 50%;
+    margin-left: 3px;
+}
+
+.button_plus::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    background-color: var(--text-color2);
+    width: 1px;
+    height: 9px;
+    transform: translate(-50%, -50%);
+}
+
+.button_plus::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    background-color: var(--text-color2);
+    width: 1px;
+    height: 9px;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+
 
 
 

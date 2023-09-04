@@ -27,8 +27,7 @@ const ProjectRequest = () => {
 
             return res.data;
         } catch(err) {
-            console.error(err);
-            ProjectDispatch({ type: "PROJECT_CREATE_FAILUE", data: err.response.data.message });
+            ProjectDispatch({ type: "PROJECT_CREATE_FAILUE", data: err.message });
         }
     } 
 
@@ -62,8 +61,6 @@ const ProjectRequest = () => {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
             }
-
-            console.log(data)
             const res = await axios.patch(`${host}/api/join/project/join/invite/${projectId}/${userId}`, config);
             ProjectDispatch({ type: "PROJECT_REQUEST_SUCCESS", data: res.data });
 
@@ -83,8 +80,6 @@ const ProjectRequest = () => {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
             }
-
-            console.log(data)
             const res = await axios.patch(`${host}/api/project/join/${projectId}/${userId}`, config);
             ProjectDispatch({ type: "PROJECT_REQUEST_SUCCESS", data: res.data });
 
@@ -104,8 +99,6 @@ const ProjectRequest = () => {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
             }
-
-            console.log(data)
             const res = await axios.patch(`${host}/api/project/join/accept/${projectId}/${userId}`, config);
             ProjectDispatch({ type: "PROJECT_INVITE_SUCCESS", data: res.data });
 
@@ -126,7 +119,6 @@ const ProjectRequest = () => {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
             }
-            console.log(data)
             const res = await axios.patch(`${host}/api/project/join/reject/${projectId}/${userId}`, config);
             ProjectDispatch({ type: "PROJECT_REJECT_SUCCESS", data: res.data });
 

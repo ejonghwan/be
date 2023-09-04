@@ -30,7 +30,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    userSearch: action.data,
+                    userSearch: action.data
                 }
 
             case "USER_SEARCH_FAILUE" : 
