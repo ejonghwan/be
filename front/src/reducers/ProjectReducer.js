@@ -86,6 +86,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
 
             
             case "PROJECT_INVITE_SUCCESS": 
+                console.log('PROJECT_INVITE_SUCCESS', action.data)
                 return {
                     ...state,
                     loading: false,

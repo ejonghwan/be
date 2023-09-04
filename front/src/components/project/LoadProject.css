@@ -20,9 +20,11 @@
     padding: 20px;
     background-color: var(--bg-box-color1);
     border-radius: 18px;
-    max-width: 50%;
+    max-width: 80%;
     margin: 0 auto;
     white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: scroll;
 }
 
 .like_count {

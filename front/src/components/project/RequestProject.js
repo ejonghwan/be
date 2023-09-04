@@ -13,11 +13,10 @@ const RequestProject = ({ btnTxt, className = '', projectId, userId}) => {
 
     const handleRequestProject = async e => {
         e.preventDefault();
-        if(!window.confirm('이 습관에 정말 가입하시겠습니까?')) return;
         try {
             ProjectDispatch({ type: "PROJECT_REQUEST" });
+            alert('이 습관에 신청하셨습니다. 신청이 수락되면 가입이 완료됩니다.')
             await requestProject({ projectId, userId });
-            
         } catch(err) {
             console.log(err)
         }
