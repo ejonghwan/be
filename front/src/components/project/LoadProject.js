@@ -183,7 +183,7 @@ const LoadProject = ({ projectId }) => {
                             className={'vertical'} 
                         />
                     ) : (
-                        <NoData icon={<PiSmileyXEyesDuotone />} title={"이 습관에 신청한 유저가 없습니다."} />
+                        <NoData icon={<PiSmileyXEyesDuotone />} title={"이 습관에 초대한 유저가 없습니다."} />
                     )}
                 </div>
             </Fragment>
