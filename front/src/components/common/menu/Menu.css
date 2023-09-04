@@ -6,6 +6,13 @@
 
 .info_menu .name {
     padding-left: 10px;
+    font-size: 1.3rem;
+}
+
+.info_menu .id {
+    font-size: 1.2rem;
+    vertical-align: top;
+    color: var(--text-color2);
 }
 
 .info_menu .name > strong {
@@ -14,8 +21,8 @@
 
 .info_menu .email {
     padding-left: 10px;
-    margin-top: 10px;
-    padding-bottom: 10px;
+    margin-top: 5px;
+    font-size: 1.3rem;
 }
 
 .info_menu + .info_menu {

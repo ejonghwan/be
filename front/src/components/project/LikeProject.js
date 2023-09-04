@@ -15,28 +15,20 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
     const [like, setLike] = useState(null)
 
-    const handleProjectLike = async e => {
+    const handleProjectLike = e => {
         e.preventDefault();
-        try {
-            if(!state.isLogged) return alert('좋아요를 하려면 로그인을 먼저 해주세요.')
-            e.preventDefault();
-            likeApi(like)
-            setLike(!like)
-        } catch(err) {
-            console.log(err)
-        }
+        if(!state.isLogged) return alert('좋아요를 하려면 로그인을 먼저 해주세요.')
+        e.preventDefault();
+        likeApi(like)
+        setLike(!like)
     } 
 
     const handleProjectUnlike = async e => {
         e.preventDefault();
-        try {
-            if(!state.isLogged) return alert('좋아요를 취소 하려면 로그인을 먼저 해주세요.')
-            e.preventDefault();
-            likeApi(like)
-            setLike(!like)
-        } catch(err) {
-            console.log(err)
-        }
+        if(!state.isLogged) return alert('좋아요를 취소 하려면 로그인을 먼저 해주세요.')
+        e.preventDefault();
+        likeApi(like)
+        setLike(!like)
     } 
 
 
@@ -45,11 +37,17 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
         try {
             dispatch({ type: "LOADING" })
             if(like) {
-                await projectUnlike({ projectId, userId });
-                ProjectDispatch({ type: "PROJECT_LIKE_DEC_SUCCESS" })
+                const resUnlike = await projectUnlike({ projectId, userId });
+                if(resUnlike.data) {
+                    ProjectDispatch({ type: "PROJECT_LIKE_DEC_SUCCESS" })
+                    setLike(!like)
+                }
             } else {
-                await projectLike({ projectId, userId });
-                ProjectDispatch({ type: "PROJECT_LIKE_INC_SUCCESS" })
+                const resLikeawait = await projectLike({ projectId, userId });
+                if(resLikeawait.data) {
+                    ProjectDispatch({ type: "PROJECT_LIKE_INC_SUCCESS" })
+                    setLike(!like)
+                }
             }
         } catch(err) {
             console.log(err)

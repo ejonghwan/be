@@ -10,7 +10,7 @@ import Button from '../form/Button';
 const Menu = () => {
     const [thema, setThema] = useState(false);
     const {state } = useContext(UserContext)
-    const { name, email } = state.user;
+    const { name, email, id } = state.user;
 
     
     const { menuOpen } = useGlobalState();
@@ -27,7 +27,7 @@ const Menu = () => {
         <div id="menu" className={`menu_type_small ${menuOpen && 'on'}`}>
             
             <ul className='info_menu'>
-                <li className='name'>반가워요! <strong>{name}</strong> 님</li>
+                <li className='name'><span className='id'>{id}</span> - <strong>{name}</strong> 님</li>
                 <li className='email'>{email}</li>
             </ul>
             <ul className='info_menu'>

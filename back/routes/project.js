@@ -165,8 +165,6 @@ router.patch('/join/accept/:projectId/:userId', async (req, res) => {
             ]),
             User.findByIdAndUpdate(userId, { "joinProjects.$[ele].state": true }, { arrayFilters: [{"ele._id": projectId}], new: true })
         ])
-
-        console.log('back', project)
         res.status(200).json(project)
     } catch (err) {
         console.error('server:', err);
@@ -303,10 +301,8 @@ router.patch('/edit/:projectId', async (req, res) => {
         for(let i = 0; i < deleteCategorys.length; i++) {
             await Category.findOneAndUpdate({ categoryName: deleteCategorys[i] }, { $pull: { projects: projectId } }, { new: true }).exec();
         }
-        
         const project = await Project.findByIdAndUpdate({ _id: projectId }, putData, { new: true }).exec();
         
-        // console.log('얘는 왜 적용안됨? ', project); { new: true }
         res.status(201).json(project);
     } catch (err) {
         console.error('server:', err);
@@ -364,7 +360,6 @@ router.patch('/like', async (req, res) => {
         const likeUser = await Project.find({_id: projectId}).select("likeUser");
         for(let i = 0; i < likeUser[0].likeUser.length; i++) {
             if(likeUser[0].likeUser[i].equals(userId)) {
-                console.log('user 있음')
                 return res.status(400).json({ message: "이미 좋아요를 추가했습니다." })
             } 
         }
@@ -393,19 +388,23 @@ router.patch('/unlike', async (req, res) => {
         // 다른사람 좋아요가 1개라도 있으면 상관없는데 0개일땐 -1로 감..
         // 근데 위에껀 상관없음 프론트에서 어차피 0개 인상태에서 시작하기 때문.
         const likeUser = await Project.find({_id: projectId}).select("likeUser");
-        console.log(likeUser[0].likeUser.length)
+        console.log(userId, likeUser)
         for(let i = 0; i < likeUser[0].likeUser.length; i++) {
-            if(!likeUser[0].likeUser[i].equals(userId)) {
-                return res.status(400).json({ message: "취소할 좋아요가 없습니다" })
+            console.log(likeUser[0].likeUser[i].equals(userId))
+            if(likeUser[0].likeUser[i].equals(userId)) {
+                const [ project, user ] = await Promise.all([
+                    Project.findByIdAndUpdate(projectId, { $pull: {likeUser: userId }, $inc: { likeCount: -1 } }, { new: true }),
+                    User.updateOne({_id: userId}, { $pull: {likeProject: projectId } }, { new: true }),
+                ])
+        
+                return res.status(201).json(projectId);
+               
             } 
         }
 
-        const [ project, user ] = await Promise.all([
-            Project.findByIdAndUpdate(projectId, { $pull: {likeUser: userId }, $inc: { likeCount: -1 } }, { new: true }),
-            User.updateOne({_id: userId}, { $pull: {likeProject: projectId } }, { new: true }),
-        ])
+        res.status(400).json({ message: "취소할 좋아요가 없습니다" })
 
-        res.status(201).json(projectId);
+        
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

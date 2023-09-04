@@ -436,7 +436,8 @@ const UserRequest = () => {
             };
             const like = await axios.patch(`${host}/api/project/like`, data, config); 
             dispatch({ type: "PROJECT_LIKE_SUCCESS", data: like.data });
-
+            return like;
+            
         } catch(err) {
             console.error(err);
             dispatch({ type: "PROJECT_LIKE_FAILUE", data: err.response.data.message })
@@ -461,6 +462,7 @@ const UserRequest = () => {
             };
             const unlike = await axios.patch(`${host}/api/project/unlike`, data, config); 
             dispatch({ type: "PROJECT_UNLIKE_SUCCESS", data: unlike.data });
+            return unlike;
 
         } catch(err) {
             console.error(err);
