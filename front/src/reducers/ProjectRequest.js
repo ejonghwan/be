@@ -129,6 +129,29 @@ const ProjectRequest = () => {
     }
 
 
+    
+    // 프로젝트 탈퇴
+    const WithdrawProject = async data => {
+        try {
+            const { projectId, userId } = data;
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+            const res = await axios.delete(`${host}/api/project/delete/${projectId}/${userId}`, config);
+            ProjectDispatch({ type: "PROJECT_WITHDRAW_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err.response.data);
+            ProjectDispatch({ type: "PROJECT_WITHDRAW_FAILUE", data: err.response.data });
+        }
+    }
+
+
+
+
 
 
 
@@ -141,8 +164,7 @@ const ProjectRequest = () => {
         requestInviteProject,
         inviteProject,
         rejectProject,
-        
-
+        WithdrawProject,
     }
 }
 

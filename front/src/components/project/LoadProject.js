@@ -22,7 +22,7 @@ import RequestProject from './RequestProject';
 
 const LoadProject = ({ projectId }) => {
 
-    const { loadProject, inviteProject, rejectProject } = ProjectRequest();
+    const { loadProject, inviteProject, rejectProject, WithdrawProject } = ProjectRequest();
     const { state } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
@@ -53,6 +53,18 @@ const LoadProject = ({ projectId }) => {
             let userId = e.target.parentNode.dataset.userid;
             ProjectDispatch({ type: "PROJECT_REQUEST" });
             await rejectProject({ projectId, userId });
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    const handleWithdrawProject = async e => {
+        e.preventDefault();
+        try {
+            if(window.confirm('정말 탈퇴하시겠습니까?')) {
+                ProjectDispatch({ type: "PROJECT_REQUEST" });
+                await WithdrawProject({ projectId, userId: state.user._id });
+            }
         } catch(err) {
             console.log(err)
         }
@@ -224,7 +236,7 @@ const LoadProject = ({ projectId }) => {
             {/* 습관에 가입한 유저만 */}
             {project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0 && (
                  <div className='align_c gapt_30'>
-                    <Button className={'button_type5'}>이 습관 탈퇴하기</Button>
+                    <Button className={'button_type5'} onClick={handleWithdrawProject}>이 습관 탈퇴하기</Button>
                 </div>
             )}
         </Fragment>

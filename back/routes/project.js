@@ -210,7 +210,7 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
 //@ path    PATCH /api/project/delete/:projectId/:userId
 //@ doc     프로젝트 탈퇴
 //@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.patch('/delete/:projectId/:userId', async (req, res) => {
+router.delete('/delete/:projectId/:userId', async (req, res) => {
     try {
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([

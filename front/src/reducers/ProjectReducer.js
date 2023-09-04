@@ -115,6 +115,21 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     errorMessage: action.data,
                 }
 
+
+            case "PROJECT_WITHDRAW_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    project: action.data,
+                }
+
+            case "PROJECT_WITHDRAW_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                    errorMessage: action.data,
+                }
+
             default: return { state }
     }
 }
