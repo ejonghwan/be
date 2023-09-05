@@ -29,6 +29,7 @@ const LoadProject = ({ projectId }) => {
     const { state } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
+    const [friendData, setFriendData] = useState([])
     const editRef = useRef(null);
     const inviteRef = useRef(null);
     
@@ -82,6 +83,16 @@ const LoadProject = ({ projectId }) => {
     const handleFriendInvite = () => {
         inviteRef.current.popupOpen();
     }
+
+    const handleAddFriend = e => {
+        e.preventDefault();
+        console.log('내일 친추추가 리듀서 작업')
+
+    }
+
+    useEffect(() => {
+        console.log(3123, friendData)
+    }, [friendData])
 
 
     useEffect(() => {
@@ -267,8 +278,11 @@ const LoadProject = ({ projectId }) => {
                 <ProjectEdit />
             </Popup>
 
-            <Popup className={`popup_type_default`} isHead={true} title={`친구 초대하기`} closeClick={() => inviteRef.current.popupClose()} dimd={true}  ref={inviteRef}>
-                <UserSearch />
+            <Popup className={`popup_type_default user_search_pop`} isHead={true} title={`친구 초대하기`} closeClick={() => inviteRef.current.popupClose()} dimd={true}  ref={inviteRef}>
+                <UserSearch setFriendData={setFriendData}/>
+                <div className='add_friend align_c gapt_30'>
+                    <Button type={'button'} className={"button_type2"} onClick={handleAddFriend}>초대 보내기</Button>
+                </div>
             </Popup>
             
         </Fragment>

@@ -1,55 +1,29 @@
-import { Fragment, useCallback, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Input from '../common/form/Input';
-import Label from '../common/form/Label';
-import Textarea from '../common/form/Textarea';
-import Button from '../common/form/Button';
-import './UserSearch.css';
-import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone, PiXCircleDuotone, PiSmileyXEyesDuotone  } from "react-icons/pi";
-import IconVisual from '../common/icon/IconVisual';
-import IconList from '../common/icon/IconList';
-import IconData from '../common/icon/IconData';
+import { Fragment, useCallback, useContext, useState } from 'react';
+import { PiSmileyXEyesDuotone  } from "react-icons/pi";
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import Search from '../common/form/Search';
 import Tags from '../common/tag/Tags';
 import SearchRequest from '../../reducers/SearchRequest';
-import ProjectRequest from '../../reducers/ProjectRequest';
 import { UserContext } from '../../context/UserContext';
 import { SearchContext } from '../../context/SearchContext';
-import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
+import './UserSearch.css';
 
 
-const UserSearch = () => {
+const UserSearch = ({ setFriendData = [] }) => {
 
     const { userSearch } = SearchRequest();
-    const { createProject } = ProjectRequest();
     const { state } = useContext(UserContext);
     const { SearchState, SearchDispatch } = useContext(SearchContext);
-    const { ProjectState, ProjectDispatch } = useContext(ProjectContext);
-    const navigate = useNavigate()
 
-    const [projectImages, setProjectImages] = useState(0);
-    const [categoryValue, setCategoryValue] = useState(''); 
     const [joinUserValue, setJoinUserValue] = useState(''); // 인풋값
     const [joinUserList, setJoinUserList] = useState([]); //뿌리기 위해 여기서만 사용
     const [isUserSearchResult, setIsUserSearchResult] = useState(false)
     const [submitData, setSubmitData] = useState({ 
-        constructorUser: { _id: state.user._id },
-        title: '',
-        content: '',
-        categorys: [], //{categoryName: ''}
         joinUser: [],
-        projectPublic: true,
-        projectImages: projectImages,
     });
 
-
-    const handleValuesChange = e => {
-        const {name, value} = e.target;
-        setSubmitData({...submitData, [name]: value})
-    }
 
 
     // 검색 관련 이벤트
@@ -58,7 +32,6 @@ const UserSearch = () => {
         handleJoinUserSearch(e.target.value) 
         //그리고 useCallback 안에서는 state를 구독하지 않기 때문에 변화 값을 인자로 넘겨줘야함 
     }
-
 
     // 유저 검색
     const handleJoinUserSearch = useCallback(_debounce(async (userName) => {
@@ -87,6 +60,8 @@ const UserSearch = () => {
         setJoinUserList(prev => [...prev, { name: name, _id: _id }]);
         setJoinUserValue('');
         setIsUserSearchResult(false);
+        
+        setFriendData && setFriendData(prev => [...prev.concat( { _id: _id, state: true } )]) // 부모에거 setSTate가 넘어왔을 때 
      }
 
     const handleJoinUserDelete = tagName => {
@@ -97,13 +72,14 @@ const UserSearch = () => {
 
 
     return (
-        <div className='gap_30'>
+        <Fragment>
             <Search 
                 id={'search'}
+                type={"text"}
                 placeholder={"검색할 친구의 이름을 입력해주세요."}
                 isLabel={true}
                 labelCont={"이 습관에 초대할 친구 이름 검색"}
-                isButton={true} 
+                isButton={false} 
                 value={joinUserValue}
                 buttonType={"button"}
                 isSearchResult={isUserSearchResult}
@@ -137,7 +113,7 @@ const UserSearch = () => {
             <div className='category_wrap gapt_10'>
                 <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete} contentName={"친구"} isNoData={false}/>
             </div>
-        </div>
+        </Fragment>
     );
 };
 
