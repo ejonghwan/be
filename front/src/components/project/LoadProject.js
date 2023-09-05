@@ -1,4 +1,4 @@
-import { useEffect, useContext, Fragment } from 'react';
+import { useState, useEffect, useContext, Fragment, useRef } from 'react';
 import ProjectRequest from '../../reducers/ProjectRequest';
 import { ProjectContext } from '../../context/ProjectContext';
 import IconData from '../common/icon/IconData';
@@ -9,12 +9,15 @@ import { UserContext } from '../../context/UserContext';
 import UserThumItem from '../common/userThum/UserThumItem';
 import Button from '../common/form/Button';
 import IconVisual from '../common/icon/IconVisual';
-import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone } from "react-icons/pi";
+import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone, PiUserPlusDuotone } from "react-icons/pi";
 import LikeProject from '../project/LikeProject';
 import Tags from '../common/tag/Tags';
 import './LoadProject.css';
 import NoData from '../common/notData/NoData';
 import RequestProject from './RequestProject';
+import Popup from '../common/popup/Popup';
+import ProjectEdit from './ProjectEdit';
+import UserSearch from '../search/UserSearch';
 
 
 
@@ -26,6 +29,8 @@ const LoadProject = ({ projectId }) => {
     const { state } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
+    const editRef = useRef(null);
+    const inviteRef = useRef(null);
     
     const handleLoadProject = async () => {
         try {
@@ -70,6 +75,14 @@ const LoadProject = ({ projectId }) => {
         }
     }
 
+    const handleEditState = () => {
+        editRef.current.popupOpen();
+    }
+
+    const handleFriendInvite = () => {
+        inviteRef.current.popupOpen();
+    }
+
 
     useEffect(() => {
         handleLoadProject();
@@ -80,12 +93,20 @@ const LoadProject = ({ projectId }) => {
         <Fragment>
             <div className='align_c gapt_30'>
                 {state.user?._id === project.constructorUser?._id._id && (
-                    <span className=''>
-                        <Button className={'button_type4 ico_hover_type2'}>
-                            <PiGearDuotone />
-                            <span className='blind'>이 습관 수정</span>
-                        </Button>
-                    </span>
+                    <div className='constructor_options'>
+                        <span>
+                            <Button className={'button_type4 ico_hover_type2'} onClick={handleEditState}>
+                                <PiGearDuotone />
+                                <span className='blind'>이 습관 수정</span>
+                            </Button>
+                        </span>
+                        <span>
+                            <Button className={'button_type4 ico_hover_type1'} onClick={handleFriendInvite}>
+                                <PiUserPlusDuotone />
+                                <span className='blind'>친구초대</span>
+                            </Button>
+                        </span>
+                    </div>
                 )}
             </div>
             {/* 모두 보임 */}
@@ -239,6 +260,17 @@ const LoadProject = ({ projectId }) => {
                     <Button className={'button_type5'} onClick={handleWithdrawProject}>이 습관 탈퇴하기</Button>
                 </div>
             )}
+
+
+            
+            <Popup className={`popup_type_default`} isHead={true} title={`습관 수정`} closeClick={() => editRef.current.popupClose()} dimd={true}  ref={editRef}>
+                <ProjectEdit />
+            </Popup>
+
+            <Popup className={`popup_type_default`} isHead={true} title={`친구 초대하기`} closeClick={() => inviteRef.current.popupClose()} dimd={true}  ref={inviteRef}>
+                <UserSearch />
+            </Popup>
+            
         </Fragment>
     );
 };
