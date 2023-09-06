@@ -186,7 +186,8 @@ const CreateProjectDetail = () => {
                         placeholder={"검색할 친구의 이름을 입력해주세요."}
                         isLabel={true}
                         labelCont={"이 습관에 초대할 친구 이름 검색"}
-                        isButton={true} 
+                        isButton={false} 
+                        type={"text"}
                         value={joinUserValue}
                         buttonType={"button"}
                         isSearchResult={isUserSearchResult}
@@ -228,6 +229,7 @@ const CreateProjectDetail = () => {
                         isLabel={true}
                         labelCont={"카테고리를 등록할 수 있어요."}
                         isButton={true} 
+                        type={"text"}
                         // buttonCont={`추가`}   
                         buttonIcon={<PiPlusCircleDuotone />}
                         buttonType={"button"}
@@ -236,6 +238,7 @@ const CreateProjectDetail = () => {
                         onChange={e => setCategoryValue(e.target.value)}
                         handleInputReset={handleCategoryReset}
                     />
+                    <p className='g_sub_txt'>※ '#' 으로 구분지어 입력해주세요.</p>
                     <div className='category_wrap gapt_10'>
                         <Tags tags={submitData.categorys.map(tag => tag.categoryName)} isLink={false} handleDelete={handleTagDelete}/>
                     </div>

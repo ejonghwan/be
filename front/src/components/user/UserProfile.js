@@ -7,11 +7,12 @@ import Timer from '../common/utils/Timer.js';
 import ProfileImageEdit from '../user/ProfileImageEdit.js'
 import UserRequest from '../../reducers/UserRequest.js';
 import { UserContext } from '../../context/UserContext.js';
-import { stringLengthChecked, statusCode, onlyNumChecked  } from '../../utils/utils.js';
+import { stringLengthChecked, statusCode, onlyNumChecked, changeViewDate  } from '../../utils/utils.js';
 import './UserProfile.css';
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import { PiBabyDuotone } from "react-icons/pi";
+
 
 
 
@@ -375,13 +376,13 @@ const UserProfile = () => {
                         <li>
                             <strong className='Profile_info_tit'>가입일</strong>
                             <div className='Profile_info_cont'>
-                                {state.user.createdAt}
+                                {changeViewDate(state.user.createdAt, 'second')}
                             </div>
                         </li>
                         <li>
                             <strong className='Profile_info_tit'>수정일</strong>
                             <div className='Profile_info_cont'>
-                                {state.user.updatedAt}
+                                {changeViewDate(state.user.updatedAt, 'second')}
                             </div>
                             <div className='align_c gapt_30 btn_wrap'>
                                 <Button className={'button_type2'} name={'userInfo'} onClick={handleToggle} >

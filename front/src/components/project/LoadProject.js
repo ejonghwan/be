@@ -97,9 +97,6 @@ const LoadProject = ({ projectId }) => {
             alert('친구를 초대했습니다.');
             setFriendData([]);
         }
-       
-
-
     }
 
     useEffect(() => {

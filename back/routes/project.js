@@ -289,7 +289,7 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
 
         // 같은건 제외 프론트에서 
         if(constructorUser) putData.constructorUser = constructorUser;
-        if(instanceUser) putData.instanceUser = instanceUser;
+        if(instanceUser) putData.instanceUser = instanceUser; // 이거 기존꺼 유지 잘 되면서 삭제되는지 
         if(rank) putData.rank = rank;
         if(title) putData.title = title;
         if(content) putData.content = content;
@@ -302,22 +302,26 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
             await Category.findOneAndUpdate({ categoryName: deleteCategorys[i] }, { $pull: { projects: projectId } }, { new: true }).exec();
         }
 
-        // 카테고리 생성 분기 - 23.9.6 12 이거 아직 작업안함
+        await Project.findByIdAndUpdate(projectId, { $pullAll: { categorys: deleteCategorys } }, { new: true }).exec();
+
+
+        // 카테고리 생성 분기 - 23.9.6 12 이거 아직 작업안함. 
+        // 플젝 수정에서 받는 req.body.categorys는 새로 추가된 것만 보냄
         let findCategory;
         let newCategory;
         for(let i = 0; i < categorys.length; i++) {
             findCategory = await Category.findOne({ categoryName: categorys[i].categoryName });
 
             if(findCategory) { // 카테고리가 기존에 존재할 경우
-                await Category.findByIdAndUpdate(findCategory._id, { $push: { projects: newProject._id } }, { new: true }).exec();
-                await Project.findByIdAndUpdate(newProject._id, 
+                await Category.findByIdAndUpdate(findCategory._id, { $push: { projects: projectId } }, { new: true }).exec();
+                await Project.findByIdAndUpdate(projectId, 
                     { 'categorys.$[cate]._id' : findCategory._id }, // 아이디 추가 업데이트
                     { arrayFilters: [ {'cate.categoryName': findCategory.categoryName} ] }, // []중 어떤거를 업데이트할건지
                 ).exec();
             }
             if(!findCategory) { // 카테고리가 없어서 새로운 카테고리 생성
-                newCategory = await new Category({ categoryName: categorys[i].categoryName, projects: newProject._id });
-                await Project.findByIdAndUpdate(newProject._id, 
+                newCategory = await new Category({ categoryName: categorys[i].categoryName, projects: projectId });
+                await Project.findByIdAndUpdate(projectId, 
                     { 'categorys.$[cate]._id' : newCategory._id }, 
                     { arrayFilters: [ {'cate.categoryName': newCategory.categoryName} ] },
                 ).exec();
