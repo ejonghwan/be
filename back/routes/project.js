@@ -259,8 +259,8 @@ router.post('/', auth, async (req, res) => {
                 ).exec();
                 newCategory.save();
             }
-           
         }
+
         // 프로젝트 생성 시 유저디비에 추가 / 프로젝트 참여시에도 유저디비 + 프로젝트 디비에 추가 
         await User.updateOne({_id: constructorUser._id}, { $push: { projects: { _id: newProject._id } } }, { new: true });
 
@@ -301,8 +301,32 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
         for(let i = 0; i < deleteCategorys.length; i++) {
             await Category.findOneAndUpdate({ categoryName: deleteCategorys[i] }, { $pull: { projects: projectId } }, { new: true }).exec();
         }
+
+        // 카테고리 생성 분기 - 23.9.6 12 이거 아직 작업안함
+        let findCategory;
+        let newCategory;
+        for(let i = 0; i < categorys.length; i++) {
+            findCategory = await Category.findOne({ categoryName: categorys[i].categoryName });
+
+            if(findCategory) { // 카테고리가 기존에 존재할 경우
+                await Category.findByIdAndUpdate(findCategory._id, { $push: { projects: newProject._id } }, { new: true }).exec();
+                await Project.findByIdAndUpdate(newProject._id, 
+                    { 'categorys.$[cate]._id' : findCategory._id }, // 아이디 추가 업데이트
+                    { arrayFilters: [ {'cate.categoryName': findCategory.categoryName} ] }, // []중 어떤거를 업데이트할건지
+                ).exec();
+            }
+            if(!findCategory) { // 카테고리가 없어서 새로운 카테고리 생성
+                newCategory = await new Category({ categoryName: categorys[i].categoryName, projects: newProject._id });
+                await Project.findByIdAndUpdate(newProject._id, 
+                    { 'categorys.$[cate]._id' : newCategory._id }, 
+                    { arrayFilters: [ {'cate.categoryName': newCategory.categoryName} ] },
+                ).exec();
+                newCategory.save();
+            }
+        }
+
+
         const project = await Project.findByIdAndUpdate({ _id: projectId }, putData, { new: true }).exec();
-        
         res.status(201).json(project);
     } catch (err) {
         console.error('server:', err);
@@ -388,9 +412,7 @@ router.patch('/unlike', auth, async (req, res) => {
         // 다른사람 좋아요가 1개라도 있으면 상관없는데 0개일땐 -1로 감..
         // 근데 위에껀 상관없음 프론트에서 어차피 0개 인상태에서 시작하기 때문.
         const likeUser = await Project.find({_id: projectId}).select("likeUser");
-        console.log(userId, likeUser)
         for(let i = 0; i < likeUser[0].likeUser.length; i++) {
-            console.log(likeUser[0].likeUser[i].equals(userId))
             if(likeUser[0].likeUser[i].equals(userId)) {
                 const [ project, user ] = await Promise.all([
                     Project.findByIdAndUpdate(projectId, { $pull: {likeUser: userId }, $inc: { likeCount: -1 } }, { new: true }),

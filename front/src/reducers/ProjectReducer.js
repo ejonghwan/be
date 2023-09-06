@@ -136,7 +136,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loading: false,
                     project: {
                         ...state.project,
-                        joinUser: [action.data, ...state.project.joinUser]
+                        joinUser: [...action.data]
                     },
                 }
 

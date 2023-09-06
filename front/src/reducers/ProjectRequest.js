@@ -184,9 +184,9 @@ const ProjectRequest = () => {
                 },
                 withCredentials: true,
             }
-            const res = await axios.patch(`${host}/api/project/join/${projectId}/${userId}`, {}, config);
+            const res = await axios.patch(`${host}/api/project/join/invite/${projectId}/${userId}`, {}, config);
             ProjectDispatch({ type: "PROJECT_ADD_INVITE_SUCCESS", data: res.data });
-
+            return res;
         } catch(err) {
             console.error(err.response.data);
             ProjectDispatch({ type: "PROJECT_ADD_INVITE_FAILUE", data: err.response.data });

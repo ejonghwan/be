@@ -116,7 +116,6 @@ router.post('/signup', async (req, res) => {
     try {
         const { id, password, email, name, question, phoneNumber, gender, birthday } = req.body;
         if(!id || typeof id !== 'string') return res.status(400).json({message: 'is not id'}) 
-        console.log(id)
         if(id.length <= 3 || id.length >= 13) return res.status(400).json({message: 'id length check. 4~12'}) //front 에서도 검증해야됨
         if(!password ) return res.status(400).json({message:'is not password'}) 
         if(!email || typeof email !== 'string') return res.status(400).json({message:'is not email'}) 
@@ -196,7 +195,6 @@ router.patch('/edit/email', auth, async(req, res) => {
     
         // 클라 번호와 메일 번호가 같은지 체크
         const match = await bcrypt.compare(authNumber, getAuthCode);
-        // console.log('get cookie', getAuthCode, match)
         if(!match) return res.status(400).json({ message: '인증번호가 다릅니다'});
 
         const user = await User.findOneAndUpdate({ _id: _id }, { $set: {email: email} }, { new: true });
@@ -216,7 +214,6 @@ router.patch('/edit/email', auth, async(req, res) => {
 router.post('/edit/password', auth, async (req, res) => {
     try {
         const { _id, prevPassword, newPassword, newPasswordCheck } = req.body;
-        console.log('back body: ', req.body)
         if(!mongoose.isValidObjectId(_id)) return res.status(400).json({ message: 'is not _id' }) 
         if(!prevPassword && typeof prevPassword !== 'string') return res.status(400).json({ message: 'is not prev password' }) 
         if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: 'is not checked password' }) 
@@ -251,7 +248,6 @@ router.post('/edit/password', auth, async (req, res) => {
 router.post('/find/password', async (req, res) => {
     try {
         const { _id, newPassword, newPasswordCheck } = req.body;
-        // console.log('back body: ', req.body)
         if(!_id && typeof _id !== 'string') return res.status(400).json({ message: 'is not _id' }) 
         if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: 'is not checked password' }) 
         if(newPassword !== newPasswordCheck) return res.status(400).json({ message: 'not password matched' })
@@ -263,7 +259,6 @@ router.post('/find/password', async (req, res) => {
       
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newPassword, salt, (err, hash) => {
-                // console.log('back hashed', hash)
                 user.password = hash;
                 user.save();
                 res.status(201).end();

@@ -345,6 +345,14 @@ form {
     color: var(--point-color2);
 }
 
+.g_sub_txt {
+    margin-top: 5px;
+    font-size: 1.3rem;
+    color: var(--text-color2);
+    padding-left: 15px;
+    text-indent: -15px;
+}
+
 
 
 @media screen and (max-width: 960px) {

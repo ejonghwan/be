@@ -163,6 +163,7 @@ const CreateProjectDetail = () => {
                         value={title} 
                         onChange={handleValuesChange} 
                     />
+                    <p className='g_sub_txt'>※ 습관 이름은 생성 후 수정이 불가능합니다.</p>
                 </div>
                 <div className='gap_30'>
                     <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>

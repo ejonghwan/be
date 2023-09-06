@@ -8,16 +8,12 @@ import bcrypt from 'bcrypt'
 export const auth = async (req, res, next) => {
     try {
 
-        const accToken = req.header('X-access-token') //이거 왜 갑자기 안됨 ? 언디파인드 뜸  
-        // const accToken = req.body.headers['X-access-token'];
-        console.log('acc???', accToken)
+        const accToken = req.header('X-access-token');
         if(accToken) {
             
             const match = jwt.verify(accToken, process.env.JWT_KEY, {ignoreExpiration: true},) 
              // decode가 있으면 acc로 인증 
-             console.log('여기 왜 안옴????', accToken)
             if(match && match.exp > Date.now().valueOf() / 1000) { 
-                console.log(match)
                 const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate("projects joinProjects._id").exec();
                 req.user = { accToken, ...user._doc };
                 next();

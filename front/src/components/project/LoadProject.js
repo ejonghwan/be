@@ -18,6 +18,7 @@ import RequestProject from './RequestProject';
 import Popup from '../common/popup/Popup';
 import ProjectEdit from './ProjectEdit';
 import UserSearch from '../search/UserSearch';
+import { changeViewDate } from '../../utils/utils';
 
 
 
@@ -83,12 +84,18 @@ const LoadProject = ({ projectId }) => {
         inviteRef.current.popupOpen();
     }
 
-    const handleAddFriend = e => {
+    const handleAddFriend = async e => {
         e.preventDefault();
         console.log('내일 친추추가 리듀서 작업')
+        let addState = null;
         if(friendData.length <= 0) return;
         for(let i = 0; i < friendData.length; i++) {
-            addFriendProject({ projectId, userId: friendData[i]._id })
+            addState = await addFriendProject({ projectId, userId: friendData[i]._id })
+        }
+        if(addState.status === 200) {
+            inviteRef.current.popupClose();
+            alert('친구를 초대했습니다.');
+            setFriendData([]);
         }
        
 
@@ -277,6 +284,10 @@ const LoadProject = ({ projectId }) => {
                 </div>
             )}
 
+
+            {/* 모든 유저 */}
+            <div>습관 만들어진 날 {changeViewDate(project.createdAt, 'second')}</div>
+            <div>습관 수정된 날 {changeViewDate(project.updatedAt, 'second')}</div>
 
             
             <Popup className={`popup_type_default`} isHead={true} title={`습관 수정`} closeClick={() => editRef.current.popupClose()} dimd={true}  ref={editRef}>
