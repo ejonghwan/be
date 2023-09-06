@@ -27,7 +27,7 @@ const Menu = () => {
         <div id="menu" className={`menu_type_small ${menuOpen && 'on'}`}>
             
             <ul className='info_menu'>
-                <li className='name'><span className='id'>{id}</span> - <strong>{name}</strong> 님</li>
+                <li className='name'><strong>{name}</strong> 님 <span className='id'> - {id}</span></li>
                 <li className='email'>{email}</li>
             </ul>
             <ul className='info_menu'>

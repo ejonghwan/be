@@ -7,35 +7,39 @@ import bcrypt from 'bcrypt'
 // client 에서 넘어온 token값 보고 인증... 
 export const auth = async (req, res, next) => {
     try {
-        const accToken = req.header('X-access-token')
+
+        const accToken = req.header('X-access-token') //이거 왜 갑자기 안됨 ? 언디파인드 뜸  
+        // const accToken = req.body.headers['X-access-token'];
+        console.log('acc???', accToken)
         if(accToken) {
+            
             const match = jwt.verify(accToken, process.env.JWT_KEY, {ignoreExpiration: true},) 
              // decode가 있으면 acc로 인증 
+             console.log('여기 왜 안옴????', accToken)
             if(match && match.exp > Date.now().valueOf() / 1000) { 
-                // console.log(match)
-                console.log('auth / acc 토큰으로 인증함')
+                console.log(match)
                 const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate("projects joinProjects._id").exec();
-                req.user = { accToken, ...user._doc }
-                next() 
+                req.user = { accToken, ...user._doc };
+                next();
 
             } else {
 
                 // 인증토큰 만료되어 리프레시 토큰으로 인증할 경우
-                const getRefreshToken = req.cookies["X-refresh-token"]
+                const getRefreshToken = req.cookies["X-refresh-token"];
                 if(!getRefreshToken) return; // client에서 cookie로 리프레시토큰없으면 return
-                console.log('auth /  acc 토큰 만료돼서 refresh 토큰 으로 인증하고 다시 발급')
+                console.log('auth /  acc 토큰 만료돼서 refresh 토큰 으로 인증하고 다시 발급');
 
-                const refreshTokenDecode = decodeURIComponent(getRefreshToken)
+                const refreshTokenDecode = decodeURIComponent(getRefreshToken);
                 const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0 }).populate("projects joinProjects._id").exec();
                 // 리프레시로 인증할 때 위에 셀렉+퍼퓰 테스트 아직 안해봄
 
                 // db에 저장된 리프레시가 만료되었을 경우 => db토큰 새로 교체하고 acc토큰 발급
-                const dbToken = await jwt.verify(user.token, process.env.JWT_KEY, {ignoreExpiration: true})
+                const dbToken = await jwt.verify(user.token, process.env.JWT_KEY, {ignoreExpiration: true});
                 if(dbToken.exp < Date.now().valueOf() / 1000) {
-                    user.token = jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "30 days" })
+                    user.token = jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "30 days" });
                     user.save().then(user => {
-                        const acctoken = jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "2h" })
-                        req.user = { accToken, ...user._doc }
+                        const acctoken = jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "2h" });
+                        req.user = { acctoken, ...user._doc };
                         req.reftoken = user.token,
                         next();
                     });

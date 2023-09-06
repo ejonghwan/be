@@ -14,7 +14,7 @@ const router = express.Router();
 
 //@ path    GET /api/project
 //@ doc     로드 프로젝 (모두)
-//@ access  private
+//@ access  public
 router.get('/', async (req, res) => {
     try {
         const project = await Project.find().populate([
@@ -91,8 +91,8 @@ projectDB: joinUser / userDB: joinProjects state값에 따라 두곳에서 임�
 
 //@ path    PATCH /api/project/join/invite/:projectId/:userId
 //@ doc     프로젝트 초대
-//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.patch('/join/invite/:projectId/:userId', async (req, res) => {
+//@ access  private
+router.patch('/join/invite/:projectId/:userId', auth, async (req, res) => {
     try {
         const { projectId, userId } = req.params;
         const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
@@ -120,8 +120,8 @@ router.patch('/join/invite/:projectId/:userId', async (req, res) => {
 
 //@ path    PATCH /api/project/join/:projectId/:userId
 //@ doc     프로젝트 가입신청
-//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.patch('/join/:projectId/:userId', async (req, res) => {
+//@ access  private 
+router.patch('/join/:projectId/:userId', auth, async (req, res) => {
     try {
         const { projectId, userId } = req.params;
         const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
@@ -150,8 +150,8 @@ router.patch('/join/:projectId/:userId', async (req, res) => {
 
 //@ path    PATCH /api/project/join/accept/:projectId/:userId
 //@ doc     프로젝트 수락
-//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.patch('/join/accept/:projectId/:userId', async (req, res) => {
+//@ access  private 
+router.patch('/join/accept/:projectId/:userId', auth, async (req, res) => {
     try {
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
@@ -174,8 +174,8 @@ router.patch('/join/accept/:projectId/:userId', async (req, res) => {
 
 //@ path    PATCH /api/project/join/reject/:projectId/:userId
 //@ doc     프로젝트 거절
-//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.patch('/join/reject/:projectId/:userId', async (req, res) => {
+//@ access  private 
+router.patch('/join/reject/:projectId/:userId', auth, async (req, res) => {
     try {
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
@@ -209,8 +209,8 @@ router.patch('/join/reject/:projectId/:userId', async (req, res) => {
 
 //@ path    PATCH /api/project/delete/:projectId/:userId
 //@ doc     프로젝트 탈퇴
-//@ access  private (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.delete('/delete/:projectId/:userId', async (req, res) => {
+//@ access  private 
+router.delete('/delete/:projectId/:userId', auth, async (req, res) => {
     try {
         const { projectId, userId } = req.params;
         const [project, user] = await Promise.all([
@@ -229,8 +229,8 @@ router.delete('/delete/:projectId/:userId', async (req, res) => {
 
 //@ path    POST /api/project
 //@ doc     생성 프로젝 
-//@ access  private  (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.post('/', async (req, res) => {
+//@ access  private  
+router.post('/', auth, async (req, res) => {
     try {
         const { constructorUser, instanceUser, rank, title, content, write, projectPublic, categorys, joinUser, promise } = req.body; //joinUser 는 배열
         
@@ -279,8 +279,8 @@ router.post('/', async (req, res) => {
 
 //@ path    PATCH /api/project/edit/:projectId
 //@ doc     수정 프로젝
-//@ access  private  (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.patch('/edit/:projectId', async (req, res) => { 
+//@ access  private 
+router.patch('/edit/:projectId', auth, async (req, res) => { 
     try {
         // 양도 constructorUser
         const { constructorUser, instanceUser, rank, title, content, write, projectPublic, categorys, deleteCategorys } = req.body;
@@ -314,7 +314,7 @@ router.patch('/edit/:projectId', async (req, res) => {
 //@ path    DELETE /api/project
 //@ doc     삭제 프로젝
 //@ access  private  (테스트 끝나면 auth 미들웨어 붙여야됨)
-router.delete('/', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     try {
         const { userId, projectId } = req.body;
         const project = await Project.findById(projectId)
@@ -352,7 +352,7 @@ router.delete('/', async (req, res) => {
 //@ path    PATCH /api/project/like
 //@ doc     프로젝트 찜or좋아요
 //@ access  private
-router.patch('/like', async (req, res) => {
+router.patch('/like', auth, async (req, res) => {
     try {
         
         const { userId, projectId } = req.body;
@@ -381,7 +381,7 @@ router.patch('/like', async (req, res) => {
 //@ path    PATCH /api/project/unlike
 //@ doc     프로젝트 찜or좋아요 취소
 //@ access  private
-router.patch('/unlike', async (req, res) => {
+router.patch('/unlike', auth, async (req, res) => {
     try {
         const { userId, projectId } = req.body;
 

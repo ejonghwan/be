@@ -79,7 +79,6 @@ const UserRequest = () => {
                 accToken = localStorage.getItem('X-access-token');
             };
             if(!accToken) throw new Error('is not accToken');
-
             const config = {
                 headers: {
                     "Content-Type": "application/json",

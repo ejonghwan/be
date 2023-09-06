@@ -24,8 +24,7 @@ import UserSearch from '../search/UserSearch';
 
 
 const LoadProject = ({ projectId }) => {
-
-    const { loadProject, inviteProject, rejectProject, WithdrawProject } = ProjectRequest();
+    const { loadProject, inviteProject, rejectProject, withdrawProject, addFriendProject } = ProjectRequest();
     const { state } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
@@ -69,7 +68,7 @@ const LoadProject = ({ projectId }) => {
         try {
             if(window.confirm('정말 탈퇴하시겠습니까?')) {
                 ProjectDispatch({ type: "PROJECT_REQUEST" });
-                await WithdrawProject({ projectId, userId: state.user._id });
+                await withdrawProject({ projectId, userId: state.user._id });
             }
         } catch(err) {
             console.log(err)
@@ -87,6 +86,12 @@ const LoadProject = ({ projectId }) => {
     const handleAddFriend = e => {
         e.preventDefault();
         console.log('내일 친추추가 리듀서 작업')
+        if(friendData.length <= 0) return;
+        for(let i = 0; i < friendData.length; i++) {
+            addFriendProject({ projectId, userId: friendData[i]._id })
+        }
+       
+
 
     }
 

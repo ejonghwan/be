@@ -21,7 +21,6 @@ const router = express.Router();
 //@ access  public
 router.get('/load', auth, async (req, res) => {
     try {
-        delete req.user.token;
         if(req.reftoken) {
             // auth 미들웨어에서 acc/ref 토큰 모두 만료되어 ref 다시 만들고 db에 저장 후 쿠키로 응답
             console.log('모두 만료돼서 디비 토큰 다시 저장하고 acc 다시 발급')
@@ -34,6 +33,7 @@ router.get('/load', auth, async (req, res) => {
         } else {
             // 쿠키로 보낸 리프레시 토큰 만료안돼서 이거넘김
             console.log('acc토큰 or 쿠키로 보낸 리프레시 토큰 만료안돼서 이거넘김');
+            delete req.user.token;
             res.status(200).json(req.user);
         };
     } catch(err) {
@@ -319,7 +319,7 @@ router.post('/find/id', async (req, res) => {
 //@ path    POST /api/users/find/id/question
 //@ doc     질답으로 아이디 찾기
 //@ access  public
-router.post('/find/id/question', async (req, res) => {
+router.post('/find/id/question', auth, async (req, res) => {
     try {
         const { name, email, questionType, result } = req.body;
         if(!name) return res.status(400).json({ message: 'is not name' });
