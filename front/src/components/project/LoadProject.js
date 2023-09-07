@@ -83,7 +83,7 @@ const LoadProject = ({ projectId }) => {
 
     const handleAddFriend = async e => {
         e.preventDefault();
-        console.log('내일 친추추가 리듀서 작업')
+        
         let addState = null;
         if(friendData.length <= 0) return;
         for(let i = 0; i < friendData.length; i++) {
@@ -284,13 +284,28 @@ const LoadProject = ({ projectId }) => {
             <div>습관 수정된 날 {changeViewDate(project.updatedAt, 'second')}</div>
 
             
-            <Popup className={`popup_type_default`} isHead={true} title={`습관 수정`} closeClick={() => editRef.current.popupClose()} dimd={true}  ref={editRef}>
+            <Popup 
+                className={`popup_type_default profile_edit`} 
+                isHead={true} 
+                title={`습관 수정`} 
+                closeClick={() => editRef.current.popupClose()} 
+                dimd={true} 
+                ref={editRef} 
+                isButton={true} 
+                buttons={[<Button className={"button_type2"}>습관 수정</Button>]}>
                 <ProjectEdit />
             </Popup>
 
-            <Popup className={`popup_type_default user_search_pop`} isHead={true} title={`친구 초대하기`} closeClick={() => inviteRef.current.popupClose()} dimd={true}  ref={inviteRef}>
-                <UserSearch setFriendData={setFriendData}/>
-                <div className='add_friend align_c gapt_30'>
+            <Popup 
+                className={`popup_type_default user_search_pop`} 
+                isHead={true} 
+                title={`친구 초대하기`} 
+                closeClick={() => inviteRef.current.popupClose()} 
+                dimd={true}  
+                ref={inviteRef}
+                >
+                <UserSearch setFriendData={setFriendData} />
+                <div className='add_friend align_c gapt_40'>
                     <Button type={'button'} className={"button_type2"} onClick={handleAddFriend}>초대 보내기</Button>
                 </div>
             </Popup>

@@ -72,9 +72,12 @@
     border: 1px solid var(--line-color2);
 }
 
+.popup .popup_body .popup .dimd {
+    background-color: red;
+}
 
 
-.popup .user_thum_imgwrap {
+[class*='profile_'].popup .popup_body > .user_thum_imgwrap {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -82,22 +85,22 @@
     margin: 0 auto;
 }
 
-.popup .user_thum_txtwrap {
+[class*='profile_'].popup .popup_body > .user_thum_txtwrap {
     margin-top: 20px;
     text-align: center;
 }
 
-.popup .user_thum_email,
-.popup .user_thum_id,
-.popup .user_thum_createdat,
-.popup .user_thum_name {
+[class*='profile_'].popup .popup_body > .user_thum_txtwrap .user_thum_email,
+[class*='profile_'].popup .popup_body > .user_thum_txtwrap .user_thum_id,
+[class*='profile_'].popup .popup_body > .user_thum_txtwrap .user_thum_createdat,
+[class*='profile_'].popup .popup_body > .user_thum_txtwrap .user_thum_name {
     display: block;
     margin-top: 2px;
     color: var(--text-color2);
     font-size: 1.3rem;
 }
 
-.popup .user_thum_name {
+[class*='profile_'].popup .popup_body > .user_thum_txtwrap .user_thum_name {
     color: var(--text-color1);
     font-size: 1.8rem;
     margin-top: 18px;

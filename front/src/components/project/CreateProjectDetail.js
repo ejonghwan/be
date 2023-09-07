@@ -269,7 +269,6 @@ const CreateProjectDetail = () => {
                         />
                          <Label htmlFor="private" content="비공개" className={"label_type1 gap_0"} />
                     </div>
-                        
                 </div>
 
                 <div className='align_c gapt_30'>

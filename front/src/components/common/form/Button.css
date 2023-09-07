@@ -68,6 +68,13 @@
     font-size: 1.3rem;
 }
 
+[class*=button_type].danger {
+    background-color: var(--point-color2);
+    color: var(--text-color-white);
+}
+
+
+
 
 
 /* 텍스트 버튼 */

@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../common/form/Input';
 import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 import './CreateProjectDetail.css';
-import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone, PiXCircleDuotone, PiSmileyXEyesDuotone  } from "react-icons/pi";
+import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone, PiXCircleDuotone, PiSmileyXEyesDuotone, PiUsersDuotone  } from "react-icons/pi";
 import IconVisual from '../common/icon/IconVisual';
 import IconList from '../common/icon/IconList';
 import IconData from '../common/icon/IconData';
@@ -19,37 +19,76 @@ import { SearchContext } from '../../context/SearchContext';
 import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
-
+import UserThumItem from '../common/userThum/UserThumItem';
 import './ProjectEdit.css';
+
 
 const ProjectEdit = () => {
 
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
+
     const [projectImages, setProjectImages] = useState(0);
+    const [categoryValue, setCategoryValue] = useState(''); 
     const [submitData, setSubmitData] = useState({ 
-        // constructorUser: { _id: state.user._id },
-        title: '',
-        content: '',
-        categorys: [], //{categoryName: ''}
-        joinUser: [],
-        projectPublic: true,
+        content: project.content,
+        categorys: [...project.categorys], //{categoryName: ''}
+        deleteCategory: [],
+        projectPublic: project.projectPublic,
         projectImages: projectImages,
     });
 
+    const handleValuesChange = e => {
+        const {name, value} = e.target;
+        setSubmitData({...submitData, [name]: value})
+    }
 
     const handleIconClick = idx => {
         setProjectImages(idx)
         setSubmitData(prev => ({ ...prev, projectImages: idx }))
     };
+
+    const handleCategoryReset = () => setCategoryValue('');
+    const handleCategoryClick = useCallback(() => {
+        let categoryResult = categoryValue.replace(/ /g,"").split('#').filter(item => {
+            return item !== null && item !== undefined && item !== '';
+           });
+        let inCategoryName = [];
+        for(let i = 0; i < categoryResult.length; i++) {
+            inCategoryName.push({ categoryName: categoryResult[i] })
+        }
+        setSubmitData(prev => ({...prev, categorys: [...prev.categorys, ...inCategoryName]}))
+        setCategoryValue('')
+    }, [categoryValue])
+
+    const handleTagDelete = tagName => {
+        setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}))
+    }
+
+    const handleExportUser = e => {
+        let userId = e.target.parentNode.dataset.userid;
+        console.log(userId)
+    }
+
+
+    
+    useEffect(() => {
+        console.log(submitData)
+    }, [submitData])
+
+
+    useEffect(() => {
+        setProjectImages(project.projectImages)
+    }, [])
+
     return (
-        <div>
+        <div className='project_edit'>
             img <br />
-            constructorUser, 디폴트<br />
-            instanceUser, 삭제 // 이거 기존꺼 유지 잘 되면서 삭제되는지 <br />
-            rank, // 아직 미구현<br />
-            title, // 수정 x <br />
+            {/* constructorUser, 디폴트<br /> */}
+            instanceUser, 삭제 //그냥 없애는 아이디만 보내자
+            {/* rank, // 아직 미구현<br /> */}
+            {/* title, // 수정 x <br /> */}
             content, // 수정 <br />
-            write, // 수정 x <br />
+            {/* write, // 수정 x <br /> */}
             projectPublic, // 수정<br />
             categorys, // 새로 추가된것만 <br />
             deleteCategorys // 삭제한거<br />
@@ -62,14 +101,96 @@ const ProjectEdit = () => {
                 days: Array
                 <br />
             <div>
-                <IconVisual icon={IconData[project.projectImages]}/>
+                <IconVisual icon={IconData[projectImages]}/>
             </div>
-            <div>
-                <div  className='gapt_30'>
-                    <IconList icons={IconData} onClick={handleIconClick} current={project.projectImages}/>
+            
+            <div  className='gapt_30'>
+                <IconList icons={IconData} onClick={handleIconClick} current={projectImages}/>
+            </div>
+          
+            <div className='gap_30'>{project.title}</div>
+
+            <div className='gap_30'>
+                <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>
+                <Textarea 
+                    id={"content"}
+                    name={"content"}
+                    className={"textarea_type1"} 
+                    value={submitData.content}
+                    onChange={handleValuesChange}
+                    required={true} 
+                    placeholder={"#룰1 - 영단어 2만개를 외워서 게시판에 인증샷 남기기\n#룰2 - 못하면 못잠"}
+                >
+                    {submitData.content}
+                </Textarea>
+            </div>
+
+            <div className='part_user gap_30'>
+                <h3 className='gap_10'>습관에 참여한 친구들</h3>
+                {project.instanceUser && project.instanceUser.length > 0 ? (
+                    <UserThumItem 
+                        users={project.instanceUser} 
+                        isText={true} 
+                        className={'vertical'} 
+                        matched={'part_user'} 
+                        buttons={[
+                            <Button type={'button'} className={'button_type6 danger'} onClick={handleExportUser}>내보내기</Button>
+                        ]} 
+                    />
+                ) : (
+                    <NoData icon={<PiUsersDuotone />} title={"이 습관을 같이 하는 친구가 없습니다."} />
+                )}
+            </div>
+
+            <div className='gap_30'>
+                <Search 
+                    id={'category'}
+                    placeholder={"#공부 #영단어 #운동"}
+                    isLabel={true}
+                    labelCont={"카테고리를 등록할 수 있어요."}
+                    isButton={true} 
+                    type={"text"}
+                    // buttonCont={`추가`}   
+                    buttonIcon={<PiPlusCircleDuotone />}
+                    buttonType={"button"}
+                    value={categoryValue}
+                    buttonClick={handleCategoryClick}
+                    onChange={e => setCategoryValue(e.target.value)}
+                    handleInputReset={handleCategoryReset}
+                />
+                <p className='g_sub_txt'>※ '#' 으로 구분지어 입력해주세요.</p>
+                <div className='category_wrap gapt_10'>
+                    <Tags tags={submitData.categorys.map(tag => tag.categoryName)} isLink={false} handleDelete={handleTagDelete}/>
                 </div>
             </div>
-            <div>{project.title}</div>
+
+            <div className='gap_30'>
+                <Label htmlFor="content" content="습관 공개" className={"label_type1"}/>
+                <div className='Profile_info_cont gender_wrap'>
+                    <Input 
+                        id="public" 
+                        type="radio" 
+                        required={true} 
+                        className={"input_type1"} 
+                        name="projectPublic" 
+                        value={true}
+                        onChange={handleValuesChange} 
+                        defaultChecked={true}
+                    />
+                    <Label htmlFor="public" content="공개" className={"label_type1 gap_0"} />
+                    <Input 
+                        id="private" 
+                        type="radio" 
+                        required={true} 
+                        className={"input_type1"} 
+                        name="projectPublic" 
+                        value={false}
+                        onChange={handleValuesChange} 
+                    />
+                    <Label htmlFor="private" content="비공개" className={"label_type1 gap_0"} />
+                </div>
+            </div>
+
             
 
         </div>

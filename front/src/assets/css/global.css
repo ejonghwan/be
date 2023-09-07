@@ -28,6 +28,7 @@
     --arrow-color: #939393;
     
     
+    
     --text-color-white: #fff;
     --text-color0: #222;
     --text-color1: #555;
@@ -43,6 +44,7 @@
     --bg-box-color2: #ddd; 
     --bg-box-color3: #efefef;; 
     --bg-box-color4: #444; 
+    --bg-box-opacity: #ffffffd9; 
 
     --line-color1: #f4f4f4;
     --line-color2: #ddd;
@@ -362,6 +364,7 @@ form {
         padding: 30px 20px;
     }
 }
+
 
 @media screen and (max-width: 760px) {
     .b_conts {}

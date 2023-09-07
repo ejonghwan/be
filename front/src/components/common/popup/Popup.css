@@ -6,9 +6,8 @@
     height: auto;
     background-color: var(--bg-box-white);
     border-radius: 20px;
-    border: 1px solid var(--line-color1);
+    /* border: 1px solid var(--line-color1); */
     padding: 20px;
-    margin-top: 10px;
     z-index: 100;
     max-width: 90vw;
     max-height: 90vh;
@@ -68,5 +67,30 @@
 #popup .popup_body {
     padding: 10px 0;
     overflow-y: scroll;
-    max-height: 80vh;
+    height: 90%;
+}
+
+#popup .popup_bottom {
+    position: absolute;
+    bottom: 0;
+    padding: 15px 20px;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    border-bottom-right-radius: 18px;
+    border-bottom-left-radius: 18px;
+    /* background-color: var(--bg-box-opacity); */
+    backdrop-filter: blur(3px);
+}
+
+#popup.profile_edit {
+    width: 90%;
+    height: 90%;
+}
+
+
+
+.popup .dimd {
+    background-color: red;
+    position: static;
 }

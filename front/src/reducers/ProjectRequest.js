@@ -73,7 +73,7 @@ const ProjectRequest = () => {
 
         } catch(err) {
             console.error(err);
-            ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err });
+            ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err.message });
         }
     }
 
@@ -189,7 +189,7 @@ const ProjectRequest = () => {
             return res;
         } catch(err) {
             console.error(err.response.data);
-            ProjectDispatch({ type: "PROJECT_ADD_INVITE_FAILUE", data: err.response.data });
+            ProjectDispatch({ type: "PROJECT_ADD_INVITE_FAILUE", data: err.response.data.message });
         }
     }
 
