@@ -98,7 +98,7 @@ router.patch('/join/invite/:projectId/:userId', auth, async (req, res) => {
         const isUser = await Project.findById(projectId).select({'joinUser': {$elemMatch: { _id: userId }} })
         if(isUser.joinUser.length >= 1) { 
             // 만약 초대리스트를 내려준다면 ...이건 프론트에서 체크해서 아예 요청 안보내는게 나을듯.
-            return res.status(401).json({ message: "이미 진행 중" });
+            return res.status(401).json({ message: "이미 진행 중인 친구입니다." });
         }
 
         // 230903 수정. joinUser 유저 -> 플젝 신청하면 state: true (플젝안 버튼 보임. 유저안 버튼 안보임)

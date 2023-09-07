@@ -73,7 +73,7 @@ const ProjectRequest = () => {
 
         } catch(err) {
             console.error(err);
-            ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err.response.data.message });
+            ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err });
         }
     }
 

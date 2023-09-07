@@ -6,6 +6,7 @@ import Tags from '../common/tag/Tags';
 import SearchRequest from '../../reducers/SearchRequest';
 import { UserContext } from '../../context/UserContext';
 import { SearchContext } from '../../context/SearchContext';
+import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
 import './UserSearch.css';
@@ -16,6 +17,7 @@ const UserSearch = ({ setFriendData = [] }) => {
     const { userSearch } = SearchRequest();
     const { state } = useContext(UserContext);
     const { SearchState, SearchDispatch } = useContext(SearchContext);
+    const { ProjectState: { project } } = useContext(ProjectContext);
 
     const [joinUserValue, setJoinUserValue] = useState(''); // 인풋값
     const [joinUserList, setJoinUserList] = useState([]); //뿌리기 위해 여기서만 사용
@@ -55,6 +57,8 @@ const UserSearch = ({ setFriendData = [] }) => {
      const handleAddFriend = ({ name, _id }) => () => {
         for(let i = 0; i < joinUserList.length; i++) {
             if(submitData.joinUser[i]._id.match(_id)) return alert('이미 추가한 친구입니다.')
+            if(project.joinUser[i]._id.match(_id)) return alert('이미 진행중인 친구입니다.')
+            console.log(project.joinUser[i])
         }
         setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.concat({ _id: _id, state: true }) }));
         setJoinUserList(prev => [...prev, { name: name, _id: _id }]);
@@ -113,6 +117,9 @@ const UserSearch = ({ setFriendData = [] }) => {
             <div className='category_wrap gapt_10'>
                 <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete} contentName={"친구"} isNoData={false}/>
             </div>
+            <ErrorMsg>
+                
+            </ErrorMsg>
         </Fragment>
     );
 };

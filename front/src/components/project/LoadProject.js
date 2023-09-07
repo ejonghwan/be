@@ -21,9 +21,6 @@ import UserSearch from '../search/UserSearch';
 import { changeViewDate } from '../../utils/utils';
 
 
-
-
-
 const LoadProject = ({ projectId }) => {
     const { loadProject, inviteProject, rejectProject, withdrawProject, addFriendProject } = ProjectRequest();
     const { state } = useContext(UserContext);
