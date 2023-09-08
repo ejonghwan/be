@@ -27,11 +27,13 @@ const ProjectEdit = () => {
 
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
+    const [instanceUser, setInstanceUser] = useState([])
     const [projectImages, setProjectImages] = useState(0);
     const [existCategorys, setExistCategorys] = useState([...project.categorys])
     const [categoryValue, setCategoryValue] = useState(''); 
     const [submitData, setSubmitData] = useState({ 
         content: project.content,
+        instanceUser: instanceUser,
         categorys: [], //{categoryName: ''} 새로 보낼 것만 넣음
         deleteCategory: [], // 기존껄 삭제하면 그 카테고리는 여기로
         projectPublic: project.projectPublic,
@@ -64,12 +66,10 @@ const ProjectEdit = () => {
        
         let allCategory = [...submitData.categorys, ...existCategorys, ...inCategoryName];
         let allCategoryEqualsFilter = allCategory.reduce((acc, cur) => acc.find(item => item.categoryName === cur.categoryName) ? acc : [...acc, cur], [])
+        let existFilter = allCategoryEqualsFilter.filter(item => !existCategorys.some(x => x.categoryName === item.categoryName)) // 기존에 있던건 제외
 
-        console.log(allCategoryEqualsFilter)
 
-
-        // setSubmitData(prev => ({...prev, categorys: [...prev.categorys, ...inCategoryName]}))
-        setSubmitData(prev => ({...prev, categorys: [...allCategoryEqualsFilter]}))
+        setSubmitData(prev => ({...prev, categorys: [...existFilter]}))
         setCategoryValue('')
     }, [categoryValue])
 
@@ -212,8 +212,6 @@ const ProjectEdit = () => {
                     <Label htmlFor="private" content="비공개" className={"label_type1 gap_0"} />
                 </div>
             </div>
-
-            
 
         </div>
     );

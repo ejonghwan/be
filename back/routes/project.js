@@ -289,13 +289,18 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
 
         // 같은건 제외 프론트에서 
         if(constructorUser) putData.constructorUser = constructorUser;
-        if(instanceUser) putData.instanceUser = instanceUser; // 이거 기존꺼 유지 잘 되면서 삭제되는지 
+        // if(instanceUser) putData.instanceUser = instanceUser; // 이거 기존꺼 유지 잘 되면서 삭제되는지 
         if(rank) putData.rank = rank;
         if(title) putData.title = title;
         if(content) putData.content = content;
         if(write) putData.write = write;
         if(projectPublic) putData.projectPublic = projectPublic;
         if(categorys) putData.categorys = categorys;
+
+
+        // 플젝 인스유저 뺴고 / 인증글 디비에서 이 유저 글 뺴고, 플젝 write에서 뺴고 / 인스유저는 배열로 여러 아이디가 들어옴
+        await Project.findByIdAndUpdate(projectId, { $pullAll: { "instanceUser._id": instanceUser } }, { new: true }).exec();
+
 
         // deleteCategorys; //array 이거 삭제할 때 프론트에서 삭제한거 보내줘야됨 
         for(let i = 0; i < deleteCategorys.length; i++) {
