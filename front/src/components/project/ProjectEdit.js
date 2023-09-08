@@ -28,11 +28,12 @@ const ProjectEdit = () => {
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
     const [projectImages, setProjectImages] = useState(0);
+    const [existCategorys, setExistCategorys] = useState([...project.categorys])
     const [categoryValue, setCategoryValue] = useState(''); 
     const [submitData, setSubmitData] = useState({ 
         content: project.content,
-        categorys: [...project.categorys], //{categoryName: ''}
-        deleteCategory: [],
+        categorys: [], //{categoryName: ''} 새로 보낼 것만 넣음
+        deleteCategory: [], // 기존껄 삭제하면 그 카테고리는 여기로
         projectPublic: project.projectPublic,
         projectImages: projectImages,
     });
@@ -51,18 +52,38 @@ const ProjectEdit = () => {
     const handleCategoryClick = useCallback(() => {
         let categoryResult = categoryValue.replace(/ /g,"").split('#').filter(item => {
             return item !== null && item !== undefined && item !== '';
-           });
+           })
+        
+        let equalsFillter = categoryResult.filter((el, idx) => categoryResult?.indexOf(el) === idx); //같은거 삭제
         let inCategoryName = [];
-        for(let i = 0; i < categoryResult.length; i++) {
-            inCategoryName.push({ categoryName: categoryResult[i] })
+        for(let i = 0; i < equalsFillter.length; i++) {
+            inCategoryName.push({ categoryName: equalsFillter[i] })
         }
-        setSubmitData(prev => ({...prev, categorys: [...prev.categorys, ...inCategoryName]}))
+
+
+       
+        let allCategory = [...submitData.categorys, ...existCategorys, ...inCategoryName];
+        let allCategoryEqualsFilter = allCategory.reduce((acc, cur) => acc.find(item => item.categoryName === cur.categoryName) ? acc : [...acc, cur], [])
+
+        console.log(allCategoryEqualsFilter)
+
+
+        // setSubmitData(prev => ({...prev, categorys: [...prev.categorys, ...inCategoryName]}))
+        setSubmitData(prev => ({...prev, categorys: [...allCategoryEqualsFilter]}))
         setCategoryValue('')
     }, [categoryValue])
 
-    const handleTagDelete = tagName => {
-        setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}))
+    
+    const handleTagDelete = (e, tagName) => {
+        if(e.target.closest('.exist_category')) {
+            setExistCategorys(prev => ( prev.filter(tag => tag.categoryName !== tagName )))
+            setSubmitData(prev => ({ ...prev, deleteCategory: prev.deleteCategory.concat({ categoryName: tagName }) }))
+            console.log(tagName, existCategorys)
+        } else {
+            setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}))
+        }
     }
+
 
     const handleExportUser = e => {
         let userId = e.target.parentNode.dataset.userid;
@@ -160,7 +181,8 @@ const ProjectEdit = () => {
                 />
                 <p className='g_sub_txt'>※ '#' 으로 구분지어 입력해주세요.</p>
                 <div className='category_wrap gapt_10'>
-                    <Tags tags={submitData.categorys.map(tag => tag.categoryName)} isLink={false} handleDelete={handleTagDelete}/>
+                    <Tags tags={existCategorys.map(tag => tag.categoryName)} className={'exist_category'} isLink={false} isNoData={false} handleDelete={handleTagDelete}/>
+                    <Tags tags={submitData.categorys.map(tag => tag.categoryName)} className={'add_category'} isNoData={false} isLink={false} handleDelete={handleTagDelete}/>
                 </div>
             </div>
 

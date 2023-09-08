@@ -4,6 +4,10 @@
     gap: 4px;
 }
 
+.tag_wrap + .tag_wrap {
+    margin-top: 4px;
+}
+
 .tag_wrap > li {
     flex: 0 0 auto;
     border: 1px solid var(--tag-color);

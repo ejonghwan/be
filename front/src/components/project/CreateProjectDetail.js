@@ -57,15 +57,16 @@ const CreateProjectDetail = () => {
         let categoryResult = categoryValue.replace(/ /g,"").split('#').filter(item => {
             return item !== null && item !== undefined && item !== '';
            });
+        let equalsFillter = categoryResult.filter((el, idx) => categoryResult.indexOf(el) === idx); //같은거 삭제
         let inCategoryName = [];
-        for(let i = 0; i < categoryResult.length; i++) {
-            inCategoryName.push({ categoryName: categoryResult[i] })
+        for(let i = 0; i < equalsFillter.length; i++) {
+            inCategoryName.push({ categoryName: equalsFillter[i] })
         }
         setSubmitData(prev => ({...prev, categorys: [...prev.categorys, ...inCategoryName]}))
         setCategoryValue('')
     }, [categoryValue])
 
-    const handleTagDelete = tagName => {
+    const handleTagDelete = (e, tagName) => {
         setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}))
     }
 
@@ -107,7 +108,7 @@ const CreateProjectDetail = () => {
         setIsUserSearchResult(false);
      }
 
-    const handleJoinUserDelete = tagName => {
+    const handleJoinUserDelete = (e, tagName) => {
         let getId = joinUserList.filter(user => user.name === tagName)[0]._id;
         setJoinUserList(prev => prev.filter(user => user.name !== tagName));
         setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.filter(user => user._id !== getId) }))

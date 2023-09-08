@@ -19,7 +19,7 @@ const Tags = ({ className = '', tags = [], isLink = false, handleDelete, content
                                 : 
                                 (<div className='no_link'>
                                     {tag}
-                                    <button type="button" className='button_reset button_delete' onClick={() => handleDelete(tag)}>
+                                    <button type="button" className='button_reset button_delete' onClick={e => handleDelete(e, tag)}>
                                         <span className='blind'>{`${tag} 없애기`}</span>
                                     </button>
                                 </div>)

@@ -66,7 +66,7 @@ const UserSearch = ({ setFriendData = [] }) => {
         setFriendData && setFriendData(prev => [...prev.concat( { _id: _id, state: true } )]) // 부모에거 setSTate가 넘어왔을 때 
      }
 
-    const handleJoinUserDelete = tagName => {
+    const handleJoinUserDelete = (e, tagName) => {
         let getId = joinUserList.filter(user => user.name === tagName)[0]._id;
         setJoinUserList(prev => prev.filter(user => user.name !== tagName));
         setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.filter(user => user._id !== getId) }))
