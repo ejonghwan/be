@@ -87,7 +87,9 @@ const ProjectEdit = () => {
 
     const handleExportUser = e => {
         let userId = e.target.parentNode.dataset.userid;
-        console.log(userId)
+        e.target.parentNode.parentNode.classList.add('remove')
+        setInstanceUser(prev => prev.concat(userId))
+        console.log(instanceUser)
     }
 
 

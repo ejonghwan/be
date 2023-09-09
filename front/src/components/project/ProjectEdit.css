@@ -2,3 +2,7 @@
     width: 80%;
     margin: auto;
 }
+.project_edit .user_thum_wrap > li.remove {
+    opacity: .5;
+    pointer-events: none;
+}
