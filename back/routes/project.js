@@ -297,13 +297,16 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
         if(projectPublic) putData.projectPublic = projectPublic;
         if(categorys) putData.categorys = categorys;
 
+        //user model
+        // joinProjects: [{ _id:  }]
 
-        // 플젝 인스유저 뺴고 / 인증글 디비에서 이 유저 글 뺴고, 플젝 write에서 뺴고 / 인스유저는 배열로 여러 아이디가 들어옴
-        await Project.findByIdAndUpdate(projectId, 
-            { $pullAll: { 
-                "instanceUser._id": instanceUser, 
-                "writes": writes
-            } }, { new: true }).exec();
+        // project model
+        // instanceUser: [{ _id:  }]
+        for(let i = 0; i < instanceUser.length; i++) {
+            await User.findByIdAndUpdate(instanceUser[i], { $pull: { "joinProjects._id": projectId, } }, { new: true }).exec();
+        }
+
+        await Project.findByIdAndUpdate(projectId, { $pullAll: { "instanceUser._id": instanceUser, } }, { new: true }).exec();
 
 
         // deleteCategorys; //array 이거 삭제할 때 프론트에서 삭제한거 보내줘야됨 
@@ -338,9 +341,20 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
             }
         }
 
-
         const project = await Project.findByIdAndUpdate({ _id: projectId }, putData, { new: true }).exec();
         res.status(201).json(project);
+
+        /* 
+            확인해야될거
+            1. 프로젝트에서 인스유저 잘 빠지는지 
+            2. 유저에서 프로젝트 잘 빠지는지
+            3. 콘텐츠, 공개여부 잘 수정되는지
+            4. 카테고리 디비에서 projects: [] 해당 플젝 아이디 잘 빠지는지
+            5. 플젝에서 categorys: [ { categoryName:'' } ] 찾아서 없어지는지
+            6. 플젝에서 신규 추가한 카테고리 잘 추가되는지. (기존에 없던건 만들고 있던건 추가)
+        */
+
+
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
