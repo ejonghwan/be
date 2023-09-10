@@ -198,7 +198,7 @@ const ProjectRequest = () => {
     const editProject = async data => {
         try {
             console.log('reqsut', data)
-            const { projectId, instanceUser, content, projectPublic, categorys, deleteCategorys } = data;
+            const { projectId, instanceUser, content, projectPublic, categorys, deleteCategorys, projectImages } = data;
             // if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             // if(!userId || typeof userId !== 'string') throw new Error('is not userId');
             const config = {

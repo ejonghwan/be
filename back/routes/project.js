@@ -284,7 +284,7 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
     try {
    
         // 양도 constructorUser
-        const { constructorUser, instanceUser, rank, title, content, projectPublic, categorys, deleteCategorys } = req.body;
+        const { constructorUser, instanceUser, rank, title, content, projectPublic, categorys, deleteCategorys, projectImages } = req.body;
         const { projectId } = req.params;
         let putData = {};
 
@@ -299,6 +299,7 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
         // if(write) putData.write = write;
         if(projectPublic) putData.projectPublic = projectPublic;
         if(categorys) putData.categorys = categorys;
+        if(projectImages) putData.projectImages = projectImages;
 
         //user model
         // joinProjects: [{ _id:  }]
