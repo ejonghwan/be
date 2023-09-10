@@ -38,7 +38,7 @@ const ProjectEdit = () => {
         content: project.content,
         instanceUser: [],
         categorys: [], //{categoryName: ''} 새로 보낼 것만 넣음
-        deleteCategory: [], // 기존껄 삭제하면 그 카테고리는 여기로
+        deleteCategorys: [], // 기존껄 삭제하면 그 카테고리는 여기로
         projectPublic: project.projectPublic,
         projectImages: projectImages,
     });
@@ -78,7 +78,7 @@ const ProjectEdit = () => {
     const handleTagDelete = (e, tagName) => {
         if(e.target.closest('.exist_category')) {
             setExistCategorys(prev => ( prev.filter(tag => tag.categoryName !== tagName )))
-            setSubmitData(prev => ({ ...prev, deleteCategory: prev.deleteCategory.concat({ categoryName: tagName }) }))
+            setSubmitData(prev => ({ ...prev, deleteCategorys: prev.deleteCategorys.concat({ categoryName: tagName }) }))
             console.log(tagName, existCategorys)
         } else {
             setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}))
@@ -90,7 +90,7 @@ const ProjectEdit = () => {
         let userId = e.target.parentNode.dataset.userid;
         e.target.parentNode.parentNode.classList.add('remove')
         setInstanceUser(prev => prev.concat(userId))
-        setSubmitData(prev => prev.concat(userId))
+        setSubmitData(prev => ({ ...prev, instanceUser: prev.instanceUser.concat(userId) }))
         console.log(instanceUser)
     }
 
@@ -127,7 +127,7 @@ const ProjectEdit = () => {
             {/* write, // 수정 x <br /> */}
             projectPublic, // 수정<br />
             categorys, // 새로 추가된것만 <br />
-            deleteCategorys // 삭제한거<br />
+            deleteCategoryss // 삭제한거<br />
             <br />
             인스유저 
             instanceUser Array
@@ -212,7 +212,7 @@ const ProjectEdit = () => {
                         name="projectPublic" 
                         value={true}
                         onChange={handleValuesChange} 
-                        defaultChecked={true}
+                        defaultChecked={project.projectPublic && true}
                     />
                     <Label htmlFor="public" content="공개" className={"label_type1 gap_0"} />
                     <Input 
@@ -223,6 +223,7 @@ const ProjectEdit = () => {
                         name="projectPublic" 
                         value={false}
                         onChange={handleValuesChange} 
+                        defaultChecked={project.projectPublic === false && true}
                     />
                     <Label htmlFor="private" content="비공개" className={"label_type1 gap_0"} />
                 </div>

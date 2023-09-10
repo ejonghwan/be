@@ -305,19 +305,25 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
 
         // project model
         // instanceUser: [{ _id:  }]
-        for(let i = 0; i < instanceUser.length; i++) {
-            await User.findByIdAndUpdate(instanceUser[i], { $pull: { "joinProjects._id": projectId, } }, { new: true }).exec();
-        }
 
-        await Project.findByIdAndUpdate(projectId, { $pullAll: { "instanceUser._id": instanceUser, } }, { new: true }).exec();
+        // 1. 테스트 완료
+        // for(let i = 0; i < instanceUser.length; i++) {
+        //     await User.findByIdAndUpdate(instanceUser[i], { $pull: { "joinProjects": {_id: projectId} } }, { new: true }).exec();
+        // } 
+
+        // 2. 테스트.작업 미완료
+        // await Project.findByIdAndUpdate(projectId, { $pullAll: { "instanceUser": instanceUser } }, { new: true }).exec();
 
 
         // deleteCategorys; //array 이거 삭제할 때 프론트에서 삭제한거 보내줘야됨 
+        // 3. 테스트 완료 
         for(let i = 0; i < deleteCategorys.length; i++) {
-            await Category.findOneAndUpdate({ categoryName: deleteCategorys[i] }, { $pull: { projects: projectId } }, { new: true }).exec();
+            await Category.findOneAndUpdate({ "categoryName": deleteCategorys[i].categoryName }, { $pull: { projects: projectId } }, { new: true }).exec();
         }
 
-        await Project.findByIdAndUpdate(projectId, { $pullAll: { categorys: deleteCategorys } }, { new: true }).exec();
+        // 4. 테스트 미완료 오류 
+        // await Project.findByIdAndUpdate(projectId, { $pullAll: { categorys: deleteCategorys } }, { new: true }).exec();
+
 
 
         // 카테고리 생성 분기 - 23.9.6 12 이거 아직 작업안함. 
@@ -351,10 +357,10 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
             확인해야될거
             1. 프로젝트에서 인스유저 잘 빠지는지 
             2. 유저에서 프로젝트 잘 빠지는지
-            3. 콘텐츠, 공개여부 잘 수정되는지
+            // 3. 콘텐츠, 공개여부 잘 수정되는지 - 완료
             4. 카테고리 디비에서 projects: [] 해당 플젝 아이디 잘 빠지는지
             5. 플젝에서 categorys: [ { categoryName:'' } ] 찾아서 없어지는지
-            6. 플젝에서 신규 추가한 카테고리 잘 추가되는지. (기존에 없던건 만들고 있던건 추가)
+            // 6. 플젝에서 신규 추가한 카테고리 잘 추가되는지. (기존에 없던건 만들고 있던건 추가). - 완료
         */
 
 
