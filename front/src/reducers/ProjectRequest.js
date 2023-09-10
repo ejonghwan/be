@@ -194,6 +194,33 @@ const ProjectRequest = () => {
     }
 
 
+    // 프로젝트 수정
+    const editProject = async data => {
+        try {
+            console.log('reqsut', data)
+            const { projectId, instanceUser, content, projectPublic, categorys, deleteCategorys } = data;
+            // if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            // if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+
+
+            const res = await axios.patch(`${host}/api/project/edit/${projectId}`, data, config);
+            ProjectDispatch({ type: "PROJECT_EDIT_SUCCESS", data: res.data });
+            return res;
+        } catch(err) {
+            console.error(err.response.data);
+            ProjectDispatch({ type: "PROJECT_EDIT_FAILUE", data: err.response.data.message });
+        }
+    }
+
+
     
 
 
@@ -206,6 +233,7 @@ const ProjectRequest = () => {
         rejectProject,
         withdrawProject,
         addFriendProject,
+        editProject,
     }
 }
 

@@ -130,7 +130,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
                 
             case "PROJECT_ADD_INVITE_SUCCESS": 
-            console.log('reducer', action.data)
+            // console.log('reducer', action.data)
                 return {
                     ...state,
                     loading: false,
@@ -141,6 +141,25 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
             case "PROJECT_ADD_INVITE_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                    errorMessage: action.data,
+                }
+
+
+            case "PROJECT_EDIT_SUCCESS": 
+            // console.log('reducer', action.data)
+                return {
+                    ...state,
+                    loading: false,
+                    // project: {
+                    //     ...state.project,
+                    //     joinUser: [...action.data]
+                    // },
+                }
+
+            case "PROJECT_EDIT_FAILUE" : 
                 return {
                     ...state,
                     loading: false,

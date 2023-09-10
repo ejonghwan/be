@@ -21,19 +21,22 @@ import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
 import UserThumItem from '../common/userThum/UserThumItem';
 import './ProjectEdit.css';
+import UserRequest from '../../reducers/UserRequest';
 
 
 const ProjectEdit = () => {
 
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
+    const { editProject } = ProjectRequest();
     const [instanceUser, setInstanceUser] = useState([])
     const [projectImages, setProjectImages] = useState(0);
     const [existCategorys, setExistCategorys] = useState([...project.categorys])
     const [categoryValue, setCategoryValue] = useState(''); 
     const [submitData, setSubmitData] = useState({ 
+        projectId: project._id,
         content: project.content,
-        instanceUser: instanceUser,
+        instanceUser: [],
         categorys: [], //{categoryName: ''} 새로 보낼 것만 넣음
         deleteCategory: [], // 기존껄 삭제하면 그 카테고리는 여기로
         projectPublic: project.projectPublic,
@@ -62,8 +65,6 @@ const ProjectEdit = () => {
             inCategoryName.push({ categoryName: equalsFillter[i] })
         }
 
-
-       
         let allCategory = [...submitData.categorys, ...existCategorys, ...inCategoryName];
         let allCategoryEqualsFilter = allCategory.reduce((acc, cur) => acc.find(item => item.categoryName === cur.categoryName) ? acc : [...acc, cur], [])
         let existFilter = allCategoryEqualsFilter.filter(item => !existCategorys.some(x => x.categoryName === item.categoryName)) // 기존에 있던건 제외
@@ -89,9 +90,21 @@ const ProjectEdit = () => {
         let userId = e.target.parentNode.dataset.userid;
         e.target.parentNode.parentNode.classList.add('remove')
         setInstanceUser(prev => prev.concat(userId))
+        setSubmitData(prev => prev.concat(userId))
         console.log(instanceUser)
     }
 
+
+    const handleProjectEdit = async e => {
+        try {
+            e.preventDefault();
+            ProjectDispatch({ type: "PROJECT_REQUEST" });
+            const res = await editProject(submitData);
+            console.log(res)
+        } catch(err) {
+            console.log(err)
+        }
+    } 
 
     
     useEffect(() => {
@@ -213,6 +226,10 @@ const ProjectEdit = () => {
                     />
                     <Label htmlFor="private" content="비공개" className={"label_type1 gap_0"} />
                 </div>
+            </div>
+
+            <div>
+                <Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>
             </div>
 
         </div>

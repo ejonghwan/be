@@ -282,10 +282,13 @@ router.post('/', auth, async (req, res) => {
 //@ access  private 
 router.patch('/edit/:projectId', auth, async (req, res) => { 
     try {
+   
         // 양도 constructorUser
-        const { constructorUser, instanceUser, rank, title, content, writes, projectPublic, categorys, deleteCategorys } = req.body;
+        const { constructorUser, instanceUser, rank, title, content, projectPublic, categorys, deleteCategorys } = req.body;
         const { projectId } = req.params;
         let putData = {};
+
+        console.log(req.body)
 
         // 같은건 제외 프론트에서 
         if(constructorUser) putData.constructorUser = constructorUser;

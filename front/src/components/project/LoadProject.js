@@ -291,8 +291,9 @@ const LoadProject = ({ projectId }) => {
                 closeClick={() => editRef.current.popupClose()} 
                 dimd={true} 
                 ref={editRef} 
-                isButton={true} 
-                buttons={[<Button className={"button_type2"}>습관 수정</Button>]}>
+                // isButton={true} 
+                // buttons={[<Button className={"button_type2"}>습관 수정</Button>]}
+                >
                 <ProjectEdit />
             </Popup>
 
