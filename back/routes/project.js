@@ -287,9 +287,7 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
         const { constructorUser, instanceUser, rank, title, content, projectPublic, categorys, deleteCategorys, projectImages } = req.body;
         const { projectId } = req.params;
         let putData = {};
-
-        console.log(req.body)
-
+        
         // 같은건 제외 프론트에서 
         if(constructorUser) putData.constructorUser = constructorUser;
         // if(instanceUser) putData.instanceUser = instanceUser; // 이거 기존꺼 유지 잘 되면서 삭제되는지 
@@ -341,35 +339,8 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
                 newCategory.save();
             }
         }
-        // .select('_id')
-        const project = await Project.findByIdAndUpdate({ _id: projectId }, putData, { new: true }).select('_id categorys content instanceUser projectImages projectPublic updatedAt').exec();
+        const project = await Project.findByIdAndUpdate({ _id: projectId }, putData, { new: true }).populate([ { path: 'instanceUser._id', select: 'id profileImage email name createdAt' },]).select('_id categorys content instanceUser projectImages projectPublic updatedAt').exec();
         res.status(201).json(project);
-
-// categorys
-// constructorUser
-// content
-// createdAt
-// instanceUser
-// joinUser
-// likeCount
-// likeUser
-// projectImages
-// projectPublic
-// promise
-// updatedAt
-// userCount
-
-
-        /* 
-            확인해야될거
-            1. 프로젝트에서 인스유저 잘 빠지는지 
-            2. 유저에서 프로젝트 잘 빠지는지
-            // 3. 콘텐츠, 공개여부 잘 수정되는지 - 완료
-            4. 카테고리 디비에서 projects: [] 해당 플젝 아이디 잘 빠지는지
-            5. 플젝에서 categorys: [ { categoryName:'' } ] 찾아서 없어지는지
-            // 6. 플젝에서 신규 추가한 카테고리 잘 추가되는지. (기존에 없던건 만들고 있던건 추가). - 완료
-        */
-
 
     } catch (err) {
         console.error('server:', err);

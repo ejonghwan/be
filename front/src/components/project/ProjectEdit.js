@@ -24,24 +24,16 @@ import './ProjectEdit.css';
 import UserRequest from '../../reducers/UserRequest';
 
 
-const ProjectEdit = () => {
+const ProjectEdit = ({ submitData, setSubmitData, projectImages, setProjectImages }) => {
 
-    const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
+    const { ProjectState: { project } } = useContext(ProjectContext);
 
-    const { editProject } = ProjectRequest();
+    // const { editProject } = ProjectRequest();
     const [instanceUser, setInstanceUser] = useState([])
-    const [projectImages, setProjectImages] = useState(project.projectImages);
+    // const [projectImages, setProjectImages] = useState(project.projectImages);
     const [existCategorys, setExistCategorys] = useState([...project.categorys])
     const [categoryValue, setCategoryValue] = useState(''); 
-    const [submitData, setSubmitData] = useState({ 
-        projectId: project._id,
-        content: project.content,
-        instanceUser: [],
-        categorys: [], //{categoryName: ''} 새로 보낼 것만 넣음
-        deleteCategorys: [], // 기존껄 삭제하면 그 카테고리는 여기로
-        projectPublic: project.projectPublic,
-        projectImages: projectImages,
-    });
+    
 
     const handleValuesChange = e => {
         const {name, value} = e.target;
@@ -95,16 +87,7 @@ const ProjectEdit = () => {
     }
 
 
-    const handleProjectEdit = async e => {
-        try {
-            e.preventDefault();
-            ProjectDispatch({ type: "PROJECT_REQUEST" });
-            const res = await editProject(submitData);
-            console.log(res)
-        } catch(err) {
-            console.log(err)
-        }
-    } 
+  
 
     
     useEffect(() => {
@@ -113,38 +96,15 @@ const ProjectEdit = () => {
 
 
     useEffect(() => {
-    }, [])
+        console.log('????', projectImages)
+        // setProjectImages()
+    }, [projectImages])
 
     return (
         <div className='project_edit'>
-            img <br />
-            {/* constructorUser, 디폴트<br /> */}
-            instanceUser, 삭제 //그냥 없애는 아이디만 보내자
-            {/* rank, // 아직 미구현<br /> */}
-            {/* title, // 수정 x <br /> */}
-            content, // 수정 <br />
-            {/* write, // 수정 x <br /> */}
-            projectPublic, // 수정<br />
-            categorys, // 새로 추가된것만 <br />
-            deleteCategoryss // 삭제한거<br />
-            <br />
-            인스유저 
-            instanceUser Array
-                0 Object
-                _id: 64ec6e2565bdb45b5254d1fe
-                rank: "e"
-                days: Array
-                <br />
-            <div>
-                <IconVisual icon={IconData[projectImages]}/>
-            </div>
-            
-            <div  className='gapt_30'>
-                <IconList icons={IconData} onClick={handleIconClick} current={projectImages}/>
-            </div>
-          
+            <div><IconVisual icon={IconData[projectImages]}/></div>  
+            <div className='gapt_30'><IconList icons={IconData} onClick={handleIconClick} current={projectImages}/></div>
             <div className='gap_30'>{project.title}</div>
-
             <div className='gap_30'>
                 <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>
                 <Textarea 
@@ -229,7 +189,7 @@ const ProjectEdit = () => {
             </div>
 
             <div>
-                <Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>
+                {/* <Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button> */}
             </div>
 
         </div>

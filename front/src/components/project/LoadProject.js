@@ -9,7 +9,7 @@ import { UserContext } from '../../context/UserContext';
 import UserThumItem from '../common/userThum/UserThumItem';
 import Button from '../common/form/Button';
 import IconVisual from '../common/icon/IconVisual';
-import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone, PiUserPlusDuotone } from "react-icons/pi";
+import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone, PiUserPlusDuotone, PiHandEyeDuotone, PiEyeClosedDuotone } from "react-icons/pi";
 import LikeProject from '../project/LikeProject';
 import Tags from '../common/tag/Tags';
 import './LoadProject.css';
@@ -22,9 +22,20 @@ import { changeViewDate } from '../../utils/utils';
 
 
 const LoadProject = ({ projectId }) => {
-    const { loadProject, inviteProject, rejectProject, withdrawProject, addFriendProject } = ProjectRequest();
+    const { loadProject, inviteProject, rejectProject, withdrawProject, addFriendProject, editProject } = ProjectRequest();
     const { state } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
+
+    const [projectImages, setProjectImages] = useState(project.projectImages);
+    const [submitData, setSubmitData] = useState({ 
+        projectId: project._id,
+        content: project.content,
+        instanceUser: [],
+        categorys: [], //{categoryName: ''} 새로 보낼 것만 넣음
+        deleteCategorys: [], // 기존껄 삭제하면 그 카테고리는 여기로
+        projectPublic: project.projectPublic,
+        projectImages: projectImages,
+    });
 
     const [friendData, setFriendData] = useState([])
     const editRef = useRef(null);
@@ -95,6 +106,19 @@ const LoadProject = ({ projectId }) => {
             setFriendData([]);
         }
     }
+
+    const handleProjectEdit = async e => {
+        try {
+            e.preventDefault();
+            ProjectDispatch({ type: "PROJECT_REQUEST" });
+            await editProject(submitData);
+            alert('수정 완료!')
+            editRef.current.popupClose()
+            // console.log(res)
+        } catch(err) {
+            console.log(err)
+        }
+    } 
 
     useEffect(() => {
         console.log(3123, friendData)
@@ -282,6 +306,17 @@ const LoadProject = ({ projectId }) => {
             {/* 모든 유저 */}
             <div>습관 만들어진 날 {changeViewDate(project.createdAt, 'second')}</div>
             <div>습관 수정된 날 {changeViewDate(project.updatedAt, 'second')}</div>
+            {project.projectPublic ? (
+                <div>
+                    <PiHandEyeDuotone />
+                    공개된 습관입니다.
+                </div>
+            ) : (
+                <div>
+                    <PiEyeClosedDuotone />
+                    비공개된 습관입니다.
+                </div>
+            )}
 
             
             <Popup 
@@ -291,10 +326,10 @@ const LoadProject = ({ projectId }) => {
                 closeClick={() => editRef.current.popupClose()} 
                 dimd={true} 
                 ref={editRef} 
-                // isButton={true} 
-                // buttons={[<Button className={"button_type2"}>습관 수정</Button>]}
+                isButton={true} 
+                buttons={[<Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>]}
                 >
-                <ProjectEdit />
+                <ProjectEdit  submitData={submitData} setSubmitData={setSubmitData} projectImages={projectImages} setProjectImages={setProjectImages}/>
             </Popup>
 
             <Popup 

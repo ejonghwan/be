@@ -153,10 +153,15 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    // project: {
-                    //     ...state.project,
-                    //     joinUser: [...action.data]
-                    // },
+                    project: {
+                        ...state.project,
+                        instanceUser: action.data.instanceUser,
+                        categorys: action.data.categorys,
+                        content: action.data.content,
+                        projectImages: action.data.projectImages,
+                        projectPublic: action.data.projectPublic,
+                        updatedAt: action.data.updatedAt,
+                    },
                 }
 
             case "PROJECT_EDIT_FAILUE" : 
