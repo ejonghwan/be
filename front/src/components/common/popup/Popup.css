@@ -104,3 +104,8 @@
     z-index: 10;
     text-align: center;
 }
+
+
+.popup.user_search_pop {
+    width: 400px;
+}

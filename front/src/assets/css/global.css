@@ -229,6 +229,7 @@ button.hover_type3:hover {
 .gap_30 { margin-bottom: 30px !important; }
 .gap_40 { margin-bottom: 40px !important; }
 .gap_50 { margin-bottom: 50px !important; }
+.gapr_10 {margin-right: 10px !important;}
 
 html {
     font-size: 10px;
@@ -315,6 +316,14 @@ svg {
 
 .flex_c {
     justify-content: center;
+}
+
+.flex_col {
+    flex-direction: column;
+}
+
+.flex_sb {
+    justify-content: space-between;
 }
 
 .b_conts {

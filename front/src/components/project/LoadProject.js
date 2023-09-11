@@ -9,7 +9,7 @@ import { UserContext } from '../../context/UserContext';
 import UserThumItem from '../common/userThum/UserThumItem';
 import Button from '../common/form/Button';
 import IconVisual from '../common/icon/IconVisual';
-import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone, PiUserPlusDuotone, PiHandEyeDuotone, PiEyeClosedDuotone } from "react-icons/pi";
+import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone, PiUserPlusDuotone, PiHandEyeDuotone, PiEyeClosedDuotone, PiNotePencilDuotone, PiRepeatDuotone } from "react-icons/pi";
 import LikeProject from '../project/LikeProject';
 import Tags from '../common/tag/Tags';
 import './LoadProject.css';
@@ -20,6 +20,7 @@ import ProjectEdit from './ProjectEdit';
 import UserSearch from '../search/UserSearch';
 import { changeViewDate } from '../../utils/utils';
 import ProjectPublic from './ProjectPublic';
+import ViewDate from '../common/date/ViewDate';
 
 
 const LoadProject = ({ projectId }) => {
@@ -107,7 +108,14 @@ const LoadProject = ({ projectId }) => {
         // 로드프로젝은 로그인 한 사람만 볼 수 있음
         <Fragment>
             <div className='align_c gapt_30'>
-                <ProjectPublic txt={true} className={'flex_r gap_20'}/>
+                <div className='gap_20 flex flex_r'>
+                    <ProjectPublic txt={true} className={'gapr_10'}/>
+                    <ViewDate dates={[
+                        {txt: ' ', date: changeViewDate(project.createdAt, 'second')},
+                        // {txt: 'UpdateAt ', date: changeViewDate(project.updatedAt, 'second')},
+                    ]} />
+                </div>
+                
                 {state.user?._id === project.constructorUser?._id._id && (
                     <div className='constructor_options'>
                         <span>
@@ -131,11 +139,11 @@ const LoadProject = ({ projectId }) => {
                 <IconVisual icon={IconData[project.projectImages]} />
                 {/* <Icon icon={IconData[project.userCount]} /> */}
             </div>
-            <div className='align_c gapt_30'>
+            <div className='align_c gapt_40'>
                 <p className='project_sub_title'>우리의 목표!</p>
                 <h3 className='project_title'>{project.title}</h3>
             </div>
-            <div className='align_c gapt_30'>
+            <div className='align_c gapt_40'>
                 <p className='project_sub_title'>습관 상세 내용</p>
                 <div className='project_content'>{project.content}</div>
             </div>
@@ -263,8 +271,6 @@ const LoadProject = ({ projectId }) => {
 
 
             {/* 모든 유저 */}
-            <div>습관 만들어진 날 {changeViewDate(project.createdAt, 'second')}</div>
-            <div>습관 수정된 날 {changeViewDate(project.updatedAt, 'second')}</div>
             <Popup 
                 className={`popup_type_default profile_edit`} 
                 isHead={true} 

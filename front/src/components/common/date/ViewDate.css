@@ -1,0 +1,13 @@
+.view_date_wrap {
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    color: var(--text-color1);
+    font-weight: 400;
+}
+
+
+
+.view_date_wrap .view_date_item + .view_date_item {
+    margin-left: 10px;
+}

@@ -15,6 +15,8 @@ import NoData from '../common/notData/NoData';
 import UserThumItem from '../common/userThum/UserThumItem';
 import ProjectRequest from '../../reducers/ProjectRequest';
 import './ProjectEdit.css';
+import ViewDate from '../common/date/ViewDate';
+import { changeViewDate } from '../../utils/utils';
 
 
 const ProjectEdit = ({ editRef }) => {
@@ -204,6 +206,11 @@ const ProjectEdit = ({ editRef }) => {
                     <Label htmlFor="private" content="비공개" className={"label_type1 gap_0"} />
                 </div>
             </div>
+            <ViewDate className='flex_r gap_30' dates={[
+                {txt: '생성일 - ', date: changeViewDate(project.createdAt, 'second')},
+                {txt: '수정일 - ', date: changeViewDate(project.updatedAt, 'second')},
+            ]} />
+
 
             <div className='pos_button_wrap'>
                 <Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>
