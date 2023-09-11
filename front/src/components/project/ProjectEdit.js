@@ -1,48 +1,51 @@
-import { useContext, useEffect, useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState, useCallback, memo } from 'react';
 import Input from '../common/form/Input';
 import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
-import './CreateProjectDetail.css';
-import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone, PiXCircleDuotone, PiSmileyXEyesDuotone, PiUsersDuotone  } from "react-icons/pi";
+import { PiPlusCircleDuotone, PiUsersDuotone  } from "react-icons/pi";
 import IconVisual from '../common/icon/IconVisual';
 import IconList from '../common/icon/IconList';
 import IconData from '../common/icon/IconData';
-import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import Search from '../common/form/Search';
 import Tags from '../common/tag/Tags';
-import SearchRequest from '../../reducers/SearchRequest';
-import ProjectRequest from '../../reducers/ProjectRequest';
-import { UserContext } from '../../context/UserContext';
-import { SearchContext } from '../../context/SearchContext';
 import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
 import UserThumItem from '../common/userThum/UserThumItem';
+import ProjectRequest from '../../reducers/ProjectRequest';
 import './ProjectEdit.css';
-import UserRequest from '../../reducers/UserRequest';
 
 
-const ProjectEdit = ({ submitData, setSubmitData, projectImages, setProjectImages }) => {
+const ProjectEdit = ({ editRef }) => {
 
-    const { ProjectState: { project } } = useContext(ProjectContext);
+    const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
-    // const { editProject } = ProjectRequest();
-    const [instanceUser, setInstanceUser] = useState([])
-    // const [projectImages, setProjectImages] = useState(project.projectImages);
-    const [existCategorys, setExistCategorys] = useState([...project.categorys])
+    // const [instanceUser, setInstanceUser] = useState([]);
+    const [existCategorys, setExistCategorys] = useState([...project.categorys]);
     const [categoryValue, setCategoryValue] = useState(''); 
+    const { editProject } = ProjectRequest();
+
+    const [projectImages, setProjectImages] = useState(project.projectImages);
+    const [submitData, setSubmitData] = useState({ 
+        projectId: project._id,
+        content: project.content,
+        instanceUser: [],
+        categorys: [], //{categoryName: ''} 새로 보낼 것만 넣음
+        deleteCategorys: [], // 기존껄 삭제하면 그 카테고리는 여기로
+        projectPublic: project.projectPublic,
+        projectImages: projectImages,
+    });
     
 
     const handleValuesChange = e => {
         const {name, value} = e.target;
-        setSubmitData({...submitData, [name]: value})
+        setSubmitData({...submitData, [name]: value});
     }
 
     const handleIconClick = idx => {
-        setProjectImages(idx)
-        setSubmitData(prev => ({ ...prev, projectImages: idx }))
+        setProjectImages(idx);
+        setSubmitData(prev => ({ ...prev, projectImages: idx }));
     };
 
     const handleCategoryReset = () => setCategoryValue('');
@@ -54,59 +57,72 @@ const ProjectEdit = ({ submitData, setSubmitData, projectImages, setProjectImage
         let equalsFillter = categoryResult.filter((el, idx) => categoryResult?.indexOf(el) === idx); //같은거 삭제
         let inCategoryName = [];
         for(let i = 0; i < equalsFillter.length; i++) {
-            inCategoryName.push({ categoryName: equalsFillter[i] })
+            inCategoryName.push({ categoryName: equalsFillter[i] });
         }
 
         let allCategory = [...submitData.categorys, ...existCategorys, ...inCategoryName];
-        let allCategoryEqualsFilter = allCategory.reduce((acc, cur) => acc.find(item => item.categoryName === cur.categoryName) ? acc : [...acc, cur], [])
-        let existFilter = allCategoryEqualsFilter.filter(item => !existCategorys.some(x => x.categoryName === item.categoryName)) // 기존에 있던건 제외
+        let allCategoryEqualsFilter = allCategory.reduce((acc, cur) => acc.find(item => item.categoryName === cur.categoryName) ? acc : [...acc, cur], []);
+        let existFilter = allCategoryEqualsFilter.filter(item => !existCategorys.some(x => x.categoryName === item.categoryName)); // 기존에 있던건 제외
 
-
-        setSubmitData(prev => ({...prev, categorys: [...existFilter]}))
-        setCategoryValue('')
-    }, [categoryValue])
+        setSubmitData(prev => ({...prev, categorys: [...existFilter]}));
+        setCategoryValue('');
+    }, [categoryValue]);
 
     
     const handleTagDelete = (e, tagName) => {
         if(e.target.closest('.exist_category')) {
-            setExistCategorys(prev => ( prev.filter(tag => tag.categoryName !== tagName )))
-            setSubmitData(prev => ({ ...prev, deleteCategorys: prev.deleteCategorys.concat({ categoryName: tagName }) }))
-            console.log(tagName, existCategorys)
+            setExistCategorys(prev => ( prev.filter(tag => tag.categoryName !== tagName )));
+            setSubmitData(prev => ({ ...prev, deleteCategorys: prev.deleteCategorys.concat({ categoryName: tagName }) }));
+            console.log(tagName, existCategorys);
         } else {
-            setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}))
-        }
-    }
+            setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}));
+        };
+    };
 
 
     const handleExportUser = e => {
         let userId = e.target.parentNode.dataset.userid;
-        e.target.parentNode.parentNode.classList.add('remove')
-        setInstanceUser(prev => prev.concat(userId))
-        setSubmitData(prev => ({ ...prev, instanceUser: prev.instanceUser.concat(userId) }))
-        console.log(instanceUser)
-    }
+        e.target.parentNode.parentNode.classList.add('remove');
+        // setInstanceUser(prev => prev.concat(userId));
+        setSubmitData(prev => ({ ...prev, instanceUser: prev.instanceUser.concat(userId) }));
+    };
 
 
-  
+    const handleProjectEdit = async e => {
+        try {
+            e.preventDefault();
+            ProjectDispatch({ type: "PROJECT_REQUEST" });
+            await editProject(submitData);
+            alert('수정 완료!');
+            editRef.current.popupClose();
+        } catch(err) {
+            console.log(err);
+        }
+    } 
 
-    
+
+    useEffect(() => {
+        setProjectImages(project.projectImages);
+    }, []);
+
     useEffect(() => {
         console.log(submitData)
-    }, [submitData])
+       
+    }, [submitData]);
 
-
-    useEffect(() => {
-        console.log('????', projectImages)
-        // setProjectImages()
-    }, [projectImages])
 
     return (
         <div className='project_edit'>
             <div><IconVisual icon={IconData[projectImages]}/></div>  
-            <div className='gapt_30'><IconList icons={IconData} onClick={handleIconClick} current={projectImages}/></div>
-            <div className='gap_30'>{project.title}</div>
-            <div className='gap_30'>
-                <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>
+            <div className='gapt_30'>
+                <IconList icons={IconData} onClick={handleIconClick} current={projectImages}/>
+            </div>
+            <div className='gap_30 gapt_30 align_c'>
+                <p className="project_sub_title">우리의 목표!</p>
+                <strong className='project_title'>{project.title}</strong>
+            </div>
+            <div className='gap_30 align_c'>
+                <Label htmlFor="content" content="습관 상세 내용" className={"label_type1 project_sub_title"}/>
                 <Textarea 
                     id={"content"}
                     name={"content"}
@@ -115,6 +131,7 @@ const ProjectEdit = ({ submitData, setSubmitData, projectImages, setProjectImage
                     onChange={handleValuesChange}
                     required={true} 
                     placeholder={"#룰1 - 영단어 2만개를 외워서 게시판에 인증샷 남기기\n#룰2 - 못하면 못잠"}
+                    defaultValue={project.content}
                 >
                     {submitData.content}
                 </Textarea>
@@ -188,12 +205,12 @@ const ProjectEdit = ({ submitData, setSubmitData, projectImages, setProjectImage
                 </div>
             </div>
 
-            <div>
-                {/* <Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button> */}
+            <div className='pos_button_wrap'>
+                <Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>
             </div>
 
         </div>
     );
 };
 
-export default ProjectEdit;
+export default memo(ProjectEdit);

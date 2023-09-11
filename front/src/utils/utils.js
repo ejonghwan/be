@@ -91,13 +91,13 @@ export const changeViewDate = (date, viewTime) => {
     const second = new Date(date).getSeconds();
 
     switch(viewTime) {
-        case 'year': return `${year}년`;
-        case 'month': return `${year}년 ${month}월`
-        case 'day': return `${year}년 ${month}월 ${day}일`;
-        case 'hour': return `${year}년 ${month}월 ${day}일 ${hour}시`;
-        case 'minute': return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
-        case 'second': return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분 ${second}초`;
-        default: return `${year}년 ${month}월 ${day}일`;
+        case 'year': return `${year}.`;
+        case 'month': return `${year}. ${month}.`
+        case 'day': return `${year}. ${month}. ${day}.`;
+        case 'hour': return `${year}. ${month}. ${day}. ${hour}`;
+        case 'minute': return `${year}. ${month}. ${day}. ${hour}:${minute}`;
+        case 'second': return `${year}. ${month}. ${day}. ${hour}:${minute}:${second}`;
+        default: return `${year}. ${month}. ${day}.`;
     }
 }
 

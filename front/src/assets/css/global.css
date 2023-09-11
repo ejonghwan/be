@@ -305,6 +305,18 @@ svg {
     display: flex;
 }
 
+.flex_r {
+    justify-content: flex-end;
+}
+
+.flex_l {
+    justify-content: flex-start;
+}
+
+.flex_c {
+    justify-content: center;
+}
+
 .b_conts {
     width: 960px;
     /* height: 100%; */

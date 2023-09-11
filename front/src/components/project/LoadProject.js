@@ -19,23 +19,13 @@ import Popup from '../common/popup/Popup';
 import ProjectEdit from './ProjectEdit';
 import UserSearch from '../search/UserSearch';
 import { changeViewDate } from '../../utils/utils';
+import ProjectPublic from './ProjectPublic';
 
 
 const LoadProject = ({ projectId }) => {
     const { loadProject, inviteProject, rejectProject, withdrawProject, addFriendProject, editProject } = ProjectRequest();
     const { state } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
-
-    const [projectImages, setProjectImages] = useState(project.projectImages);
-    const [submitData, setSubmitData] = useState({ 
-        projectId: project._id,
-        content: project.content,
-        instanceUser: [],
-        categorys: [], //{categoryName: ''} 새로 보낼 것만 넣음
-        deleteCategorys: [], // 기존껄 삭제하면 그 카테고리는 여기로
-        projectPublic: project.projectPublic,
-        projectImages: projectImages,
-    });
 
     const [friendData, setFriendData] = useState([])
     const editRef = useRef(null);
@@ -107,23 +97,7 @@ const LoadProject = ({ projectId }) => {
         }
     }
 
-    const handleProjectEdit = async e => {
-        try {
-            e.preventDefault();
-            ProjectDispatch({ type: "PROJECT_REQUEST" });
-            await editProject(submitData);
-            alert('수정 완료!')
-            editRef.current.popupClose()
-            // console.log(res)
-        } catch(err) {
-            console.log(err)
-        }
-    } 
-
-    useEffect(() => {
-        console.log(3123, friendData)
-    }, [friendData])
-
+ 
 
     useEffect(() => {
         handleLoadProject();
@@ -133,6 +107,7 @@ const LoadProject = ({ projectId }) => {
         // 로드프로젝은 로그인 한 사람만 볼 수 있음
         <Fragment>
             <div className='align_c gapt_30'>
+                <ProjectPublic txt={true} className={'flex_r gap_20'}/>
                 {state.user?._id === project.constructorUser?._id._id && (
                     <div className='constructor_options'>
                         <span>
@@ -161,7 +136,7 @@ const LoadProject = ({ projectId }) => {
                 <h3 className='project_title'>{project.title}</h3>
             </div>
             <div className='align_c gapt_30'>
-                <p className='project_sub_title'>관련 내용</p>
+                <p className='project_sub_title'>습관 상세 내용</p>
                 <div className='project_content'>{project.content}</div>
             </div>
 
@@ -208,20 +183,6 @@ const LoadProject = ({ projectId }) => {
                     {/* 방장에게 초대가 온 유저인 경우 */}
                     <div className='gapt_30'>
                         {
-                            // project.joinUser?.map((joinUser, idx) => {
-                            //     if(state.user._id === joinUser._id._id && joinUser.state) {
-                            //         return (
-                            //             <div key={idx}>
-                            //                 이 프로젝트 장에게서 초대요청이 왔습니다.
-                            //                 <div className='user_button_wrap' data-userid={state.user._id}>
-                            //                     <Button type={'button'} className={'button_type6 in'} onClick={handleInviteProject}>수락</Button>, 
-                            //                     <Button type={'button'} className={'button_type6 out'} onClick={handleRejectProject}>거절</Button>
-                            //                 </div>
-                            //             </div>
-                            //         )
-                            //     }
-                            // }) 
-
                             project.joinUser?.filter(joinUser => state.user._id === joinUser._id._id && joinUser.state).length > 0 && (
                                 <div>
                                     이 프로젝트 장에게서 초대요청이 왔습니다.
@@ -231,8 +192,6 @@ const LoadProject = ({ projectId }) => {
                                     </div>
                                 </div>
                             )
-                              
-                           
                         }
                     </div>
                     
@@ -306,19 +265,6 @@ const LoadProject = ({ projectId }) => {
             {/* 모든 유저 */}
             <div>습관 만들어진 날 {changeViewDate(project.createdAt, 'second')}</div>
             <div>습관 수정된 날 {changeViewDate(project.updatedAt, 'second')}</div>
-            {project.projectPublic ? (
-                <div>
-                    <PiHandEyeDuotone />
-                    공개된 습관입니다.
-                </div>
-            ) : (
-                <div>
-                    <PiEyeClosedDuotone />
-                    비공개된 습관입니다.
-                </div>
-            )}
-
-            
             <Popup 
                 className={`popup_type_default profile_edit`} 
                 isHead={true} 
@@ -327,9 +273,9 @@ const LoadProject = ({ projectId }) => {
                 dimd={true} 
                 ref={editRef} 
                 isButton={true} 
-                buttons={[<Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>]}
+                // buttons={[<Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>]}
                 >
-                <ProjectEdit  submitData={submitData} setSubmitData={setSubmitData} projectImages={projectImages} setProjectImages={setProjectImages}/>
+                <ProjectEdit editRef={editRef}/>
             </Popup>
 
             <Popup 

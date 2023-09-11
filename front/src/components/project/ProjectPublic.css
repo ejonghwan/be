@@ -1,0 +1,10 @@
+.project_public {
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    color: var(--text-color1);
+}
+
+.project_public svg {
+    margin-right: 5px;
+}
