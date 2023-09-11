@@ -301,46 +301,30 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
         // if(categorys) putData.categorys = categorys; //카테고리를 합쳐서 넣는게 아님. 특정카테고리만 추가 및 삭제
         if(projectImages) putData.projectImages = projectImages;
 
-        // 카테고리 작업중. 
-        // 1. 기존에 있던 카테고리에 추가할떄 중복추가됨 
-        // 2. 삭제한 카테고리가 카테고리에서 삭제안됨 
 
-        //user model
-        // joinProjects: [{ _id:  }]
+        // 1. 유저디비 가입한 곳에서 제거 - 테스트 완료
+        for(let i = 0; i < instanceUser.length; i++) {
+            await User.findByIdAndUpdate(instanceUser[i], { $pull: { "joinProjects": { _id: projectId } } }, { new: true }).exec();
+        } 
 
-        // project model
-        // instanceUser: [{ _id:  }]
+        // 2. 인스유저에서 제거 - 테스트완료
+        await Project.findByIdAndUpdate(projectId, { $pull: { instanceUser: { _id: { $in: instanceUser } } } }, { new: true }).exec();
 
-        // 1. 테스트 완료
-        // for(let i = 0; i < instanceUser.length; i++) {
-        //     await User.findByIdAndUpdate(instanceUser[i], { $pull: { "joinProjects": {_id: projectId} } }, { new: true }).exec();
-        // } 
-
-        // 2. 테스트.작업 미완료
-        // await Project.findByIdAndUpdate(projectId, { $pullAll: { "instanceUser": instanceUser } }, { new: true }).exec();
-
-
-        // deleteCategorys; //array 이거 삭제할 때 프론트에서 삭제한거 보내줘야됨 
-        // 3. 테스트 완료 
+        // 3. 카테고리 카테고리에서 삭제 - 테스트 완료 
         for(let i = 0; i < deleteCategorys.length; i++) {
             await Category.findOneAndUpdate({ "categoryName": deleteCategorys[i].categoryName }, { $pull: { projects: projectId } }, { new: true }).exec();
         }
-        // 카테고리 플젝에 추가 - 테스트완료 
+        // 4. 카테고리 플젝에 추가 - 테스트완료 
         await Project.findByIdAndUpdate(projectId, { $push: { categorys: { $each: categorys } } }, { new: true }).exec();
 
 
-        // 4. 테스트 완료 
+        // 5. 카테고리 플젝에서 삭제 - 테스트 완료 
         await Project.findByIdAndUpdate(projectId, { $pull: { categorys: {  categoryName: { $in: deleteCategorys.map(item => item.categoryName) } } } }, { new: true }).exec();
 
-
-
-        // 카테고리 생성 분기 - 23.9.6 12 이거 아직 작업안함. 
-        // 플젝 수정에서 받는 req.body.categorys는 새로 추가된 것만 보냄
         let findCategory;
         let newCategory;
         for(let i = 0; i < categorys.length; i++) {
             findCategory = await Category.findOne({ categoryName: categorys[i].categoryName });
-            console.log('findCate?????', findCategory)
             if(findCategory) { // 카테고리가 기존에 존재할 경우
                 await Category.findByIdAndUpdate(findCategory._id, { $push: { projects: projectId } }, { new: true }).exec();
                 await Project.findByIdAndUpdate(projectId, 
@@ -357,9 +341,24 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
                 newCategory.save();
             }
         }
-
-        const project = await Project.findByIdAndUpdate({ _id: projectId }, putData, { new: true }).exec();
+        // .select('_id')
+        const project = await Project.findByIdAndUpdate({ _id: projectId }, putData, { new: true }).select('_id categorys content instanceUser projectImages projectPublic updatedAt').exec();
         res.status(201).json(project);
+
+// categorys
+// constructorUser
+// content
+// createdAt
+// instanceUser
+// joinUser
+// likeCount
+// likeUser
+// projectImages
+// projectPublic
+// promise
+// updatedAt
+// userCount
+
 
         /* 
             확인해야될거
