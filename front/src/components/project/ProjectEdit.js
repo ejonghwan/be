@@ -30,7 +30,7 @@ const ProjectEdit = () => {
 
     const { editProject } = ProjectRequest();
     const [instanceUser, setInstanceUser] = useState([])
-    const [projectImages, setProjectImages] = useState(0);
+    const [projectImages, setProjectImages] = useState(project.projectImages);
     const [existCategorys, setExistCategorys] = useState([...project.categorys])
     const [categoryValue, setCategoryValue] = useState(''); 
     const [submitData, setSubmitData] = useState({ 
@@ -113,7 +113,6 @@ const ProjectEdit = () => {
 
 
     useEffect(() => {
-        setProjectImages(project.projectImages)
     }, [])
 
     return (
