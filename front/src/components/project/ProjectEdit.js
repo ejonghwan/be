@@ -206,7 +206,7 @@ const ProjectEdit = ({ editRef }) => {
                     <Label htmlFor="private" content="비공개" className={"label_type1 gap_0"} />
                 </div>
             </div>
-            <ViewDate className='flex_r gap_30' dates={[
+            <ViewDate className='flex_l gap_30' dates={[
                 {txt: '생성일 - ', date: changeViewDate(project.createdAt, 'second')},
                 {txt: '수정일 - ', date: changeViewDate(project.updatedAt, 'second')},
             ]} />

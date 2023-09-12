@@ -39,7 +39,6 @@ const useImageRequest = () => {
 
             // image data는 image model 설계한대로 다 옴
             if(path === "userProfile") dispatch({ type: "USER_PROFILEIMAGE_EDIT_SUCCESS", data: { _id: image.data._id, key: image.data.key } });
-            // if(path === "project") {}
             // if(path === "write") {}
             
             return image;

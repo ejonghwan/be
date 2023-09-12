@@ -197,10 +197,15 @@ const ProjectRequest = () => {
     // 프로젝트 수정
     const editProject = async data => {
         try {
-            console.log('reqsut', data)
             const { projectId, instanceUser, content, projectPublic, categorys, deleteCategorys, projectImages } = data;
-            // if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
-            // if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(instanceUser && typeof instanceUser !== 'object') throw new Error('type check instanceUser');
+            if(content && typeof content !== 'string') throw new Error('type check content');
+            if(projectPublic && typeof projectPublic !== 'string') throw new Error('type check projectPublic');
+            if(categorys && typeof categorys !== 'object') throw new Error('type check categorys');
+            if(deleteCategorys && typeof deleteCategorys !== 'object') throw new Error('type check deleteCategorys');
+            if(projectImages && typeof projectImages !== 'number') throw new Error('type check projectImages');
+            
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -208,8 +213,6 @@ const ProjectRequest = () => {
                 },
                 withCredentials: true,
             }
-
-
 
             const res = await axios.patch(`${host}/api/project/edit/${projectId}`, data, config);
             ProjectDispatch({ type: "PROJECT_EDIT_SUCCESS", data: res.data });

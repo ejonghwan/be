@@ -66,16 +66,16 @@ router.post('/login', async (req, res) => {
     try {
         const { id, password } = req.body;
 
-        if(!id) return res.status(400).json({ message: 'is not id' }) 
-        if(!password) return res.status(400).json({ message: 'is not password' }) 
+        if(!id) return res.status(400).json({ message: '아이디가 없습니다.' }) 
+        if(!password) return res.status(400).json({ message: '비밀번호가 없습니다.' }) 
 
         // 파퓰레이트 하위는 아래처럼 쓰면됨 이거 정리해둬야됨  221109 하다감
         // const user = await User.findOne({ id: id }).populate({ path: "projects", populate: { path: "rank.a" } }).exec();
         const user = await User.findOne({ id: id }).populate("projects joinProjects._id").exec();
-        if(!user) return res.status(400).json({ message: "is not find user" })
+        if(!user) return res.status(400).json({ message: "유저가 없습니다" })
 
         const match = await bcrypt.compare(password, user.password);
-        if(!match) return res.status(400).json({ message: "password is not matched" })
+        if(!match) return res.status(400).json({ message: "비밀번호가 일치하지 않습니다." })
         if(match) {
             // 2h acc토큰 발급
             jwt.sign({ id: id }, process.env.JWT_KEY, { expiresIn: "2h" }, (err, accToken) => {
@@ -115,26 +115,26 @@ router.get('/logout', auth, (req, res) => {
 router.post('/signup', async (req, res) => {
     try {
         const { id, password, email, name, question, phoneNumber, gender, birthday } = req.body;
-        if(!id || typeof id !== 'string') return res.status(400).json({message: 'is not id'}) 
-        if(id.length <= 3 || id.length >= 13) return res.status(400).json({message: 'id length check. 4~12'}) //front 에서도 검증해야됨
-        if(!password ) return res.status(400).json({message:'is not password'}) 
-        if(!email || typeof email !== 'string') return res.status(400).json({message:'is not email'}) 
-        if(!name || typeof name !== 'string') return res.status(400).json({message:'is not name'}) 
-        if(!question || typeof question !== 'object') return res.status(400).json({message:'is not question'}) 
-        if(!phoneNumber || typeof phoneNumber !== 'string') return res.status(400).json({message:'is not phoneNumber'}) 
-        if(!gender || typeof gender !== 'string') return res.status(400).json({message:'is not gender'}) 
-        if(!birthday || typeof birthday !== 'string') return res.status(400).json({message:'is not birthday'}) 
+        if(!id || typeof id !== 'string') return res.status(400).json({message: '아이디가 없습니다.'});
+        if(id.length <= 3 || id.length >= 13) return res.status(400).json({message: '아이디는 4~12자 사이로 입력해주세요.'}); //front 에서도 검증해야됨
+        if(!password ) return res.status(400).json({message:'비밀번호가 없습니다.'});
+        if(!email || typeof email !== 'string') return res.status(400).json({message:'이메일이 없습니다'});
+        if(!name || typeof name !== 'string') return res.status(400).json({message:'이름이 없습니다.'});
+        if(!question || typeof question !== 'object') return res.status(400).json({message:'질문과 답이 없습니다.'});
+        if(!phoneNumber || typeof phoneNumber !== 'string') return res.status(400).json({message:'휴대폰 번호가 없습니다.'});
+        if(!gender || typeof gender !== 'string') return res.status(400).json({message:'성별이 없습니다.'});
+        if(!birthday || typeof birthday !== 'string') return res.status(400).json({message:'생년월일이 없습니다.'});
 
         const existingUser = await User.findOne({$or: [{id: id}, {phoneNumber: phoneNumber}] });
         if(existingUser) throw Error( '유저나 휴대폰번호가 이미 존재합니다' );
       
         const user = await new User(req.body, { token: null });
 
-        // default 프로필 이미지 6369f7f0d94aae125a0bc833
+        // default 프로필 이미지 6369f7f0d94aae125a0bc833. 디비에서 삭제 말자
 
-        await bcrypt.genSalt(10, async (err, salt) => {
+        bcrypt.genSalt(10, async (err, salt) => {
             // password hash
-            await bcrypt.hash(user.password, salt, async (err, hash) => {
+            bcrypt.hash(user.password, salt, async (err, hash) => {
                 if(err) throw Error(err);
                 user.password = hash;
                 jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "30 days" }, (err, reftoken) => {
@@ -147,7 +147,6 @@ router.post('/signup', async (req, res) => {
                 });
             });
         });
-
     } catch(err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -168,7 +167,6 @@ router.patch('/edit/userInfo', auth, async(req, res) => {
         if(!mongoose.isValidObjectId(_id)) return res.status(400).json({ message: '_아이디가 잘못되었습니다' }) 
 
         // 한번 find하고 비교해서 바뀐거만 할지... 아니면 몇개안되니 find update 한번에 할지 ..고민
-      
         const user = await User.findOneAndUpdate({ _id: _id }, { $set: {name, gender, birthday, phoneNumber} }, { new: true })
 
         res.status(201).json(user)
@@ -214,16 +212,16 @@ router.patch('/edit/email', auth, async(req, res) => {
 router.post('/edit/password', auth, async (req, res) => {
     try {
         const { _id, prevPassword, newPassword, newPasswordCheck } = req.body;
-        if(!mongoose.isValidObjectId(_id)) return res.status(400).json({ message: 'is not _id' }) 
-        if(!prevPassword && typeof prevPassword !== 'string') return res.status(400).json({ message: 'is not prev password' }) 
-        if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: 'is not checked password' }) 
-        if(newPassword !== newPasswordCheck) return res.status(400).json({ message: 'not password matched' })
+        if(!mongoose.isValidObjectId(_id)) return res.status(400).json({ message: '_id가 없습니다.' }) 
+        if(!prevPassword && typeof prevPassword !== 'string') return res.status(400).json({ message: '변경 전 비밀번호가 없습니다.' }) 
+        if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: '새로운 비밀번호가 없습니다.' }) 
+        if(newPassword !== newPasswordCheck) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' })
 
         const user = await User.findById(_id);
         const matched = await bcrypt.compare(prevPassword, user.password);
 
-        if(!user) return res.status(400).json({ message: 'is not user' });
-        if(!matched) return res.status(400).json({ message: '이전 비번 확인해주세요' });
+        if(!user) return res.status(400).json({ message: '유저가 없습니다.' });
+        if(!matched) return res.status(400).json({ message: '이전 비번 확인해주세요.' });
 
         if(matched) {
             bcrypt.genSalt(10, (err, salt) => {
@@ -248,14 +246,14 @@ router.post('/edit/password', auth, async (req, res) => {
 router.post('/find/password', async (req, res) => {
     try {
         const { _id, newPassword, newPasswordCheck } = req.body;
-        if(!_id && typeof _id !== 'string') return res.status(400).json({ message: 'is not _id' }) 
-        if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: 'is not checked password' }) 
-        if(newPassword !== newPasswordCheck) return res.status(400).json({ message: 'not password matched' })
+        if(!_id && typeof _id !== 'string') return res.status(400).json({ message: '아이디가 없습니다.' }) 
+        if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' }) 
+        if(newPassword !== newPasswordCheck) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' })
 
         const user = await User.findOne({id: _id})
         if(!user) return res.status(400).json({ message: 'is not user' })
         const prevPasswordMatched = await bcrypt.compare(newPassword, user.password)
-        if(prevPasswordMatched) return res.status(401).json({ message: '이전비밀번호랑 같습니다', matched: true })
+        if(prevPasswordMatched) return res.status(401).json({ message: '이전 비밀번호랑 같습니다.', matched: true })
       
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newPassword, salt, (err, hash) => {
@@ -289,8 +287,8 @@ router.post('/find/id', async (req, res) => {
         const get_id = req.cookies["_id"];
         const { authNumber } = req.body;
 
-        if(!mongoose.isValidObjectId(get_id)) return res.status(400).json({ message: 'id type check' });
-        if(!authNumber) return res.status(400).json({ message: 'is not authNumber' });
+        if(!mongoose.isValidObjectId(get_id)) return res.status(400).json({ message: '아이디 타입체크해주세요.' });
+        if(!authNumber) return res.status(400).json({ message: '인증번호가 없습니다.' });
 
         // 3분토큰 만료인지 체크 
         if(!getAuthCode) return res.status(500).json({ message: '인증시간 만료. 다시 인증번호 발급받아주세요' });
@@ -317,10 +315,10 @@ router.post('/find/id', async (req, res) => {
 router.post('/find/id/question', auth, async (req, res) => {
     try {
         const { name, email, questionType, result } = req.body;
-        if(!name) return res.status(400).json({ message: 'is not name' });
-        if(!email) return res.status(400).json({ message: 'is not email' });
-        if(!questionType) return res.status(400).json({ message: 'is not questionType' });
-        if(!result) return res.status(400).json({ message: 'is not result' });
+        if(!name) return res.status(400).json({ message: '이름이 없습니다.' });
+        if(!email) return res.status(400).json({ message: '이메일이 없습니다.' });
+        if(!questionType) return res.status(400).json({ message: '질문이 없습니다.' });
+        if(!result) return res.status(400).json({ message: '답이 없습니다.' });
 
         const user = await User.findOne({email: email});
         if(!user) return  res.status(500).json({ message: '유저가 없습니다. 회원가입해주세요' });
@@ -361,8 +359,8 @@ router.post('/delete', auth, async (req, res) => {
     try {
         // 로그인 된 상태 + 아뒤/비번/이멜 입력
         const { id, password } = req.body;
-        if(!id || typeof id !== 'string') return res.status(400).json({ message: 'is not id and type checked' });
-        if(!password || typeof password !== 'string') return res.status(400).json({ message: 'is not result and type checked' });
+        if(!id || typeof id !== 'string') return res.status(400).json({ message: '아이디 타입체크 해주세요.' });
+        if(!password || typeof password !== 'string') return res.status(400).json({ message: '비밀번호 학인해주세요.' });
 
         const user = await User.findOne({id: id});
         if(!user) return res.status(500).json({ message: '유저가 없습니다. 회원가입해주세요' });
