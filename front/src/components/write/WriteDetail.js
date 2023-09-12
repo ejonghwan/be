@@ -17,8 +17,9 @@ import UserThumItem from '../common/userThum/UserThumItem';
 import ProjectRequest from '../../reducers/ProjectRequest';
 import ViewDate from '../common/date/ViewDate';
 import { changeViewDate } from '../../utils/utils';
-
 import './WriteDetail.css';
+
+
 
 const WriteDetail = ({ projectId }) => {
 

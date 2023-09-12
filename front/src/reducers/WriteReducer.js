@@ -29,7 +29,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    writes: action.data,
+                    writes: [...state.writes.concat(action.data)]
                 }
 
             case "WRITE_CREATE_FAILUE" : 
