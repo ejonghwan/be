@@ -94,7 +94,7 @@ router.post('/', async (req, res) => {
             { $and: [{ _id: projectId }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
             ) 
 
-        // console.log('isInstance??', isInstance)
+
 
         // #### instance ####
         // 오늘 쓴 인증글이 있다면 count만 ++

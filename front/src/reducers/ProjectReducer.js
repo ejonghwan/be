@@ -171,6 +171,25 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     errorMessage: action.data,
                 }
 
+            case "WRITE_CREATE_SUCCESS": 
+            // console.log('reducer', action.data)
+                return {
+                    ...state,
+                    loading: false,
+                    project: {
+                        ...state.project,
+                        // writes: []
+                    },
+                }
+
+            case "WRITE_CREATE_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                    errorMessage: action.data,
+                }
+            
+
             default: return { state }
     }
 }

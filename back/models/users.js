@@ -29,7 +29,8 @@ const UserSchema = mongoose.Schema({
      comments: [{ type: Types.ObjectId, ref: 'comment'}],
      recomments: [{ type: Types.ObjectId, ref: 'recomment'}],
      likePost: [{ type: Types.ObjectId, ref: 'write' }],
-     likeProject: [{ type: Types.ObjectId, ref: 'project' }]
+     likeProject: [{ type: Types.ObjectId, ref: 'project' }],
+     prevSearch: [{ search: { type: String }, date: { type: String } }]
 }, {
     timestamps: true,
 })

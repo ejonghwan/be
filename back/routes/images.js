@@ -5,7 +5,6 @@ import util from 'util';
 // 모델
 import ImageModel from '../models/images.js';
 import User from '../models/users.js';
-import Project from '../models/project.js';
 import Write from '../models/write.js';
 
 // 미들웨어 
@@ -41,8 +40,6 @@ router.post('/:path/:id', auth, upload.single("image"), async (req, res) => {
         image.save();
 
         if(path && path === 'userProfile') { await User.findByIdAndUpdate(id, { profileImage: { _id: image._id, key: image.key } }) } 
-        // console.log(await User.findById(id))
-        // if(path && path === 'project') { await Project.findByIdAndUpdate(id, { projectImages: { _id: image._id, key: image.key } }) } 
         if(path && path === 'write') { await Write.findByIdAndUpdate(id, { writeImages: { _id: image._id, key: image.key } }) } 
         
         res.json(image); //db 정보 그대로 줌
@@ -71,13 +68,13 @@ router.get('/', async (req, res) => {
 // @ GET /api/images
 // @ public
 // @ desc 이미지수정
-router.patch('/', auth, async (req, res) => {
-    try {
+// router.patch('/', auth, async (req, res) => {
+//     try {
       
-    } catch(err) {
-        console.error(err)
-    }
-})
+//     } catch(err) {
+//         console.error(err)
+//     }
+// })
 
 
 // @ GET /api/images

@@ -21,7 +21,7 @@ import { changeViewDate } from '../../utils/utils';
 import ProjectPublic from './ProjectPublic';
 import ViewDate from '../common/date/ViewDate';
 import './LoadProject.css';
-import WriteDetail from '../write/WriteDetail';
+import WriteDetail from '../write/WriteUpload';
 
 
 const LoadProject = ({ projectId }) => {

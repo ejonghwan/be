@@ -1,4 +1,4 @@
-.image_dropBox {
+.profile_img_wrap .image_dropBox {
     /* background: var(--bg-box-black); */
     height: 100%;
     display: flex;
@@ -10,7 +10,7 @@
     color: var(--text-color-white);
 }
 
-.image_dropBox::before {
+.profile_img_wrap .image_dropBox::before {
     content: '';
     width: 100%;
     height: 100%;
@@ -51,7 +51,7 @@
 }
 
 
-.image_dropBox > input {
+.profile_img_wrap .image_dropBox > input {
     opacity: .0;
     width: 100%; 
     height: 100%;;
@@ -59,7 +59,7 @@
     cursor: pointer;
 }
 
-.image_dropBox .profile_text {
+.profile_img_wrap .image_dropBox .profile_text {
     color: var(--text-color-white);
     position: absolute;
     top: 45%;
@@ -69,18 +69,18 @@
     text-align: center;
 }
 
-.image_dropBox .profile_text > svg {
+.profile_img_wrap .image_dropBox .profile_text > svg {
     color: var(--text-color-white);
     margin-bottom: 5px;
 }
 
 
 
-.image_dropBox:hover {
+.profile_img_wrap .image_dropBox:hover {
     backdrop-filter: blur(1px);
     color: #fff;
 }
 
-.image_dropBox:hover::before {
+.profile_img_wrap .image_dropBox:hover::before {
     opacity: .8;
 }
