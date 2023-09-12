@@ -32,11 +32,11 @@ router.get('/', async (req, res) => {
 
 //@ path    POST /api/write
 //@ doc     생성 인증글
-//@ access  private
+//@ access  private populate: { path: "user._id", select: 'id name profileImage' }
 router.post('/', async (req, res) => { 
     try {
         const { user, projectId, title, content, writePublic } = req.body;
-        const write = await new Write(req.body);
+        const write = await new Write(req.body).populate({ path: "user._id", select: 'id name profileImage' });
         write.save();
         /*
             5.30 인증글을 작성하면 

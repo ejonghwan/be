@@ -24,20 +24,20 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 }
 
             
-            case "WRITE_CREATE_SUCCESS": 
-                // action  {type: "", data: ...} 
-                return {
-                    ...state,
-                    loading: false,
-                    writes: [...state.writes.concat(action.data)]
-                }
+            // case "WRITE_CREATE_SUCCESS": 
+            //     // action  {type: "", data: ...} 
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         writes: [...state.writes.concat(action.data)]
+            //     }
 
-            case "WRITE_CREATE_FAILUE" : 
-                return {
-                    ...state,
-                    loading: false,
-                    errorMessage: action.data,
-                }
+            // case "WRITE_CREATE_FAILUE" : 
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         errorMessage: action.data,
+            //     }
 
 
 

@@ -172,13 +172,12 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
             case "WRITE_CREATE_SUCCESS": 
-            // console.log('reducer', action.data)
                 return {
                     ...state,
                     loading: false,
                     project: {
                         ...state.project,
-                        // writes: []
+                        writes: [...state.project.writes.concat(action.data)]
                     },
                 }
 
