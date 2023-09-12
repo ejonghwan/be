@@ -3,10 +3,10 @@ import { HiOutlineCamera, HiOutlineXMark } from "react-icons/hi2";
 import ImageUploadForm from '../image/ImageUploadForm.js' 
 import { UserContext } from '../../context/UserContext.js';
 import Button from '../common/form/Button.js';
-import './ProfileImageEdit.css'
+import './WriteImageEdit.css'
 
 
-const ProfileImageEdit = () => {
+const WriteImageEdit = () => {
     const { state } = useContext(UserContext);
     const [profileEdit, setProfileEdit] = useState(false);
     const [uploadState, setUploadState] = useState(false);
@@ -26,7 +26,7 @@ const ProfileImageEdit = () => {
                     </div>
                     <div className='profile_btn'>
                         <Button className={'button_type4'} onClick={handleProfileImageEdit} >
-                            <span className='blind'>내 프로필 이미지 변경취소</span>
+                            <span className='blind'>인증 사진 취소</span>
                             <HiOutlineXMark />
                         </Button>
                     </div>
@@ -50,4 +50,4 @@ const ProfileImageEdit = () => {
 }
 
 
-export default memo(ProfileImageEdit);
+export default memo(WriteImageEdit);

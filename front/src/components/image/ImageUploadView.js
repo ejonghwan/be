@@ -6,11 +6,10 @@ import useImageRequest from '../../reducers/ImageRequest.js';
 import { statusCode } from '../../utils/utils.js';
 import { HiOutlineFolderOpen, HiMiniArrowPath } from "react-icons/hi2";
 import Button from '../common/form/Button.js';
-import './ImageUploadForm.css';
+import './ImageUploadView.css';
 
 
-
-const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
+const ImageUploadView = ({ path, setUploadState }) => {
     // noneSubmitBtn 있으면 서브밋버튼 숨김
     const { imageUpload } = useImageRequest();
     const [file, setFile] = useState(null);
@@ -75,16 +74,16 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
                     <input id="image" type="file" accept='image/png, image/jpg, image/*' onChange={handleInputChange}/>
                 </div>
             </div>
-            {!noneSubmitBtn && imageUrl && (
+            {/* {!noneSubmitBtn && imageUrl && (
                     <div className='profile_btn left'>
                     <Button className={'button_type4'} >
                         <span className='blind'>이미지 변경</span>
                         <HiMiniArrowPath />
                     </Button>
                 </div>
-                )}
+                )} */}
         </form>
     )
-}
+};
 
-export default ImageUploadForm;
+export default ImageUploadView;

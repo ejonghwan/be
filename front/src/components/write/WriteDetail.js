@@ -18,6 +18,8 @@ import ProjectRequest from '../../reducers/ProjectRequest';
 import ViewDate from '../common/date/ViewDate';
 import { changeViewDate } from '../../utils/utils';
 import './WriteDetail.css';
+import WriteImageForm from './WriteImageEdit';
+import ImageUploadView from '../image/ImageUploadView';
 
 
 
@@ -42,16 +44,24 @@ const WriteDetail = ({ projectId }) => {
 
     const handleCreateWriteSubmit = async e => {
         try {
-
+            e.preventDefault()
+            console.log('submit')
         } catch(err) {
             console.error(err)
         }
     }
 
+    useEffect(() => {
+        console.log(writeSubmitData)
+    }, [writeSubmitData])
+
 
     return (
         <div className='write_detail_wrap'>
             <form onSubmit={handleCreateWriteSubmit}>
+
+                <ImageUploadView />
+
                 <div className='gapt_30 gap_30'>
                     <Label htmlFor="title" content="습관 이름을 정해주세요." className={"label_type1"}/>
                     <Input 
@@ -64,7 +74,6 @@ const WriteDetail = ({ projectId }) => {
                         value={writeSubmitData.title} 
                         onChange={handleValuesChange} 
                     />
-                    <p className='g_sub_txt'>※ 습관 이름은 생성 후 수정이 불가능합니다.</p>
                 </div>
                 <div className='gap_30'>
                     <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>
@@ -79,6 +88,9 @@ const WriteDetail = ({ projectId }) => {
                     >
                         {writeSubmitData.content}
                     </Textarea>
+                </div>
+                <div className='align_c'>
+                    <Button className={"button_type2"} onClick={handleCreateWriteSubmit}>글쓰기</Button>
                 </div>
             </form>
         </div>

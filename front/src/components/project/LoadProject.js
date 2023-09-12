@@ -9,10 +9,9 @@ import { UserContext } from '../../context/UserContext';
 import UserThumItem from '../common/userThum/UserThumItem';
 import Button from '../common/form/Button';
 import IconVisual from '../common/icon/IconVisual';
-import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone, PiUserPlusDuotone, PiHandEyeDuotone, PiEyeClosedDuotone, PiNotePencilDuotone, PiRepeatDuotone } from "react-icons/pi";
+import { PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone, PiUserPlusDuotone } from "react-icons/pi";
 import LikeProject from '../project/LikeProject';
 import Tags from '../common/tag/Tags';
-import './LoadProject.css';
 import NoData from '../common/notData/NoData';
 import RequestProject from './RequestProject';
 import Popup from '../common/popup/Popup';
@@ -21,6 +20,8 @@ import UserSearch from '../search/UserSearch';
 import { changeViewDate } from '../../utils/utils';
 import ProjectPublic from './ProjectPublic';
 import ViewDate from '../common/date/ViewDate';
+import './LoadProject.css';
+import WriteDetail from '../write/WriteDetail';
 
 
 const LoadProject = ({ projectId }) => {
@@ -31,6 +32,7 @@ const LoadProject = ({ projectId }) => {
     const [friendData, setFriendData] = useState([])
     const editRef = useRef(null);
     const inviteRef = useRef(null);
+    const projectAuthRef = useRef(null);
     
     const handleLoadProject = async () => {
         try {
@@ -75,13 +77,10 @@ const LoadProject = ({ projectId }) => {
         }
     }
 
-    const handleEditState = () => {
-        editRef.current.popupOpen();
-    }
-
-    const handleFriendInvite = () => {
-        inviteRef.current.popupOpen();
-    }
+    const handleEditState = () => editRef.current.popupOpen();
+    const handleFriendInvite = () => inviteRef.current.popupOpen();
+    const handleAuthWrite = () => projectAuthRef.current.popupOpen();
+ 
 
     const handleAddFriend = async e => {
         e.preventDefault();
@@ -154,7 +153,7 @@ const LoadProject = ({ projectId }) => {
             (
                 <Fragment>
                      <div className='align_c gapt_30'>
-                        <Button className={'button_type2'}>오늘 습관 인증</Button>
+                        <Button className={'button_type2'} onClick={handleAuthWrite}>오늘 습관 인증</Button>
                     </div>
                     <div className='gapt_50'>
                         <Calender project={project} />
@@ -269,8 +268,19 @@ const LoadProject = ({ projectId }) => {
                 </div>
             )}
 
-
-            {/* 모든 유저 */}
+            {/* 인증글 쓰기 */}
+            <Popup
+                className={`popup_type_default write_detail`} 
+                isHead={true} 
+                title={`인증 글쓰기`} 
+                closeClick={() => projectAuthRef.current.popupClose()} 
+                dimd={true} 
+                ref={projectAuthRef} 
+            >
+                <WriteDetail projectId={projectId}/>
+            </Popup>
+            
+            {/* 습관 수정하기 */}
             <Popup 
                 className={`popup_type_default profile_edit`} 
                 isHead={true} 
@@ -278,12 +288,13 @@ const LoadProject = ({ projectId }) => {
                 closeClick={() => editRef.current.popupClose()} 
                 dimd={true} 
                 ref={editRef} 
-                isButton={true} 
+                // isButton={true} 
                 // buttons={[<Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>]}
-                >
+            >
                 <ProjectEdit editRef={editRef}/>
             </Popup>
 
+            {/* 친구 초대하기 */}
             <Popup 
                 className={`popup_type_default user_search_pop`} 
                 isHead={true} 
@@ -291,7 +302,7 @@ const LoadProject = ({ projectId }) => {
                 closeClick={() => inviteRef.current.popupClose()} 
                 dimd={true}  
                 ref={inviteRef}
-                >
+            >
                 <UserSearch setFriendData={setFriendData} />
                 <div className='add_friend align_c gapt_40'>
                     <Button type={'button'} className={"button_type2"} onClick={handleAddFriend}>초대 보내기</Button>
