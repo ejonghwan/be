@@ -21,7 +21,7 @@ import { changeViewDate } from '../../utils/utils';
 import ProjectPublic from './ProjectPublic';
 import ViewDate from '../common/date/ViewDate';
 import './LoadProject.css';
-import WriteDetail from '../write/WriteUpload';
+import WriteUpload from '../write/WriteUpload';
 
 
 const LoadProject = ({ projectId }) => {
@@ -277,7 +277,7 @@ const LoadProject = ({ projectId }) => {
                 dimd={true} 
                 ref={projectAuthRef} 
             >
-                <WriteDetail projectId={projectId}/>
+                <WriteUpload projectId={projectId} projectAuthRef={projectAuthRef}/>
             </Popup>
             
             {/* 습관 수정하기 */}

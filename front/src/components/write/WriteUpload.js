@@ -13,7 +13,7 @@ import './WriteUpload.css';
 
 
 
-const WriteUpload = ({ projectId }) => {
+const WriteUpload = ({ projectId, projectAuthRef }) => {
 
     // 섬넬에서도 바로바로 인증 버튼 눌러서 인증 가능하게 하기위해 플젝 아뒤는 프롭으로 전달받도록 함 
     const { state } = useContext(UserContext);
@@ -41,6 +41,7 @@ const WriteUpload = ({ projectId }) => {
             const res = await createWrite(writeSubmitData) // 글 보내기
              // 이미지가 있으면 올리고 없으면 올리지 않음. 동기적으로 글 생성 후 그 아이디 받아서 다시 요청
             if( imageData.file ) { await imageUpload({ ...imageData, _id: res._id }); }
+            projectAuthRef.current.popupClose()
             navigate(`/write/detail/${res._id}`)
         } catch(err) {
             console.error(err)
