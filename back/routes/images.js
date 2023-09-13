@@ -11,11 +11,8 @@ import Write from '../models/write.js';
 import upload from '../middleware/imageUpload.js';
 import { auth } from '../middleware/auth.js';
 
-
 const router = express.Router();
 const unlink = util.promisify(fs.unlink);
-
-
 
 // @ POST /api/images/:path/:id
 // @ public

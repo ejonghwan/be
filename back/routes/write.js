@@ -30,6 +30,24 @@ router.get('/', async (req, res) => {
 })
 
 
+//@ path    GET /api/write/:writeId
+//@ doc     로드 인증글 (상세)
+//@ access  private
+router.get('/:writeId', async (req, res) => {
+    try {
+        const { writeId } = req.params;
+        const write = await Write.findById(writeId).populate([
+            { path: 'user._id', select: 'id profileImage email name createdAt' },
+            // { path: 'likes._id', select: 'id profileImage email name createdAt' }, //이거값 확인
+            { path: 'comments', select: '_id' }, // 이거 값 확인
+        ]);
+        res.status(200).json(write)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
 //@ path    POST /api/write
 //@ doc     생성 인증글
 //@ access  private populate: { path: "user._id", select: 'id name profileImage' }
