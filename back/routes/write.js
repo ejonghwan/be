@@ -50,11 +50,14 @@ router.get('/:writeId', async (req, res) => {
 
 //@ path    POST /api/write
 //@ doc     생성 인증글
-//@ access  private populate: { path: "user._id", select: 'id name profileImage' }
+//@ access  private 
 router.post('/', async (req, res) => { 
     try {
-        const { user, projectId, title, content, writePublic } = req.body;
-        const write = await new Write(req.body).populate({ path: "user._id", select: 'id name profileImage' });
+        const { user, project, title, content, writePublic } = req.body;
+        const write = await new Write(req.body).populate([
+            { path: "user._id", select: 'id name profileImage' },
+            { path: "project._id", select: 'title content' }
+        ]);
         write.save();
         /*
             5.30 인증글을 작성하면 
@@ -79,8 +82,8 @@ router.post('/', async (req, res) => {
 
         const date = new Date();
         const nowDate = `${date.getFullYear()}-` + `${date.getMonth() + 1}-` + `${date.getDate()}`;
-        const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": user._id } ] }, )
-        const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
+        const isConstructor = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id } ] }, )
+        const isConstructorDate = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
     
 
         // #### constructor ####  - 230621 테스트완료 (생성자 + 인스유저에 모두 있을 경우도 완료)
@@ -98,7 +101,7 @@ router.post('/', async (req, res) => {
         // 오늘 쓴 인증글이 없다면 필드 date count 추가
         if(isConstructor && !isConstructorDate) {
             console.log('c 인증글 없음!')
-            await Project.findByIdAndUpdate(projectId, 
+            await Project.findByIdAndUpdate(project._id, 
                 { $push: { "constructorUser.days": { date: nowDate} } },
                 { new: true }
             )
@@ -109,7 +112,7 @@ router.post('/', async (req, res) => {
 
         // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
         const isInstance = await Project.findOne(
-            { $and: [{ _id: projectId }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
+            { $and: [{ _id: project._id }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
             ) 
 
 
@@ -133,7 +136,7 @@ router.post('/', async (req, res) => {
         // 오늘 쓴 인증글이 없다면 필드 date count 추가
         if(!isConstructor && !isInstance) {
             console.log('인증글 없음!')
-            await Project.findByIdAndUpdate(projectId, 
+            await Project.findByIdAndUpdate(project._id, 
                 { $push: { "instanceUser.$[ele].days": { date: nowDate} } },
                 { arrayFilters: [{"ele._id": user._id}], new: true }
             )
@@ -143,7 +146,7 @@ router.post('/', async (req, res) => {
 
         await Promise.all([
             User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
-            Project.updateOne({_id: projectId}, { $push: { writes: write._id } }, { new: true }),
+            Project.updateOne({_id: project._id}, { $push: { writes: write._id } }, { new: true }),
         ])
         res.status(201).json(write);
 

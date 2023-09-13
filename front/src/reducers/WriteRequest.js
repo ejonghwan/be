@@ -13,11 +13,11 @@ const WriteRequest = () => {
 
     const createWrite = async data => {
         try {
-            const { user, projectId, title, content } = data;
+            const { user, project, title, content } = data;
             if(!title || typeof title !== 'string') throw new Error('넘어온 제목값이 잘못되었습니다');
             if(!content || typeof content !== 'string') throw new Error('넘어온 내용값이 잘못되었습니다');
             if(!user || typeof user !== 'object') throw new Error('넘어온 유저값이 잘못되었습니다');
-            if(!projectId || typeof projectId !== 'string') throw new Error('넘어온 플젝 아이디값이 잘못되었습니다');
+            if(!project || typeof project !== 'object') throw new Error('넘어온 플젝 아이디값이 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 

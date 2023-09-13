@@ -25,7 +25,7 @@ const WriteUpload = ({ projectId, projectAuthRef }) => {
 
     const [writeSubmitData, setWriteSubmitData] = useState({ 
         user: { _id: state.user._id, name: state.user.name },
-        projectId: projectId,
+        project: { _id: projectId },
         title: '',
         content: '',
     });
