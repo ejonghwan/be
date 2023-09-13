@@ -48,12 +48,6 @@ const WriteUpload = ({ projectId, projectAuthRef }) => {
         }
     }, 1000)
 
-
-    // useEffect(() => {
-    //     console.log(writeSubmitData)
-    // }, [writeSubmitData])
-
-
     return (
         <div className='write_detail_wrap'>
 

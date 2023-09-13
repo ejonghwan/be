@@ -58,6 +58,22 @@
 }
 
 
+.user_thum_wrap.horizontal_type1 > li {
+    padding: 0;
+    display: inline-flex;
+}
+
+.user_thum_wrap.horizontal_type1 .user_thum_imgwrap {
+    line-height: 1;
+}
+
+
+.user_thum_wrap.horizontal_type1 .user_thum_imgwrap > img {
+    width: 30px;
+    height: 30px;
+}
+
+
 .user_button_wrap {
     display: flex;
     gap: 5px;

@@ -5,7 +5,7 @@ import Popup from '../popup/Popup';
 import './UserThum.css';
 
 
-const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, buttonName buttonType, onClick*/ buttons = [], align = 'horizon', imgStyle}) => {
+const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, buttonName buttonType, onClick*/ buttons = [], align = 'horizon', imgStyle, isId = true}) => {
 
     const [selectIdx, setSelectIdx] = useState(0)
     const userInfoRef = useRef(null);
@@ -26,7 +26,7 @@ const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, 
                         {isText && (
                             <div className='user_thum_txtwrap'>
                                 <Button type={'button'} className={'button_reset hover_type3'} onClick={() => handleIndex(idx)}>
-                                    <span className='user_thum_id'>{user._id.id}</span>
+                                    {isId && <span className='user_thum_id'>{user._id.id}</span>}
                                     <span className='user_thum_name'>{user._id.name} 님</span>
                                 </Button>
                             </div>

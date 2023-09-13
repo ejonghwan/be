@@ -1,13 +1,21 @@
 import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { WriteContext } from '../../context/WriteContext';
+import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
 import './WriteDetail.css';
 import LikeIcon from '../common/icon/LikeIcon';
+import CommentIcon from '../common/icon/CommentIcon';
+import WriteLike from './WriteLike';
+import UserThumItem from '../common/userThum/UserThumItem';
+import ViewDate from '../common/date/ViewDate';
+import { changeViewDate } from '../../utils/utils';
+
 
 const WriteDetail = ({ writeId }) => {
 
     const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext)
+    const { state } = useContext(UserContext)
     const { loadWrite } = WriteRequest();
 
     const handleLoadWrite = async () => {
@@ -26,13 +34,27 @@ const WriteDetail = ({ writeId }) => {
             <div className='write_header'>
                 <div>
                     <Link to={`/project/detail/${writes.project?._id._id}`}>{writes.project?._id.title}</Link>
-                    <h3>{writes.title}</h3>
+                    <h3 className='write_title'>{writes.title}</h3>
                 </div>
                 <div>
-                    <LikeIcon count={writes.likeCount}/>
-                  
-                    <span>{writes.project?._id.title} 좋아요한 유저 사진, 갯수</span>
-                    <span>{writes.project?._id.title} 코멘트 갯수</span>
+                    <div className=''>
+                        <UserThumItem 
+                            users={[writes.user]} 
+                            isText={true} 
+                            isId={false}
+                            className={'horizontal_type1'} 
+                        />
+                        
+                         <ViewDate dates={[
+                            {txt: '작성일', date: changeViewDate(writes.createdAt, 'minute')},
+                            {txt: '수정일 ', date: changeViewDate(writes.updatedAt, 'minute')},
+                        ]} />
+                    </div>
+                    <div>
+                        <WriteLike writeId={writeId} userId={state.user._id} writeLikeLen={writes.likeCount} />
+                        <CommentIcon count={writes.likeCount} />
+                    </div>
+                    
                 </div>
             </div>
 

@@ -3,7 +3,7 @@ import './LikeIcon.css'
 
 const LikeIcon = ({ count }) => {
     return (
-        <span className='hart_ico'>
+        <span className='like_ico'>
             <PiHeartDuotone />
             <span className='count'>{count}</span>
         </span>
