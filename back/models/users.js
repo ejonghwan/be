@@ -30,7 +30,8 @@ const UserSchema = mongoose.Schema({
      recomments: [{ type: Types.ObjectId, ref: 'recomment'}],
      likePost: [{ type: Types.ObjectId, ref: 'write' }],
      likeProject: [{ type: Types.ObjectId, ref: 'project' }],
-     prevSearch: [{ search: { type: String }, date: { type: String } }]
+     prevSearch: [{ search: { type: String }, date: { type: String } }],
+     darkMode: [{ type: String, default: 'light' }]
 }, {
     timestamps: true,
 })
