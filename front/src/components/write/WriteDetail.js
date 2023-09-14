@@ -1,4 +1,4 @@
-import { useEffect, useContext, Fragment } from 'react';
+import { useEffect, useContext, Fragment, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { WriteContext } from '../../context/WriteContext';
 import { UserContext } from '../../context/UserContext';
@@ -11,7 +11,9 @@ import UserThumItem from '../common/userThum/UserThumItem';
 import ViewDate from '../common/date/ViewDate';
 import { changeViewDate } from '../../utils/utils';
 import Nodata from '../common/notData/NoData';
-import { PiGhostDuotone } from "react-icons/pi";
+import { PiGhostDuotone, PiGearDuotone } from "react-icons/pi";
+import Button from '../common/form/Button';
+import Popup from '../common/popup/Popup';
 
 
 
@@ -20,6 +22,10 @@ const WriteDetail = ({ writeId }) => {
     const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext)
     const { state } = useContext(UserContext)
     const { loadWrite } = WriteRequest();
+    const editWriteRef = useRef(null);
+
+    const handleWriteEditState = () => editWriteRef.current.popupOpen();
+
 
     const handleLoadWrite = async () => {
         WriteDispatch({ type: "WRITE_REQUEST" })
@@ -58,6 +64,10 @@ const WriteDetail = ({ writeId }) => {
                                 </div>
                                 <div className='write_header_ico_wrap'>
                                     <WriteLike writeId={writeId} userId={state.user._id} writeLikeLen={writes.likeCount} />
+                                    <Button className={'button_type4 ico_hover_type2'} onClick={handleWriteEditState}>
+                                        <PiGearDuotone />
+                                        <span className='blind'>인증글 수정</span>
+                                    </Button>
                                     <CommentIcon count={writes.commentCount} />
                                 </div>
                                 
@@ -85,6 +95,20 @@ const WriteDetail = ({ writeId }) => {
                     </div>
                 )
             }
+
+             {/* 글 수정하기 */}
+             <Popup 
+                className={`popup_type_default profile_edit`} 
+                isHead={true} 
+                title={`글 수정`} 
+                closeClick={() => editWriteRef.current.popupClose()} 
+                dimd={true} 
+                ref={editWriteRef} 
+                // isButton={true} 
+                // buttons={[<Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>]}
+            >
+                {/* <ProjectEdit editWriteRef={editWriteRef}/> */}
+            </Popup>
         </div>
     );
 };
