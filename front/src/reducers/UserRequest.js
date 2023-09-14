@@ -143,7 +143,7 @@ const UserRequest = () => {
                 },
                 withCredentials: true,
             };
-            await localStorage.removeItem('X-access-token');
+            localStorage.removeItem('X-access-token');
             const user = await axios.get(`${host}/api/users/logout`, config);
             dispatch({ type: "USER_LOGOUT_SUCCESS" });
             return user;

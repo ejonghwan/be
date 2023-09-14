@@ -13,7 +13,7 @@ export const UserIntialState = {
     authNumberErrorMessage: '',
     imageErrorMessage: '',
     globalErrorMessage: '',
-    loading: true,
+    loading: false,
     user: {},
 }
 
@@ -40,6 +40,13 @@ const UserReducer = (state = UserIntialState, action) => {
                     imageErrorMessage: '',
                     globalErrorMessage: '',
                 }
+
+            case "LOADING_CLEAR" : 
+                return {
+                    ...state,
+                    loading: false,
+                }
+
 
             
             case "USER_SIGNUP_SUCCESS": 

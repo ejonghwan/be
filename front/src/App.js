@@ -26,15 +26,15 @@ const App = () => {
       const accToken = localStorage.getItem('X-access-token');
       if(!accToken) return;
 
-      dispatch({ type: "LOADING" });
-      const user = await getUser(); 
-      const data = user.data;
+      // 로그아웃/시간 제외 예상치못하게 로그아웃되어 있는 경우 무한로딩 뜨는 문제해결
+      if(!state.isLogged) dispatch({ type: "LOADING_CLEAR" })
 
-      // if(!state.isLogged) { localStorage.removeItem('X-access-token') };
+      dispatch({ type: "LOADING" });
+      await getUser(); 
 
     } catch(err) {
       console.error('catch?', err);
-    };
+    } 
   };
 
   const userEmailLoad = async () => { //메일로 유입되는 유저는 acc토큰 넘겨줌
@@ -51,6 +51,7 @@ const App = () => {
       console.error(err)
     }
   }
+  
 
   useEffect(() => {
     userLoad()
