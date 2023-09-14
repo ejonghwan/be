@@ -23,7 +23,11 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     errorMessage: '',
                 }
 
-            
+            case "WRITE_LOADING_CLEAR" : 
+                return {
+                    ...state,
+                    loading: false,
+                }
             // case "WRITE_CREATE_SUCCESS": 
             //     // action  {type: "", data: ...} 
             //     return {

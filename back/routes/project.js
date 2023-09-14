@@ -424,7 +424,7 @@ router.patch('/unlike', auth, async (req, res) => {
         const { userId, projectId } = req.body;
 
         // 다른사람 좋아요가 1개라도 있으면 상관없는데 0개일땐 -1로 감..
-        // 근데 위에껀 상관없음 프론트에서 어차피 0개 인상태에서 시작하기 때문.
+        // 근데 좋아요는 상관없음 프론트에서 어차피 0개 인상태에서 시작하기 때문.
         const likeUser = await Project.find({_id: projectId}).select("likeUser");
         for(let i = 0; i < likeUser[0].likeUser.length; i++) {
             if(likeUser[0].likeUser[i].equals(userId)) {
