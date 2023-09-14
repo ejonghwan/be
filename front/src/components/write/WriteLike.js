@@ -15,7 +15,8 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
     const { likeWrite, unLikeWrite } = WriteRequest();
     const { state, dispatch } = useContext(UserContext);
     const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
-    const [like, setLike] = useState(null)
+    const [like, setLike] = useState(() => writes.likes?.map(likeUser => likeUser === state.user._id ? true : false))
+    // const [like, setLike] = useState(() => writes.likes)
 
     const handleWriteLike = e => {
         e.preventDefault();
@@ -53,10 +54,15 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
 
 
     useEffect(() => {
-        writes.likes && writes.likes.map(likeUser => {
-            if(likeUser === state.user._id) setLike(true)
-            if(likeUser !== state.user._id) setLike(false)
-        })
+
+        // 이거 왜 여기서 setLike하면 안되는지 알아내야함
+        // console.log(writes.likes)
+        // writes.likes.map(likeUser => {
+        //     if(likeUser === state.user._id) setLike(false)
+        //     if(likeUser !== state.user._id) setLike(false)
+        // })
+        // console.log(state.user._id, writes.likes, like)
+
     }, [writes.likes]);
 
     return (

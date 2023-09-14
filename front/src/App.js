@@ -27,7 +27,7 @@ const App = () => {
       if(!accToken) return;
 
       // 로그아웃/시간후로그아웃 제외 예상치못하게 로그아웃되어 있는 경우 무한로딩 뜨는 문제해결
-      if(!state.isLogged) dispatch({ type: "LOADING_CLEAR" })
+       // if(!state.isLogged) dispatch({ type: "LOADING_CLEAR" })
 
       dispatch({ type: "LOADING" });
       await getUser(); 

@@ -261,6 +261,14 @@ router.delete('/', async (req, res) => {
 router.patch('/like', async (req, res) => {
     try {
         const { userId, writeId } = req.body;
+
+        const likeUser = await Write.find({_id: writeId}).select("likes");
+        for(let i = 0; i < likeUser[0].likes.length; i++) {
+            if(likeUser[0].likes[i].equals(userId)) {
+                return res.status(400).json({ message: "이미 좋아요를 추가했습니다." })
+            } 
+        }
+
         const [ write ] = await Promise.all([
             Write.findByIdAndUpdate(writeId, { $push: {likes: [userId] }, $inc: { likeCount: 1 } }, { new: true }),
             User.updateOne({_id: userId}, { $push: {likePost: writeId } }, { new: true }),

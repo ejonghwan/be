@@ -58,7 +58,7 @@ const WriteDetail = ({ writeId }) => {
                                 </div>
                                 <div className='write_header_ico_wrap'>
                                     <WriteLike writeId={writeId} userId={state.user._id} writeLikeLen={writes.likeCount} />
-                                    <CommentIcon count={writes.likeCount} />
+                                    <CommentIcon count={writes.commentCount} />
                                 </div>
                                 
                             </div>
