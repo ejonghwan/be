@@ -35,7 +35,7 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
     // like state는 바로 번경되더라도 실제 요청은 1.5초 후에 클릭되는 상태에 따라 가게 debouce 작업. 
     const likeApi = useCallback(_debounce(async (like) => {
         try {
-            dispatch({ type: "LOADING" })
+            ProjectDispatch({ type: "PROJECT_REQUEST" })
             if(like) {
                 const resUnlike = await projectUnlike({ projectId, userId });
                 if(resUnlike.data) {

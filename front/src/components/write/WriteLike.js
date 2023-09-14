@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect, useCallback, Fragment } from 'react';
 import { PiStarDuotone, PiHeartDuotone } from "react-icons/pi";
 import { UserContext } from '../../context/UserContext';
-import UserRequest from '../../reducers/UserRequest';
+import WriteRequest from '../../reducers/WriteRequest';
 import Button from '../common/form/Button';
 import _debounce from 'lodash.debounce';
 import InfoState from '../common/infoState/InfoState';
@@ -10,9 +10,9 @@ import { WriteContext } from '../../context/WriteContext';
 
 const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
 
-    const { writeLike, writeUnlike } = UserRequest();
+    const { likeWrite, unLikeWrite } = WriteRequest();
     const { state, dispatch } = useContext(UserContext);
-    const { WriteState: { writes }, ProjectDispatch } = useContext(WriteContext);
+    const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
     const [like, setLike] = useState(null)
 
     const handleWriteLike = e => {
@@ -35,17 +35,17 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
     // like state는 바로 번경되더라도 실제 요청은 1.5초 후에 클릭되는 상태에 따라 가게 debouce 작업. 
     const likeApi = useCallback(_debounce(async (like) => {
         try {
-            dispatch({ type: "LOADING" })
+            WriteDispatch({ type: "WRITE_REQUEST" })
             if(like) {
-                const resUnlike = await writeUnlike({ writeId, userId });
+                const resUnlike = await unLikeWrite({ writeId, userId });
                 if(resUnlike.data) {
-                    ProjectDispatch({ type: "WRITE_LIKE_DEC_SUCCESS" })
+                    WriteDispatch({ type: "WRITE_LIKE_DEC_SUCCESS" })
                     setLike(!like)
                 }
             } else {
-                const resLikeawait = await writeLike({ writeId, userId });
+                const resLikeawait = await likeWrite({ writeId, userId });
                 if(resLikeawait.data) {
-                    ProjectDispatch({ type: "WRITE_LIKE_INC_SUCCESS" })
+                    WriteDispatch({ type: "WRITE_LIKE_INC_SUCCESS" })
                     setLike(!like)
                 }
             }
@@ -62,11 +62,20 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
         //     if(project === writeId) setLike(true)
         //     if(project !== writeId) setLike(false)
         // })
-    }, []);
+
+        writes.likes && writes.likes.map(likeUser => {
+            console.log('??', likeUser)
+            if(likeUser === state.user._id) setLike(true)
+            if(likeUser !== state.user._id) setLike(false)
+        })
+
+       
+    }, [writes.likes]);
 
     return (
         <Fragment>
             <span className={`write_like_wrap ${className}`}>
+                {console.log('like????', like)}
                 {like && (
                     <Button type={'button'} className={`button_type4 write_like ico_hover_type1 like ${like && 'active'}`} onClick={handleWriteUnlike}>
                         {like && <InfoState text={'좋아요!'} /> }

@@ -1,33 +1,33 @@
 
 
 
-.project_like_wrap .project_like.active {
+.write_like_wrap .write_like.active {
     background: #fff0bf;
 }
-.project_like_wrap .project_like.active > svg{
+.write_like_wrap .write_like.active > svg{
     /* color: #f2ff02; */
     color: var(--point-color2);
 }
 
-.project_like_wrap .like_count {
+.write_like_wrap .like_count {
     color: var(--text-color2);   
     margin-left: 5px;
 }
 
-.project_like_wrap + span {
+.write_like_wrap + span {
     margin-right: 10px;
 }
 
 
 /* 디테일이 붙은건 포지션붙임 */
-/* .project_like_wrap.detail {
+/* .write_like_wrap.detail {
     position: absolute;
     bottom: -5px;
     left: calc(50% + 33px);
     z-index: 1;
 }
 
-.project_like_wrap.detail .project_like {
+.write_like_wrap.detail .write_like {
     border: 5px solid var(--text-color-white)
 } */
 
