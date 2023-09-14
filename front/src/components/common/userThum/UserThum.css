@@ -61,6 +61,8 @@
 .user_thum_wrap.horizontal_type1 > li {
     padding: 0;
     display: inline-flex;
+    max-width: inherit;
+    flex: 0 0 auto;
 }
 
 .user_thum_wrap.horizontal_type1 .user_thum_imgwrap {

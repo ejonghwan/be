@@ -56,6 +56,48 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 }
 
 
+            case "WRITE_LIKE_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    // writes: action.data
+                }
+
+            case "WRITE_LIKE_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                    errorMessage: action.data,
+                }
+
+            case "WRITE_UNLIKE_SUCCESS": 
+                return {
+                    ...state,
+                    loading: false,
+                    // writes: action.data
+                }
+
+            case "WRITE_UNLIKE_FAILUE" : 
+                return {
+                    ...state,
+                    loading: false,
+                    errorMessage: action.data,
+                }
+
+            case "WRITE_LIKE_INC_SUCCESS": 
+                return {
+                    ...state,
+                    writes: {...state.writes, likeCount: state.writes.likeCount + 1}
+                }
+
+            case "WRITE_LIKE_DEC_SUCCESS": 
+                return {
+                    ...state,
+                    writes: {...state.writes, likeCount: state.writes.likeCount + 1}
+                }
+
+
+
 
             default: return { state }
     }

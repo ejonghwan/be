@@ -23,10 +23,10 @@ const App = () => {
   // 유저 새로고침
   const userLoad = async () => {
     try {
-      const accToken = await localStorage.getItem('X-access-token');
+      const accToken = localStorage.getItem('X-access-token');
       if(!accToken) return;
 
-      dispatch({ type: "LOADING", loadingMessage: "" });
+      dispatch({ type: "LOADING" });
       const user = await getUser(); 
       const data = user.data;
 
@@ -41,7 +41,7 @@ const App = () => {
     try {
       if(accToken && valid) {
           if(!accToken) throw new Error('is not acctoken');
-          dispatch({ type: "LOADING", loadingMessage: "" })
+          dispatch({ type: "LOADING" })
           const user = await getUser(accToken);
           // searchParams.delete('valid') //이거 왜 안되지 ..
           // searchParams.delete('accToken')
@@ -56,14 +56,21 @@ const App = () => {
     userLoad()
     userEmailLoad()
     dispatch({type: "ERROR_LOADING_CLEAR"})
-    
   }, [])
+
+  useEffect(() => {
+    console.log('loading?', state.loading)
+  }, [state.loading])
 
 
  
   return (
       <div className="App"> 
-        <RoutesPage />
+        {state.loading ? (
+          <div>파이어베이스 로드 참고하기</div>
+        ) : (
+          <RoutesPage />
+        )}
       </div>
   );
 }

@@ -1,21 +1,21 @@
 import { useState, useContext, useEffect, useCallback, Fragment } from 'react';
 import { PiStarDuotone, PiHeartDuotone } from "react-icons/pi";
 import { UserContext } from '../../context/UserContext';
-import { ProjectContext } from '../../context/ProjectContext';
 import UserRequest from '../../reducers/UserRequest';
 import Button from '../common/form/Button';
 import _debounce from 'lodash.debounce';
 import InfoState from '../common/infoState/InfoState';
 import './WriteLike.css';
+import { WriteContext } from '../../context/WriteContext';
 
 const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
 
-    const { projectLike, projectUnlike }  = UserRequest();
+    const { writeLike, writeUnlike } = UserRequest();
     const { state, dispatch } = useContext(UserContext);
-    const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
+    const { WriteState: { writes }, ProjectDispatch } = useContext(WriteContext);
     const [like, setLike] = useState(null)
 
-    const handleProjectLike = e => {
+    const handleWriteLike = e => {
         e.preventDefault();
         if(!state.isLogged) return alert('좋아요를 하려면 로그인을 먼저 해주세요.')
         e.preventDefault();
@@ -23,7 +23,7 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
         setLike(!like)
     } 
 
-    const handleProjectUnlike = async e => {
+    const handleWriteUnlike = async e => {
         e.preventDefault();
         if(!state.isLogged) return alert('좋아요를 취소 하려면 로그인을 먼저 해주세요.')
         e.preventDefault();
@@ -37,15 +37,15 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
         try {
             dispatch({ type: "LOADING" })
             if(like) {
-                const resUnlike = await projectUnlike({ writeId, userId });
+                const resUnlike = await writeUnlike({ writeId, userId });
                 if(resUnlike.data) {
-                    ProjectDispatch({ type: "PROJECT_LIKE_DEC_SUCCESS" })
+                    ProjectDispatch({ type: "WRITE_LIKE_DEC_SUCCESS" })
                     setLike(!like)
                 }
             } else {
-                const resLikeawait = await projectLike({ writeId, userId });
+                const resLikeawait = await writeLike({ writeId, userId });
                 if(resLikeawait.data) {
-                    ProjectDispatch({ type: "PROJECT_LIKE_INC_SUCCESS" })
+                    ProjectDispatch({ type: "WRITE_LIKE_INC_SUCCESS" })
                     setLike(!like)
                 }
             }
@@ -58,28 +58,28 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
 
     useEffect(() => {
         // 렌더링 시작 시 넘어온 likeProject값과 스토어 내정보 likeProject가 같으면 상태변경
-        state.user.likeProject.map(project => {
-            if(project === writeId) setLike(true)
-            if(project !== writeId) setLike(false)
-        })
+        // state.user.likeProject.map(project => {
+        //     if(project === writeId) setLike(true)
+        //     if(project !== writeId) setLike(false)
+        // })
     }, []);
 
     return (
         <Fragment>
-            <span className={`project_like_wrap ${className}`}>
+            <span className={`write_like_wrap ${className}`}>
                 {like && (
-                    <Button type={'button'} className={`button_type4 project_like ico_hover_type1 like ${like && 'active'}`} onClick={handleProjectUnlike}>
+                    <Button type={'button'} className={`button_type4 write_like ico_hover_type1 like ${like && 'active'}`} onClick={handleWriteUnlike}>
                         {like && <InfoState text={'좋아요!'} /> }
                         <PiHeartDuotone />
-                        <span className='blind'>이 습관 즐겨찾기 및 좋아요</span>
+                        <span className='blind'>이 글 좋아요</span>
                     </Button>
                 )}
 
                 {!like && (
-                    <Button type={'button'} className={`button_type4 project_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleProjectLike}>
+                    <Button type={'button'} className={`button_type4 write_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleWriteLike}>
                         {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
                         <PiHeartDuotone />
-                        <span className='blind'>이 습관 즐겨찾기 및 좋아요 취소</span>
+                        <span className='blind'>이 글 좋아요 취소</span>
                     </Button>
                 )}
                  <span className='like_count'>{writeLikeLen}</span>

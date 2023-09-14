@@ -13,7 +13,7 @@ export const UserIntialState = {
     authNumberErrorMessage: '',
     imageErrorMessage: '',
     globalErrorMessage: '',
-    loading: '',
+    loading: true,
     user: {},
 }
 
@@ -22,12 +22,11 @@ const UserReducer = (state = UserIntialState, action) => {
     switch(action.type) {
             case "LOADING" : return {
                 ...state,
-                loading: action.loadingMessage,
+                loading: true,
             }
             case "ERROR_LOADING_CLEAR" : 
                 return {
                     ...state,
-                    loading: '',
                     authErrorMessage: '',
                     loginErrorMessage: '',
                     signupErrorMessage: '',
@@ -47,13 +46,13 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     signupErrorMessage: '',
-                    loading: '',
+                    loading: false,
                 }
 
             case "USER_SIGNUP_FAILUE" : 
                 return {
                     ...state,
-                    loading: '',
+                    loading: false,
                     signupErrorMessage: action.data,
                 }
 
@@ -61,7 +60,7 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_LOAD_SUCCESS": 
                 return {
                     ...state,
-                    loading: '',
+                    loading: false,
                     user: action.data,
                     isLogged: true,
                 }
@@ -69,7 +68,7 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_LOAD_FAILUE" : 
                 return {
                     ...state,
-                    loading: '',
+                    loading: false,
                     isLogged: false,
                 }
 
@@ -78,7 +77,7 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     loginErrorMessage: '',
-                    loading: '',
+                    loading: false,
                     user: action.data,
                     isLogged: true,
                 }
@@ -86,7 +85,7 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_LOGIN_FAILUE" : 
                 return {
                     ...state,
-                    loading: '',
+                    loading: false,
                     isLogged: false,
                     loginErrorMessage: action.data,
                 }
@@ -95,7 +94,7 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_LOGOUT_SUCCESS": 
                 return {
                     ...state, 
-                    loading: '',
+                    loading: false,
                     user: {},
                     isLogged: false,
                 }
@@ -105,7 +104,7 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     infoEditErrorMessage: '',
-                    loading: '',
+                    loading: false,
                     user: {
                         ...state.user,
                         name: action.data.name,
@@ -117,7 +116,7 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_USER_INFO_EDIT_FAILUE" : 
                 return {
                     ...state,
-                    loading: '',
+                    loading: false,
                     infoEditErrorMessage: action.data,
                 }
 
@@ -126,7 +125,7 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     mailEditErrorMessage: '',
-                    loading: '',
+                    loading: false,
                     user: {
                         ...state.user,
                         email: action.data.email,
@@ -136,7 +135,7 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_MAIL_EDIT_FAILUE" : 
                 return {
                     ...state,
-                    loading: '',
+                    loading: false,
                     mailEditErrorMessage: action.data,
                 }
 
@@ -145,13 +144,13 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     authErrorMessage: '',
-                    loading: '',
+                    loading: false,
                 }
 
             case "USER_MAIL_AUTH_FAILUE" : 
                 return {
                     ...state,
-                    loading: '',
+                    loading: false,
                     mailAuthErrorMessage: action.data,
                 }
 
@@ -160,13 +159,13 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     authNumberErrorMessage: '',
-                    loading: '',
+                    loading: false,
                 }
 
             case "AUTH_NUMBER_FAILUE" : 
                 return {
                     ...state,
-                    loading: '',
+                    loading: false,
                     authNumberErrorMessage: action.data,
                 }
             
@@ -177,13 +176,13 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     passwordEditErrorMessage: '',
-                    loading: '',
+                    loading: false,
                 }
 
             case "USER_PASSWORD_EDIT_FAILUE" : 
                 return {
                     ...state,
-                    loading: '',
+                    loading: false,
                     passwordEditErrorMessage: action.data,
                 }
 
@@ -191,7 +190,7 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_PROFILEIMAGE_EDIT_SUCCESS": 
                 return {
                     ...state,
-                    loading: '', 
+                    loading: false, 
                     user: {
                         ...state.user,
                         profileImage: action.data
@@ -201,7 +200,7 @@ const UserReducer = (state = UserIntialState, action) => {
             case "IMAGE_FAILUE": 
                 return {
                     ...state,
-                    loading: '', 
+                    loading: false, 
                     imageErrorMessage: action.data,
                 }
 
