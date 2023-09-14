@@ -38,7 +38,7 @@ const WriteDetail = ({ writeId }) => {
                 || 
                 state.user.projects?.filter(project => project._id === writes.project?._id._id).length > 0 ? (
                     <Fragment>
-                            <div className='write_header'>
+                        <div className='write_header'>
                             <div className='write_header_item'>
                                 <Link to={`/project/detail/${writes.project?._id._id}`} className='project_link'>{writes.project?._id.title}</Link>
                                 <h3 className='write_title gap_20'>{writes.title}</h3>
@@ -65,11 +65,14 @@ const WriteDetail = ({ writeId }) => {
                         </div>
                         <div className='write_body'>
                             {writes.writeImages?.map(image => (
-                                <div className="" key={image.key}>
+                                <div className="write_img_wrap" key={image.key}>
                                     <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${image.key}`} alt="인증 사진" />
                                 </div>
                             ))}
                             <div>{writes.content}</div>
+                        </div>
+                        <div className='write_bottom'>
+                            comment
                         </div>
                     </Fragment>
                 ) : (

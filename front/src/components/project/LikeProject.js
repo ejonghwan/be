@@ -69,7 +69,7 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
             <span className={`project_like_wrap ${className}`}>
                 {like && (
                     <Button type={'button'} className={`button_type4 project_like ico_hover_type1 like ${like && 'active'}`} onClick={handleProjectUnlike}>
-                        {like && <InfoState text={'좋아요 취소!'} /> }
+                        {like && <InfoState text={'좋아요!'} /> }
                         <PiHeartDuotone />
                         <span className='blind'>이 습관 즐겨찾기 및 좋아요 취소</span>
                     </Button>
@@ -77,7 +77,7 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
 
                 {!like && (
                     <Button type={'button'} className={`button_type4 project_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleProjectLike}>
-                        {!like && like !== null && <InfoState text={'좋아요!'} /> }
+                        {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
                         <PiHeartDuotone />
                         <span className='blind'>이 습관 즐겨찾기 및 좋아요</span>
                     </Button>

@@ -13,9 +13,9 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
 
 
     const { likeWrite, unLikeWrite } = WriteRequest();
-    const { state, dispatch } = useContext(UserContext);
+    const { state } = useContext(UserContext);
     const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
-    const [like, setLike] = useState(() => writes.likes?.map(likeUser => likeUser === state.user._id ? true : false)[0])
+    const [like, setLike] = useState(() => writes.likes?.filter(likeUser => likeUser === state.user._id).length > 0 ? true : false)
 
     const handleWriteLike = e => {
         e.preventDefault();
@@ -71,10 +71,9 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
     return (
         <Fragment>
             <span className={`write_like_wrap ${className}`}>
-                {console.log('???', like)}
                 {like && (
                     <Button type={'button'} className={`button_type4 write_like ico_hover_type1 like ${like && 'active'}`} onClick={handleWriteUnlike}>
-                        {like && <InfoState text={'좋아요 취소!'} /> }
+                        {like && <InfoState text={'좋아요!'} /> }
                         <PiHeartDuotone />
                         <span className='blind'>이 글 좋아요 취소</span>
                     </Button>
@@ -82,7 +81,7 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
 
                 {!like && (
                     <Button type={'button'} className={`button_type4 write_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleWriteLike}>
-                        {!like && like !== null && <InfoState text={'좋아요!'} /> }
+                        {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
                         <PiHeartDuotone />
                         <span className='blind'>이 글 좋아요</span>
                     </Button>

@@ -1,11 +1,29 @@
 .write_wrap .write_info {
     display: flex;
-    
+    align-items: center;
+    justify-content: space-between;
 }
 
 
+.write_wrap .write_header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-color2);
+    margin-bottom: 30px;
+}
+
+.write_wrap .write_bottom {
+    padding-top: 10px;
+    border-top: 1px solid var(--line-color2);
+    margin-top: 30px;
+}
+
 .write_wrap .write_title {
     font-size: 2.5rem;
+}
+
+.write_wrap .write_body .write_img_wrap {
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .write_wrap .project_link {
@@ -14,4 +32,11 @@
 
 .write_wrap .no_data .project_link {
     font-size: 1.8rem;
+}
+
+
+.write_wrap .write_header_ico_wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

@@ -1,0 +1,9 @@
+.comment_ico {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+
+.comment_ico > svg {
+    margin-right: 5px;
+}

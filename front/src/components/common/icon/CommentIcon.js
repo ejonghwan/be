@@ -1,5 +1,5 @@
-import React from 'react';
 import { PiChatCircleDotsDuotone  } from "react-icons/pi";
+import './CommentIcon.css';
 
 const CommentIcon = ({ count }) => {
     return (
