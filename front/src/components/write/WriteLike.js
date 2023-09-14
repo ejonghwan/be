@@ -10,6 +10,8 @@ import { WriteContext } from '../../context/WriteContext';
 
 const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
 
+
+
     const { likeWrite, unLikeWrite } = WriteRequest();
     const { state, dispatch } = useContext(UserContext);
     const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
@@ -38,16 +40,10 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
             WriteDispatch({ type: "WRITE_REQUEST" })
             if(like) {
                 const resUnlike = await unLikeWrite({ writeId, userId });
-                if(resUnlike.data) {
-                    WriteDispatch({ type: "WRITE_LIKE_DEC_SUCCESS" })
-                    setLike(!like)
-                }
+                if(resUnlike.data) setLike(!like)
             } else {
                 const resLikeawait = await likeWrite({ writeId, userId });
-                if(resLikeawait.data) {
-                    WriteDispatch({ type: "WRITE_LIKE_INC_SUCCESS" })
-                    setLike(!like)
-                }
+                if(resLikeawait.data) setLike(!like)
             }
         } catch(err) {
             console.log(err)
@@ -57,25 +53,15 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
 
 
     useEffect(() => {
-        // 렌더링 시작 시 넘어온 likeProject값과 스토어 내정보 likeProject가 같으면 상태변경
-        // state.user.likeProject.map(project => {
-        //     if(project === writeId) setLike(true)
-        //     if(project !== writeId) setLike(false)
-        // })
-
         writes.likes && writes.likes.map(likeUser => {
-            console.log('??', likeUser)
             if(likeUser === state.user._id) setLike(true)
             if(likeUser !== state.user._id) setLike(false)
         })
-
-       
     }, [writes.likes]);
 
     return (
         <Fragment>
             <span className={`write_like_wrap ${className}`}>
-                {console.log('like????', like)}
                 {like && (
                     <Button type={'button'} className={`button_type4 write_like ico_hover_type1 like ${like && 'active'}`} onClick={handleWriteUnlike}>
                         {like && <InfoState text={'좋아요!'} /> }

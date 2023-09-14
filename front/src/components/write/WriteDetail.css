@@ -12,3 +12,6 @@
     color: var(--point-color);
 }
 
+.write_wrap .no_data .project_link {
+    font-size: 1.8rem;
+}

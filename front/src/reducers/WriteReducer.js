@@ -60,7 +60,11 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    // writes: action.data
+                    writes: {
+                        ...state.writes,
+                        likeCount: state.writes.likeCount + 1,
+                        likes: state.writes.likes.concat(action.data)
+                    }
                 }
 
             case "WRITE_LIKE_FAILUE" : 
@@ -74,7 +78,11 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    // writes: action.data
+                    writes: {
+                        ...state.writes,
+                        likeCount: state.writes.likeCount - 1,
+                        likes: state.writes.likes.filter(user => user !== action.data)
+                    }
                 }
 
             case "WRITE_UNLIKE_FAILUE" : 
@@ -84,18 +92,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     errorMessage: action.data,
                 }
 
-            case "WRITE_LIKE_INC_SUCCESS": 
-                return {
-                    ...state,
-                    writes: {...state.writes, likeCount: state.writes.likeCount + 1}
-                }
-
-            case "WRITE_LIKE_DEC_SUCCESS": 
-                return {
-                    ...state,
-                    writes: {...state.writes, likeCount: state.writes.likeCount + 1}
-                }
-
+            
 
 
 

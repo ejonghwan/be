@@ -265,7 +265,7 @@ router.patch('/like', async (req, res) => {
             Write.findByIdAndUpdate(writeId, { $push: {likes: [userId] }, $inc: { likeCount: 1 } }, { new: true }),
             User.updateOne({_id: userId}, { $push: {likePost: writeId } }, { new: true }),
         ])
-        res.status(201).json(write);
+        res.status(201).json(userId);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -286,7 +286,7 @@ router.patch('/unlike', async (req, res) => {
             User.updateOne({_id: userId}, { $pull: {likePost: writeId } }, { new: true }),
         ])
 
-        res.status(201).json(write);
+        res.status(201).json(userId);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
