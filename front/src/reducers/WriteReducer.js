@@ -1,7 +1,22 @@
 export const WriteIntialState = {
-    successMessage: '',
-    errorMessage: '',
-    loading: null,
+  
+    loadLoading: false,
+    loadDone: false,
+    loadError: null,
+
+    createLoading: false,
+    createDone: false,
+    createError: null,
+
+    likeLoading: false,
+    likeDone: false,
+    likeError: null,
+
+    unlikeLoading: false,
+    unlikeDone: false,
+    unlikeError: null,
+
+
     createWrites: {},
     writes: {},
 }
@@ -9,61 +24,39 @@ export const WriteIntialState = {
 
 const WriteReducer = (state = WriteIntialState, action) => {
     switch(action.type) {
-            case "WRITE_REQUEST" : 
+
+            case "WRITE_LOAD_REQUEST" : 
                 return {
                     ...state,
-                    loading: true,
+                    loadLoading: true,
                 }
-
-            case "ERROR_LOADING_CLEAR" : 
-                return {
-                    ...state,
-                    loading: false,
-                    successMessage: '',
-                    errorMessage: '',
-                }
-
-            case "WRITE_LOADING_CLEAR" : 
-                return {
-                    ...state,
-                    loading: false,
-                }
-            // case "WRITE_CREATE_SUCCESS": 
-            //     // action  {type: "", data: ...} 
-            //     return {
-            //         ...state,
-            //         loading: false,
-            //         writes: [...state.writes.concat(action.data)]
-            //     }
-
-            // case "WRITE_CREATE_FAILUE" : 
-            //     return {
-            //         ...state,
-            //         loading: false,
-            //         errorMessage: action.data,
-            //     }
-
 
             case "WRITE_LOAD_SUCCESS": 
-                // action  {type: "", data: ...} 
                 return {
                     ...state,
-                    loading: false,
+                    loadLoading: false,
+                    loadDone: true,
                     writes: action.data
                 }
 
             case "WRITE_LOAD_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    loadLoading: false,
+                    loadError: action.data,
                 }
 
+            case "WRITE_LIKE_REQUEST": 
+                return {
+                    ...state,
+                    likeLoading: true,
+                }
 
             case "WRITE_LIKE_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
+                    likeLoading: false,
+                    likeDone: true,
                     writes: {
                         ...state.writes,
                         likeCount: state.writes.likeCount + 1,
@@ -74,14 +67,22 @@ const WriteReducer = (state = WriteIntialState, action) => {
             case "WRITE_LIKE_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    likeLoading: false,
+                    likeError: action.data,
+                }
+
+
+            case "WRITE_UNLIKE_REQUEST": 
+                return {
+                    ...state,
+                    unlikeLoading: true,
                 }
 
             case "WRITE_UNLIKE_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
+                    unlikeLoading: false,
+                    unlikeDone: true,
                     writes: {
                         ...state.writes,
                         likeCount: state.writes.likeCount - 1,
@@ -92,8 +93,8 @@ const WriteReducer = (state = WriteIntialState, action) => {
             case "WRITE_UNLIKE_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    unlikeLoading: false,
+                    unlikeError: action.data,
                 }
 
             

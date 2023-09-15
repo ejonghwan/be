@@ -68,7 +68,7 @@ const App = () => {
   return (
       <div className="App"> 
       {console.log(state.loading)}
-        {state.loading || state.loading === null ? (
+        {state.loading || state.loading === null && state.isLogged ? (
           <div>파이어베이스 로드 참고하기</div>
         ) : (
           <RoutesPage />

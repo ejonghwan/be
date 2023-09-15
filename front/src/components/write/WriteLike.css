@@ -1,5 +1,7 @@
 
-
+.write_like_wrap {
+    position: relative;
+}
 
 .write_like_wrap .write_like.active {
     background: #fff0bf;
