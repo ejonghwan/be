@@ -192,6 +192,34 @@ export const onlyNumChecked = (str) => {
 }
 
 
+/**
+ * 로컬스토리지 시간설정
+ * @param {Number} keyName - 
+ * @param {String} keyValue - 문자 
+ * @param {String} exp - ms 
+ * @returns {void}
+ */
+export const setWithExpire = (keyName, keyValue, exp) => {
+    const obj = {
+        value : keyValue,
+        expire : Date.now() + exp
+      }
+      const objString = JSON.stringify(obj);
+      localStorage.setItem(keyName, objString);
+}
+
+
+
+export const getWithExpire = keyName => {
+  const objString = localStorage.getItem(keyName);
+  if(!objString) return null;
+  const obj = JSON.parse(objString);
+  if(Date.now() > obj.expire) {
+    localStorage.removeItem(keyName);
+    return null;
+  }
+  return obj.value;
+}
 
 
 
@@ -206,106 +234,6 @@ export const onlyNumChecked = (str) => {
 
 
 
-// 커스텀 디바운스 쓰로틀... 이해만 하고 그냥 로대쉬꺼 씀
-// export const debounce = (cb, waitTime = 500) => {
-//     let timeout;
-//     return (...args) => {
-//         if(timeout) clearTimeout(timeout);
-//         timeout = setTimeout(() => {
-//             cb(...args)
-//         }, waitTime);
-//     }
-// }
-
-
-
-// export const useDebounce = (value, waitTime = 500) => {
-//     const [debounceValue, setDebounceValue] = React.useState(value) 
-//     React.useEffect(() => {
-//         const handler = setTimeout(() => {
-//             setDebounceValue(value)
-//         }, waitTime)
-
-//         return () => {
-//             clearTimeout(handler)
-//         }
-//     }, [value, waitTime])
-//     return debounceValue
-// }
-
-
-
-// export const useDebounce = (cb, waitTime = 500, deps = []) => { 
-//     const callback = React.useCallback(cb, deps)
-
-//     React.useEffect(() => {
-//         const timer = setTimeout(() => callback(), waitTime);
-//         return () => clearTimeout(timer);
-//         }, [callback, waitTime]);
-// }
-
-
-
-
-// export const throttle = (cb, waitTime = 0) => {
-//     let waiting = true;
-//     return (...args) => {
-//         if(waiting) {
-//             cb(...args)
-//             waiting = false;
-//             setTimeout(() => {
-//                 waiting = true;
-//             }, waitTime)
-//         }
-//     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const test = () => {
-    // const sampleTimestamp = Date.now(); //현재시간 타임스탬프 13자리 예)1599891939914
-    // const date = new Date(sampleTimestamp); //타임스탬프를 인자로 받아 Date 객체 생성
-
-    // var year = date.getFullYear().toString().slice(-2); //년도 뒤에 두자리
-    // var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
-    // var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
-    // var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
-    // var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
-    // var second = ("0" + date.getSeconds()).slice(-2); //초 2자리 (00, 01 ... 59)
-
-    // var returnDate = year + "." + month + "." + day + ". " + hour + ":" + minute + ":" + second;
-    // console.log(returnDate) 
-
-    // 7200000 2h   
-        // const start = Date.now();
-
-        // console.log('starting timer...');
-        // // expected output: starting timer...
-
-        // const millis = (Date.now() + 7000) - start;
-        // console.log(millis)
-
-        // console.log(`seconds elapsed = ${Math.floor(millis / 1000)}`);
-
-        // setTimeout(() => {
-        // const millis = Date.now() - start;
-        // console.log(millis)
-
-        // console.log(`seconds elapsed = ${Math.floor(millis / 1000)}`);
-        // // expected output: seconds elapsed = 2
-        // }, 7000);
-// }
 
 
 

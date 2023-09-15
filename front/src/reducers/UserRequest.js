@@ -1,6 +1,7 @@
-import { useContext } from 'react'
-import axios from 'axios'
-import { UserContext } from '../context/UserContext.js'
+import { useContext } from 'react';
+import axios from 'axios';
+import { UserContext } from '../context/UserContext.js';
+import { getWithExpire, setWithExpire } from '../utils/utils.js';
 
 /*
     reducer에서 request 뺀 이유. 
@@ -43,8 +44,6 @@ const UserRequest = () => {
      const signupUser = async data => {
         try {
             const { id, password, email, name, question, phoneNumber, gender, birthday } = data;
-
-            console.log('sagas:', data)
             if(!id || typeof id !== 'string') throw new Error('is not id');
             if(!password || typeof password !== 'string') throw new Error('is not password');
             if(!email || typeof email !== 'string') throw new Error('is not email');

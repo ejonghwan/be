@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 // client 에서 넘어온 token값 보고 인증... 
 export const auth = async (req, res, next) => {
     try {
-
+        console.log('??? auth')
         const accToken = req.header('X-access-token');
         if(accToken) {
             

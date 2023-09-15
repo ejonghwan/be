@@ -37,7 +37,7 @@ const LoginForm = () => {
                 setUserPassword('')
                 
                 if(location.pathname === '/login') navigate('/'); // 로그인 창에선 메인으로
-                setTimeout(async () => await logoutUser(), 7200000) // cookie 시간과 맞춰서 로그아웃
+                // setTimeout(async () => await logoutUser(), 1000 * 60 * 60 * 2) // 2시간 cookie 시간과 맞춰서 로그아웃. 이거 로컬저장소에 시간지정으로 변경함.
             }
         } catch(err) {
             console.error('catch?', err)
