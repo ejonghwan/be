@@ -19,6 +19,8 @@ import { getWithExpire, setWithExpire } from '../utils/utils.js';
 const host = process.env.REACT_APP_BACKEND_HOST;
 const UserRequest = () => {
     const { dispatch } = useContext(UserContext); 
+    // const accToken = localStorage.getItem('X-access-token');
+    const accToken = getWithExpire('X-access-token')
 
    // 회원가입 유저
      const emailAuth = async data => {
@@ -72,16 +74,16 @@ const UserRequest = () => {
     // 유저 불러오기
      const getUser = async query => { // 쿠키없으면 로컬에서 acc토큰없애기 
         try {
-            let accToken = null;
-            if(query) { accToken = query }; //이미 가입된 이메일로 들어오는 유저들은 로그인 로직탐. query로 acc토큰 받음 
+            let userAccToken = null;
+            if(query) { userAccToken = query }; //이미 가입된 이메일로 들어오는 유저들은 로그인 로직탐. query로 acc토큰 받음 
             if(localStorage.getItem('X-access-token')) {
-                accToken = localStorage.getItem('X-access-token');
+                userAccToken = getWithExpire('X-access-token')
             };
-            if(!accToken) throw new Error('is not accToken');
+            if(!userAccToken || userAccToken === null ) throw new Error('is not accToken');
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    'X-access-token': accToken,
+                    'X-access-token': userAccToken,
                 },
                 withCredentials: true,
             };
@@ -89,7 +91,8 @@ const UserRequest = () => {
             const user = await axios.get(`${host}/api/users/load`, config);
 
             // accToken 만료되었으면 다시 받아온걸로 저장소 셋팅
-            localStorage.setItem('X-access-token', user.data.accToken)
+            // localStorage.setItem('X-access-token', user.data.accToken)
+            // setWithExpire('X-access-token', user.data.accToken, 1000 * 60) //테스트용 1분 후 삭제 
             dispatch({type: "USER_LOAD_SUCCESS", data: user.data});
             return user;
         } catch(err) {
@@ -120,7 +123,8 @@ const UserRequest = () => {
             }
 
             const user = await axios.post(`${host}/api/users/login`, data, config);
-            localStorage.setItem('X-access-token', user.data.accToken);
+            // localStorage.setItem('X-access-token', user.data.accToken);
+            setWithExpire('X-access-token', user.data.accToken, 1000 * 60) //테스트용 1분 후 삭제
             dispatch({ type: "USER_LOGIN_SUCCESS", data: user.data });
             return user;
         } catch(err) {
@@ -133,7 +137,7 @@ const UserRequest = () => {
     // 로그아웃 유저 
      const logoutUser = async () => {
         try {
-            const accToken = localStorage.getItem('X-access-token');
+            // const accToken = localStorage.getItem('X-access-token');
             if(!accToken) throw new Error('is not acctoken');
             const config = {
                 headers: {
@@ -158,7 +162,7 @@ const UserRequest = () => {
     // 이름 수정 
      const userInfoEditUser = async data => {
         try {
-            const accToken = localStorage.getItem('X-access-token');
+            // const accToken = localStorage.getItem('X-access-token');
             if(!accToken) throw new Error('user request error. is not acc token');
 
             const { name, gender, birthday, phoneNumber, _id } = data;
@@ -188,7 +192,7 @@ const UserRequest = () => {
     // 회원인사람 인증번호 보내기 //
      const memberAuthNumberRequest = async data => {
         try {
-            const accToken = localStorage.getItem('X-access-token');
+            // const accToken = localStorage.getItem('X-access-token');
             if(!accToken) return;
             const { email, _id } = data;
             if(!email && typeof email !== 'string') throw new Error('user request error. is not email');
@@ -261,7 +265,7 @@ const UserRequest = () => {
     // 이메일 수정 
      const emailEditUser = async data => {
         try {
-            const accToken = localStorage.getItem('X-access-token')
+            // const accToken = localStorage.getItem('X-access-token')
             if(!accToken) throw new Error('is not acctoken');
             const { email, _id } = data;
             if(!email || typeof email !== 'string') throw new Error('user request error. is not email');
@@ -288,7 +292,7 @@ const UserRequest = () => {
     // 이전 비번을 알고 있는 경우 비번수정 (로그인 된 상태)
      const prevPasswordEditUser = async data => {
         try {
-            const accToken = localStorage.getItem('X-access-token')
+            // const accToken = localStorage.getItem('X-access-token')
             if(!accToken) throw new Error('user request error. is not accToken');
         
             const { prevPassword, newPassword, _id, newPasswordCheck } = data;
@@ -319,7 +323,6 @@ const UserRequest = () => {
      const findPasswordEditUser = async data => {
         try {
             const { _id, newPassword, newPasswordCheck } = data;
-            console.log('req?', data)
             if(!newPassword && typeof newPassword !== 'string') throw new Error('user request error. is not newPassword');
             if(!newPasswordCheck && typeof newPasswordCheck !== 'string') throw new Error('user request error. is not newPasswordCheck');
             if(!_id && typeof _id !== 'string') throw new Error('user request error. is not _id');
@@ -390,7 +393,7 @@ const UserRequest = () => {
     // 회원탈퇴
      const secession = async data => {
         try {
-            const accToken = localStorage.getItem('X-access-token')
+            // const accToken = localStorage.getItem('X-access-token')
             if(!accToken) throw new Error('토큰 만료. 로그인해주세요');
 
             const { id, password } = data;
@@ -419,7 +422,7 @@ const UserRequest = () => {
     // 프로젝트 좋아요
     const projectLike = async data => {
         try {
-            const accToken = localStorage.getItem('X-access-token')
+            // const accToken = localStorage.getItem('X-access-token')
             if(!accToken) throw new Error('토큰 만료. 로그인해주세요');
 
             const { projectId, userId } = data;
@@ -445,7 +448,7 @@ const UserRequest = () => {
       // 프로젝트 좋아요 취소
       const projectUnlike = async data => {
         try {
-            const accToken = localStorage.getItem('X-access-token')
+            // const accToken = localStorage.getItem('X-access-token')
             if(!accToken) throw new Error('토큰 만료. 로그인해주세요');
 
             const { projectId, userId } = data;
