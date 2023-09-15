@@ -6,6 +6,18 @@
     background-color: var(--bg-box-color4);
 }
 
+.image_upload_wrap .init_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.image_upload_wrap .edit_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
 
 .image_upload_wrap .image_dropBox {
     /* background: var(--bg-box-black); */

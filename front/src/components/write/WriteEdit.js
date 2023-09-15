@@ -14,7 +14,7 @@ import useImageRequest from '../../reducers/ImageRequest.js';
 import WriteRequest from '../../reducers/WriteRequest';
 
 
-const WriteEdit = ({ editWriteRef }) => {
+const WriteEdit = ({ editWriteRef, writes }) => {
 
     const { state } = useContext(UserContext);
     const { imageUpload } = useImageRequest();
@@ -24,8 +24,8 @@ const WriteEdit = ({ editWriteRef }) => {
     const [imageData, setImageData] = useState({})
 
     const [writeSubmitData, setWriteSubmitData] = useState({ 
-        title: '',
-        content: '',
+        title: writes.title,
+        content: writes.content,
     });
 
 
@@ -38,22 +38,26 @@ const WriteEdit = ({ editWriteRef }) => {
         try {
             const res = await createWrite(writeSubmitData) // 글 보내기
              // 이미지가 있으면 올리고 없으면 올리지 않음. 동기적으로 글 생성 후 그 아이디 받아서 다시 요청
+             // 수정에선 백엔드에서 기존 이미지 지우고 추가해야됨. 아직 작업안함
             if( imageData.file ) { await imageUpload({ ...imageData, _id: res._id }); }
-            editWriteRef.current.popupClose()
-            navigate(`/write/detail/${res._id}`)
+            editWriteRef.current.popupClose();
         } catch(err) {
             console.error(err)
         }
     }, 1000)
 
 
+    useEffect(() => {
+        console.log(writeSubmitData)
+    }, [writeSubmitData])
+
     return (
         <div>
             <div className='gapt_30 gap_30'>
-                <WriteImageEdit />
+                <ImageUploadView path={"write"} setImageData={setImageData} initailImageSrc={writes.writeImages?.map(image => (`${process.env.REACT_APP_BACKEND_HOST}/uploads/${image.key}`)  )}/>
             </div>
             <div className='gapt_30 gap_30'>
-                <Label htmlFor="title" content="습관 이름을 정해주세요." className={"label_type1"}/>
+                <Label htmlFor="title" content="인증 제목" className={"label_type1"}/>
                 <Input 
                     id={"title"}
                     type={"text" }
@@ -66,7 +70,7 @@ const WriteEdit = ({ editWriteRef }) => {
                 />
             </div>
             <div className='gap_30'>
-                <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>
+                <Label htmlFor="content" content="인증 내용" className={"label_type1"}/>
                 <Textarea 
                     id={"content"}
                     name={"content"}
@@ -78,7 +82,9 @@ const WriteEdit = ({ editWriteRef }) => {
                 >
                     {writeSubmitData.content}
                 </Textarea>
-                
+            </div>
+            <div className='align_c'>
+                <Button type={'button'} className={"button_type2"} onClick={handleCreateWriteSubmit}>인증글 수정</Button>
             </div>
         </div>
     );

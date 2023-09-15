@@ -5,7 +5,7 @@ import { HiOutlineFolderOpen } from "react-icons/hi2";
 import './ImageUploadView.css';
 
 
-const ImageUploadView = ({ path, setImageData, className = '' }) => {
+const ImageUploadView = ({ path, setImageData, className = '', initailImageSrc = null }) => {
     // const { imageUpload } = useImageRequest();
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("파일 선택");
@@ -32,8 +32,9 @@ const ImageUploadView = ({ path, setImageData, className = '' }) => {
     }, [file])
 
     return (
-        <div className={`image_upload_wrap ${className}`}>
-            {imageUrl && <img src={imageUrl} alt="변경될 이미지"/>}
+        <div className={`image_upload_wrap pos_image ${className}`}>
+            {initailImageSrc && <img src={initailImageSrc} alt="기존 이미지" className='init_img' />}
+            {imageUrl && <img src={imageUrl} alt="변경될 이미지" className='edit_img' />}
 
             <div className={'image_dropBox'}>
                 <div className='image_upload_text'>

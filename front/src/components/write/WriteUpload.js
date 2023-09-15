@@ -54,7 +54,7 @@ const WriteUpload = ({ projectId, projectAuthRef }) => {
             <ImageUploadView path={"write"} setImageData={setImageData}/>
 
             <div className='gapt_30 gap_30'>
-                <Label htmlFor="title" content="습관 이름을 정해주세요." className={"label_type1"}/>
+                <Label htmlFor="title" content="인증 제목" className={"label_type1"}/>
                 <Input 
                     id={"title"}
                     type={"text" }
@@ -67,7 +67,7 @@ const WriteUpload = ({ projectId, projectAuthRef }) => {
                 />
             </div>
             <div className='gap_30'>
-                <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>
+                <Label htmlFor="content" content="인증 내용" className={"label_type1"}/>
                 <Textarea 
                     id={"content"}
                     name={"content"}

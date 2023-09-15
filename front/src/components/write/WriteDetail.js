@@ -54,7 +54,7 @@ const WriteDetail = ({ writeId }) => {
                                 <div className='write_header'>
                                     <div className='write_header_item'>
                                         <Link to={`/project/detail/${writes.project?._id._id}`} className='project_link'>{writes.project?._id.title}</Link>
-                                        <h3 className='write_title gap_20'>{writes.title}</h3>
+                                        <h3 className='write_title gap_10'>{writes.title}</h3>
                                     </div>
                                     <div className='write_header_item write_info'>
                                         <div className='write_header_user_wrap'>
@@ -106,7 +106,7 @@ const WriteDetail = ({ writeId }) => {
 
              {/* 글 수정하기 */}
              <Popup 
-                className={`popup_type_default profile_edit`} 
+                className={`popup_type_default write_edit`} 
                 isHead={true} 
                 title={`글 수정`} 
                 closeClick={() => editWriteRef.current.popupClose()} 
@@ -116,7 +116,7 @@ const WriteDetail = ({ writeId }) => {
                 // buttons={[<Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>]}
             >
                 
-                <WriteEdit editWriteRef={editWriteRef}/>
+                <WriteEdit editWriteRef={editWriteRef} writes={writes}/>
             </Popup>
         </div>
     );
