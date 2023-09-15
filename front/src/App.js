@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { BrowserRouter, useSearchParams  } from 'react-router-dom';
 import RoutesPage from './pages/index.js'
-import { getQueryString } from './utils/utils.js'
+import { getQueryString, getWithExpire } from './utils/utils.js'
 
 
 // context & request
@@ -23,11 +23,11 @@ const App = () => {
   // 유저 새로고침
   const userLoad = async () => {
     try {
-      const accToken = localStorage.getItem('X-access-token');
+      const accToken = getWithExpire('X-access-token');
       if(!accToken) return;
 
       // 로그아웃/시간후로그아웃 제외 예상치못하게 로그아웃되어 있는 경우 무한로딩 뜨는 문제해결
-       // if(!state.isLogged) dispatch({ type: "LOADING_CLEAR" })
+       if(!state.isLogged) dispatch({ type: "LOADING_CLEAR" })
 
       dispatch({ type: "LOADING" });
       await getUser(); 
@@ -42,7 +42,7 @@ const App = () => {
       if(accToken && valid) {
           if(!accToken) throw new Error('is not acctoken');
           dispatch({ type: "LOADING" })
-          const user = await getUser(accToken);
+          await getUser(accToken);
           // searchParams.delete('valid') //이거 왜 안되지 ..
           // searchParams.delete('accToken')
           window.location.href = '/'
@@ -67,7 +67,8 @@ const App = () => {
  
   return (
       <div className="App"> 
-        {state.loading ? (
+      {console.log(state.loading)}
+        {state.loading || state.loading === null ? (
           <div>파이어베이스 로드 참고하기</div>
         ) : (
           <RoutesPage />

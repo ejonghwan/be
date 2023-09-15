@@ -1,4 +1,4 @@
-import { useEffect, useContext, Fragment, useRef } from 'react';
+import { useEffect, useContext, Fragment, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { WriteContext } from '../../context/WriteContext';
 import { UserContext } from '../../context/UserContext';
@@ -19,10 +19,12 @@ import Popup from '../common/popup/Popup';
 
 const WriteDetail = ({ writeId }) => {
 
-    const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext)
-    const { state } = useContext(UserContext)
+    const { WriteState, WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
+    const { state } = useContext(UserContext);
     const { loadWrite } = WriteRequest();
     const editWriteRef = useRef(null);
+    const [isData, setIsData] = useState(false);
+
 
     const handleWriteEditState = () => editWriteRef.current.popupOpen();
 
@@ -39,10 +41,10 @@ const WriteDetail = ({ writeId }) => {
 
     return (
         <div className='write_wrap'>
-            {state.user.joinProjects?.filter(joinProject => joinProject._id !== null )
-                .filter(joinProject => joinProject._id._id === writes.project?._id._id).length > 0 
+            {WriteState.loading && <div>로딩중</div>}
+            {state.user.joinProjects?.filter(joinProject => joinProject._id !== null ).filter(joinProject => joinProject._id._id === writes.project?._id._id).length > 0 
                 || 
-                state.user.projects?.filter(project => project._id === writes.project?._id._id).length > 0 ? (
+            state.user.projects?.filter(project => project._id === writes.project?._id._id).length > 0 ? (
                     <Fragment>
                         <div className='write_header'>
                             <div className='write_header_item'>
@@ -91,7 +93,6 @@ const WriteDetail = ({ writeId }) => {
                         <div className='align_c gapt_30'>
                             <Link to={`/project/detail/${writes.project?._id._id}`} className='project_link'>{writes.project?._id.title} 보러가기</Link>
                         </div>
-                       
                     </div>
                 )
             }

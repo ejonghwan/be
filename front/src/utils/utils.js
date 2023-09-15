@@ -194,9 +194,9 @@ export const onlyNumChecked = (str) => {
 
 /**
  * 로컬스토리지 시간설정
- * @param {Number} keyName - 
- * @param {String} keyValue - 문자 
- * @param {String} exp - ms 
+ * @param {Number} keyName - 로컬 키 
+ * @param {String} keyValue - 로컬 값 
+ * @param {Date} exp - ms 단위 시간
  * @returns {void}
  */
 export const setWithExpire = (keyName, keyValue, exp) => {
@@ -209,7 +209,13 @@ export const setWithExpire = (keyName, keyValue, exp) => {
 }
 
 
-
+/**
+ * 로컬스토리지 시간설정
+ * @param {Number} keyName - 로컬 키 
+ * @param {String} keyValue - 로컬 값 
+ * @param {Date} exp - ms 단위 시간
+ * @returns {void}
+ */
 export const getWithExpire = keyName => {
   const objString = localStorage.getItem(keyName);
   if(!objString) return null;

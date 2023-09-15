@@ -124,7 +124,7 @@ const UserRequest = () => {
 
             const user = await axios.post(`${host}/api/users/login`, data, config);
             // localStorage.setItem('X-access-token', user.data.accToken);
-            setWithExpire('X-access-token', user.data.accToken, 1000 * 60) //테스트용 1분 후 삭제
+            setWithExpire('X-access-token', user.data.accToken, 1000 * 60 * 60 * 2) //로그인 후 억세스토큰 2시간 저장
             dispatch({ type: "USER_LOGIN_SUCCESS", data: user.data });
             return user;
         } catch(err) {

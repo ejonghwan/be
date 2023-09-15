@@ -1,7 +1,7 @@
 export const WriteIntialState = {
     successMessage: '',
     errorMessage: '',
-    loading: false,
+    loading: null,
     createWrites: {},
     writes: {},
 }

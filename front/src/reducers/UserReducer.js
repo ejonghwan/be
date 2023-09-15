@@ -13,7 +13,7 @@ export const UserIntialState = {
     authNumberErrorMessage: '',
     imageErrorMessage: '',
     globalErrorMessage: '',
-    loading: false,
+    loading: null,
     user: {},
 }
 
