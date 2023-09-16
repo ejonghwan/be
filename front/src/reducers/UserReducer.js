@@ -46,8 +46,6 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     loading: false,
                 }
-
-
             
             case "USER_SIGNUP_SUCCESS": 
                 return {
@@ -247,9 +245,6 @@ const UserReducer = (state = UserIntialState, action) => {
                     loading: false,
                     globalErrorMessage: action.data
                 }
-
-
-            
 
             default: return { state }
     }
