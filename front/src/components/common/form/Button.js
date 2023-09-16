@@ -1,6 +1,6 @@
 import './Button.css';
 
-const Button = ({ id, className, type, disabled, onClick, children, name }) => {
+const Button = ({ id, className, type, disabled, onClick, children, name, title }) => {
 
     return (
         <button 
@@ -10,6 +10,7 @@ const Button = ({ id, className, type, disabled, onClick, children, name }) => {
             onClick={onClick} 
             disabled={disabled}
             name={name}
+            title={title}
             >
             {children}
         </button>

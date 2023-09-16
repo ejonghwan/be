@@ -20,6 +20,7 @@
     background-color: var(--bg-color-white);
 }
 
+
 .btn_wrap {
     width: 100%;
 }
@@ -44,6 +45,7 @@
     background-color: transparent;
     padding: 0px;
     font-size: inherit;
+    line-height: 0;
 }
 
 /* svg or img btn */

@@ -74,7 +74,7 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
                 {like && (
                     <Fragment>
                         {like && <InfoState text={'좋아요!'} /> }
-                        <Button type={'button'} className={`button_type4 write_like ico_hover_type1 like ${like && 'active'}`} onClick={handleWriteUnlike}>
+                        <Button type={'button'} className={`button_type3 write_like ico_hover_type1 like ${like && 'active'}`} onClick={handleWriteUnlike} title={'좋아요 취소'}>
                             <PiHeartDuotone />
                             <span className='blind'>이 글 좋아요 취소</span>
                         </Button>
@@ -85,7 +85,7 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
                 {!like && (
                     <Fragment>
                         {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
-                        <Button type={'button'} className={`button_type4 write_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleWriteLike}>
+                        <Button type={'button'} className={`button_type3 write_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleWriteLike} title={'좋아요'}>
                             <PiHeartDuotone />
                             <span className='blind'>이 글 좋아요</span>
                         </Button>

@@ -1,10 +1,12 @@
 
 .write_like_wrap {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .write_like_wrap .write_like.active {
-    background: #fff0bf;
+    /* background: #fff0bf; */
 }
 .write_like_wrap .write_like.active > svg{
     /* color: #f2ff02; */
@@ -15,22 +17,4 @@
     color: var(--text-color2);   
     margin-left: 5px;
 }
-
-.write_like_wrap + span {
-    margin-right: 10px;
-}
-
-
-/* 디테일이 붙은건 포지션붙임 */
-/* .write_like_wrap.detail {
-    position: absolute;
-    bottom: -5px;
-    left: calc(50% + 33px);
-    z-index: 1;
-}
-
-.write_like_wrap.detail .write_like {
-    border: 5px solid var(--text-color-white)
-} */
-
 

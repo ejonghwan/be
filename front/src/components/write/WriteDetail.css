@@ -1,6 +1,6 @@
 .write_wrap .write_info {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
 }
 
@@ -28,6 +28,7 @@
 
 .write_wrap .project_link {
     color: var(--point-color);
+    text-decoration: underline;
 }
 
 .write_wrap .no_data .project_link {
@@ -39,4 +40,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.write_wrap .write_delete svg {
+    color: var(--point-color2);
 }

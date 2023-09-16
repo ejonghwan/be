@@ -11,7 +11,7 @@ import UserThumItem from '../common/userThum/UserThumItem';
 import ViewDate from '../common/date/ViewDate';
 import { changeViewDate } from '../../utils/utils';
 import Nodata from '../common/notData/NoData';
-import { PiGhostDuotone, PiGearDuotone } from "react-icons/pi";
+import { PiGhostDuotone, PiGearDuotone, PiXCircleDuotone } from "react-icons/pi";
 import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
 import WriteEdit from './WriteEdit.js'
@@ -53,7 +53,7 @@ const WriteDetail = ({ writeId }) => {
                             <Fragment>
                                 <div className='write_header'>
                                     <div className='write_header_item'>
-                                        <Link to={`/project/detail/${writes.project?._id._id}`} className='project_link'>{writes.project?._id.title}</Link>
+                                        <Link to={`/project/detail/${writes.project?._id._id}`} className='project_link' title={'습관 페이지로 이동'}>{writes.project?._id.title}</Link>
                                         <h3 className='write_title gap_10'>{writes.title}</h3>
                                     </div>
                                     <div className='write_header_item write_info'>
@@ -71,11 +71,15 @@ const WriteDetail = ({ writeId }) => {
                                         </div>
                                         <div className='write_header_ico_wrap'>
                                             <WriteLike writeId={writeId} userId={state.user._id} writeLikeLen={writes.likeCount} />
-                                            <Button className={'button_type4 ico_hover_type2'} onClick={handleWriteEditState}>
+                                            <CommentIcon count={writes.commentCount} />
+                                            <Button className={'button_type3 ico_hover_type2'} onClick={handleWriteEditState} title={'글 수정'}>
                                                 <PiGearDuotone />
                                                 <span className='blind'>인증글 수정</span>
                                             </Button>
-                                            <CommentIcon count={writes.commentCount} />
+                                            <Button className={'button_type3 ico_hover_type1 write_delete'} title={'글 삭제'}>
+                                                <PiXCircleDuotone />
+                                                <span className='blind'>인증글 삭제</span>
+                                            </Button>
                                         </div>
                                         
                                     </div>

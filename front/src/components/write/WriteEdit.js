@@ -1,5 +1,3 @@
-import WriteImageEdit from './WriteImageEdit';
-import './WriteEdit.css';
 import Input from '../common/form/Input';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
@@ -12,6 +10,8 @@ import _debounce from 'lodash.debounce';
 import ImageUploadView from '../image/ImageUploadView';
 import useImageRequest from '../../reducers/ImageRequest.js';
 import WriteRequest from '../../reducers/WriteRequest';
+import './WriteEdit.css';
+
 
 
 const WriteEdit = ({ editWriteRef, writes }) => {
@@ -19,7 +19,6 @@ const WriteEdit = ({ editWriteRef, writes }) => {
     const { state } = useContext(UserContext);
     const { imageUpload } = useImageRequest();
     const { createWrite } = WriteRequest();
-    const navigate = useNavigate();
 
     const [imageData, setImageData] = useState({})
 
@@ -34,7 +33,7 @@ const WriteEdit = ({ editWriteRef, writes }) => {
         setWriteSubmitData({...writeSubmitData, [name]: value})
     }
 
-    const handleCreateWriteSubmit = _debounce(async(e) => {
+    const handleEditWriteSubmit = _debounce(async(e) => {
         try {
             const res = await createWrite(writeSubmitData) // 글 보내기
              // 이미지가 있으면 올리고 없으면 올리지 않음. 동기적으로 글 생성 후 그 아이디 받아서 다시 요청
@@ -57,7 +56,7 @@ const WriteEdit = ({ editWriteRef, writes }) => {
                 <ImageUploadView path={"write"} setImageData={setImageData} initailImageSrc={writes.writeImages?.map(image => (`${process.env.REACT_APP_BACKEND_HOST}/uploads/${image.key}`)  )}/>
             </div>
             <div className='gapt_30 gap_30'>
-                <Label htmlFor="title" content="인증 제목" className={"label_type1"}/>
+                <Label htmlFor="title" content="글 제목" className={"label_type1"}/>
                 <Input 
                     id={"title"}
                     type={"text" }
@@ -70,7 +69,7 @@ const WriteEdit = ({ editWriteRef, writes }) => {
                 />
             </div>
             <div className='gap_30'>
-                <Label htmlFor="content" content="인증 내용" className={"label_type1"}/>
+                <Label htmlFor="content" content="글 내용" className={"label_type1"}/>
                 <Textarea 
                     id={"content"}
                     name={"content"}
@@ -84,7 +83,7 @@ const WriteEdit = ({ editWriteRef, writes }) => {
                 </Textarea>
             </div>
             <div className='align_c'>
-                <Button type={'button'} className={"button_type2"} onClick={handleCreateWriteSubmit}>인증글 수정</Button>
+                <Button type={'button'} className={"button_type2"} onClick={handleEditWriteSubmit}>인증글 수정</Button>
             </div>
         </div>
     );
