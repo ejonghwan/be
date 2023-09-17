@@ -37,7 +37,6 @@ const WriteEdit = ({ editWriteRef, writes }) => {
 
     const handleEditWriteSubmit = _debounce(async(e) => {
         try {
-            console.log('??', writeSubmitData)
             const res = await editWrite(writeSubmitData) // 글 보내기
             console.log(res)
             if( imageData.file ) { 

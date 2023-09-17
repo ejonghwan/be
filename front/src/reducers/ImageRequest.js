@@ -69,7 +69,6 @@ const useImageRequest = () => {
             console.error(err);
             return err.response;
         }
-
     }
 
 

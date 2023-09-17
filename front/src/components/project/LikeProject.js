@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback, Fragment } from 'react';
+import { useState, useContext, useEffect, useCallback, Fragment, memo } from 'react';
 import { PiStarDuotone, PiHeartDuotone } from "react-icons/pi";
 import { UserContext } from '../../context/UserContext';
 import { ProjectContext } from '../../context/ProjectContext';
@@ -68,19 +68,24 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
         <Fragment>
             <span className={`project_like_wrap ${className}`}>
                 {like && (
-                    <Button type={'button'} className={`button_type4 project_like ico_hover_type1 like ${like && 'active'}`} onClick={handleProjectUnlike}>
+                    <Fragment>
                         {like && <InfoState text={'좋아요!'} /> }
-                        <PiHeartDuotone />
-                        <span className='blind'>이 습관 즐겨찾기 및 좋아요 취소</span>
-                    </Button>
+                        <Button type={'button'} className={`button_type4 project_like ico_hover_type1 like ${like && 'active'}`} onClick={handleProjectUnlike}>
+                            <PiHeartDuotone />
+                            <span className='blind'>이 습관 즐겨찾기 및 좋아요 취소</span>
+                        </Button>
+                    </Fragment>
                 )}
 
                 {!like && (
-                    <Button type={'button'} className={`button_type4 project_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleProjectLike}>
+                    <Fragment>
                         {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
-                        <PiHeartDuotone />
-                        <span className='blind'>이 습관 즐겨찾기 및 좋아요</span>
-                    </Button>
+                        <Button type={'button'} className={`button_type4 project_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleProjectLike}>
+                            
+                            <PiHeartDuotone />
+                            <span className='blind'>이 습관 즐겨찾기 및 좋아요</span>
+                        </Button>
+                    </Fragment>
                 )}
                  <span className='like_count'>{projectLikeLen}</span>
             </span>
@@ -88,4 +93,4 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
     );
 };
 
-export default LikeProject;
+export default memo(LikeProject);

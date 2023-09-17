@@ -110,12 +110,35 @@ const WriteRequest = () => {
             }
 
             const res = await axios.patch(`${host}/api/write/edit/${writeId}`, data, config);
-            console.log(res)
             WriteDispatch({ type: "WRITE_EDIT_SUCCESS", data: res.data });
 
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "WRITE_EDIT_FAILUE", data: err.message });
+        };
+    };
+    
+
+    const deleteWrite = async data => {
+        try {
+            const { userId, writeId, projectId } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+            const res = await axios.delete(`${host}/api/write`, data, config);
+            console.log(res)
+            WriteDispatch({ type: "WRITE_DELETE_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "WRITE_DELETE_FAILUE", data: err.message });
         };
     };
 
@@ -125,6 +148,7 @@ const WriteRequest = () => {
         likeWrite,
         unLikeWrite,
         editWrite,
+        deleteWrite,
     }
 }
 

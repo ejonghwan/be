@@ -22,7 +22,7 @@ const WriteDetail = ({ writeId }) => {
 
     const { WriteState, WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
     const { state } = useContext(UserContext);
-    const { loadWrite } = WriteRequest();
+    const { loadWrite, deleteWrite } = WriteRequest();
     const editWriteRef = useRef(null);
 
 
@@ -30,8 +30,25 @@ const WriteDetail = ({ writeId }) => {
 
 
     const handleLoadWrite = async () => {
-        WriteDispatch({ type: "WRITE_LOAD_REQUEST" })
-        await loadWrite(writeId)
+        try {
+            WriteDispatch({ type: "WRITE_LOAD_REQUEST" })
+            await loadWrite(writeId)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    const handleWriteDelete = async () => {
+        try {
+            WriteDispatch({ type: "WRITE_DELETE_REQUEST" })
+            await deleteWrite({
+                userId: state.user._id,
+                writeId: writeId,
+                projectId: writes.project._id._id
+            })
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     useEffect(() => {
@@ -78,7 +95,7 @@ const WriteDetail = ({ writeId }) => {
                                                         <PiGearDuotone />
                                                         <span className='blind'>인증글 수정</span>
                                                     </Button>
-                                                    <Button className={'button_type3 ico_hover_type1 write_delete'} title={'글 삭제'}>
+                                                    <Button className={'button_type3 ico_hover_type1 write_delete'} title={'글 삭제'} onClick={handleWriteDelete}>
                                                         <PiXCircleDuotone />
                                                         <span className='blind'>인증글 삭제</span>
                                                     </Button>

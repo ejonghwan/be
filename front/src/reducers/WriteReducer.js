@@ -20,6 +20,10 @@ export const WriteIntialState = {
     editWriteDone: false,
     editWriteError: null,
 
+    deleteWriteLoading: false,
+    deleteWriteDone: false,
+    deleteWriteError: null,
+
 
     createWrites: {},
     writes: {},
@@ -109,7 +113,6 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 }
 
             case "WRITE_EDIT_SUCCESS": 
-            console.log(action.data)
                 return {
                     ...state,
                     editWriteLoading: false,
@@ -137,6 +140,31 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     }
                 }
 
+
+            case "WRITE_DELETE_REQUEST": 
+                return {
+                    ...state,
+                    deleteWriteLoading: true,
+                }
+
+            case "WRITE_DELETE_SUCCESS": 
+                return {
+                    ...state,
+                    deleteWriteLoading: false,
+                    deleteWriteDone: true,
+                    // writes: {
+                    //     ...state.writes,
+                    //     title: action.data.title,
+                    //     content: action.data.content,
+                    // }
+                }
+
+            case "WRITE_DELETE_FAILUE" : 
+                return {
+                    ...state,
+                    deleteWriteLoading: false,
+                    deleteWriteError: action.data,
+                }
             
 
 
