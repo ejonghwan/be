@@ -61,17 +61,6 @@ router.get('/', async (req, res) => {
 })
 
 
-// 이게 필요한가 ? 
-// @ GET /api/images
-// @ public
-// @ desc 이미지수정
-// router.patch('/', auth, async (req, res) => {
-//     try {
-      
-//     } catch(err) {
-//         console.error(err)
-//     }
-// })
 
 
 // @ GET /api/images
@@ -80,7 +69,7 @@ router.get('/', async (req, res) => {
 router.delete('/:filename', auth, async (req, res) => {
     try { //삭제 테스트 잘됨 / 프론트 아직 안함
         const { filename } = req.params;
-        const img = await ImageModel.deleteOne({ key: filename })
+        await ImageModel.deleteOne({ key: filename })
         await unlink(`./uploads/${filename}`);
         res.end();
     } catch(err) {
@@ -91,19 +80,9 @@ router.delete('/:filename', auth, async (req, res) => {
  
 
 
-// 파퓰 테스트
-// @ GET /api/images/pp
-// @ public
-// @ desc 이미지 삭제
-router.get('/pp', async (req, res) => {
-    try {
-        const img = await ImageModel.findById('633d46a6d9ab95b3a0f74c9a').populate("user._id").exec();
-        console.log(img)
-        res.json(img)
-    } catch(err) {
-        console.error(err)
-    }
-})
+
+
+
 
 /* 
     ** 100 < n < 1000 "부분저장"

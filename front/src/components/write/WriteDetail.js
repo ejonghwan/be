@@ -72,14 +72,18 @@ const WriteDetail = ({ writeId }) => {
                                         <div className='write_header_ico_wrap'>
                                             <WriteLike writeId={writeId} userId={state.user._id} writeLikeLen={writes.likeCount} />
                                             <CommentIcon count={writes.commentCount} />
-                                            <Button className={'button_type3 ico_hover_type2'} onClick={handleWriteEditState} title={'글 수정'}>
-                                                <PiGearDuotone />
-                                                <span className='blind'>인증글 수정</span>
-                                            </Button>
-                                            <Button className={'button_type3 ico_hover_type1 write_delete'} title={'글 삭제'}>
-                                                <PiXCircleDuotone />
-                                                <span className='blind'>인증글 삭제</span>
-                                            </Button>
+                                            {writes.user._id?._id === state.user._id && (
+                                                <Fragment>
+                                                    <Button className={'button_type3 ico_hover_type2'} onClick={handleWriteEditState} title={'글 수정'}>
+                                                        <PiGearDuotone />
+                                                        <span className='blind'>인증글 수정</span>
+                                                    </Button>
+                                                    <Button className={'button_type3 ico_hover_type1 write_delete'} title={'글 삭제'}>
+                                                        <PiXCircleDuotone />
+                                                        <span className='blind'>인증글 삭제</span>
+                                                    </Button>
+                                                </Fragment>
+                                            )}
                                         </div>
                                         
                                     </div>

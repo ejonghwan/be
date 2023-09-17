@@ -95,11 +95,34 @@ const WriteRequest = () => {
         };
     };
 
+
+    const editWrite = async data => {
+        try {
+            const { userId, writeId } = data;
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId가 잘못되었습니다');
+            if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+            const res = await axios.patch(`${host}/api/write/edit/${writeId}`, data, config);
+            WriteDispatch({ type: "WRITE_EDIT_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "WRITE_EDIT_FAILUE", data: err.message });
+        };
+    };
+
     return {
         createWrite,
         loadWrite,
         likeWrite,
         unLikeWrite,
+        editWrite,
     }
 }
 

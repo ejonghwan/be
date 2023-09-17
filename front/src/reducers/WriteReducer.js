@@ -16,6 +16,10 @@ export const WriteIntialState = {
     unlikeDone: false,
     unlikeError: null,
 
+    editWriteLoading: false,
+    editWriteDone: false,
+    editWriteError: null,
+
 
     createWrites: {},
     writes: {},
@@ -95,6 +99,32 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     unlikeLoading: false,
                     unlikeError: action.data,
+                }
+
+
+            case "WRITE_EDIT_REQUEST": 
+                return {
+                    ...state,
+                    editWriteLoading: true,
+                }
+
+            case "WRITE_EDIT_SUCCESS": 
+                return {
+                    ...state,
+                    editWriteLoading: false,
+                    editWriteDone: true,
+                    // writes: {
+                    //     ...state.writes,
+                    //     likeCount: state.writes.likeCount - 1,
+                    //     likes: state.writes.likes.filter(user => user !== action.data)
+                    // }
+                }
+
+            case "WRITE_EDIT_FAILUE" : 
+                return {
+                    ...state,
+                    editWriteLoading: false,
+                    editWriteError: action.data,
                 }
 
             

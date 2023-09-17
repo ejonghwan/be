@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import axios from 'axios'
 import { ImageContext } from '../context/ImageContext.js'
 import { UserContext } from '../context/UserContext.js'
+import { getWithExpire } from '../utils/utils.js'
 
 
 
@@ -10,7 +11,7 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 const useImageRequest = () => {
     const { imageState, imageDispatch } = useContext(ImageContext); 
     const { state, dispatch } = useContext(UserContext);  // user꺼는 너무 많아서 그냥 기본으로 ...
-
+    const accToken = getWithExpire('X-access-token')
 
     const imageUpload = async data => {
         try {
@@ -25,7 +26,7 @@ const useImageRequest = () => {
             const image = await axios.post(`${host}/api/images/${encodeURIComponent(path)}/${_id}`, formData, {
                 headers: { 
                     "Content-Type": "multipart/form-data",
-                    'X-access-token': localStorage.getItem('X-access-token'),
+                    'X-access-token': accToken
                 },
                 withCredentials: true,
                 // onUploadProgress: ProgressEvent => {
@@ -50,10 +51,32 @@ const useImageRequest = () => {
 
     }
 
+    const imageDelete = async data => {
+        try {
+            const { fileName } = data;
+            
+            const image = await axios.delete(`${host}/api/images/${encodeURIComponent(fileName)}`, {
+                headers: { 
+                    "Content-Type": "multipart/form-data",
+                    'X-access-token': accToken
+                },
+                withCredentials: true,
+            })
+
+            return image;
+        } catch(err) {
+            console.error(err);
+            return err.response;
+        }
+
+    }
+
+
 
 
     return {
         imageUpload,
+        imageDelete,
     }
 }
 
