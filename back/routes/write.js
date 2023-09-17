@@ -165,12 +165,16 @@ router.post('/', async (req, res) => {
 router.patch('/edit/:writeId', async (req, res) => {
     try {
         const { writeId } = req.params;
-        const { title, content, writePublic } = req.body;
+        const { title, content, writePublic, prevImagefilename } = req.body;
 
         let putData = {}
         if(title) putData.title = title;
         if(content) putData.content = content;
         if(writePublic) putData.writePublic = writePublic;
+
+        if(prevImagefilename) {
+            await Write.findByIdAndUpdate(writeId, {$pull: { writeImages: { key: prevImagefilename } }}, { new: true });
+        }
 
         const write = await Write.findByIdAndUpdate(writeId, putData, { new: true });
         res.status(201).json(write);

@@ -36,8 +36,12 @@ router.post('/:path/:id', auth, upload.single("image"), async (req, res) => {
         })
         image.save();
 
-        if(path && path === 'userProfile') { await User.findByIdAndUpdate(id, { profileImage: { _id: image._id, key: image.key } }) } 
-        if(path && path === 'write') { await Write.findByIdAndUpdate(id, { writeImages: { _id: image._id, key: image.key } }) } 
+        if(path && path === 'userProfile') { 
+            await User.findByIdAndUpdate(id, { profileImage: { _id: image._id, key: image.key } });
+        } 
+        if(path && path === 'write') { 
+            await Write.findByIdAndUpdate(id, { writeImages: { _id: image._id, key: image.key } }); 
+        } 
         
         res.json(image); //db 정보 그대로 줌
 
@@ -69,7 +73,7 @@ router.get('/', async (req, res) => {
 router.delete('/:filename', auth, async (req, res) => {
     try { //삭제 테스트 잘됨 / 프론트 아직 안함
         const { filename } = req.params;
-        await ImageModel.deleteOne({ key: filename })
+        await ImageModel.deleteOne({ key: filename });
         await unlink(`./uploads/${filename}`);
         res.end();
     } catch(err) {

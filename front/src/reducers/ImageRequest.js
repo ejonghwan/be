@@ -54,15 +54,14 @@ const useImageRequest = () => {
     const imageDelete = async data => {
         try {
             const { fileName } = data;
-            
+        
             const image = await axios.delete(`${host}/api/images/${encodeURIComponent(fileName)}`, {
                 headers: { 
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                     'X-access-token': accToken
                 },
                 withCredentials: true,
             })
-
             return image;
         } catch(err) {
             console.error(err);

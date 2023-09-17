@@ -98,9 +98,10 @@ const WriteRequest = () => {
 
     const editWrite = async data => {
         try {
-            const { userId, writeId } = data;
-            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId가 잘못되었습니다');
-            if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            const { writeId, prevImagefilename } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            console.log('???', data)
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -108,7 +109,11 @@ const WriteRequest = () => {
                 },
                 withCredentials: true,
             }
+            // console.log('???', data)
+            console.log('???')
+
             const res = await axios.patch(`${host}/api/write/edit/${writeId}`, data, config);
+            console.log(res)
             WriteDispatch({ type: "WRITE_EDIT_SUCCESS", data: res.data });
 
             return res.data;

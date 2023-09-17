@@ -17,14 +17,16 @@ import './WriteEdit.css';
 const WriteEdit = ({ editWriteRef, writes }) => {
 
     const { state } = useContext(UserContext);
-    const { imageUpload } = useImageRequest();
-    const { createWrite } = WriteRequest();
+    const { imageUpload, imageDelete } = useImageRequest();
+    const { createWrite, editWrite } = WriteRequest();
 
     const [imageData, setImageData] = useState({})
 
-    const [writeSubmitData, setWriteSubmitData] = useState({ 
+    const [writeSubmitData, setWriteSubmitData] = useState({
+        writeId: writes._id,
         title: writes.title,
         content: writes.content,
+        prevImageFulename:  writes.writeImages ?  writes.writeImages[0].key : null,
     });
 
 
@@ -35,12 +37,12 @@ const WriteEdit = ({ editWriteRef, writes }) => {
 
     const handleEditWriteSubmit = _debounce(async(e) => {
         try {
-            const res = await createWrite(writeSubmitData) // 글 보내기
-             // 이미지가 있으면 올리고 없으면 올리지 않음. 동기적으로 글 생성 후 그 아이디 받아서 다시 요청
-             // 수정에선 백엔드에서 기존 이미지 지우고 추가해야됨. 아직 작업안함
+            console.log('??', writeSubmitData)
+            const res = await editWrite(writeSubmitData) // 글 보내기
+            console.log(res)
             if( imageData.file ) { 
                 await imageUpload({ ...imageData, _id: res._id }); 
-                
+                await imageDelete({ fileName: writes.writeImages[0].key });
             };
             editWriteRef.current.popupClose();
         } catch(err) {
