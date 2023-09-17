@@ -166,7 +166,7 @@ router.patch('/edit/:writeId', async (req, res) => {
     try {
         const { writeId } = req.params;
         const { title, content, writePublic, prevImagefilename } = req.body;
-
+ 
         let putData = {}
         if(title) putData.title = title;
         if(content) putData.content = content;

@@ -101,7 +101,6 @@ const WriteRequest = () => {
             const { writeId, prevImagefilename } = data;
             // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
             // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
-            console.log('???', data)
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -109,8 +108,6 @@ const WriteRequest = () => {
                 },
                 withCredentials: true,
             }
-            // console.log('???', data)
-            console.log('???')
 
             const res = await axios.patch(`${host}/api/write/edit/${writeId}`, data, config);
             console.log(res)

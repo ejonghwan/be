@@ -109,15 +109,16 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 }
 
             case "WRITE_EDIT_SUCCESS": 
+            console.log(action.data)
                 return {
                     ...state,
                     editWriteLoading: false,
                     editWriteDone: true,
-                    // writes: {
-                    //     ...state.writes,
-                    //     likeCount: state.writes.likeCount - 1,
-                    //     likes: state.writes.likes.filter(user => user !== action.data)
-                    // }
+                    writes: {
+                        ...state.writes,
+                        title: action.data.title,
+                        content: action.data.content,
+                    }
                 }
 
             case "WRITE_EDIT_FAILUE" : 
@@ -125,6 +126,15 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     editWriteLoading: false,
                     editWriteError: action.data,
+                }
+
+            case "WRITE_IMAGE_EDIT_SUCCESS" : 
+                return {
+                    ...state,
+                    writes: {
+                        ...state.writes,
+                        writeImages: [action.data]
+                    }
                 }
 
             

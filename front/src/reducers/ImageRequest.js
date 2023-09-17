@@ -3,6 +3,7 @@ import axios from 'axios'
 import { ImageContext } from '../context/ImageContext.js'
 import { UserContext } from '../context/UserContext.js'
 import { getWithExpire } from '../utils/utils.js'
+import { WriteContext } from '../context/WriteContext.js'
 
 
 
@@ -11,6 +12,7 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 const useImageRequest = () => {
     const { imageState, imageDispatch } = useContext(ImageContext); 
     const { state, dispatch } = useContext(UserContext);  // user꺼는 너무 많아서 그냥 기본으로 ...
+    const { WriteDispatch } = useContext(WriteContext)
     const accToken = getWithExpire('X-access-token')
 
     const imageUpload = async data => {
@@ -40,7 +42,7 @@ const useImageRequest = () => {
 
             // image data는 image model 설계한대로 다 옴
             if(path === "userProfile") dispatch({ type: "USER_PROFILEIMAGE_EDIT_SUCCESS", data: { _id: image.data._id, key: image.data.key } });
-            // if(path === "write") {}
+            if(path === "write") WriteDispatch({ type: "WRITE_IMAGE_EDIT_SUCCESS", data: { _id: image.data._id, key: image.data.key } })
             
             return image;
         } catch(err) {
