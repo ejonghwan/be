@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { WriteContext } from '../../context/WriteContext';
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
+import ImageRequest from '../../reducers/ImageRequest';
 import LikeIcon from '../common/icon/LikeIcon';
 import CommentIcon from '../common/icon/CommentIcon';
 import WriteLike from './WriteLike';
@@ -15,6 +16,7 @@ import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
 import WriteEdit from './WriteEdit.js'
 import './WriteDetail.css';
+import Comment from '../comment/Comment';
 
 
 const WriteDetail = ({ writeId }) => {
@@ -22,6 +24,7 @@ const WriteDetail = ({ writeId }) => {
     const { WriteState, WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
     const { state } = useContext(UserContext);
     const { loadWrite, deleteWrite } = WriteRequest();
+    const { imageDelete } = ImageRequest();
     const editWriteRef = useRef(null);
     const navigate = useNavigate();
 
@@ -47,6 +50,7 @@ const WriteDetail = ({ writeId }) => {
                 writeId: writeId,
                 projectId: writes.project._id._id
             });
+            await imageDelete({ fileName: writes.writeImages[0].key });
             navigate(`/project/detail/${writes.project._id}`)
         } catch(err) {
             console.log(err)
@@ -116,7 +120,7 @@ const WriteDetail = ({ writeId }) => {
                                     <div>{writes.content}</div>
                                 </div>
                                 <div className='write_bottom'>
-                                    comment
+                                    <Comment comments={writes.comments}/>
                                 </div>
                             </Fragment>
                         ) : (
