@@ -124,6 +124,34 @@ export const initTime = () => {
 }
 
 
+/** 
+ * 현재 시간 반환 (이전)
+ * @returns {string} 년 월 일 시간 분 초 
+ */
+export const timeForToday = (date) => {
+    const today = new Date();
+    const timeValue = new Date(date);
+
+    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+    if (betweenTime < 1) return '방금전';
+    if (betweenTime < 60) {
+        return `${betweenTime}분전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+        return `${betweenTimeHour}시간전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+        return `${betweenTimeDay}일전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+}
+
+
 
  /**
  * 상태 코드 첫 숫자 확인하는 함수

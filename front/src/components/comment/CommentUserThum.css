@@ -1,0 +1,62 @@
+
+.comment_user_thum_wrap {
+    
+}
+
+.comment_user_thum_wrap > .comment_user_thum_inner {
+    display: flex;
+    /* flex-wrap: wrap; */
+    /* align-items: center; */
+    /* background: var(--bg-box-color0); */
+}
+
+.comment_user_thum_wrap .user_thum_imgwrap {
+    flex: 0 0 auto;
+}
+
+.comment_user_thum_wrap .user_thum_txtwrap {
+    /* flex: 1 0 auto; */
+    margin-left: 15px;
+}
+
+.comment_user_thum_wrap  + .comment_user_thum_wrap {
+    margin-top: 20px;
+}
+
+.comment_user_thum_wrap .user_thum_txtwrap .info > button {
+    padding: 0;
+    margin-right: 10px;
+}
+
+.comment_user_thum_wrap .user_thum_txtwrap .cont {
+    white-space: pre-line;
+}
+
+.comment_user_thum_wrap .user_thum_txtwrap .info .created_at,
+.comment_user_thum_wrap .user_thum_txtwrap .info .is_update {
+    font-size: 1.3rem;
+    color: var(--text-color2);
+    margin-left: 5px;
+}
+
+
+.comment_user_thum_wrap .user_thum_imgwrap > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 40%;
+}
+
+.comment_user_thum_wrap .user_thum_id {
+    display: block;
+    font-size: 1.3rem;
+    color: var(--text-color2);
+}
+
+.comment_user_thum_wrap .user_thum_name {
+    display: block;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+
+

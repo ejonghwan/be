@@ -21,21 +21,22 @@ const Comment = ({ comments = [] }) => {
     }, [])
 
     return (
-        <div>
+        <Fragment>
             {comments.map(comment => (
                 <Fragment key={comment._id}>
-                    <div>
-                        <CommentUserThum 
-                            users={[comment.user]} 
-                            content={comment.content}
-                            isText={true} 
-                            isId={false}
-                            className={'horizontal_type1'} 
-                        />
-                    </div>
+                    
+                    <CommentUserThum 
+                        users={[comment.user]} 
+                        content={comment.content}
+                        comment={comment}
+                        isText={true} 
+                        isId={false}
+                        className={'horizontal_type1'} 
+                    />
+                   
                 </Fragment>
             ))}
-        </div>
+        </Fragment>
     );
 };
 
