@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
 
         await Promise.all([
             User.findByIdAndUpdate(user._id, { $push: { comments: comment._id } }, { new: true }).exec(),
-            Write.findByIdAndUpdate(writeId, { $push: { comments: comment._id } }, { new: true }).exec()
+            Write.findByIdAndUpdate(writeId, { $push: { comments: comment._id }, $inc: { commentCount: 1 } }, { new: true }).exec()
         ])
 
         res.status(201).json(comment)
@@ -81,10 +81,9 @@ router.delete('/', async (req, res) => {
         const [comment, user, write] = await Promise.all([
             Comment.findByIdAndDelete(commentId, { new: true }).exec(),
             User.findByIdAndUpdate(userId, { $pull: { comments: commentId } }, { new: true }).exec(),
-            Write.findByIdAndUpdate(writeId, { $pull: { comments: commentId } }, { new: true }).exec(),
+            Write.findByIdAndUpdate(writeId, { $pull: { comments: commentId }, $inc: { commentCount: -1 } }, { new: true }).exec(),
         ])
         res.status(201).json(write);
-        // promise all 코멘트 왜 밑에 두면 삭제 안되지 ? 
 
     } catch (err) {
         console.error('server:', err);

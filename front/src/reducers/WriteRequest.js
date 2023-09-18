@@ -129,10 +129,11 @@ const WriteRequest = () => {
                     "Content-Type": "application/json", 
                     'X-access-token': accToken, 
                 },
+                data: data,
                 withCredentials: true,
             }
 
-            const res = await axios.delete(`${host}/api/write`, data, config);
+            const res = await axios.delete(`${host}/api/write`, config);
             console.log(res)
             WriteDispatch({ type: "WRITE_DELETE_SUCCESS", data: res.data });
 

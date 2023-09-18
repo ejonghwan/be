@@ -6,6 +6,8 @@ import { auth } from '../middleware/auth.js' ;
 import Write from '../models/write.js';
 import Project from '../models/project.js';
 import User from '../models/users.js';
+import Comment from '../models/comment.js';
+import Recomment from '../models/recomment.js';
 
 const router = express.Router();
 
@@ -192,15 +194,15 @@ router.patch('/edit/:writeId', async (req, res) => {
 router.delete('/', async (req, res) => {
     try {
         const { userId, writeId, projectId } = req.body;
-        const write = await Write.findById(writeId)
-        const deleteWriteDate = new Date(write.createdAt)
+        const write = await Write.findById(writeId);
+        const deleteWriteDate = new Date(write.createdAt);
        
         // 글삭제 시 ins에 있던 해당 일 count삭제
         // 230621 생각해보니 현재 날짜가 아니라 작성한 날짜를 찾아야함.
         const nowDate = `${deleteWriteDate.getFullYear()}` + `${deleteWriteDate.getMonth() + 1}` + `${deleteWriteDate.getDate()}`;
 
-        const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId } ] }, )
-        const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
+        const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId } ] }, );
+        const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, );
     
         // 생성 시 0, 추가할때마다 +1
         // 삭제 시 카운트가 0인경우 -1로.. -1이면 추가했던걸 삭제했다는 뜻
@@ -214,16 +216,16 @@ router.delete('/', async (req, res) => {
                 if(isConstructorDate.constructorUser.days[h].date === nowDate) {
                     isConstructorDate.constructorUser.days[h].count--
                     await isConstructorDate.save();
-                }
-            }
-        }
+                };
+            };
+        };
 
         
         // #### constructor ####
    
 
         // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
-        const isInstance = await Project.findOne({ $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }) 
+        const isInstance = await Project.findOne({ $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }) ;
 
         // #### instance ####
         // 인스턴스 유저도 -- 
@@ -236,26 +238,42 @@ router.delete('/', async (req, res) => {
                         if(isInstance.instanceUser[i].days[h].date === nowDate) {
                             isInstance.instanceUser[i].days[h].count--
                             await isInstance.save();
-                        }
-                    }
-                }
-            }
-        }
+                        };
+                    };
+                };
+            };
+        };
         // #### instance ####
 
+
+        // 코멘트, 리코멘트 삭제 - 테스트완료
+        console.log( write.comments )
+        for(let i = 0; i < write.comments.length; i++) {
+            await Recomment.remove({ comment: write.comments[i]._id }, { new: true })
+        }
+        for(let i = 0; i < write.comments.length; i++) {
+            await Comment.findByIdAndRemove(write.comments[i], { new: true })
+        }
+
+        // 유저에 좋아요 글 삭제 - 테스트 완료
+        for(let i = 0; i < write.likes.length; i++) {
+            await User.findByIdAndUpdate(write.likes[i], { $pull: {likePost: writeId } }, { new: true })
+        }   
+
+        // 테스트 완료
         await Promise.all([
             Write.findByIdAndRemove(writeId),
-            User.updateOne({_id: userId}, { $pull: {writes: writeId } }, { new: true }),
+            User.updateOne({_id: userId}, { $pull: { writes: writeId } }, { new: true }),
             Project.updateOne({_id: projectId}, { $pull: {writes: writeId } }, { new: true }),
-        ])
-
+            
+        ]);
         res.status(201).end();
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
+    };
     
-})
+});
 
 
 

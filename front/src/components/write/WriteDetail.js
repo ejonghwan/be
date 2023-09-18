@@ -1,9 +1,8 @@
 import { useEffect, useContext, Fragment, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { WriteContext } from '../../context/WriteContext';
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
-import './WriteDetail.css';
 import LikeIcon from '../common/icon/LikeIcon';
 import CommentIcon from '../common/icon/CommentIcon';
 import WriteLike from './WriteLike';
@@ -15,7 +14,7 @@ import { PiGhostDuotone, PiGearDuotone, PiXCircleDuotone } from "react-icons/pi"
 import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
 import WriteEdit from './WriteEdit.js'
-
+import './WriteDetail.css';
 
 
 const WriteDetail = ({ writeId }) => {
@@ -24,6 +23,7 @@ const WriteDetail = ({ writeId }) => {
     const { state } = useContext(UserContext);
     const { loadWrite, deleteWrite } = WriteRequest();
     const editWriteRef = useRef(null);
+    const navigate = useNavigate();
 
 
     const handleWriteEditState = () => editWriteRef.current.popupOpen();
@@ -31,8 +31,8 @@ const WriteDetail = ({ writeId }) => {
 
     const handleLoadWrite = async () => {
         try {
-            WriteDispatch({ type: "WRITE_LOAD_REQUEST" })
-            await loadWrite(writeId)
+            WriteDispatch({ type: "WRITE_LOAD_REQUEST" });
+            await loadWrite(writeId);
         } catch(err) {
             console.log(err)
         }
@@ -40,12 +40,14 @@ const WriteDetail = ({ writeId }) => {
 
     const handleWriteDelete = async () => {
         try {
-            WriteDispatch({ type: "WRITE_DELETE_REQUEST" })
+            if(!window.confirm('정말 이 글을 삭제하시겠습니까?')) return;
+            WriteDispatch({ type: "WRITE_DELETE_REQUEST" });
             await deleteWrite({
                 userId: state.user._id,
                 writeId: writeId,
                 projectId: writes.project._id._id
-            })
+            });
+            navigate(`/project/detail/${writes.project._id}`)
         } catch(err) {
             console.log(err)
         }
