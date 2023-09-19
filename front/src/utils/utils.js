@@ -257,6 +257,15 @@ export const getWithExpire = keyName => {
 
 
 
+/**
+ * 바이트 계산 : 한글 3 바이트. 영문 1바이트
+ * @param {string} string - 계산할 문자열
+ * @returns {number}
+ */
+export const getByteLengthOfString = function(str, b, i, c){
+    for(b = i = 0; c = str.charCodeAt(i++); b += c >> 11 ? 3 : c >> 7 ? 2 : 1);
+    return b;
+};
 
 
 

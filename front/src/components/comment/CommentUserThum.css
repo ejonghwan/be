@@ -1,13 +1,14 @@
 
 .comment_user_thum_wrap {
-    
+    margin-top: 20px;
 }
+
+/* .comment_user_thum_wrap  + .comment_user_thum_wrap {
+    margin-top: 20px;
+} */
 
 .comment_user_thum_wrap > .comment_user_thum_inner {
     display: flex;
-    /* flex-wrap: wrap; */
-    /* align-items: center; */
-    /* background: var(--bg-box-color0); */
 }
 
 .comment_user_thum_wrap .user_thum_imgwrap {
@@ -19,22 +20,28 @@
     margin-left: 15px;
 }
 
-.comment_user_thum_wrap  + .comment_user_thum_wrap {
-    margin-top: 20px;
-}
 
 .comment_user_thum_wrap .user_thum_txtwrap .info > button {
     padding: 0;
-    margin-right: 10px;
+    /* margin-right: 10px; */
+}
+
+.comment_user_thum_wrap .user_thum_txtwrap .cont_detail > button {
+    padding: 0;
+    margin-top: 5px;
+    font-size: 1.2rem;
+    color: var(--text-color2);
+    font-weight: 500;
 }
 
 .comment_user_thum_wrap .user_thum_txtwrap .cont {
     white-space: pre-line;
 }
 
+
 .comment_user_thum_wrap .user_thum_txtwrap .info .created_at,
 .comment_user_thum_wrap .user_thum_txtwrap .info .is_update {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: var(--text-color2);
     margin-left: 5px;
 }
@@ -54,8 +61,8 @@
 
 .comment_user_thum_wrap .user_thum_name {
     display: block;
-    font-weight: 500;
-    text-decoration: underline;
+    font-weight: 600;
+    /* text-decoration: underline; */
 }
 
 

@@ -120,7 +120,7 @@ const WriteDetail = ({ writeId }) => {
                                     <div>{writes.content}</div>
                                 </div>
                                 <div className='write_bottom'>
-                                    <Comment comments={writes.comments}/>
+                                    <Comment comments={writes.comments.reverse()}/>
                                 </div>
                             </Fragment>
                         ) : (
