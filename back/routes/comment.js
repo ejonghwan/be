@@ -100,11 +100,18 @@ router.delete('/', async (req, res) => {
 router.patch('/like', async (req, res) => {
     try {
         const { userId, commentId } = req.body;
+
+        const likeUser = await Comment.find({_id: commentId}).select("likes");
+        for(let i = 0; i < likeUser[0].likes.length; i++) {
+            if(likeUser[0].likes[i].equals(userId)) {
+                return res.status(400).json({ message: "이미 좋아요를 추가했습니다." })
+            } 
+        }
+
         const [ comment ] = await Promise.all([
             Comment.findByIdAndUpdate(commentId, { $push: {likes: userId }, $inc: { likeCount: 1 } }, { new: true }),
-            // 유저모델에 좋아요한 댓글을 넣을까 말까 ...
         ])
-        res.status(201).json(comment);
+        res.status(201).json({ userId, commentId });
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -122,7 +129,7 @@ router.patch('/unlike', async (req, res) => {
         const [ comment ] = await Promise.all([
             Comment.findByIdAndUpdate(commentId, { $pull: {likes: userId }, $inc: { likeCount: -1 } }, { new: true }),
         ])
-        res.status(201).json(comment);
+        res.status(201).json({ userId, commentId });
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

@@ -12,7 +12,7 @@ const Comment = ({ comments = [] }) => {
         <Fragment>
             <CommentCreate comments={comments} />
             {WriteState.createCommentLoading && <div>댓글 생성 중.......</div>}
-
+            
             {comments.map((comment, idx) => (
                 <Fragment key={comment._id}>
                     <CommentUserThum 

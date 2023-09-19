@@ -28,6 +28,14 @@ export const WriteIntialState = {
     createCommentDone: false,
     createCommentError: null,
 
+    likeCommentLoading: false,
+    likeCommentDone: false,
+    likeCommentError: null,
+
+    unlikeCommentLoading: false,
+    unlikeCommentDone: false,
+    unlikeCommentError: null,
+
 
     createWrites: {},
     writes: {},
@@ -196,6 +204,56 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     createCommentError: action.data,
                 }
             
+
+            case "COMMENT_LIKE_REQUEST": 
+                return {
+                    ...state,
+                    likeCommentLoading: true,
+                }
+
+            case "COMMENT_LIKE_SUCCESS": 
+                return {
+                    ...state,
+                    likeCommentLoading: false,
+                    likeCommentDone: true,
+                    writes: {
+                        ...state.writes,
+                        comments: state.writes.comments.map(comment => comment._id === action.data.commentId ? 
+                            { ...comment, likes: comment.likes.concat(action.data.userId), likeCount: comment.likeCount + 1 } : comment)
+                    }
+                }
+
+            case "COMMENT_LIKE_FAILUE" : 
+                return {
+                    ...state,
+                    likeCommentLoading: false,
+                    likeCommentError: action.data,
+                }
+
+            case "COMMENT_UNLIKE_REQUEST": 
+                return {
+                    ...state,
+                    unlikeCommentLoading: true,
+                }
+
+            case "COMMENT_UNLIKE_SUCCESS": 
+                return {
+                    ...state,
+                    unlikeCommentLoading: false,
+                    unlikeCommentDone: true,
+                    writes: {
+                        ...state.writes,
+                        comments: state.writes.comments.map(comment => comment._id === action.data.commentId ? 
+                            { ...comment, likes: comment.likes.filter(com => com._id !== action.data.userId), likeCount: comment.likeCount - 1 } : comment)
+                    }
+                }
+
+            case "COMMENT_UNLIKE_FAILUE" : 
+                return {
+                    ...state,
+                    unlikeCommentLoading: false,
+                    unlikeCommentError: action.data,
+                }
 
 
 

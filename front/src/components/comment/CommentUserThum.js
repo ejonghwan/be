@@ -5,11 +5,12 @@ import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
 import { PiDotsThreeOutlineVerticalDuotone, PiDotsThreeVerticalDuotone, PiPencilSimpleLineDuotone, PiXSquareDuotone  } from "react-icons/pi";
 import { timeForToday, getByteLengthOfString } from '../../utils/utils';
+import CommentLike from './CommentLike';
 import './CommentUserThum.css';
 
 
 
-const CommentUserThum = ({ users = [], className = '', idx, buttons = [], align = 'horizon', imgStyle, isId = true, comment}) => {
+const CommentUserThum = ({ className = '', idx, buttons = [], align = 'horizon', imgStyle, isId = true, comment}) => {
     
     const [selectIdx, setSelectIdx] = useState(0);
     const [ellip, setEllip] = useState(false);
@@ -28,7 +29,7 @@ const CommentUserThum = ({ users = [], className = '', idx, buttons = [], align 
     }
 
     const handleContentViewOpen = () => {
-        setEllip(!ellip)
+        setEllip(!ellip) 
         setBriefly(!briefly)
     }
 
@@ -42,9 +43,7 @@ const CommentUserThum = ({ users = [], className = '', idx, buttons = [], align 
 
     return (
         <Fragment>
-            {console.log(comment)}
             <article className={`comment_user_thum_wrap ${className} ${align}`}>
-               
                 <div className='comment_user_thum_inner'>
                     <div className="user_thum_imgwrap" style={imgStyle}>
                         <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${comment.user._id.profileImage.key}`} alt="유저 프로필 이미지" />
@@ -68,19 +67,23 @@ const CommentUserThum = ({ users = [], className = '', idx, buttons = [], align 
                                 <Button className={'button_reset hover_type3'} onClick={handleContentViewOpen}>자세히 보기</Button>
                             </div>
                         )}
-                            {briefly && (
-                            <div className='cont_detail'>
-                                <Button className={'button_reset hover_type3'} onClick={handleContentViewOpen}>간략히</Button>
-                            </div>
+                        {briefly && (
+                        <div className='cont_detail'>
+                            <Button className={'button_reset hover_type3'} onClick={handleContentViewOpen}>간략히</Button>
+                        </div>
                         )}
+                         <div>
+                            <CommentLike comment={comment} />
+                            <Button onClick={() => console.log('commnet?', comment._id)}>답글</Button>
+                        </div>
                     </div>
-                 
 
                     <div className='user_thum_more'>
                         <Button type={'button'} className={'button_type3 ico_hover_type1'} onClick={handleOpenCommentMore}>
                             <PiDotsThreeOutlineVerticalDuotone />
                         </Button>
                     </div>
+
                     <Popup className={`popup_type_default comment_more`} isHead={false} dimd={true} ref={commentMoreRef}>
                         <Button className={'button_type3 ico_hover_type1'}>
                             <PiPencilSimpleLineDuotone />
@@ -91,15 +94,17 @@ const CommentUserThum = ({ users = [], className = '', idx, buttons = [], align 
                             <span>삭제</span>
                         </Button>
                     </Popup>
-
+{/* 
                     {buttons.length > 0 && (
                         <div className='user_button_wrap' data-userid={comment.user._id._id}>
                             {buttons.map((item, idx) => (
                                 <Fragment key={idx}>{item}</Fragment>
                             ))}
                         </div>
-                    )}
+                    )} */}
                 </div>
+
+              
              
             </article>
 

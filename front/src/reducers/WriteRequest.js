@@ -153,7 +153,6 @@ const WriteRequest = () => {
                     "Content-Type": "application/json", 
                     'X-access-token': accToken, 
                 },
-                data: data,
                 withCredentials: true,
             }
 
@@ -166,6 +165,50 @@ const WriteRequest = () => {
         };
     };
 
+    const likeComment = async data => {
+        try {
+            const { userId, commentId } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+            const res = await axios.patch(`${host}/api/comment/like`, data, config);
+            WriteDispatch({ type: "COMMENT_LIKE_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "COMMENT_LIKE_FAILUE", data: err.message });
+        };
+    };
+
+    const unlikeComment = async data => {
+        try {
+            const { userId, commentId } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+            const res = await axios.patch(`${host}/api/comment/unlike`, data, config);
+            WriteDispatch({ type: "COMMENT_UNLIKE_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "COMMENT_UNLIKE_FAILUE", data: err.message });
+        };
+    };
+
     return {
         createWrite,
         loadWrite,
@@ -174,6 +217,8 @@ const WriteRequest = () => {
         editWrite,
         deleteWrite,
         createComment,
+        likeComment,
+        unlikeComment,
     }
 }
 
