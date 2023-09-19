@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback, Fragment, memo } from 'react';
+import { useState, useContext, useEffect, useCallback, Fragment, memo, useRef } from 'react';
 import { PiStarDuotone, PiHeartDuotone } from "react-icons/pi";
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
@@ -15,21 +15,27 @@ const CommentLike = ({  comment, className = '' }) => {
     const { likeComment, unlikeComment } = WriteRequest();
     const { state } = useContext(UserContext);
     const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
-    const [like, setLike] = useState(() => comment.likes?.filter(likeUser => likeUser === state.user._id).length > 0 ? true : false)
+    const [like, setLike] = useState(() => comment.likes?.filter(likeUser => likeUser === state.user._id).length > 0 ? true : false);
+    const likeRef = useRef(false);
+    const unlikeRef = useRef(false);
 
-    const handleCommentLike = useCallback(() => {
-        console.log(comment._id, 'asdasdasdasd')
+    const handleCommentLike = () => {
+        console.log('??????????????? 여기안와 ???')
         if(!state.isLogged) return alert('좋아요를 하려면 로그인을 먼저 해주세요.')
-        likeApi(like)
-        setLike(!like)
-    }, [like])
+        likeApi(like);
+        setLike(!like);
+        console.log('??????????????? 여기안와 22222222222 ???')
+        unlikeRef.current = false;
+        likeRef.current = true;
+    }
 
-    const handleCommentUnlike = useCallback(() => {
-        console.log(comment._id, 'asdasdasdasd')
+    const handleCommentUnlike = () => {
         if(!state.isLogged) return alert('좋아요를 취소 하려면 로그인을 먼저 해주세요.')
-        likeApi(like)
-        setLike(!like)
-    }, [like])
+        likeApi(like);
+        setLike(!like);
+        likeRef.current = false;
+        unlikeRef.current = true;
+    }
 
 
     // like state는 바로 번경되더라도 실제 요청은 1.5초 후에 클릭되는 상태에 따라 가게 debouce 작업. 
@@ -51,7 +57,7 @@ const CommentLike = ({  comment, className = '' }) => {
         } catch(err) {
             console.log(err)
         } 
-    }, 1000), []);
+    }, 1000), [comment.likes]);
 
 
 
@@ -60,7 +66,7 @@ const CommentLike = ({  comment, className = '' }) => {
             <span className={`write_like_wrap ${className}`}>
                 {like && (
                     <Fragment>
-                        {like && <InfoState text={'좋아요!'} /> }
+                        {likeRef.current && <InfoState text={'좋아요!'} />}
                         <Button type={'button'} className={`button_type3 write_like ico_hover_type1 like ${like && 'active'}`} onClick={handleCommentUnlike} title={'좋아요 취소'}>
                             <PiHeartDuotone />
                             <span className='blind'>이 글 좋아요 취소</span>
@@ -70,7 +76,7 @@ const CommentLike = ({  comment, className = '' }) => {
 
                 {!like && (
                     <Fragment>
-                        {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
+                        {unlikeRef.current && <InfoState text={'좋아요 취소!'} />}
                         <Button type={'button'} className={`button_type3 write_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleCommentLike} title={'좋아요'}>
                             <PiHeartDuotone />
                             <span className='blind'>이 글 좋아요</span>

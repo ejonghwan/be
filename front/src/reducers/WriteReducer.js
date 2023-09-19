@@ -56,7 +56,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     loadLoading: false,
                     loadDone: true,
-                    writes: action.data
+                    writes: {...action.data, comments: action.data.comments.reverse()}
                 }
 
             case "WRITE_LOAD_FAILUE" : 
@@ -212,6 +212,17 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 }
 
             case "COMMENT_LIKE_SUCCESS": 
+                // const commentIdx = state.writes.comments.findIndex(comment => comment._id === action.data.commentId);
+                // const selectComment = state.writes.comments[commentIdx]
+                // const editComment = { 
+                //     ...selectComment, 
+                //     likes: selectComment.likes.concat(action.data.userId), 
+                //     likeCount: selectComment.likeCount + 1 
+                // }
+                // const copiedComment = [...state.writes.comments]
+                // copiedComment[commentIdx].likeCount = copiedComment[commentIdx].likeCount + 1;
+                // copiedComment[commentIdx].likes.concat(action.data.userId);
+            
                 return {
                     ...state,
                     likeCommentLoading: false,
@@ -237,6 +248,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 }
 
             case "COMMENT_UNLIKE_SUCCESS": 
+                
                 return {
                     ...state,
                     unlikeCommentLoading: false,
@@ -244,7 +256,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     writes: {
                         ...state.writes,
                         comments: state.writes.comments.map(comment => comment._id === action.data.commentId ? 
-                            { ...comment, likes: comment.likes.filter(com => com._id !== action.data.userId), likeCount: comment.likeCount - 1 } : comment)
+                            { ...comment, likes: comment.likes.filter(_id => _id !== action.data.userId), likeCount: comment.likeCount - 1 } : comment)
                     }
                 }
 

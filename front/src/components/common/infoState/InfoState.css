@@ -8,14 +8,18 @@
     left: 40%;
     padding: 12px 15px;
     font-weight: 300;
-    animation: info_state_ani 1s; 
     opacity: 0;
     z-index: 10;
     border-radius: 10px;
     text-align: center;
     padding: 3px 10px;
     white-space: nowrap;
+    animation: info_state_ani 1s; 
 }
+
+/* .info_state_wrap.active {
+   
+} */
 
 
 
