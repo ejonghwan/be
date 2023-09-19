@@ -1,6 +1,6 @@
 import './Textarea.css';
 
-const Textarea = ({ id, className, children, type, required, placeholder, name, value, onChange, disabled}) => {
+const Textarea = ({ id, className, children, type, required, placeholder, name, value, onChange, disabled, style}) => {
     return (
         <textarea
             id={id} 
@@ -12,6 +12,7 @@ const Textarea = ({ id, className, children, type, required, placeholder, name, 
             name={name} 
             onChange={onChange} 
             disabled={disabled} 
+            style={style}
         >{children}</textarea>
     );
 };

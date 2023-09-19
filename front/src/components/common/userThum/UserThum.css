@@ -73,6 +73,7 @@
 .user_thum_wrap.horizontal_type1 .user_thum_imgwrap > img {
     width: 30px;
     height: 30px;
+    margin-bottom: 0px;
 }
 
 

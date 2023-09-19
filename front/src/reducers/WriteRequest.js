@@ -134,12 +134,35 @@ const WriteRequest = () => {
             }
 
             const res = await axios.delete(`${host}/api/write`, config);
-            console.log(res)
             WriteDispatch({ type: "WRITE_DELETE_SUCCESS", data: res.data });
 
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "WRITE_DELETE_FAILUE", data: err.message });
+        };
+    };
+
+
+    const createComment = async data => {
+        try {
+            const { user, writeId, content } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                data: data,
+                withCredentials: true,
+            }
+
+            const res = await axios.post(`${host}/api/comment`, data, config);
+            WriteDispatch({ type: "COMMENT_CREATE_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "COMMENT_CREATE_FAILUE", data: err.message });
         };
     };
 
@@ -150,6 +173,7 @@ const WriteRequest = () => {
         unLikeWrite,
         editWrite,
         deleteWrite,
+        createComment,
     }
 }
 

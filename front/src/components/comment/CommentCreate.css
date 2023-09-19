@@ -1,5 +1,14 @@
 .create_comment_wrap {}
 
+.create_comment_wrap .sub_info > span {
+    font-size: 1.3rem; 
+}
+
+
+.create_comment_wrap .sub_info > span + span {
+    margin-left: 10px;
+}
+
 
 .create_comment_wrap .create_comment_inner {
     display: flex;    
@@ -9,6 +18,11 @@
 
 .create_comment_wrap .create_comment_form {
     flex: 1 0 auto;
+    text-align: right;
+}
+
+.create_comment_wrap .create_comment_form > button + button {
+    margin-left: 5px;
 }
 
 .create_comment_wrap .create_comment_img {

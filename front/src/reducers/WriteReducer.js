@@ -24,6 +24,10 @@ export const WriteIntialState = {
     deleteWriteDone: false,
     deleteWriteError: null,
 
+    createCommentLoading: false,
+    createCommentDone: false,
+    createCommentError: null,
+
 
     createWrites: {},
     writes: {},
@@ -164,6 +168,32 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     deleteWriteLoading: false,
                     deleteWriteError: action.data,
+                }
+
+
+
+            case "COMMENT_CREATE_REQUEST": 
+                return {
+                    ...state,
+                    createCommentLoading: true,
+                }
+
+            case "COMMENT_CREATE_SUCCESS": 
+                return {
+                    ...state,
+                    createCommentLoading: false,
+                    createCommentDone: true,
+                    writes: {
+                        ...state.writes,
+                        comments: state.writes.comments.concat(action.data)
+                    }
+                }
+
+            case "COMMENT_CREATE_FAILUE" : 
+                return {
+                    ...state,
+                    createCommentLoading: false,
+                    createCommentError: action.data,
                 }
             
 

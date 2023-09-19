@@ -1,13 +1,15 @@
 
 import './Comment.css'
 import { loadCommentRequest } from '../../context/CommentContext';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import CommentUserThum from './CommentUserThum';
 import CommentCreate from './CommentCreate';
+import { WriteContext } from '../../context/WriteContext';
 
 
 const Comment = ({ comments = [] }) => {
 
+    const { WriteState } = useContext(WriteContext);
 
     // const loadComment = async() => {
     //     try {
@@ -24,6 +26,7 @@ const Comment = ({ comments = [] }) => {
     return (
         <Fragment>
             <CommentCreate comments={comments} />
+            {WriteState.createCommentLoading && <div>댓글 생성 중.......</div>}
             {comments.map((comment, idx) => (
                 <Fragment key={comment._id}>
                     <CommentUserThum 

@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
     try {
         // get data: user, content, writeId, 
         const { user, content, writeId } = req.body;
-        const comment = await new Comment(req.body)
+        const comment = await new Comment(req.body).populate({ path: "user._id", select: 'id name profileImage createdAt' })
         comment.save();
 
         await Promise.all([

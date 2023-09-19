@@ -70,6 +70,26 @@
     font-size: 1.3rem;
 }
 
+.button_type7 {
+    background-color: var(--point-color);
+    color: var(--text-color-white);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 1.3rem;
+}
+
+button.line {
+    border: 1px solid var(--line-color2);
+    background-color: transparent;
+    color: var(--text-color1);
+}
+
+button.line:hover {
+    background-color: var(--hover-color);
+}
+
+
+
 [class*=button_type].danger {
     background-color: var(--point-color2);
     color: var(--text-color-white);
