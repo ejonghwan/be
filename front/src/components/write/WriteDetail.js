@@ -11,12 +11,12 @@ import UserThumItem from '../common/userThum/UserThumItem';
 import ViewDate from '../common/date/ViewDate';
 import { changeViewDate } from '../../utils/utils';
 import Nodata from '../common/notData/NoData';
-import { PiGhostDuotone, PiGearDuotone, PiXCircleDuotone } from "react-icons/pi";
+import { PiGhostDuotone, PiGearDuotone, PiXCircleDuotone, PiFileXDuotone, PiChatDotsDuotone } from "react-icons/pi";
 import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
 import WriteEdit from './WriteEdit.js'
-import './WriteDetail.css';
 import Comment from '../comment/Comment';
+import './WriteDetail.css';
 
 
 const WriteDetail = ({ writeId }) => {
@@ -88,7 +88,7 @@ const WriteDetail = ({ writeId }) => {
                                                 className={'horizontal_type1'} 
                                             />}
                                             <ViewDate dates={[
-                                                {txt: '작성일', date: changeViewDate(writes.createdAt, 'minute')},
+                                                {txt: '작성일 ', date: changeViewDate(writes.createdAt, 'minute')},
                                                 {txt: '수정일 ', date: changeViewDate(writes.updatedAt, 'minute')},
                                             ]} />
                                         </div>
@@ -102,7 +102,7 @@ const WriteDetail = ({ writeId }) => {
                                                         <span className='blind'>인증글 수정</span>
                                                     </Button>
                                                     <Button className={'button_type3 ico_hover_type1 write_delete'} title={'글 삭제'} onClick={handleWriteDelete}>
-                                                        <PiXCircleDuotone />
+                                                        <PiFileXDuotone />
                                                         <span className='blind'>인증글 삭제</span>
                                                     </Button>
                                                 </Fragment>

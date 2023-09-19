@@ -31,7 +31,7 @@
     
     --text-color-white: #fff;
     --text-color0: #222;
-    --text-color1: #555;
+    --text-color1: #555; 
     --text-color2: #999;
     --text-error-color: red;
     --text-success-color: #2e9e64;
@@ -304,6 +304,10 @@ svg {
 
 .flex {
     display: flex;
+}
+
+.flex_align_i_c {
+    align-items: center;
 }
 
 .flex_r {

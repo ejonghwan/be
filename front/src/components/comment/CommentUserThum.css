@@ -3,16 +3,61 @@
     margin-top: 20px;
 }
 
+
+.comment_user_thum_wrap .popup.comment_more {
+    padding: 0;    
+    position: absolute;
+    right: 0;
+    transform: initial;
+    top: 50px;
+    left: auto;
+    border-radius: 10px;
+}
+
+
+
+.comment_user_thum_wrap .popup.comment_more + .dimd {
+    background-color: transparent;
+}
+
+.comment_user_thum_wrap .popup.comment_more button {
+    display: flex;
+    align-items: center;
+    padding: 5px 17px;
+    line-height: 1;
+}
+
+
+.comment_user_thum_wrap .popup.comment_more button.delete,
+.comment_user_thum_wrap .popup.comment_more button.delete svg {
+    color: var(--point-color2);
+}
+
+.comment_user_thum_wrap .popup.comment_more button > svg {
+    margin-right: 10px;
+}
+
+
 /* .comment_user_thum_wrap  + .comment_user_thum_wrap {
     margin-top: 20px;
 } */
 
 .comment_user_thum_wrap > .comment_user_thum_inner {
     display: flex;
+    position: relative;
 }
 
 .comment_user_thum_wrap .user_thum_imgwrap {
     flex: 0 0 auto;
+}
+
+.comment_user_thum_wrap:hover .user_thum_more {
+    opacity: 1;
+}
+.comment_user_thum_wrap .user_thum_more {
+    margin-left: auto;
+    opacity: 0;
+    padding: 10px 0px 10px 10px;
 }
 
 .comment_user_thum_wrap .user_thum_txtwrap {
