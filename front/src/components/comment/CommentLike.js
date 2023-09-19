@@ -63,11 +63,11 @@ const CommentLike = ({  comment, className = '' }) => {
 
     return (
         <Fragment>
-            <span className={`write_like_wrap ${className}`}>
+            <span className={`comment_like_wrap ${className}`}>
                 {like && (
                     <Fragment>
-                        {likeRef.current && <InfoState text={'좋아요!'} />}
-                        <Button type={'button'} className={`button_type3 write_like ico_hover_type1 like ${like && 'active'}`} onClick={handleCommentUnlike} title={'좋아요 취소'}>
+                        {likeRef.current && <InfoState text={'좋아요!'}  className='comment' />}
+                        <Button type={'button'} className={`button_type3 comment_like ico_hover_type1 like ${like && 'active'}`} onClick={handleCommentUnlike} title={'좋아요 취소'}>
                             <PiHeartDuotone />
                             <span className='blind'>이 글 좋아요 취소</span>
                         </Button>
@@ -76,8 +76,8 @@ const CommentLike = ({  comment, className = '' }) => {
 
                 {!like && (
                     <Fragment>
-                        {unlikeRef.current && <InfoState text={'좋아요 취소!'} />}
-                        <Button type={'button'} className={`button_type3 write_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleCommentLike} title={'좋아요'}>
+                        {unlikeRef.current && <InfoState text={'좋아요 취소!'} className='comment' />}
+                        <Button type={'button'} className={`button_type3 comment_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleCommentLike} title={'좋아요'}>
                             <PiHeartDuotone />
                             <span className='blind'>이 글 좋아요</span>
                         </Button>

@@ -1,7 +1,7 @@
 import './InfoState.css';
-const InfoState = ({ text }) => {
+const InfoState = ({ text, className = '' }) => {
     return (
-        <div className='info_state_wrap'>
+        <div className={`info_state_wrap ${className}`}>
             <span>{text}</span>
         </div>
     );

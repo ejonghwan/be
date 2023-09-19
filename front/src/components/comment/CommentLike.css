@@ -1,0 +1,21 @@
+
+.comment_like_wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.comment_like_wrap .comment_like.active {
+    /* background: #fff0bf; */
+}
+.comment_like_wrap .comment_like.active > svg{
+    /* color: #f2ff02; */
+    color: var(--point-color2);
+}
+
+.comment_like_wrap .like_count {
+    color: var(--text-color2);   
+    margin-left: 5px;
+}
+

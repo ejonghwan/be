@@ -8,18 +8,14 @@
     left: 40%;
     padding: 12px 15px;
     font-weight: 300;
+    animation: info_state_ani 1s; 
     opacity: 0;
     z-index: 10;
     border-radius: 10px;
     text-align: center;
     padding: 3px 10px;
     white-space: nowrap;
-    animation: info_state_ani 1s; 
 }
-
-/* .info_state_wrap.active {
-   
-} */
 
 
 
@@ -29,3 +25,35 @@
     70% {transform: translate(-50%, 0px); opacity: 1;}
     100% {transform: translate(-50%, -15px); opacity: 0;}
 }
+
+
+
+/* 
+.info_state_wrap.comment {
+    width: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--text-color-white);
+    font-size: 1.2rem;
+    position: absolute;
+    left: -45%;
+    padding: 12px 15px;
+    font-weight: 300;
+    opacity: 0;
+    z-index: 10;
+    border-radius: 10px;
+    text-align: center;
+    padding: 3px 10px;
+    white-space: nowrap;
+    animation: info_state_ani_commnet 1s; 
+    transform: translate(0%, -10px);
+}
+
+
+
+
+@keyframes info_state_ani_commnet {
+    0% {transform: translate(0%, -15px); opacity: 0;}
+    30% {transform: translate(0%, -35px); opacity: 1;}
+    70% {transform: translate(0%, -35px); opacity: 1;}
+    100% {transform: translate(0%, -55px); opacity: 0;}
+} */
