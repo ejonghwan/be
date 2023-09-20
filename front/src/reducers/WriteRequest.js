@@ -231,6 +231,31 @@ const WriteRequest = () => {
         };
     };
 
+
+    const deleteComment = async data => {
+        try {
+            const { userId, writeId, commentId } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                data: data,
+                withCredentials: true,
+            }
+
+            const res = await axios.delete(`${host}/api/comment`, config);
+            WriteDispatch({ type: "COMMENT_DELETE_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "COMMENT_DELETE_FAILUE", data: err.message });
+        };
+    };
+
+
     return {
         createWrite,
         loadWrite,
@@ -242,6 +267,7 @@ const WriteRequest = () => {
         likeComment,
         unlikeComment,
         editComment,
+        deleteComment,
     }
 }
 

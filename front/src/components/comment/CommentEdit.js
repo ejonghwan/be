@@ -3,7 +3,6 @@ import { UserContext } from '../../context/UserContext';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 import WriteRequest from '../../reducers/WriteRequest';
-import { WriteReducer } from '../../reducers';
 import { WriteContext } from '../../context/WriteContext';
 import './CommentEdit.css';
 

@@ -7,14 +7,16 @@ import { PiDotsThreeOutlineVerticalDuotone, PiDotsThreeVerticalDuotone, PiPencil
 import { timeForToday, getByteLengthOfString } from '../../utils/utils';
 import CommentLike from './CommentLike';
 import CommentEdit from './CommentEdit';
-import './CommentUserThum.css';
 import { UserContext } from '../../context/UserContext';
-
-
+import WriteRequest from '../../reducers/WriteRequest';
+import './CommentUserThum.css';
+import { WriteContext } from '../../context/WriteContext';
 
 const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isId = true, comment}) => {
     
-    const { state } = useContext(UserContext)
+    const { state } = useContext(UserContext);
+    const { deleteComment } = WriteRequest();
+    const { WriteState: { writes } , WriteDispatch } = useContext(WriteContext);
     const [selectIdx, setSelectIdx] = useState(0);
     const [ellip, setEllip] = useState(false);
     const [briefly, setBriefly] = useState(false);
@@ -26,29 +28,45 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
     const handleIndex = idx => {
         setSelectIdx(idx);
         userInfoRef.current.popupOpen();
-    }
+    };
 
     const contentHeightSplit = () =>{
         parseInt(window.getComputedStyle(contentRef.current)?.height) > 80 && setEllip(true);
-    }
+    };
 
     const handleContentViewOpen = () => {
-        setEllip(!ellip) 
-        setBriefly(!briefly)
-    }
+        setEllip(!ellip) ;
+        setBriefly(!briefly);
+    };
 
     const handleOpenCommentMore = () => {
         commentMoreRef.current.popupOpen();
-    }
+    };
 
     const handleEditComment = () => {
-        setEditOpen(!editOpen)
-        console.log(commentMoreRef.current.popupClose())
-    }
+        setEditOpen(!editOpen);
+        commentMoreRef.current.popupClose();
+    };
+
+    const handleEleteComment = async () => {
+        try {
+            if(!window.confirm(`"${comment.content}" 코멘트를 정말 삭제하시겠습니까?`)) return;
+            WriteDispatch({ type: "COMMENT_DELETE_REQUEST" })
+            await deleteComment({
+                userId: comment.user._id._id,
+                writeId: writes._id,
+                commentId: comment._id
+            })
+            commentMoreRef.current.popupClose();
+        } catch(err) {
+            console.log(err)
+        }
+        
+    };
 
     useEffect(() => {
         contentHeightSplit();
-    }, [])
+    }, []);
 
     return (
         <Fragment>
@@ -108,7 +126,7 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
                             <PiPencilSimpleLineDuotone />
                             <span>수정</span>
                         </Button>
-                        <Button className={'button_type3 ico_hover_type1 delete'}>
+                        <Button className={'button_type3 ico_hover_type1 delete'} onClick={handleEleteComment}>
                             <PiXSquareDuotone />
                             <span>삭제</span>
                         </Button>

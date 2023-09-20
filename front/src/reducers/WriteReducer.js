@@ -295,6 +295,31 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 }
 
 
+            case "COMMENT_DELETE_REQUEST": 
+                return {
+                    ...state,
+                    deleteCommentLoading: true,
+                }
+
+            case "COMMENT_DELETE_SUCCESS": 
+                return {
+                    ...state,
+                    deleteCommentLoading: false,
+                    deleteCommentDone: true,
+                    writes: {
+                        ...state.writes,
+                        comments: state.writes.comments.filter(comment => comment._id !== action.data.commentId) 
+                    }
+                }
+
+            case "COMMENT_DELETE_FAILUE" : 
+                return {
+                    ...state,
+                    deleteCommentLoading: false,
+                    deleteCommentError: action.data,
+                }
+
+
 
             default: return { state }
     }
