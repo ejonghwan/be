@@ -193,7 +193,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     createCommentDone: true,
                     writes: {
                         ...state.writes,
-                        comments: state.writes.comments.concat(action.data)
+                        comments: [action.data, ...state.writes.comments]
                     }
                 }
 
@@ -265,6 +265,33 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     unlikeCommentLoading: false,
                     unlikeCommentError: action.data,
+                }
+
+
+            case "COMMENT_EDIT_REQUEST": 
+                return {
+                    ...state,
+                    editCommentLoading: true,
+                }
+
+            case "COMMENT_EDIT_SUCCESS": 
+                console.log('re', action.data)
+                return {
+                    ...state,
+                    editCommentLoading: false,
+                    editCommentDone: true,
+                    writes: {
+                        ...state.writes,
+                        comments: state.writes.comments.map(comment => comment._id === action.data._id ? 
+                            { ...comment, content: action.data.content } : comment)
+                    }
+                }
+
+            case "COMMENT_EDIT_FAILUE" : 
+                return {
+                    ...state,
+                    editCommentLoading: false,
+                    editCommentError: action.data,
                 }
 
 

@@ -41,7 +41,7 @@ router.get('/:writeId', async (req, res) => {
         const write = await Write.findById(writeId).populate([
             { path: 'user._id', select: 'id profileImage email name createdAt' },
             // { path: 'likes._id', select: 'id profileImage email name createdAt' }, //이거값 확인
-            { path: 'comments', select: '_id user content likes likeCount recomments recommentCount createdAt updatedAt', populate: { path: "user._id", select: 'id name profileImage createdAt' } }, // 이거 값 확인
+            { path: 'comments', select: '_id user content likes likeCount modified recomments recommentCount createdAt updatedAt', populate: { path: "user._id", select: 'id name profileImage createdAt' } }, // 이거 값 확인
             { path: "project._id", select: 'title' },
         ]);
         res.status(200).json(write)
@@ -247,7 +247,6 @@ router.delete('/', async (req, res) => {
 
 
         // 코멘트, 리코멘트 삭제 - 테스트완료
-        console.log( write.comments )
         for(let i = 0; i < write.comments.length; i++) {
             await Recomment.remove({ comment: write.comments[i]._id }, { new: true })
         }

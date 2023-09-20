@@ -19,23 +19,21 @@ const CommentLike = ({  comment, className = '' }) => {
     const likeRef = useRef(false);
     const unlikeRef = useRef(false);
 
-    const handleCommentLike = () => {
-        console.log('??????????????? 여기안와 ???')
+    const handleCommentLike = useCallback(() => {
         if(!state.isLogged) return alert('좋아요를 하려면 로그인을 먼저 해주세요.')
         likeApi(like);
         setLike(!like);
-        console.log('??????????????? 여기안와 22222222222 ???')
         unlikeRef.current = false;
         likeRef.current = true;
-    }
+    }, [like, unlikeRef, likeRef])
 
-    const handleCommentUnlike = () => {
+    const handleCommentUnlike = useCallback(() => {
         if(!state.isLogged) return alert('좋아요를 취소 하려면 로그인을 먼저 해주세요.')
         likeApi(like);
         setLike(!like);
         likeRef.current = false;
         unlikeRef.current = true;
-    }
+    }, [like, unlikeRef, likeRef])
 
 
     // like state는 바로 번경되더라도 실제 요청은 1.5초 후에 클릭되는 상태에 따라 가게 debouce 작업. 

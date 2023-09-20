@@ -62,7 +62,6 @@ const CommentCreate = ({ comments }) => {
                     </Textarea>
                     <Button className={"button_type7 line"} onClick={handleResetComment}>취소</Button>
                     <Button className={"button_type7"} onClick={handleCreateComment} disabled={submitContent ? false : true} >댓글</Button>
-                    
                 </div>
             </div>
         </div>

@@ -62,7 +62,7 @@ router.patch('/edit/:commentId', async (req, res) => {
 
         if(content) putData.content = content;
 
-        const comment = await Comment.findByIdAndUpdate(commentId, putData, { new: true }).exec();
+        const comment = await Comment.findByIdAndUpdate(commentId, { ...putData, modified: true }, { new: true }).exec();
         res.status(201).json(comment)
 
     } catch (err) {

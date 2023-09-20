@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import './InfoState.css';
 const InfoState = ({ text, className = '' }) => {
     return (
@@ -7,4 +8,4 @@ const InfoState = ({ text, className = '' }) => {
     );
 };
 
-export default InfoState;
+export default memo(InfoState);

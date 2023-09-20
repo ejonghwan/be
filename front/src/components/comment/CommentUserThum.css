@@ -45,6 +45,7 @@
 .comment_user_thum_wrap > .comment_user_thum_inner {
     display: flex;
     position: relative;
+    gap: 15px;
 }
 
 .comment_user_thum_wrap .user_thum_imgwrap {
@@ -62,7 +63,7 @@
 
 .comment_user_thum_wrap .user_thum_txtwrap {
     /* flex: 1 0 auto; */
-    margin-left: 15px;
+    /* margin-left: 15px; */
 }
 
 
