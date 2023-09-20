@@ -36,6 +36,10 @@ export const WriteIntialState = {
     unlikeCommentDone: false,
     unlikeCommentError: null,
 
+    createRecommentLoading: false,
+    createRecommentDone: false,
+    createRecommentError: null,
+
 
     createWrites: {},
     writes: {},
@@ -317,6 +321,31 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     deleteCommentLoading: false,
                     deleteCommentError: action.data,
+                }
+
+
+            case "RECOMMENT_CREATE_REQUEST": 
+                return {
+                    ...state,
+                    createRecommentLoading: true,
+                }
+
+            case "RECOMMENT_CREATE_SUCCESS": 
+                return {
+                    ...state,
+                    createRecommentLoading: false,
+                    createRecommentDone: true,
+                    // writes: {
+                    //     ...state.writes,
+                    //     Recomments: state.writes.Recomments.filter(Recomment => Recomment._id !== action.data.RecommentId) 
+                    // }
+                }
+
+            case "RECOMMENT_CREATE_FAILUE" : 
+                return {
+                    ...state,
+                    createRecommentLoading: false,
+                    createRecommentError: action.data,
                 }
 
 

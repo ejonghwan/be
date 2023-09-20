@@ -9,11 +9,13 @@ import CommentLike from './CommentLike';
 import CommentEdit from './CommentEdit';
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
-import './CommentUserThum.css';
 import { WriteContext } from '../../context/WriteContext';
+import './CommentUserThum.css';
+import RecommentCreate from './RecommentCreate';
+
+
 
 const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isId = true, comment}) => {
-    
     const { state } = useContext(UserContext);
     const { deleteComment } = WriteRequest();
     const { WriteState: { writes } , WriteDispatch } = useContext(WriteContext);
@@ -21,6 +23,7 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
     const [ellip, setEllip] = useState(false);
     const [briefly, setBriefly] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
+    const [recommentOpen, setRecommentOpen] = useState(false);
     const userInfoRef = useRef(null);
     const contentRef = useRef(null);
     const commentMoreRef = useRef(null);
@@ -61,8 +64,11 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
         } catch(err) {
             console.log(err)
         }
-        
     };
+
+    const handleRecommentState = () => {
+        setRecommentOpen(true)
+    }
 
     useEffect(() => {
         contentHeightSplit();
@@ -99,9 +105,9 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
                                     <Button className={'button_reset hover_type3'} onClick={handleContentViewOpen}>간략히</Button>
                                 </div>
                                 )}
-                                <div>
+                                <div className='sub'>
                                     <CommentLike comment={comment} />
-                                    <Button onClick={() => console.log('commnet?', comment._id)}>답글</Button>
+                                    <Button className={'button_type_txt2 hover_type1'} onClick={handleRecommentState}>답글</Button>
                                 </div>
                             </div>
                             {comment.user._id._id === state.user._id && (
@@ -111,7 +117,6 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
                                     </Button>
                                 </div>
                             )}
-                           
                         </Fragment>
                     ) : (
                         <Fragment>
@@ -119,6 +124,8 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
                         </Fragment>
                     )}
                    
+                    {/* 리코멘트 */}
+                    {recommentOpen && <RecommentCreate comment={comment} setRecommentOpen={setRecommentOpen} />}
                     
 
                     <Popup className={`popup_type_default comment_more`} isHead={false} dimd={true} ref={commentMoreRef}>

@@ -3,7 +3,6 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    margin-top: 5px;
 }
 
 .comment_like_wrap .comment_like.active {

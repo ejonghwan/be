@@ -1,33 +1,35 @@
-.edit_comment_wrap {
+.recomment_wrap {
     width: calc(100% - 55px);
+    flex: 0 0 auto;
+    margin-left: auto;
 }
 
-.edit_comment_wrap .sub_info > span {
+.recomment_wrap .sub_info > span {
     font-size: 1.3rem; 
 }
 
 
-.edit_comment_wrap .sub_info > span + span {
+.recomment_wrap .sub_info > span + span {
     margin-left: 10px;
 }
 
 
-.edit_comment_wrap .edit_comment_inner {
+.recomment_wrap .recomment_inner {
     display: flex;    
     gap: 15px;
 }
 
 
-.edit_comment_wrap .edit_comment_form {
+.recomment_wrap .recomment_form {
     flex: 1 0 auto;
     text-align: right;
 }
 
-.edit_comment_wrap .edit_comment_form > button + button {
+.recomment_wrap .recomment_form > button + button {
     margin-left: 5px;
 }
 
-.edit_comment_wrap .edit_comment_img {
+.recomment_wrap .recomment_img {
     width: 50px;
     height: 50px;
     flex: 0 0 auto;
