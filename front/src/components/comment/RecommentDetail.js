@@ -5,17 +5,17 @@ import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
 import { PiDotsThreeOutlineVerticalDuotone, PiDotsThreeVerticalDuotone, PiPencilSimpleLineDuotone, PiXSquareDuotone  } from "react-icons/pi";
 import { timeForToday, getByteLengthOfString } from '../../utils/utils';
-import CommentLike from './CommentLike';
 import CommentEdit from './CommentEdit';
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
-import RecommentCreate from './RecommentCreate';
+import RecommentLike from './RecommentLike';
 import './RecommentDetail.css';
+import RecommentEdit from './RecommentEdit';
 
 
 
-const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId = true, recomment}) => {
+const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId = true, comment, recomment }) => {
     const { state } = useContext(UserContext);
     const { deleteComment } = WriteRequest();
     const { WriteState: { writes } , WriteDispatch } = useContext(WriteContext);
@@ -106,7 +106,7 @@ const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isI
                                 </div>
                                 )}
                                 <div className='sub'>
-                                    <CommentLike comment={recomment} />
+                                    <RecommentLike comment={comment} recomment={recomment} />
                                     <Button className={'button_type_txt2 hover_type1'} onClick={handleRecommentState}>답글</Button>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@ const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isI
                         </Fragment>
                     ) : (
                         <Fragment>
-                            <CommentEdit comment={recomment} setEditOpen={setEditOpen} />
+                            <RecommentEdit comment={comment} recomment={recomment} setEditOpen={setEditOpen} />
                         </Fragment>
                     )}
         

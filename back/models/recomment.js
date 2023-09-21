@@ -19,7 +19,7 @@ const recommentSchema = new mongoose.Schema(
         comment: { type: Types.ObjectId, ref: 'comment' },
        
         isLive: { type: Boolean, default: false,},
-        likes: { type: Types.ObjectId, ref: 'user' },
+        likes: [{ type: Types.ObjectId, ref: 'user' }],
         likeCount: { type: Number, required: true, default: 0, },
         modified: { type: Boolean, default: false }
     },

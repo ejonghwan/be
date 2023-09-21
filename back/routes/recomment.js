@@ -29,17 +29,17 @@ router.get('/', async (req, res) => {
 
 //@ path    GET /api/recomment/:commentId
 //@ doc     대댓글 가져오기 (특정 댓글)
-//@ access  private
-router.get('/:commentId', async (req, res) => {
-    try {
-        const recommnet = await Recomment.find();
-        res.status(200).json(recommnet)
-    } catch (err) {
-        console.error('server:', err);
-        res.status(500).json({ message: err.message });
-    }
+// //@ access  private
+// router.get('/:commentId', async (req, res) => {
+//     try {
+//         const recommnet = await Recomment.find();
+//         res.status(200).json(recommnet)
+//     } catch (err) {
+//         console.error('server:', err);
+//         res.status(500).json({ message: err.message });
+//     }
 
-})
+// })
 
 
 
@@ -50,14 +50,14 @@ router.post('/', async (req, res) => {
     try {
         // get data: user, content, coomentId, 
         const { user, content, commentId } = req.body;
-        const recomment = await new Recomment(req.body);
+        const recomment = await new Recomment(req.body).populate({ path: "user._id", select: 'id name profileImage createdAt' });
         recomment.save();
 
         await Promise.all([
             User.findByIdAndUpdate(user._id, { $push: { recomments: recomment._id } }, { new: true }).exec(),
             Comment.findByIdAndUpdate(commentId, { $push: { recomments: recomment._id }, $inc: { recommentCount: 1 } }, { new: true }).exec()
         ]);
-        res.status(201).json(recomment);
+        res.status(201).json({ recomment, commentId });
 
     } catch (err) {
         console.error('server:', err);
@@ -72,13 +72,13 @@ router.post('/', async (req, res) => {
 router.patch('/edit/:recommentId', async (req, res) => {
     try {
         const { recommentId } = req.params;
-        const { content } = req.body;
+        const { content, commentId } = req.body;
         const putData = {};
 
         if(content) putData.content = content;
 
         const recomment = await Recomment.findByIdAndUpdate(recommentId, putData, { new: true }).exec();
-        res.status(201).json(recomment)
+        res.status(201).json({ recomment, commentId })
 
     } catch (err) {
         console.error('server:', err);
@@ -112,11 +112,11 @@ router.delete('/', async (req, res) => {
 //@ access  private
 router.patch('/like', async (req, res) => {
     try {
-        const { userId, recommentId } = req.body;
+        const { userId, commentId, recommentId } = req.body;
         const [ recomment ] = await Promise.all([
             Recomment.findByIdAndUpdate(recommentId, { $push: { likes: userId }, $inc: { likeCount: 1 } }, { new: true }),
         ]);
-        res.status(201).json(recomment);
+        res.status(201).json({userId, commentId, recommentId });
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -130,11 +130,11 @@ router.patch('/like', async (req, res) => {
 //@ access  private
 router.patch('/unlike', async (req, res) => {
     try {
-        const { userId, recommentId } = req.body;
+        const { userId, commentId, recommentId } = req.body;
         const [ recomment ] = await Promise.all([
             Recomment.findByIdAndUpdate(recommentId, { $pull: {likes: userId }, $inc: { likeCount: -1 } }, { new: true }),
         ])
-        res.status(201).json(recomment);
+        res.status(201).json({userId, commentId, recommentId });
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

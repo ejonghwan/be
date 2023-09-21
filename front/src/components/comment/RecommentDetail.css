@@ -1,6 +1,5 @@
 
 .recomment_user_thum_wrap {
-    margin-top: 20px;
     width: 100%;
     margin-left: 55px;
 }
@@ -55,7 +54,7 @@
     flex: 0 0 auto;
 }
 
-.recomment_user_thum_wrap:hover .user_thum_more {
+.recomment_user_thum_wrap:hover .recomment_user_thum_inner > .user_thum_more {
     opacity: 1;
 }
 .recomment_user_thum_wrap .user_thum_more {

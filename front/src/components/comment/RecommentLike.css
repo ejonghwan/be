@@ -1,0 +1,20 @@
+
+.recomment_like_wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.recomment_like_wrap .recomment_like.active {
+    /* background: #fff0bf; */
+}
+.recomment_like_wrap .recomment_like.active > svg{
+    /* color: #f2ff02; */
+    color: var(--point-color2);
+}
+
+.recomment_like_wrap .like_count {
+    color: var(--text-color2);   
+    margin-left: 5px;
+}
+

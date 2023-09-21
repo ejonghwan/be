@@ -31,6 +31,7 @@ const RecommentCreate = ({ comment, setRecommentOpen }) => {
                 content: submitContent,
             });
             setSubmitContent('');
+            setRecommentOpen(false);
         } catch(err) {
             console.log(err);
         };

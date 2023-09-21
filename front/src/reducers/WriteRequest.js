@@ -256,11 +256,6 @@ const WriteRequest = () => {
     };
 
 
-    // {
-    //     "user": { "_id": "636afeff7d63060fe3b583af", "name": "종환" }, 
-    //     "content":"5.26 delete test 3 ", 
-    //     "comment": "6507e8cadd487f5addbdbfc7" 
-    // }
     const createRecomment = async data => {
         try {
             const { user, content, commentId } = data;
@@ -284,6 +279,73 @@ const WriteRequest = () => {
     };
 
 
+    const likeRecomment = async data => {
+        try {
+            const { user, commentId, recommentId } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+            const res = await axios.patch(`${host}/api/recomment/like`, data, config);
+            WriteDispatch({ type: "RECOMMENT_LIKE_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "RECOMMENT_LIKE_FAILUE", data: err.message });
+        };
+    };
+
+    const unlikeRecomment = async data => {
+        try {
+            const { user, commentId, recommentId } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+            const res = await axios.patch(`${host}/api/recomment/unlike`, data, config);
+            WriteDispatch({ type: "RECOMMENT_UNLIKE_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "RECOMMENT_UNLIKE_FAILUE", data: err.message });
+        };
+    };
+
+    const editRecomment = async data => {
+        try {
+            const { content, commentId, recommentId } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+            const res = await axios.patch(`${host}/api/recomment/edit/${recommentId}`, data, config);
+            WriteDispatch({ type: "RECOMMENT_EDIT_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "RECOMMENT_EDIT_FAILUE", data: err.message });
+        };
+    };
+
+
     return {
         createWrite,
         loadWrite,
@@ -297,6 +359,9 @@ const WriteRequest = () => {
         editComment,
         deleteComment,
         createRecomment,
+        likeRecomment,
+        unlikeRecomment,
+        editRecomment
     }
 }
 

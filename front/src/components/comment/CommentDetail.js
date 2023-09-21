@@ -131,6 +131,7 @@ const CommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId 
                         {comment.recomments.map((recomment, idx) => (
                             <Fragment key={recomment._id}>
                                 <RecommentDetail
+                                    comment={comment}
                                     recomment={recomment}
                                     isText={true} 
                                     isId={false}
