@@ -440,7 +440,6 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 };
 
             case "RECOMMENT_EDIT_SUCCESS": 
-                console.log(action.data)
                 return {
                     ...state,
                     editRecommentLoading: false,
@@ -469,6 +468,35 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     editRecommentError: action.data,
                 };
 
+
+            case "RECOMMENT_DELETE_REQUEST": 
+                return {
+                    ...state,
+                    deleteRecommentLoading: true,
+                };
+
+            case "RECOMMENT_DELETE_SUCCESS": 
+                return {
+                    ...state,
+                    deleteRecommentLoading: false,
+                    deleteRecommentDone: true,
+                    writes: {
+                        ...state.writes,
+                        comments: state.writes.comments.map(comment => {
+                            if(comment._id === action.data.commentId) {
+                                comment.recomments = comment.recomments.filter(recomment => recomment._id !== action.data.recommentId);
+                            };
+                            return comment;
+                        })
+                    }
+                };
+
+            case "RECOMMENT_DELETE_FAILUE" : 
+                return {
+                    ...state,
+                    deleteRecommentLoading: false,
+                    deleteRecommentError: action.data,
+                };
 
 
 

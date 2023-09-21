@@ -98,7 +98,7 @@ router.delete('/', async (req, res) => {
             User.findByIdAndUpdate(userId, { $pull: { recomments: recommentId } }, { new: true }).exec(),
             Comment.findByIdAndUpdate(commentId, { $pull: { recomments: recommentId }, $inc: { recommentCount: -1 } }, { new: true }).exec(),
         ])
-        res.status(201).json(comment);
+        res.status(201).json({ userId, commentId, recommentId });
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

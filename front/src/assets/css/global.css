@@ -132,14 +132,16 @@ body {
 
 /* 팝업 생성 시 화면 흔들리는거 해결 */
 /* y 쓰면 화면은 안흔들리는데 ..아래에서 팝업 클릭하면 맨 위로감 */
+/* padding-right 로 해결 */
 body.popup_active {
-    /* overflow-y: scroll;
-    position: fixed;
+    /* overflow-y: scroll; */
+    /* position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%; */
     overflow: hidden; 
+    padding-right: 7px;
 }
 
 #wrap {

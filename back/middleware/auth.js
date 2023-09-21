@@ -1,17 +1,19 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/users.js'
-import bcrypt from 'bcrypt'
+import User from '../models/users.js';
+import bcrypt from 'bcrypt';
 
 
 // 토큰 인증 미들웨어
-// client 에서 넘어온 token값 보고 인증... 
+/*
+    회원가입 시 30일 리프레시 토큰 발급 (30일 뒤 만료되면 다시 30일 발급) 
+    로그인 시 acc 2시간 발급 + 리프레시 토큰 웹쿠키로 2시간 발급
+    acc ref 시간 다를 경우 쿠키에 있는 ref로 인증하고 acc 다시 발급 
+*/
 export const auth = async (req, res, next) => {
     try {
-        console.log('??? auth')
         const accToken = req.header('X-access-token');
         if(accToken) {
-            
-            const match = jwt.verify(accToken, process.env.JWT_KEY, {ignoreExpiration: true},) 
+            const match = jwt.verify(accToken, process.env.JWT_KEY, {ignoreExpiration: true}) 
              // decode가 있으면 acc로 인증 
             if(match && match.exp > Date.now().valueOf() / 1000) { 
                 const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate("projects joinProjects._id").exec();
@@ -27,10 +29,9 @@ export const auth = async (req, res, next) => {
 
                 const refreshTokenDecode = decodeURIComponent(getRefreshToken);
                 const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0 }).populate("projects joinProjects._id").exec();
-                // 리프레시로 인증할 때 위에 셀렉+퍼퓰 테스트 아직 안해봄
 
                 // db에 저장된 리프레시가 만료되었을 경우 => db토큰 새로 교체하고 acc토큰 발급
-                const dbToken = await jwt.verify(user.token, process.env.JWT_KEY, {ignoreExpiration: true});
+                const dbToken = jwt.verify(user.token, process.env.JWT_KEY, {ignoreExpiration: true});
                 if(dbToken.exp < Date.now().valueOf() / 1000) {
                     user.token = jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "30 days" });
                     user.save().then(user => {
@@ -46,7 +47,7 @@ export const auth = async (req, res, next) => {
                 const refreshTokenMatch = await bcrypt.compare(user.token, refreshTokenDecode)
                 if(refreshTokenMatch && dbToken.exp > Date.now().valueOf() / 1000) {
                     // 2시간짜리 토큰 재발급
-                    const acctoken = await jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "2h" })
+                    const acctoken = jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "2h" })
                     req.user = { accToken: acctoken, ...user._doc };
                     next();
                 };

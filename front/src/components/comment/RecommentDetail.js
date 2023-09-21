@@ -17,7 +17,7 @@ import RecommentEdit from './RecommentEdit';
 
 const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId = true, comment, recomment }) => {
     const { state } = useContext(UserContext);
-    const { deleteComment } = WriteRequest();
+    const { deleteRecomment } = WriteRequest();
     const { WriteState: { writes } , WriteDispatch } = useContext(WriteContext);
     const [selectIdx, setSelectIdx] = useState(0);
     const [ellip, setEllip] = useState(false);
@@ -55,10 +55,10 @@ const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isI
         try {
             if(!window.confirm(`"${recomment.content}" 코멘트를 정말 삭제하시겠습니까?`)) return;
             WriteDispatch({ type: "RECOMMENT_DELETE_REQUEST" })
-            await deleteComment({
+            await deleteRecomment({
                 userId: recomment.user._id._id,
-                writeId: writes._id,
-                commentId: recomment._id
+                commentId: comment._id,
+                recommentId: recomment._id
             })
             commentMoreRef.current.popupClose();
         } catch(err) {
