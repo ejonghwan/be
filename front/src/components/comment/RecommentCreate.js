@@ -6,7 +6,7 @@ import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
 import './RecommentCreate.css'
 
-const RecommentCreate = ({ comment, setRecommentOpen }) => {
+const RecommentCreate = ({ comment, setRecommentOpen, targetUser = null }) => {
 
     const { state } = useContext(UserContext);
     const [ submitContent, setSubmitContent ] = useState('');
@@ -29,6 +29,7 @@ const RecommentCreate = ({ comment, setRecommentOpen }) => {
                 user: { _id: state.user._id, name: state.user.name },
                 commentId: comment._id,
                 content: submitContent,
+                targetUser: targetUser ? targetUser._id : null
             });
             setSubmitContent('');
             setRecommentOpen(false);
@@ -41,6 +42,7 @@ const RecommentCreate = ({ comment, setRecommentOpen }) => {
         <div className='recomment_wrap'>
             <div className='recomment_inner'>
                 <div className='recomment_form'>
+                    <span className='to_user'>{targetUser && `@${targetUser.name}`}</span>
                     <Textarea 
                         id={"content"}
                         name={"content"}
@@ -52,7 +54,6 @@ const RecommentCreate = ({ comment, setRecommentOpen }) => {
                         style={{height: '70px'}}
                         
                     >
-                        {/* {writeSubmitData.content} */}
                     </Textarea>
                     <Button className={"button_type7 line"} onClick={handleResetComment}>취소</Button>
                     <Button className={"button_type7"} onClick={handleCreateRecomment} disabled={submitContent ? false : true} >답글</Button>

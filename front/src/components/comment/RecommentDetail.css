@@ -125,4 +125,14 @@
     margin-left: 10px;
 }
 
+.recomment_user_thum_wrap .target_user {
+    color: var(--point-color);
+    background-color: var(--hover-color);
+    border-radius: 6px;
+    padding: 1px 5px;
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 1.3rem;
+}
+
 

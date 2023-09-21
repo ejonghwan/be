@@ -21,7 +21,8 @@ const recommentSchema = new mongoose.Schema(
         isLive: { type: Boolean, default: false,},
         likes: [{ type: Types.ObjectId, ref: 'user' }],
         likeCount: { type: Number, required: true, default: 0, },
-        modified: { type: Boolean, default: false }
+        modified: { type: Boolean, default: false },
+        targetUser: { type: mongoose.Schema.Types.ObjectId, index: true, ref: 'user' } 
     },
     { timestamps: true }
 )

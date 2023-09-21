@@ -23,6 +23,7 @@
 .recomment_wrap .recomment_form {
     flex: 1 0 auto;
     text-align: right;
+    position: relative;
 }
 
 .recomment_wrap .recomment_form > button + button {
@@ -35,5 +36,10 @@
     flex: 0 0 auto;
     border-radius: 40%;
     overflow: hidden;
+}
+.recomment_wrap .to_user {
+   position: absolute;
+   font-size: 1.2rem;
+   top: -18px;
 }
 

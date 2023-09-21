@@ -49,8 +49,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => { 
     try {
         // get data: user, content, coomentId, 
-        const { user, content, commentId } = req.body;
-        const recomment = await new Recomment(req.body).populate({ path: "user._id", select: 'id name profileImage createdAt' });
+        const { user, content, commentId, targetUser } = req.body;
+        const recomment = await new Recomment(req.body).populate([{ path: "user._id", select: 'id name profileImage createdAt' }, { path: "targetUser", select: 'id name profileImage createdAt' }]);
         recomment.save();
 
         await Promise.all([

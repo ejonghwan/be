@@ -5,13 +5,13 @@ import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
 import { PiDotsThreeOutlineVerticalDuotone, PiDotsThreeVerticalDuotone, PiPencilSimpleLineDuotone, PiXSquareDuotone  } from "react-icons/pi";
 import { timeForToday, getByteLengthOfString } from '../../utils/utils';
-import CommentEdit from './CommentEdit';
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
 import RecommentLike from './RecommentLike';
-import './RecommentDetail.css';
 import RecommentEdit from './RecommentEdit';
+import RecommentCreate from './RecommentCreate';
+import './RecommentDetail.css';
 
 
 
@@ -93,6 +93,7 @@ const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isI
                                     {recomment.modified && <span className='is_update'>(수정됨)</span>}
                                 </div>
                                 <div className={`cont ${ellip && 'word_ellip_2'}`} ref={contentRef}>
+                                    {recomment.targetUser && <span className='target_user'>@{recomment.targetUser?.name}</span>}
                                     {recomment.content}
                                 </div>
                                 {ellip && (
@@ -123,8 +124,11 @@ const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isI
                             <RecommentEdit comment={comment} recomment={recomment} setEditOpen={setEditOpen} />
                         </Fragment>
                     )}
-        
 
+                    {/* 답글 아래 답글 다시 생성 */}
+                    {recommentOpen && <RecommentCreate targetUser={recomment.user._id} comment={comment} setRecommentOpen={setRecommentOpen} />}
+        
+                    
                     <Popup className={`popup_type_default recomment_more`} isHead={false} dimd={true} ref={commentMoreRef}>
                         <Button className={'button_type3 ico_hover_type1'} onClick={handleEditComment}>
                             <PiPencilSimpleLineDuotone />
