@@ -13,7 +13,7 @@ const router = express.Router();
 
 
 //@ path    GET /api/recomment
-//@ doc     대댓글 가져오기
+//@ doc     대댓글 가져오기 (전체)
 //@ access  private
 router.get('/', async (req, res) => {
     try {
@@ -27,30 +27,43 @@ router.get('/', async (req, res) => {
 })
 
 
+//@ path    GET /api/recomment/:commentId
+//@ doc     대댓글 가져오기 (특정 댓글)
+//@ access  private
+router.get('/:commentId', async (req, res) => {
+    try {
+        const recommnet = await Recomment.find();
+        res.status(200).json(recommnet)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+
+})
+
+
+
 //@ path    POST /api/recomment
 //@ doc     대댓글 생성
 //@ access  private
 router.post('/', async (req, res) => { 
     try {
         // get data: user, content, coomentId, 
-        const { user, content, comment } = req.body;
-        const recomment = await new Recomment(req.body)
+        const { user, content, commentId } = req.body;
+        const recomment = await new Recomment(req.body);
         recomment.save();
 
         await Promise.all([
             User.findByIdAndUpdate(user._id, { $push: { recomments: recomment._id } }, { new: true }).exec(),
-            Comment.findByIdAndUpdate(comment, { $push: { recomments: recomment._id }, $inc: { recommentCount: 1 } }, { new: true }).exec()
-        ])
-
-
-
-        res.status(201).json(recomment)
+            Comment.findByIdAndUpdate(commentId, { $push: { recomments: recomment._id }, $inc: { recommentCount: 1 } }, { new: true }).exec()
+        ]);
+        res.status(201).json(recomment);
 
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
 
 
 //@ path    PATCH /api/recomment/edit/:recommentId

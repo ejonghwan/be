@@ -6,7 +6,7 @@ import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
 import './RecommentCreate.css'
 
-const RecommentCreate = ({ comment }) => {
+const RecommentCreate = ({ comment, setRecommentOpen }) => {
 
     const { state } = useContext(UserContext);
     const [ submitContent, setSubmitContent ] = useState('');
@@ -15,31 +15,30 @@ const RecommentCreate = ({ comment }) => {
 
     const handleChangeContent = e => {
         setSubmitContent(e.target.value);
-    }
+    };
 
     const handleResetComment = () => {
-        setSubmitContent('')
-    }
+        setSubmitContent('');
+        setRecommentOpen(false);
+    };
 
     const handleCreateRecomment = async () => {
         try {
             WriteDispatch({ type: "RECOMMENT_CREATE_REQUEST" });
             await createRecomment({
                 user: { _id: state.user._id, name: state.user.name },
-                writeId: writes._id,
+                commentId: comment._id,
                 content: submitContent,
-            })
-            setSubmitContent('')
+            });
+            setSubmitContent('');
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     return (
         <div className='recomment_wrap'>
-            
             <div className='recomment_inner'>
-               
                 <div className='recomment_form'>
                     <Textarea 
                         id={"content"}

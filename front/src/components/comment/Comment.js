@@ -1,8 +1,8 @@
 import { Fragment, useContext, useEffect } from 'react';
-import CommentUserThum from './CommentUserThum';
 import CommentCreate from './CommentCreate';
 import { WriteContext } from '../../context/WriteContext';
-import './Comment.css'
+import CommentDetail from './CommentDetail';
+import './Comment.css';
 
 const Comment = ({ comments = [] }) => {
 
@@ -15,7 +15,7 @@ const Comment = ({ comments = [] }) => {
             
             {comments.map((comment, idx) => (
                 <Fragment key={comment._id}>
-                    <CommentUserThum 
+                    <CommentDetail 
                         comment={comment}
                         isText={true} 
                         isId={false}

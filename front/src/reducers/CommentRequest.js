@@ -11,9 +11,9 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 
 const CommentRequest = () => {
     const { imageState, imageDispatch } = useContext(ImageContext); 
-    const { state, dispatch } = useContext(UserContext);  // user꺼는 너무 많아서 그냥 기본으로 ...
-    const { WriteDispatch } = useContext(WriteContext)
-    const accToken = getWithExpire('X-access-token')
+    const { state, dispatch } = useContext(UserContext);  
+    const { WriteDispatch } = useContext(WriteContext);
+    const accToken = getWithExpire('X-access-token');
 
     const loadCommentRequest = async data => {
         try {
@@ -23,8 +23,8 @@ const CommentRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
-            await axios.get('http://localhost:5000/api/comment', config)
+            };
+            await axios.get('http://localhost:5000/api/comment', config);
         
         } catch(err) {
             console.error(err);
@@ -32,7 +32,7 @@ const CommentRequest = () => {
             return err.response;
         }
 
-    }
+    };
 
 
 

@@ -49,7 +49,7 @@
     flex-wrap: wrap;
 }
 
-.comment_user_thum_wrap .user_thum_imgwrap {
+.comment_user_thum_wrap .user_thum_img_wrap {
     flex: 0 0 auto;
 }
 
@@ -63,18 +63,18 @@
     flex: 0 0 auto;
 }
 
-.comment_user_thum_wrap .user_thum_txtwrap {
+.comment_user_thum_wrap .user_thum_txt_wrap {
     width: calc(90% - 70px);
     flex: 1 0 auto;
 }
 
 
-.comment_user_thum_wrap .user_thum_txtwrap .info > button {
+.comment_user_thum_wrap .user_thum_txt_wrap .info > button {
     padding: 0;
     /* margin-right: 10px; */
 }
 
-.comment_user_thum_wrap .user_thum_txtwrap .cont_detail > button {
+.comment_user_thum_wrap .user_thum_txt_wrap .cont_detail > button {
     padding: 0;
     margin-top: 5px;
     font-size: 1.3rem;
@@ -82,20 +82,20 @@
     font-weight: 400;
 }
 
-.comment_user_thum_wrap .user_thum_txtwrap .cont {
+.comment_user_thum_wrap .user_thum_txt_wrap .cont {
     white-space: pre-line;
 }
 
 
-.comment_user_thum_wrap .user_thum_txtwrap .info .created_at,
-.comment_user_thum_wrap .user_thum_txtwrap .info .is_update {
+.comment_user_thum_wrap .user_thum_txt_wrap .info .created_at,
+.comment_user_thum_wrap .user_thum_txt_wrap .info .is_update {
     font-size: 1.2rem;
     color: var(--text-color2);
     margin-left: 5px;
 }
 
 
-.comment_user_thum_wrap .user_thum_imgwrap > img {
+.comment_user_thum_wrap .user_thum_img_wrap > img {
     width: 40px;
     height: 40px;
     border-radius: 40%;
@@ -114,13 +114,13 @@
 }
 
 
-.comment_user_thum_wrap .user_thum_txtwrap .sub {
+.comment_user_thum_wrap .user_thum_txt_wrap .sub {
     display: flex;
     align-items: center;
     margin-top: 5px;
 }
 
-.comment_user_thum_wrap .user_thum_txtwrap .sub > button {
+.comment_user_thum_wrap .user_thum_txt_wrap .sub > button {
     margin-left: 10px;
 }
 

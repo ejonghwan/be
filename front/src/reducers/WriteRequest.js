@@ -256,6 +256,34 @@ const WriteRequest = () => {
     };
 
 
+    // {
+    //     "user": { "_id": "636afeff7d63060fe3b583af", "name": "종환" }, 
+    //     "content":"5.26 delete test 3 ", 
+    //     "comment": "6507e8cadd487f5addbdbfc7" 
+    // }
+    const createRecomment = async data => {
+        try {
+            const { user, content, commentId } = data;
+            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+            const res = await axios.post(`${host}/api/recomment`, data, config);
+            WriteDispatch({ type: "RECOMMENT_CREATE_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "RECOMMENT_CREATE_FAILUE", data: err.message });
+        };
+    };
+
+
     return {
         createWrite,
         loadWrite,
@@ -268,6 +296,7 @@ const WriteRequest = () => {
         unlikeComment,
         editComment,
         deleteComment,
+        createRecomment,
     }
 }
 

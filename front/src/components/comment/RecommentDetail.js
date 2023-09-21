@@ -10,12 +10,12 @@ import CommentEdit from './CommentEdit';
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
-import './CommentUserThum.css';
 import RecommentCreate from './RecommentCreate';
+import './RecommentDetail.css';
 
 
 
-const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isId = true, comment}) => {
+const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId = true, recomment}) => {
     const { state } = useContext(UserContext);
     const { deleteComment } = WriteRequest();
     const { WriteState: { writes } , WriteDispatch } = useContext(WriteContext);
@@ -53,12 +53,12 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
 
     const handleEleteComment = async () => {
         try {
-            if(!window.confirm(`"${comment.content}" 코멘트를 정말 삭제하시겠습니까?`)) return;
-            WriteDispatch({ type: "COMMENT_DELETE_REQUEST" })
+            if(!window.confirm(`"${recomment.content}" 코멘트를 정말 삭제하시겠습니까?`)) return;
+            WriteDispatch({ type: "RECOMMENT_DELETE_REQUEST" })
             await deleteComment({
-                userId: comment.user._id._id,
+                userId: recomment.user._id._id,
                 writeId: writes._id,
-                commentId: comment._id
+                commentId: recomment._id
             })
             commentMoreRef.current.popupClose();
         } catch(err) {
@@ -76,24 +76,24 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
 
     return (
         <Fragment>
-            <article className={`comment_user_thum_wrap ${className} ${align}`}>
-                <div className='comment_user_thum_inner'>
-                    <div className="user_thum_imgwrap" style={imgStyle}>
-                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${comment.user?._id.profileImage.key}`} alt="유저 프로필 이미지" />
+            <article className={`recomment_user_thum_wrap ${className} ${align}`}>
+                <div className='recomment_user_thum_inner'>
+                    <div className="user_thum_img_wrap" style={imgStyle}>
+                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${recomment.user?._id.profileImage.key}`} alt="유저 프로필 이미지" />
                     </div>
                     {!editOpen ? (
                         <Fragment>
-                            <div className='user_thum_txtwrap'>
+                            <div className='user_thum_txt_wrap'>
                                 <div className='info'>
                                     <Button type={'button'} className={'button_reset hover_type3'} onClick={() => handleIndex(idx)}>
-                                        {isId && <span className='user_thum_id'>{comment.user?._id.id}</span>}
-                                        <span className='user_thum_name'>{comment.user?._id.name}</span>
+                                        {isId && <span className='user_thum_id'>{recomment.user?._id.id}</span>}
+                                        <span className='user_thum_name'>{recomment.user?._id.name}</span>
                                     </Button>
-                                    <span className='created_at'>{timeForToday(comment.createdAt)}</span>
-                                    {comment.modified && <span className='is_update'>(수정됨)</span>}
+                                    <span className='created_at'>{timeForToday(recomment.createdAt)}</span>
+                                    {recomment.modified && <span className='is_update'>(수정됨)</span>}
                                 </div>
                                 <div className={`cont ${ellip && 'word_ellip_2'}`} ref={contentRef}>
-                                    {comment.content}
+                                    {recomment.content}
                                 </div>
                                 {ellip && (
                                     <div className='cont_detail'>
@@ -106,11 +106,11 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
                                 </div>
                                 )}
                                 <div className='sub'>
-                                    <CommentLike comment={comment} />
+                                    <CommentLike comment={recomment} />
                                     <Button className={'button_type_txt2 hover_type1'} onClick={handleRecommentState}>답글</Button>
                                 </div>
                             </div>
-                            {comment.user._id._id === state.user._id && (
+                            {recomment.user._id._id === state.user._id && (
                                  <div className='user_thum_more'>
                                     <Button type={'button'} className={'button_type3 ico_hover_type1'} onClick={handleOpenCommentMore}>
                                         <PiDotsThreeOutlineVerticalDuotone />
@@ -120,15 +120,12 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
                         </Fragment>
                     ) : (
                         <Fragment>
-                            <CommentEdit comment={comment} setEditOpen={setEditOpen} />
+                            <CommentEdit comment={recomment} setEditOpen={setEditOpen} />
                         </Fragment>
                     )}
-                   
-                    {/* 리코멘트 */}
-                    {recommentOpen && <RecommentCreate comment={comment} setRecommentOpen={setRecommentOpen} />}
-                    
+        
 
-                    <Popup className={`popup_type_default comment_more`} isHead={false} dimd={true} ref={commentMoreRef}>
+                    <Popup className={`popup_type_default recomment_more`} isHead={false} dimd={true} ref={commentMoreRef}>
                         <Button className={'button_type3 ico_hover_type1'} onClick={handleEditComment}>
                             <PiPencilSimpleLineDuotone />
                             <span>수정</span>
@@ -145,15 +142,15 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
              
             </article>
 
-            <Popup className={`popup_type_default profile_${selectIdx}`} isHead={true} title={`${comment.user._id.name}님 회원정보`} closeClick={() => userInfoRef.current.popupClose()} dimd={true} idx={selectIdx} ref={userInfoRef}>
+            <Popup className={`popup_type_default profile_${selectIdx}`} isHead={true} title={`${recomment.user._id.name}님 회원정보`} closeClick={() => userInfoRef.current.popupClose()} dimd={true} idx={selectIdx} ref={userInfoRef}>
                 <div className="user_thum_imgwrap">
-                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${comment.user._id.profileImage.key}`} alt="유저 프로필 이미지" />
+                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${recomment.user._id.profileImage.key}`} alt="유저 프로필 이미지" />
                 </div>
                 <div className='user_thum_txtwrap'>
-                    <span className='user_thum_name'>{comment.user._id.name} 님</span>
-                    <span className='user_thum_id'>{comment.user._id.id}</span>
-                    <span className='user_thum_email'>{comment.user._id.email}</span>
-                    <span className='user_thum_createdat'>가입일 {changeViewDate(comment.user._id.createdAt, 'hour')}</span>
+                    <span className='user_thum_name'>{recomment.user._id.name} 님</span>
+                    <span className='user_thum_id'>{recomment.user._id.id}</span>
+                    <span className='user_thum_email'>{recomment.user._id.email}</span>
+                    <span className='user_thum_createdat'>가입일 {changeViewDate(recomment.user._id.createdAt, 'hour')}</span>
                 </div>
             </Popup>
 
@@ -162,5 +159,5 @@ const CommentUserThum = ({ className = '', idx, align = 'horizon', imgStyle, isI
 };
 
 
-export default memo(CommentUserThum);
+export default memo(RecommentDetail);
 
