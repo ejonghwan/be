@@ -440,25 +440,26 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 };
 
             case "RECOMMENT_EDIT_SUCCESS": 
+                console.log(action.data)
                 return {
                     ...state,
                     editRecommentLoading: false,
                     editRecommentDone: true,
-                    // writes: {
-                    //     ...state.writes,
-                    //     comments: state.writes.comments.map(comment => {
-                    //         if(comment._id === action.data.commentId) {
-                    //             comment.recomments.map(recomment => {
-                    //                 if(recomment._id === action.data.recommentId) {
-                    //                     recomment.likeCount -= 1;
-                    //                     recomment.likes = recomment.likes.filter(rec => rec !== action.data.userId);
-                    //                 }
-                    //                 return recomment;
-                    //             });
-                    //         };
-                    //         return comment;
-                    //     })
-                    // }
+                    writes: {
+                        ...state.writes,
+                        comments: state.writes.comments.map(comment => {
+                            if(comment._id === action.data.commentId) {
+                                comment.recomments.map(recomment => {
+                                    if(recomment._id === action.data.recomment._id) {
+                                        recomment.content = action.data.recomment.content;
+                                        recomment.modified = action.data.recomment.modified;
+                                    }
+                                    return recomment;
+                                });
+                            };
+                            return comment;
+                        })
+                    }
                 };
 
             case "RECOMMENT_EDIT_FAILUE" : 

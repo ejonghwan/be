@@ -77,7 +77,7 @@ router.patch('/edit/:recommentId', async (req, res) => {
 
         if(content) putData.content = content;
 
-        const recomment = await Recomment.findByIdAndUpdate(recommentId, putData, { new: true }).exec();
+        const recomment = await Recomment.findByIdAndUpdate(recommentId, {...putData, modified: true}, { new: true }).exec();
         res.status(201).json({ recomment, commentId })
 
     } catch (err) {
