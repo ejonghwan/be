@@ -8,8 +8,6 @@ import { GlobalProvider } from './context/UiContext';
 import { SearchProvider } from './context/SearchContext';
 import { ProjectProvider } from './context/ProjectContext';
 import { WriteProvider } from './context/WriteContext';
-import { CommentProvider } from './context/CommentContext';
-import { RecommentProvider } from './context/RecommentContext';
 
 // css
 import './assets/css/fonts.css'
@@ -34,13 +32,9 @@ root.render(
             <WriteProvider>
               <ImageProvider>
                 <SearchProvider>
-                  <CommentProvider>
-                    <RecommentProvider>
                       <GlobalProvider>
                         <App />
                       </GlobalProvider>
-                    </RecommentProvider>
-                  </CommentProvider>
                 </SearchProvider>
               </ImageProvider>
             </WriteProvider>

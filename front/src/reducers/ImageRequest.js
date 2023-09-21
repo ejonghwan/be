@@ -12,8 +12,8 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 const useImageRequest = () => {
     const { imageState, imageDispatch } = useContext(ImageContext); 
     const { state, dispatch } = useContext(UserContext);  // user꺼는 너무 많아서 그냥 기본으로 ...
-    const { WriteDispatch } = useContext(WriteContext)
-    const accToken = getWithExpire('X-access-token')
+    const { WriteDispatch } = useContext(WriteContext);
+    const accToken = getWithExpire('X-access-token');
 
     const imageUpload = async data => {
         try {

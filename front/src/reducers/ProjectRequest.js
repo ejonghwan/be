@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { ProjectContext } from '../context/ProjectContext';
+import { getWithExpire } from '../utils/utils.js'
 import axios from 'axios'
 
 
@@ -7,7 +8,7 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 
 const ProjectRequest = () => {
     const { ProjectDispatch } = useContext(ProjectContext); 
-    const accToken = localStorage.getItem('X-access-token');
+    const accToken = getWithExpire('X-access-token');
 
     // 프로젝트 생성
      const createProject = async data => {
