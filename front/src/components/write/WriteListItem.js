@@ -3,7 +3,7 @@ import { PiHeartDuotone } from "react-icons/pi";
 import { changeViewDate } from '../../utils/utils';
 import './WriteListItem.css';
 
-const WriteListItem = ({ writes }) => {
+const WriteListItem = ({ writes, isProjectName = false }) => {
 
     // console.log('wir', writes)
 
@@ -19,6 +19,7 @@ const WriteListItem = ({ writes }) => {
                             <span className='write_list_id'>{write.user._id.id}</span>
                         </div>
                         <div className='write_list_title_wrap'>
+                            {isProjectName && <p className='gap_5'>{write.project?._id.title}</p>}
                             <strong className='write_list_title word_ellip_1'>{write.title}</strong>
                             <p className='write_list_conts word_ellip_1'>{write.content}</p>
                         </div>

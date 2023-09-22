@@ -45,13 +45,13 @@ const WriteDetail = ({ writeId }) => {
         try {
             if(!window.confirm('정말 이 글을 삭제하시겠습니까?')) return;
             WriteDispatch({ type: "WRITE_DELETE_REQUEST" });
-            await deleteWrite({
+            writes.writeImages[0] && await imageDelete({ fileName: writes.writeImages[0].key });
+            const res = await deleteWrite({
                 userId: state.user._id,
                 writeId: writeId,
                 projectId: writes.project._id._id
             });
-            await imageDelete({ fileName: writes.writeImages[0].key });
-            navigate(`/project/detail/${writes.project._id}`)
+            navigate(`/project/detail/${res.projectId}`)
         } catch(err) {
             console.log(err)
         }
@@ -76,7 +76,7 @@ const WriteDetail = ({ writeId }) => {
                             <Fragment>
                                 <div className='write_header'>
                                     <div className='write_header_item'>
-                                        <Link to={`/project/detail/${writes.project?._id._id}`} className='project_link' title={'습관 페이지로 이동'}>{writes.project?._id.title}</Link>
+                                        <Link to={`/project/detail/${writes.project?._id._id}`} className='project_link arrow_right' title={'습관 페이지로 이동'}>{writes.project?._id.title}</Link>
                                         <h3 className='write_title gap_10'>{writes.title}</h3>
                                     </div>
                                     <div className='write_header_item write_info'>

@@ -95,6 +95,7 @@ router.get('/my/:userId/:page', async (req, res) => {
 })
 
 
+
 //@ path    POST /api/write
 //@ doc     생성 인증글
 //@ access  private 
@@ -232,6 +233,8 @@ router.patch('/edit/:writeId', async (req, res) => {
 });
 
 
+// router.get('/test', )
+
 //@ path    DELETE /api/write
 //@ doc     삭제 인증글
 //@ access  private
@@ -266,15 +269,15 @@ router.delete('/', async (req, res) => {
 
         
         // #### constructor ####
-   
+        // 여기해야됨. 인스턴스유저는 배열이라 배열로 찾아야함.
 
         // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
         const isInstance = await Project.findOne({ $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }) ;
-
+        console.log('isInstance?? outer', isInstance)
         // #### instance ####
         // 인스턴스 유저도 -- 
         if(!isConstructor && isInstance) {
-            console.log('인증글 있음!')
+            console.log('인증글 있음!', isInstance)
             // query 찾으면 수정하자....일단 고 
             for(let i = 0; i < isInstance.instanceUser.length; i++) {
                 if(isInstance.instanceUser[i]._id.equals(userId) ) {
@@ -310,7 +313,7 @@ router.delete('/', async (req, res) => {
             Project.updateOne({_id: projectId}, { $pull: {writes: writeId } }, { new: true }),
             
         ]);
-        res.status(201).end();
+        res.status(201).json({ projectId });
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

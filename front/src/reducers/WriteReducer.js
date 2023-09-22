@@ -515,7 +515,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 ...state,
                 myWritesLoading: false,
                 myWritesDone: true,
-                writesList: []
+                writeList: state.writeList.concat(...action.data)
             };
 
         case "MYWRITES_LOAD_FAILUE" : 
@@ -524,6 +524,13 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 myWritesLoading: false,
                 myWritesError: action.data,
             };
+
+        case "MYWRITES_CLEAR_REQUEST": 
+            return {
+                ...state,
+                writeList: [],
+            };
+
 
 
 
