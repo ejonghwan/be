@@ -40,7 +40,7 @@ const ProjectRequest = () => {
     // 프로젝트 로드
     const loadProject = async projectId => {
         try {
-            // if(!userName || typeof userName !== 'string') throw new Error('넘어온 이름값이 잘못되었습니다');
+            if(!projectId || typeof projectId !== 'string') throw new Error('넘어온 projectId 잘못되었습니다');
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,

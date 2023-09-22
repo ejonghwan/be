@@ -99,8 +99,8 @@ const WriteRequest = () => {
     const editWrite = async data => {
         try {
             const { writeId, prevImagefilename } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -122,8 +122,9 @@ const WriteRequest = () => {
     const deleteWrite = async data => {
         try {
             const { userId, writeId, projectId } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
+            if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId 잘못되었습니다');
+            if(!projectId || typeof projectId !== 'string') throw new Error('넘어온 projectId 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -146,8 +147,9 @@ const WriteRequest = () => {
     const createComment = async data => {
         try {
             const { user, writeId, content } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!user || typeof user !== 'object') throw new Error('넘어온 user가 잘못되었습니다');
+            if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
+            if(!content || typeof content !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -168,8 +170,8 @@ const WriteRequest = () => {
     const likeComment = async data => {
         try {
             const { userId, commentId } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId가 잘못되었습니다');
+            if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -190,8 +192,8 @@ const WriteRequest = () => {
     const unlikeComment = async data => {
         try {
             const { userId, commentId } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
+            if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -212,8 +214,8 @@ const WriteRequest = () => {
     const editComment = async data => {
         try {
             const { commentId, content } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
+            if(!content || typeof content !== 'string') throw new Error('넘어온 content 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -235,8 +237,9 @@ const WriteRequest = () => {
     const deleteComment = async data => {
         try {
             const { userId, writeId, commentId } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
+            if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId 잘못되었습니다');
+            if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -259,8 +262,9 @@ const WriteRequest = () => {
     const createRecomment = async data => {
         try {
             const { user, content, commentId } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!user || typeof user !== 'object') throw new Error('넘어온 user 잘못되었습니다');
+            if(!content || typeof content !== 'string') throw new Error('넘어온 content 잘못되었습니다');
+            if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -282,8 +286,9 @@ const WriteRequest = () => {
     const likeRecomment = async data => {
         try {
             const { user, commentId, recommentId } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!user || typeof user !== 'object') throw new Error('넘어온 user 잘못되었습니다');
+            if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
+            if(!recommentId || typeof recommentId !== 'string') throw new Error('넘어온 recommentId 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -304,8 +309,9 @@ const WriteRequest = () => {
     const unlikeRecomment = async data => {
         try {
             const { user, commentId, recommentId } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!user || typeof user !== 'object') throw new Error('넘어온 user 잘못되었습니다');
+            if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
+            if(!recommentId || typeof recommentId !== 'string') throw new Error('넘어온 recommentId 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -326,8 +332,9 @@ const WriteRequest = () => {
     const editRecomment = async data => {
         try {
             const { content, commentId, recommentId } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!content || typeof content !== 'string') throw new Error('넘어온 content 잘못되었습니다');
+            if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
+            if(!recommentId || typeof recommentId !== 'string') throw new Error('넘어온 recommentId 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -348,8 +355,9 @@ const WriteRequest = () => {
     const deleteRecomment = async data => {
         try {
             const { userId, commentId, recommentId } = data;
-            // if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
-            // if(!prevImagefilename || typeof prevImagefilename !== 'string') throw new Error('넘어온 이미지가 잘못되었습니다');
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
+            if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
+            if(!recommentId || typeof recommentId !== 'string') throw new Error('넘어온 recommentId 잘못되었습니다');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -387,7 +395,7 @@ const WriteRequest = () => {
         unlikeRecomment,
         editRecomment,
         deleteRecomment
-    }
+    };
 }
 
 export default WriteRequest;
