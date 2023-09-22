@@ -376,6 +376,27 @@ const WriteRequest = () => {
         };
     };
 
+    const loadMyWrites = async data => {
+        try {
+            const { userId, page } = data;
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+            const res = await axios.get(`${host}/api/write/my/${userId}/${page}`, config);
+            WriteDispatch({ type: "MYWRITES_LOAD_SUCCESS", data: res.data });
+            console.log(res)
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "MYWRITES_LOAD_FAILUE", data: err.message });
+        };
+    };
+
 
 
     return {
@@ -394,7 +415,8 @@ const WriteRequest = () => {
         likeRecomment,
         unlikeRecomment,
         editRecomment,
-        deleteRecomment
+        deleteRecomment,
+        loadMyWrites
     };
 }
 

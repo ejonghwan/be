@@ -52,8 +52,13 @@ export const WriteIntialState = {
     editRecommentDone: false,
     editRecommentError: null,
 
+    myWritesLoading: false,
+    myWritesDone: false,
+    myWritesError: null,
+
     createWrites: {},
     writes: {},
+    writeList: [], 
 }
 
 
@@ -497,6 +502,28 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     deleteRecommentLoading: false,
                     deleteRecommentError: action.data,
                 };
+
+                
+        case "MYWRITES_LOAD_REQUEST": 
+            return {
+                ...state,
+                myWritesLoading: true,
+            };
+
+        case "MYWRITES_LOAD_SUCCESS": 
+            return {
+                ...state,
+                myWritesLoading: false,
+                myWritesDone: true,
+                writesList: []
+            };
+
+        case "MYWRITES_LOAD_FAILUE" : 
+            return {
+                ...state,
+                myWritesLoading: false,
+                myWritesError: action.data,
+            };
 
 
 

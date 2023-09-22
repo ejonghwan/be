@@ -62,6 +62,39 @@ router.get('/:writeId', async (req, res) => {
     }
 })
 
+
+//@ path    GET /api/write/my/:userId/:number
+//@ doc     로드 인증글 (내 글만)
+//@ access  private
+router.get('/my/:userId/:page', async (req, res) => {
+    try {
+        const { userId, page } = req.params;
+        const p = parseInt(page);
+        const write = await Write.find({"user._id": userId}).populate([
+            { path: 'user._id', select: 'id profileImage email name createdAt' },
+            // { path: 'likes._id', select: 'id profileImage email name createdAt' }, //이거값 확인
+            { 
+                path: 'comments', 
+                select: '_id user content likes likeCount modified recomments recommentCount createdAt updatedAt', 
+                populate: [
+                    { path: "user._id", select: 'id name profileImage createdAt' },  
+                    { path: 'recomments', 
+                        populate: [
+                            { path: "user._id", select: 'id name profileImage createdAt' }, 
+                            { path: "targetUser", select: 'id name profileImage createdAt' }
+                        ] 
+                    } 
+                ]}, // 이거 값 확인
+            { path: "project._id", select: 'title' },
+        ]).sort({ createdAt: -1 }).skip(p * 10).limit(10);
+        res.status(200).json(write)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
 //@ path    POST /api/write
 //@ doc     생성 인증글
 //@ access  private 

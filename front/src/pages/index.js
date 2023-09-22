@@ -18,6 +18,7 @@ import Project from './project/Project.js';
 import CreateProject from './project/CreateProject.js';
 import ProjectDetail from './project/ProjectDetail.js';
 import Write from './write/Write.js';
+import WritesList from './write/WritesList.js';
 
 
 
@@ -44,7 +45,8 @@ const RoutesPage = () => {
                 <Route path='/project/detail/:_id' element={state.isLogged ? <ProjectDetail page={'습관 상세보기'} /> : <Protected page={'습관 상세보기'} />}></Route>
 
                 {/* <Route path='/write/list/user/:_id' element={state.isLogged ? <WriteDetail page={'글 모음'} /> : <Protected page={'글 모음'} />}></Route> */}
-                <Route path='/write/detail/:_id' element={state.isLogged ? <Write page={'글 상세보기'} /> : <Protected page={'글 상세보기'} />}></Route>
+                <Route path='/write/detail/:_id' element={state.isLogged ? <Write page={'글 상세보기'} /> : <Protected page={'글 상세보기'} />}></Route> 
+                <Route path='/write/mylist' element={state.isLogged ? <WritesList page={'내 글'} /> : <Protected page={'내 글'} />}></Route>
 
 
                 <Route path='/project:id' element={<Project page={'습관보기'} />}></Route>

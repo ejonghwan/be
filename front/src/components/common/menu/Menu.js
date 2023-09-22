@@ -32,7 +32,7 @@ const Menu = () => {
             </ul>
             <ul className='info_menu'>
                 <li><Link to="/profile" className='list'><PiAlienDuotone /><span>내 정보</span></Link></li>
-                <li><Link to="" className='list'><PiNoteDuotone /><span>내 글</span></Link></li>
+                <li><Link to="/write/mylist" className='list'><PiNoteDuotone /><span>내 글</span></Link></li>
                 <li><Link to="" className='list'><PiChatCircleDotsDuotone /><span>내 댓글</span></Link></li>
                 <li><Link to="/profile" className='list'><PiAtDuotone /><span>이메일 변경</span></Link></li>
                 <li><Link to="/changepassword" className='list'><PiKeyDuotone /><span>비밀번호 변경</span></Link></li>
