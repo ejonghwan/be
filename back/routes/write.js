@@ -233,33 +233,6 @@ router.patch('/edit/:writeId', async (req, res) => {
     };
 });
 
-// /api/write/test
-router.get('/test/:userId/:projectId', async(req, res) => {
-    try {
-
-        const { userId, projectId } = req.params;
-
-        // const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, );
-        // const isInstance = await Project.findOne({ $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }) ;
-        // const isInstance = await Project.findOne({ $and: [
-        //     { _id: projectId }, 
-        //     { instanceUser: { $elemMatch: { _id: userId } } }, 
-        //     { days: { $elemMatch: { date: "2023-9-22" } } }  
-        // ] }) ;
-
-
-        const isInstance = await Project.findOne({ $and: [
-            { _id: projectId }, 
-            { instanceUser: { $elemMatch: { $and: [ { _id: userId, days: { $elemMatch: { date: "2023-9-22" } } } ] } } }, 
-        ] });
-
-        console.log(isInstance)
-        res.json(isInstance)
-    } catch(err) {
-        console.log(err)
-    }
-})
-
 
 //@ path    DELETE /api/write
 //@ doc     삭제 인증글
@@ -272,8 +245,8 @@ router.delete('/', async (req, res) => {
        
         // 글삭제 시 ins에 있던 해당 일 count삭제
         // 230621 생각해보니 현재 날짜가 아니라 작성한 날짜를 찾아야함.
-        const nowDate = `${deleteWriteDate.getFullYear()}` + `${deleteWriteDate.getMonth() + 1}` + `${deleteWriteDate.getDate()}`;
-
+        const nowDate = `${deleteWriteDate.getFullYear()}-` + `${deleteWriteDate.getMonth() + 1}-` + `${deleteWriteDate.getDate()}`;
+       
         const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId } ] }, );
         const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, );
     
@@ -298,8 +271,13 @@ router.delete('/', async (req, res) => {
         // 여기해야됨. 인스턴스유저는 배열이라 배열로 찾아야함.
 
         // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
-        const isInstance = await Project.findOne({ $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }) ;
-        console.log('isInstance?? outer', isInstance)
+        const isInstance = await Project.findOne({ $and: [
+            { _id: projectId }, 
+            { instanceUser: { $elemMatch: { $and: [ { _id: userId, days: { $elemMatch: { date: nowDate } } } ] } } }, 
+        ] });
+
+        console.log('ins del',userId, isInstance, nowDate)
+
         // #### instance ####
         // 인스턴스 유저도 -- 
         if(!isConstructor && isInstance) {
@@ -394,6 +372,37 @@ router.patch('/unlike', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
     
+})
+
+
+
+
+
+// /api/write/test
+router.get('/test/:userId/:projectId', async(req, res) => {
+    try {
+
+        const { userId, projectId } = req.params;
+
+        // const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, );
+        // const isInstance = await Project.findOne({ $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }) ;
+        // const isInstance = await Project.findOne({ $and: [
+        //     { _id: projectId }, 
+        //     { instanceUser: { $elemMatch: { _id: userId } } }, 
+        //     { days: { $elemMatch: { date: "2023-9-22" } } }  
+        // ] }) ;
+
+
+        const isInstance = await Project.findOne({ $and: [
+            { _id: projectId }, 
+            { instanceUser: { $elemMatch: { $and: [ { _id: userId, days: { $elemMatch: { date: "2023922" } } } ] } } }, 
+        ] });
+
+        console.log(isInstance)
+        res.json(isInstance)
+    } catch(err) {
+        console.log(err)
+    }
 })
 
 
