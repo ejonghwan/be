@@ -106,6 +106,7 @@ router.post('/', async (req, res) => {
             { path: "user._id", select: 'id name profileImage' },
             { path: "project._id", select: 'title content' }
         ]);
+
         write.save();
         /*
             5.30 인증글을 작성하면 
@@ -159,10 +160,10 @@ router.post('/', async (req, res) => {
 
 
         // 이게 모든 인스턴스 유저 days 파인드가 아니라 ..해당 플젝의 해당 유저의 days를 찾아야됨. $and 사용
-        const isInstance = await Project.findOne(
-            { $and: [{ _id: project._id }, { "instanceUser._id": user._id }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }, 
-            ) 
-
+        const isInstance = await Project.findOne({ $and: [
+            { _id: project._id }, 
+            { instanceUser: { $elemMatch: { $and: [ { _id: user._id, days: { $elemMatch: { date: nowDate } } } ] } } }, 
+        ] });
 
 
         // #### instance ####
@@ -232,8 +233,33 @@ router.patch('/edit/:writeId', async (req, res) => {
     };
 });
 
+// /api/write/test
+router.get('/test/:userId/:projectId', async(req, res) => {
+    try {
 
-// router.get('/test', )
+        const { userId, projectId } = req.params;
+
+        // const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, );
+        // const isInstance = await Project.findOne({ $and: [{ _id: projectId }, { "instanceUser._id": userId }, { "instanceUser.days": {$elemMatch : { date: nowDate } } } ] }) ;
+        // const isInstance = await Project.findOne({ $and: [
+        //     { _id: projectId }, 
+        //     { instanceUser: { $elemMatch: { _id: userId } } }, 
+        //     { days: { $elemMatch: { date: "2023-9-22" } } }  
+        // ] }) ;
+
+
+        const isInstance = await Project.findOne({ $and: [
+            { _id: projectId }, 
+            { instanceUser: { $elemMatch: { $and: [ { _id: userId, days: { $elemMatch: { date: "2023-9-22" } } } ] } } }, 
+        ] });
+
+        console.log(isInstance)
+        res.json(isInstance)
+    } catch(err) {
+        console.log(err)
+    }
+})
+
 
 //@ path    DELETE /api/write
 //@ doc     삭제 인증글
