@@ -14,6 +14,15 @@ export const UserIntialState = {
     imageErrorMessage: '',
     globalErrorMessage: '',
     loading: null,
+
+    signupUserLoading: false,
+    signupUserDone: false,
+    signupUserError: null,
+
+    loadUserLoading: false,
+    loadUserDone: false,
+    loadUserError: null,
+
     user: {},
 }
 
@@ -46,26 +55,38 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     loading: false,
                 }
+
+            case "USER_SIGNUP_REQEUST": 
+                return {
+                    ...state,
+                    signupUserLoading: true,
+                }
             
             case "USER_SIGNUP_SUCCESS": 
                 return {
                     ...state,
-                    signupErrorMessage: '',
-                    loading: false,
+                    signupUserLoading: false,
+                    signupUserDone: true
                 }
 
             case "USER_SIGNUP_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    signupErrorMessage: action.data,
+                    signupUserLoading: false,
+                    signupUserError: action.data,
                 }
 
+            case "USER_LOAD_REQUEST": 
+                return {
+                    ...state,
+                    loadUserLoading: true,
+                }
 
             case "USER_LOAD_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
+                    loadUserLoading: false,
+                    loadUserDone: true,
                     user: action.data,
                     isLogged: true,
                 }
@@ -73,9 +94,15 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_LOAD_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
+                    loadUserLoading: false,
+                    loadUserError: action.data,
                     isLogged: false,
                 }
+
+
+
+
+
 
 
             case "USER_LOGIN_SUCCESS": 

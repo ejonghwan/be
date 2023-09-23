@@ -29,7 +29,7 @@ const App = () => {
       // 로그아웃/시간후로그아웃 제외 예상치못하게 로그아웃되어 있는 경우 무한로딩 뜨는 문제해결
        if(!state.isLogged) dispatch({ type: "LOADING_CLEAR" })
 
-      dispatch({ type: "LOADING" });
+      dispatch({ type: "USER_LOAD_REQUEST" });
       await getUser(); 
 
     } catch(err) {
@@ -41,7 +41,7 @@ const App = () => {
     try {
       if(accToken && valid) {
           if(!accToken) throw new Error('is not acctoken');
-          dispatch({ type: "LOADING" })
+          // dispatch({ type: "LOADING" })
           await getUser(accToken);
           // searchParams.delete('valid') //이거 왜 안되지 ..
           // searchParams.delete('accToken')
@@ -56,23 +56,16 @@ const App = () => {
   useEffect(() => {
     userLoad()
     userEmailLoad()
-    dispatch({type: "ERROR_LOADING_CLEAR"})
+    // dispatch({type: "ERROR_LOADING_CLEAR"})
   }, [])
-
-  // useEffect(() => {
-  //   console.log('loading?', state.loading)
-  // }, [state.loading])
 
 
  
   return (
       <div className="App"> 
-      {console.log(state.loading)}
-        {state.loading || state.loading === null && state.isLogged ? (
-          <div>파이어베이스 로드 참고하기</div>
-        ) : (
-          <RoutesPage />
-        )}
+        {state.loadUserLoading && <div>파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........</div>}
+
+        {state.loadUserDone && state.isLogged  && <RoutesPage />}
       </div>
   );
 }
