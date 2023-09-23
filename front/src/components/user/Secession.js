@@ -10,6 +10,7 @@ import UserRequest from '../../reducers/UserRequest.js'
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import { PiSignOutDuotone } from "react-icons/pi";
+import Spinners from '../common/spinners/Spinners.js';
 
 
 const Secession = () => {
@@ -27,7 +28,7 @@ const Secession = () => {
 
     const submit = _debounce(async () => {
         try {
-            dispatch({ type: "LOADING", loadingMessage: "탈퇴 처리 중.." });
+            dispatch({ type: "USER_SECESSION_REQUEST" });
             const user = await secession({ id: state.user.id, password: userPassword });
             if(statusCode(user.status, 2)) {
                 // setUserId('');
@@ -67,11 +68,14 @@ const Secession = () => {
                     <Button className={'button_type5'} disabled={!userPassword}>
                         탈퇴하기
                     </Button>
-                    <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                        {state.authNumberErrorMessage && <p>{state.authNumberErrorMessage}</p>}
-                    </ErrorMsg>
+                    {state.secessionUserError && (
+                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                            <p>{state.secessionUserError}</p>
+                        </ErrorMsg>
+                    )}
                 </div>
             </form>
+            {state.secessionUserLoading && <Spinners full={true} />}
         </div>
     );
 };

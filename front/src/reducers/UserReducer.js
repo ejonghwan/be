@@ -7,10 +7,8 @@ export const UserIntialState = {
     findIdErrorMessage: '',
     findPasswordErrorMessage: '',
     infoEditErrorMessage: '',
-    mailEditErrorMessage: '',
     passwordEditErrorMessage: '',
     mailAuthErrorMessage: '',
-    authNumberErrorMessage: '',
     imageErrorMessage: '',
     globalErrorMessage: '',
     loading: null,
@@ -22,6 +20,34 @@ export const UserIntialState = {
     loadUserLoading: false,
     loadUserDone: false,
     loadUserError: null,
+
+    loginUserLoading: false,
+    loginUserDone: false,
+    loginUserError: null,
+
+    logoutUserLoading: false,
+    logoutUserDone: false,
+    logoutUserError: null,
+    
+    editUserInfoLoading: false,
+    editUserInfoDone: false,
+    editUserInfoError: null,
+
+    editUserMailLoading: false,
+    editUserMailDone: false,
+    editUserMailError: null,
+
+    authUserMailLoading: false,
+    authUserMailDone: false,
+    authUserMailError: null,
+    
+    authNumberLoading: false,
+    authNumberlDone: false,
+    authNumberlError: null,
+
+    secessionUserLoading: false,
+    secessionUserlDone: false,
+    secessionUserlError: null,
 
     user: {},
 }
@@ -37,24 +63,19 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     authErrorMessage: '',
-                    loginErrorMessage: '',
-                    signupErrorMessage: '',
                     findIdErrorMessage: '',
                     findPasswordErrorMessage: '',
-                    infoEditErrorMessage: '',
-                    mailEditErrorMessage: '',
                     passwordEditErrorMessage: '',
-                    authNumberErrorMessage: '',
                     mailAuthErrorMessage: '',
                     imageErrorMessage: '',
                     globalErrorMessage: '',
                 }
 
-            case "LOADING_CLEAR" : 
-                return {
-                    ...state,
-                    loading: false,
-                }
+            // case "LOADING_CLEAR" : 
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //     }
 
             case "USER_SIGNUP_REQEUST": 
                 return {
@@ -87,6 +108,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     loadUserLoading: false,
                     loadUserDone: true,
+                    loadUserError: null,
                     user: action.data,
                     isLogged: true,
                 }
@@ -99,17 +121,18 @@ const UserReducer = (state = UserIntialState, action) => {
                     isLogged: false,
                 }
 
-
-
-
-
-
+            case "USER_LOGIN_REQUEST": 
+                return {
+                    ...state,
+                    loginUserLoading: true,
+                }
 
             case "USER_LOGIN_SUCCESS": 
                 return {
                     ...state,
-                    loginErrorMessage: '',
-                    loading: false,
+                    loginUserLoading: false,
+                    loginUserDone: true,
+                    loginUserError: null,
                     user: action.data,
                     isLogged: true,
                 }
@@ -117,26 +140,48 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_LOGIN_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
+                    loginUserLoading: false,
                     isLogged: false,
-                    loginErrorMessage: action.data,
+                    loginUserError: action.data,
+                }
+                
+            case "USER_LOGOUT_REQUEST": 
+                return {
+                    ...state, 
+                    logoutUserLoading: true
                 }
 
-
+            
             case "USER_LOGOUT_SUCCESS": 
                 return {
                     ...state, 
-                    loading: false,
+                    logoutUserLoading: false,
+                    logoutUserError: null,
                     user: {},
                     isLogged: false,
                 }
 
 
-            case "USER_USER_INFO_EDIT_SUCCESS": 
+            case "USER_LOGOUT_FAILUE": 
+                return {
+                    ...state, 
+                    logoutUserLoading: false,
+                    logoutUserError: action.data,
+                }
+
+
+            case "USER_INFO_EDIT_REQUEST" : 
                 return {
                     ...state,
-                    infoEditErrorMessage: '',
-                    loading: false,
+                    editUserInfoLoading: true,
+                }
+
+
+            case "USER_INFO_EDIT_SUCCESS": 
+                return {
+                    ...state,
+                    editUserInfoLoading: false,
+                    editUserInfoError: null,
                     user: {
                         ...state.user,
                         name: action.data.name,
@@ -145,19 +190,30 @@ const UserReducer = (state = UserIntialState, action) => {
                         phoneNumber: action.data.phoneNumber,
                     }
                 }
-            case "USER_USER_INFO_EDIT_FAILUE" : 
+            case "USER_INFO_EDIT_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    infoEditErrorMessage: action.data,
+                    editUserInfoLoading: false,
+                    editUserInfoError: action.data,
                 }
 
+
+
+
+
+                // 아직 테스트 안함
+            case "USER_MAIL_EDIT_REQUEST": 
+                return {
+                    ...state,
+                    editUserMailLoading: true,
+                }
 
             case "USER_MAIL_EDIT_SUCCESS": 
                 return {
                     ...state,
-                    mailEditErrorMessage: '',
-                    loading: false,
+                    editUserMailLoading: false,
+                    editUserMailDone: true,
+                    editUserMailError: null,
                     user: {
                         ...state.user,
                         email: action.data.email,
@@ -167,42 +223,96 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_MAIL_EDIT_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    mailEditErrorMessage: action.data,
+                    editUserMailLoading: false,
+                    editUserMailError: action.data,
                 }
 
+                // 이거랑 같이 테스트
+            case "USER_MAIL_AUTH_REQUEST": 
+                return {
+                    ...state,
+                    authUserMailLoading: true,
+                }
 
             case "USER_MAIL_AUTH_SUCCESS": 
                 return {
                     ...state,
-                    authErrorMessage: '',
-                    loading: false,
+                    authUserMailLoading: false,
+                    authUserMailDone: true,
+                    user: {
+                        ...state.user,
+                        email: action.data.email
+                    }
                 }
 
             case "USER_MAIL_AUTH_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    mailAuthErrorMessage: action.data,
+                    authUserMailLoading: false,
+                    authUserMailError: action.data
                 }
 
+
+                // 이것도 같이 테스트
+
+            case "AUTH_NUMBER_REQUEST": 
+                return {
+                    ...state,
+                    authNumberLoading: true,
+                }
 
             case "AUTH_NUMBER_SUCCESS": 
                 return {
                     ...state,
-                    authNumberErrorMessage: '',
-                    loading: false,
+                    authNumberLoading: false,
+                    authNumberDone: true,
+                    authNumberError: null,
                 }
 
             case "AUTH_NUMBER_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    authNumberErrorMessage: action.data,
+                    authNumberLoading: false,
+                    authNumberError: action.data
                 }
             
           
+
+
+                // 회원탈퇴 리듀서 + 스피너 + 에러 테스트 완료 
+            case "USER_SECESSION_REQUEST": 
+                return {
+                    ...state,
+                    secessionUserLoading: true,
+                }
+
+            case "USER_SECESSION_SUCCESS": 
+                return {
+                    ...state,
+                    secessionUserLoading: false,
+                    secessionUserDone: true,
+                    secessionUserError: null,
+                    user: {},
+                    isLogged: false
+                    
+                }
+
+            case "USER_SECESSION_FAILUE" : 
+                return {
+                    ...state,
+                    secessionUserLoading: false,
+                    secessionUserError: action.data
+                }
+            
           
+
+
+
+
+
+
+
+
 
             case "USER_PASSWORD_EDIT_SUCCESS": 
                 return {

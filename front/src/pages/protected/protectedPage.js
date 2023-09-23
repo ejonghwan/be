@@ -5,7 +5,7 @@ import { UserContext } from '../../context/UserContext';
 
 const ProtectedPage = ({ page }) => {
 
-    const {state, dispatch} = useContext(UserContext);
+    const {state} = useContext(UserContext);
 
     return (
         <Fragment>

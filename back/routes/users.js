@@ -177,7 +177,7 @@ router.patch('/edit/userInfo', auth, async(req, res) => {
 })
 
 
-//@ path    PATCH /api/users/edit/name
+//@ path    PATCH /api/users/edit/email
 //@ doc     이메일 변경
 //@ access  private
 router.patch('/edit/email', auth, async(req, res) => {

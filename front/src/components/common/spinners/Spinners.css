@@ -1,0 +1,125 @@
+
+.spinner_wrap {
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.spinner_wrap.full {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+.spinner_wrap.bg {
+    background-color: rgba(0, 0, 0, 0.329);
+}
+
+
+
+.gradient_spinner {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(180deg, #0f6fff 0%, rgba(0, 0, 0, 0.1) 25%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: spin 1s linear infinite;
+}
+
+.gradient_spinner::after {
+    content: "";
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    border-radius: 50%;
+    background: #f9fafa;
+}
+
+.line_spinner {
+    width: 64px;
+    height: 64px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-right: 2px solid #0f6fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.double_lines_spinner {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.double_lines_spinner::after,
+.double_lines_spinner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.double_lines_spinner::before {
+    border-right: 2px solid #0f6fff;
+    animation: spin 1s 1s linear infinite;
+}
+
+.double_lines_spinner::after {
+    border-bottom: 2px solid #0f6fff;
+    /*   animation: spin 1s 0.15s ease-in-out infinite; */
+    animation: spin 1s 0.3s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.line_progress_bar {
+    width: 200px;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.line_progress_bar::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: #0f6fff;
+    animation: grow 1s ease-in-out infinite;
+}
+
+@keyframes grow {
+    50% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+        right: 0;
+        left: unset;
+    }
+}

@@ -12,12 +12,13 @@ import './UserProfile.css';
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import { PiBabyDuotone } from "react-icons/pi";
+import Spinners from '../common/spinners/Spinners.js';
 
 
 
 
 const UserProfile = () => {
-    const { state } = useContext(UserContext);
+    const { state, dispatch } = useContext(UserContext);
 
     const [editUserInfoState, setEditUserInfoState] = useState(false);
     const [editEmailState, setEditEmailState] = useState(false);
@@ -55,10 +56,12 @@ const UserProfile = () => {
     // 이메일 수정 인증번호 요청 
     const handleEmailAuth = e => {
         e.preventDefault();
+        dispatch({ type: "AUTH_NUMBER_REQUEST" })
         emailAuth();
     };
     const emailAuth = _debounce(async e => {
         try {
+            dispatch({ type: "USER_MAIL_AUTH_REQUEST" })
             const res = await memberAuthNumberRequest({ email: userEmail, _id: state.user._id });
             if(statusCode(res.status, 2)) { setEditEmailAuthState(true); }
         } catch(err) {
@@ -75,6 +78,8 @@ const UserProfile = () => {
     }
     const emailEdit = _debounce(async () => {
         try {
+            
+            dispatch({ type: "USER_MAIL_EDIT_REQUEST" })
             const res = await emailEditUser({ email: userEmail, _id: state.user._id, authNumber: authNumber })
             if(statusCode(res.status, 2)) {
                 setEditEmailState(!editEmailState);
@@ -102,6 +107,7 @@ const UserProfile = () => {
                 phoneNumber: userPhoneNumber,
                 _id: state.user._id
             }
+            dispatch({ type: "USER_INFO_EDIT_REQUEST" })
             await userInfoEditUser(userInfo);
             setEditUserInfoState(!editUserInfoState);
             alert('정보가 변경되었습니다.')
@@ -119,15 +125,7 @@ const UserProfile = () => {
         userBirthday && stringLengthChecked(userBirthday, 8) ? setBirthdayLengthChecked(false) : setBirthdayLengthChecked(true)
     }, [userBirthday]);
 
-    // useEffect(() => {
-    //     if(state.user.gender === '남') {
-    //         setUserGender(manRef.current && manRef.current.defaultValue); //radio value
-    //         manRef.current && manRef.current.setAttribute('checked', true);
-    //     } else {
-    //         setUserGender(womanRef.current && womanRef.current.defaultValue); //radio value
-    //         womanRef.current && womanRef.current.setAttribute('checked', true)
-    //     }
-    // }, [editUserInfoState]);
+   
 
 
     
@@ -144,28 +142,32 @@ const UserProfile = () => {
                 {editEmailState ? (
                     <Fragment>
                         <form onSubmit={handleEmailAuth}>
-                            <div className='update_form'>
-                                <Label htmlFor="userEmail" content="이메일" className={"label_type1"}/>
-                                <Input 
-                                    id="userEmail" 
-                                    type="email" 
-                                    required={true} 
-                                    placeholder={state.user.email}
-                                    className={"input_type1"}
-                                    name="userEmail" 
-                                    value={userEmail} 
-                                    evt="onChange" 
-                                    onChange={handleUserEmail} 
-                                    disabled={editEmailAuthState && true}
-                                />
-                            </div>
+                            {state.authNumberLoading ? (<Spinners />) : (
+                                <div className='update_form'>
+                                    <Label htmlFor="userEmail" content="이메일" className={"label_type1"}/>
+                                    <Input 
+                                        id="userEmail" 
+                                        type="email" 
+                                        required={true} 
+                                        placeholder={state.user.email}
+                                        className={"input_type1"}
+                                        name="userEmail" 
+                                        value={userEmail} 
+                                        evt="onChange" 
+                                        onChange={handleUserEmail} 
+                                        disabled={editEmailAuthState && true}
+                                    />
+                                </div>
+                            )}
                             {!editEmailAuthState ? (
                                 <div className='align_l gapt_10 btn'>
                                     <Button className={'button_type2'} name="email">이메일 인증</Button>
                                     <Button className={'button_type_cancel'} type="button" name="email" onClick={handleToggle}>취소</Button>
-                                    <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                                        {state.mailAuthErrorMessage && <p> {state.mailAuthErrorMessage}</p>}
-                                    </ErrorMsg>
+                                    {state.authUserMailError && (
+                                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                                            <p> {state.authUserMailError}</p>
+                                        </ErrorMsg>
+                                    )}
                                 </div>
                             ) : (
                                 <div className='align_l gapt_10 btn'>
@@ -174,6 +176,11 @@ const UserProfile = () => {
                                 </div>
                             )}
                         </form>
+                        {state.authNumberError && (
+                             <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                                {state.authNumberError}
+                            </ErrorMsg>
+                        )}
 
                         {/* 인증 메일 보냈을 시 */}
                         {editEmailAuthState && (
@@ -203,9 +210,9 @@ const UserProfile = () => {
                                     />
                                     <Button className={'button_type2 gapt_10'} onClick={handleToggle} disabled={!timerNumber ? false : true} >이메일 변경</Button>
                                 </form>
-                                {state.mailEditErrorMessage && 
+                                {state.editUserMailError && 
                                     <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                                        {state.mailEditErrorMessage}
+                                        {state.editUserMailError}
                                     </ErrorMsg>
                                 }
                             </div>
@@ -231,6 +238,7 @@ const UserProfile = () => {
                         {state.user.id}
                     </div>
                 </li>
+                {state.editUserInfoLoading && <Spinners full={true} />}
                 {editUserInfoState ? (
                     <li>
                         <form onSubmit={handleUserInfoEdit}>
@@ -345,6 +353,9 @@ const UserProfile = () => {
                                 <Button className={'button_type2'} name={'userInfo'} onClick={handleUserInfoEdit} disabled={ !userName || !userGender || !userBirthday || !userPhoneNumber || birthdayLengthChecked || phoneNumberLengthChecked}>개인정보 변경</Button>
                                 <Button className={'button_type_cancel'} name={'userInfo'} onClick={handleToggle} type="button">취소</Button>
                             </div>
+                            <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                                {state.editUserInfoError && state.editUserInfoError}
+                            </ErrorMsg>
                         </form>
                     </li>
                 ) : (

@@ -447,7 +447,7 @@ const Signup = ({ page }) => {
                             회원가입
                         </Button>
                         <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                            {state.signupErrorMessage && <p> {state.signupErrorMessage}</p>}
+                            {state.signupUserError && <p> {state.signupUserError}</p>}
                         </ErrorMsg>
                     </div>
                 </form>

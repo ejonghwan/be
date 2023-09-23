@@ -33,6 +33,7 @@ const UserRequest = () => {
                 withCredentials: true,
             }
             const res = await axios.post(`${host}/api/auth`, data, config);
+            dispatch({ type: "AUTH_NUMBER_SUCCESS" })
             return res;
         } catch(err) {
             console.error(err);
@@ -102,14 +103,6 @@ const UserRequest = () => {
         };
     };
 
-    /*
-        방장: {}
-        유저: [_id, _id, ...]
-        권한: { a b c d }
-
-        유저: { 프로젝트: [_id, _id, ...] }
-    */
-    
 
     // 로그인 유저
      const loginUser = async data => {
@@ -180,11 +173,11 @@ const UserRequest = () => {
                 withCredentials: true,
             }
             const user = await axios.patch(`${host}/api/users/edit/userInfo`, data, config);
-            dispatch({ type: "USER_USER_INFO_EDIT_SUCCESS", data: user.data });
+            dispatch({ type: "USER_INFO_EDIT_SUCCESS", data: user.data });
             return user;
         } catch(err) {
             console.error(err)
-            dispatch({ type: "USER_USER_INFO_EDIT_FAILUE", data: err.response.data.message });
+            dispatch({ type: "USER_INFO_EDIT_FAILUE", data: err.response.data.message });
             return err.response
         }
     }
@@ -205,11 +198,10 @@ const UserRequest = () => {
                 withCredentials: true // 쿠키 cors 통신 설정
             }
             const res = await axios.post(`${host}/api/auth/member/number`, data, config);
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
+            dispatch({ type: "AUTH_NUMBER_SUCCESS" })
             return res;
         } catch(err) {
             console.error(err)
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
             dispatch({ type: "USER_MAIL_AUTH_FAILUE", data: err.response.data.message });
             return err.response;
         }
@@ -227,11 +219,11 @@ const UserRequest = () => {
                 withCredentials: true // 쿠키 cors 통신 설정
             }
             const res = axios.post(`${host}/api/auth/nonMember/number`, data, config);
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
+            dispatch({ type: "AUTH_NUMBER_SUCCESS" })
             return res;
         } catch(err) {
             console.error(err)
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
+           
             dispatch({ type: "USER_MAIL_AUTH_FAILUE", data: err.response.data.message });
             return err.response
         }
@@ -250,12 +242,11 @@ const UserRequest = () => {
                 withCredentials: true // 쿠키 cors 통신 설정
             }
             const res = await axios.post(`${host}/api/auth/nonLoginMember/number`, data, config);
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
+            dispatch({ type: "AUTH_NUMBER_SUCCESS" })
             return res;
 
         } catch(err) {
             console.error('user request ', err);
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
             dispatch({ type: "USER_MAIL_AUTH_FAILUE", data: err.response.data.message });
             return err.response;
         }
@@ -409,12 +400,11 @@ const UserRequest = () => {
             const user = await axios.post(`${host}/api/users/delete`, data, config); 
             
             localStorage.removeItem('X-access-token');
-            dispatch({ type: "USER_LOGOUT_SUCCESS" });
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
+            dispatch({ type: "USER_SECESSION_SUCCESS" });
             return user;
         } catch(err) {
             console.error(err);
-            dispatch({ type: "AUTH_NUMBER_FAILUE", data: err.response.data.message })
+            dispatch({ type: "USER_SECESSION_FAILUE", data: err.response.data.message })
             return err.response;
         };
     }

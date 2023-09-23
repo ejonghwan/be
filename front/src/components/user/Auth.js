@@ -10,6 +10,7 @@ import UserRequest from '../../reducers/UserRequest'
 import { statusCode } from '../../utils/utils'
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import SuccessMsg from '../common/successMsg/SuccessMsg';
+import Spinners from '../common/spinners/Spinners';
 
 
 const Auth = () => {
@@ -27,7 +28,7 @@ const Auth = () => {
 
     const authMail = useMemo(() => _debounce(async e => {
         try {
-            dispatch({ type: "LOADING", loadingMessage: "인증메일 보내는 중.." })
+            dispatch({ type: "AUTH_NUMBER_REQUEST" })
             const res = await emailAuth({ email: email })
             if(statusCode(res.status, 2)) return setAuthState(true);
         } catch(err) {
@@ -45,6 +46,7 @@ const Auth = () => {
 
     return (
         <Fragment>
+            {state.authNumberLoading && <Spinners full={true} />}
             {!authState ? (
                 <Fragment>
                     <form onSubmit={handleAuthMailSubmit}>
@@ -68,7 +70,7 @@ const Auth = () => {
                         </div>
                     </form>
                     <ErrorMsg className={'error_type1 align_c gapt_40'}>
-                        {state.authNumberErrorMessage && <span>{state.authNumberErrorMessage}</span>}
+                        {state.authNumberError && <span>{state.authNumberError}</span>}
                     </ErrorMsg>
 
                     <div className="gapt_10">
