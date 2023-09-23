@@ -198,7 +198,7 @@ const UserRequest = () => {
                 withCredentials: true // 쿠키 cors 통신 설정
             }
             const res = await axios.post(`${host}/api/auth/member/number`, data, config);
-            dispatch({ type: "AUTH_NUMBER_SUCCESS" })
+            dispatch({ type: "USER_MAIL_AUTH_SUCCESS" })
             return res;
         } catch(err) {
             console.error(err)

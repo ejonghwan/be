@@ -197,11 +197,6 @@ const UserReducer = (state = UserIntialState, action) => {
                     editUserInfoError: action.data,
                 }
 
-
-
-
-
-                // 아직 테스트 안함
             case "USER_MAIL_EDIT_REQUEST": 
                 return {
                     ...state,
@@ -227,7 +222,6 @@ const UserReducer = (state = UserIntialState, action) => {
                     editUserMailError: action.data,
                 }
 
-                // 이거랑 같이 테스트
             case "USER_MAIL_AUTH_REQUEST": 
                 return {
                     ...state,
@@ -253,8 +247,6 @@ const UserReducer = (state = UserIntialState, action) => {
                 }
 
 
-                // 이것도 같이 테스트
-
             case "AUTH_NUMBER_REQUEST": 
                 return {
                     ...state,
@@ -276,10 +268,6 @@ const UserReducer = (state = UserIntialState, action) => {
                     authNumberError: action.data
                 }
             
-          
-
-
-                // 회원탈퇴 리듀서 + 스피너 + 에러 테스트 완료 
             case "USER_SECESSION_REQUEST": 
                 return {
                     ...state,
@@ -311,6 +299,10 @@ const UserReducer = (state = UserIntialState, action) => {
 
 
 
+
+
+
+                
 
 
 
