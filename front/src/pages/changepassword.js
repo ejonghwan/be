@@ -4,7 +4,7 @@ const changepassword = ({ page }) => {
     return (
         <div className='b_conts'>
             <h2>{page}</h2>
-            <UserPasswordEdit />
+            <UserPasswordEdit prevPasswordCheck={true} />
         </div>
     );
 };

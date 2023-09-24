@@ -285,7 +285,7 @@ const UserRequest = () => {
         try {
             // const accToken = localStorage.getItem('X-access-token')
             if(!accToken) throw new Error('user request error. is not accToken');
-        
+            
             const { prevPassword, newPassword, _id, newPasswordCheck } = data;
             if(!prevPassword || typeof prevPassword !== 'string') throw new Error('user request error. is not prevPassword');
             if(!newPassword || typeof newPassword !== 'string') throw new Error('user request error. is not newPassword');

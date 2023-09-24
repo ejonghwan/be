@@ -49,6 +49,10 @@ export const UserIntialState = {
     secessionUserlDone: false,
     secessionUserlError: null,
 
+    changeUserPasswordLoading: false,
+    changeUserPasswordDone: false,
+    changeUserPasswordError: null,
+
     user: {},
 }
 
@@ -87,6 +91,7 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     signupUserLoading: false,
+                    signupUserError: '',
                     signupUserDone: true
                 }
 
@@ -108,7 +113,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     loadUserLoading: false,
                     loadUserDone: true,
-                    loadUserError: null,
+                    loadUserError: '',
                     user: action.data,
                     isLogged: true,
                 }
@@ -132,7 +137,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     loginUserLoading: false,
                     loginUserDone: true,
-                    loginUserError: null,
+                    loginUserError: '',
                     user: action.data,
                     isLogged: true,
                 }
@@ -156,7 +161,7 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state, 
                     logoutUserLoading: false,
-                    logoutUserError: null,
+                    logoutUserError: '',
                     user: {},
                     isLogged: false,
                 }
@@ -181,7 +186,7 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     editUserInfoLoading: false,
-                    editUserInfoError: null,
+                    editUserInfoError: '',
                     user: {
                         ...state.user,
                         name: action.data.name,
@@ -208,7 +213,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     editUserMailLoading: false,
                     editUserMailDone: true,
-                    editUserMailError: null,
+                    editUserMailError: '',
                     user: {
                         ...state.user,
                         email: action.data.email,
@@ -233,6 +238,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     authUserMailLoading: false,
                     authUserMailDone: true,
+                    authUserMailError:'',
                     user: {
                         ...state.user,
                         email: action.data.email
@@ -258,7 +264,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     authNumberLoading: false,
                     authNumberDone: true,
-                    authNumberError: null,
+                    authNumberError: '',
                 }
 
             case "AUTH_NUMBER_FAILUE" : 
@@ -279,7 +285,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     secessionUserLoading: false,
                     secessionUserDone: true,
-                    secessionUserError: null,
+                    secessionUserError: '',
                     user: {},
                     isLogged: false
                     
@@ -304,21 +310,32 @@ const UserReducer = (state = UserIntialState, action) => {
 
                 
 
+            case "USER_PASSWORD_EDIT_REQUEST": 
+                return {
+                    ...state,
+                    // passwordEditErrorMessage: '',
+                    changeUserPasswordLoading: true,
+                }
 
 
             case "USER_PASSWORD_EDIT_SUCCESS": 
                 return {
                     ...state,
-                    passwordEditErrorMessage: '',
-                    loading: false,
+                    // passwordEditErrorMessage: '',
+                    changeUserPasswordLoading: false,
+                    changeUserPasswordError: '',
+                    changeUserPasswordDone: true,
                 }
 
             case "USER_PASSWORD_EDIT_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    passwordEditErrorMessage: action.data,
+                    changeUserPasswordLoading: false,
+                    // passwordEditErrorMessage: action.data,
+                    changeUserPasswordError: action.data
                 }
+
+
 
 
             case "USER_PROFILEIMAGE_EDIT_SUCCESS": 

@@ -37,7 +37,7 @@ const RoutesPage = () => {
                 <Route path='/signuppage' element={<SignupPage page={'회원가입'} />}></Route>
                 <Route path='/findid' element={<FindId page={'아이디 찾기'} />}></Route>
                 <Route path='/findpassword' element={<FindPassword page={'비밀번호 찾기'} />}></Route>
-                <Route path='/changepassword' element={<ChangePassword page={'비밀번호 변경'} />}></Route>
+                <Route path='/changepassword' element={!state.loadUserLoading && state.isLogged ? <ChangePassword page={'비밀번호 변경'} /> : <Protected page={'비밀번호 변경'} />}></Route>
 
 
                 <Route path='/createproject' element={!state.loadUserLoading && state.isLogged  ? <CreateProject page={'새 습관 만들기'} /> : <Protected page={'새 습관 만들기'} />}></Route>

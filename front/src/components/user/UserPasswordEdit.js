@@ -11,10 +11,11 @@ import { HiOutlineShieldExclamation } from "react-icons/hi2";
 import SuccessMsg from '../common/successMsg/SuccessMsg.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import Button from '../common/form/Button.js';
+import Spinners from '../common/spinners/Spinners.js';
 
 
 const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
-    const { prevPasswordEditUser, findPasswordEditUser } = UserRequest();
+    const { prevPasswordEditUser, findPasswordEditUser, logoutUser } = UserRequest();
     const { state, dispatch } = useContext(UserContext);
     const navigate = useNavigate();
 
@@ -32,34 +33,37 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     // 인증이 모두 true인지
     useEffect(() => {
         newPassword === newPasswordCheck ? setPasswordIsChecked(true) : setPasswordIsChecked(false);
-        if(prevPassword && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected) setSubmitActive(true)
-        if(!prevPasswordCheck && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected) setSubmitActive(true)
-        console.log(submitActive)
-    }, [prevPasswordCheck, newPasswordCheck, prevPassword, newPassword, newPasswordCheck, passwordIsChecked, passwordProtected])
+        if(prevPassword && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected && !prevPasswordMatched) setSubmitActive(true)
+        if(!prevPasswordCheck && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected && !prevPasswordMatched) setSubmitActive(true)
+    }, [prevPasswordCheck, newPasswordCheck, prevPassword, newPassword, newPasswordCheck, passwordIsChecked, passwordProtected, prevPasswordMatched])
 
 
     // 요청
     const handlePasswordEditSubmit = useCallback(async e => {
         e.preventDefault();
         prevPasswordCheck ? prevPasswordEdit() : newPasswordEdit();
-    }, [prevPassword, newPassword, state, passwordIsChecked])
+    }, [prevPasswordCheck, prevPassword, newPassword, state, passwordIsChecked, prevPasswordMatched])
 
 
     // 기존 비번 바꾸기
     const prevPasswordEdit = _debounce(async() => {
         try {   
-            if(!prevPassword || !newPassword || !state || !passwordIsChecked) throw new Error('정보 확인해주세요');
-            dispatch({ type: "LOADING", loadingMessage: "비번 변경중.." })
+            if(!prevPassword || !newPassword || !state.user || !passwordIsChecked) throw new Error('정보 확인해주세요');
+            dispatch({ type: "USER_PASSWORD_EDIT_REQUEST" })
+            console.log('view', state.user._id)
             const user = await prevPasswordEditUser({
                 prevPassword, 
                 newPassword, 
                 newPasswordCheck,
-                _id: state.user._id
+                _id: state.user?._id
             });
             if(statusCode(user.status, 2)) { // 성공시
                 setPrevPassword('')
                 setNewPassword('')
                 setNewPasswordCheck('')
+                alert('비밀번호가 변경 되었습니다. 다시 로그인해주세요.')
+                logoutUser()
+                navigate('/login')
                 return;
             }
         } catch(err) {
@@ -72,7 +76,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     const newPasswordEdit = _debounce(async() => {
         try {   
             if(!userId && !newPassword && !state && !passwordIsChecked) return console.error('정보 확인해주세요');
-            dispatch({ type: "LOADING", loadingMessage: "비번 변경중.." })
+            // dispatch({ type: "USER_PASSWORD_EDIT_REQUEST" })
             const user = await findPasswordEditUser({
                 newPassword, 
                 newPasswordCheck,
@@ -96,7 +100,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     useEffect(() => {
         passwordChecked(newPassword) === true ? setPasswordProtected(true) : setPasswordProtected(false);
         prevPassword && prevPassword === newPassword ? setPrevPasswordMatched(true) : setPrevPasswordMatched(false);
-    }, [newPassword])
+    }, [prevPassword, newPassword])
 
 
     useEffect(() => {
@@ -114,7 +118,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                 <strong>새 비밀번호 설정</strong>
             </h3>
             <SuccessMsg className={"success_type align_l gap_20"}>
-                아이디는 <i className='check_txt'>{state.user.id ? state.user.id : userId}</i> 입니다.
+                아이디는 <i className='check_txt'>{state.user?.id }</i> 입니다.
             </SuccessMsg>
              <form onSubmit={handlePasswordEditSubmit}>
                 {prevPasswordCheck && (
@@ -162,7 +166,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                         )} */}
                         {/* <div className='align_c gapt_30'>
                             <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                                {state.passwordEditErrorMessage &&  <p>{state.passwordEditErrorMessage}</p>}
+                                {state.changeUserPasswordError &&  <p>{state.changeUserPasswordError}</p>}
                             </ErrorMsg>
                         </div> */}
                     </div>
@@ -208,10 +212,13 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                
             </form>
             <div className='align_c gapt_30'>
-                <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                    {state.passwordEditErrorMessage &&  <p>{state.passwordEditErrorMessage}</p>}
-                </ErrorMsg>
+                {state.changeUserPasswordError && (
+                    <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                        <p>{state.changeUserPasswordError}</p>
+                    </ErrorMsg>
+                )}
             </div>
+            {state.changeUserPasswordLoading && <Spinners full={false} />}
         </div>
     )
 }
