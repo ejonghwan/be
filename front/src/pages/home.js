@@ -8,13 +8,13 @@ import './home.css';
 const Home = ({ page }) => {
 
     const { state } = useContext(UserContext);
-    // console.log('home?', state.user.projects)
+    console.log('home?', state.user?.projects)
     
     return (
         <div className='b_conts'>
             <h2><span className='blind'>{page}</span></h2>
             <ul className='project_wrap'>
-                {state.user.projects?.map(project => (
+                {state.user?.projects?.map(project => (
                     <li key={project._id}><Project data={project} /></li>
                 ))}
                 <li><CreateProject /></li>

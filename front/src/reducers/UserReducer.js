@@ -1,12 +1,6 @@
 export const UserIntialState = {
     isLogged: false,
-    successMessage: '',
     authErrorMessage: '',
-    loginErrorMessage: '',
-    signupErrorMessage: '',
-    findIdErrorMessage: '',
-    findPasswordErrorMessage: '',
-    infoEditErrorMessage: '',
     mailAuthErrorMessage: '',
     imageErrorMessage: '',
     globalErrorMessage: '',
@@ -56,13 +50,17 @@ export const UserIntialState = {
     changeUserPasswordDone: false,
     changeUserPasswordError: null,
 
-
-
-
-
     findIdLoading: false,
     findIdDone: false,
     findIdError: null,
+
+    questionFindIdLoading: false,
+    questionFindIdDone: false,
+    questionFindIdError: null,
+
+    editUserProfileImageLoading: false,
+    editUserProfileImageDone: false,
+    editUserProfileImageError: null,
 
     user: {},
 }
@@ -78,9 +76,6 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     authErrorMessage: '',
-                    findIdErrorMessage: '',
-                    findPasswordErrorMessage: '',
-                    passwordEditErrorMessage: '',
                     mailAuthErrorMessage: '',
                     imageErrorMessage: '',
                     globalErrorMessage: '',
@@ -264,7 +259,6 @@ const UserReducer = (state = UserIntialState, action) => {
                 }
 
 
-                // 테스트 중
             case "NON_USER_MAIL_AUTH_REQUEST": 
                 return {
                     ...state,
@@ -286,10 +280,6 @@ const UserReducer = (state = UserIntialState, action) => {
                     authNonUserMailLoading: false,
                     authNonUserMailError: action.data
                 }
-
-
-
-
 
             case "AUTH_NUMBER_REQUEST": 
                 return {
@@ -360,7 +350,6 @@ const UserReducer = (state = UserIntialState, action) => {
                 }
 
 
-
             case "USER_FIND_ID_REQUEST": 
                 return {
                     ...state,
@@ -383,39 +372,61 @@ const UserReducer = (state = UserIntialState, action) => {
                     findIdError: action.data
                 }
 
-
-
-            
-
-
-
-
-
-
-
+            case "USER_QUESTION_FIND_ID_REQUEST": 
+                return {
+                    ...state,
+                    questionFindIdLoading: true,
+                }
                 
 
+            case "USER_QUESTION_FIND_ID_SUCCESS": 
+                return {
+                    ...state,
+                    questionFindIdLoading: false,
+                    questionFindIdError: '',
+                    questionFindIdDone: true,
+                }
+
+            case "USER_QUESTION_FIND_ID_FAILUE" : 
+                return {
+                    ...state,
+                    questionFindIdLoading: false,
+                    questionFindIdError: action.data
+                }
+
             
-
-
-
+            // no
+            case "USER_PROFILEIMAGE_EDIT_REQUEST": 
+                return {
+                    ...state,
+                    editUserProfileImageLoading: true, 
+                }
 
             case "USER_PROFILEIMAGE_EDIT_SUCCESS": 
                 return {
                     ...state,
-                    loading: false, 
+                    editUserProfileImageLoading: false, 
+                    editUserProfileImageDone: true,
+                    editUserProfileImageError: '',
                     user: {
                         ...state.user,
                         profileImage: action.data
                     }
                 }
 
-            case "IMAGE_FAILUE": 
+            case "USER_PROFILEIMAGE_EDIT_FAILUE": 
                 return {
                     ...state,
-                    loading: false, 
-                    imageErrorMessage: action.data,
+                    editUserProfileImageLoading: false, 
+                    editUserProfileImageError: action.data
                 }
+
+            // case "IMAGE_FAILUE": 
+            //     return {
+            //         ...state,
+            //         loading: false, 
+            //         imageErrorMessage: action.data,
+            //     }
 
 
             case "PROJECT_LIKE_SUCCESS": 

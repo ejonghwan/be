@@ -369,13 +369,12 @@ const UserRequest = () => {
             }
 
             const findId = await axios.post(`${host}/api/users/find/id/question`, data, config);
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
+            dispatch({ type: "USER_QUESTION_FIND_ID_SUCCESS"});
             return findId;
 
         } catch(err) {
             console.error(err)
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
-            dispatch({ type: "AUTH_NUMBER_FAILUE", data: err.response.data.message })
+            dispatch({ type: "USER_QUESTION_FIND_ID_FAILUE", data: err.response.data.message })
             return err.response
         }
     }

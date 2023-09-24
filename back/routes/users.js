@@ -312,7 +312,7 @@ router.post('/find/id', async (req, res) => {
 //@ path    POST /api/users/find/id/question
 //@ doc     질답으로 아이디 찾기
 //@ access  public
-router.post('/find/id/question', auth, async (req, res) => {
+router.post('/find/id/question', async (req, res) => {
     try {
         const { name, email, questionType, result } = req.body;
         if(!name) return res.status(400).json({ message: '이름이 없습니다.' });
@@ -325,7 +325,7 @@ router.post('/find/id/question', auth, async (req, res) => {
         
         if(user.name !== name) return  res.status(500).json({ message: '이름이 등록된 정보와 다릅니다' });
         if(user.email !== email) return  res.status(500).json({ message: '이메일이 등록된 정보와 다릅니다' });
-        if(user.question.questionType !== questionType) return  res.status(500).json({ message: '질문이 등록된 정보와 다릅니다' });
+        if(user.question.questionType !== questionType) return  res.status(500).json({ message: '질문과 답이 등록된 정보와 다릅니다' });
         if(user.question.result !== result) return  res.status(500).json({ message: '질문의 답이 등록된 정보와 다릅니다' });
 
         res.status(200).json({id: user.id})

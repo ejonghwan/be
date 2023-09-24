@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { useInput } from '../common/hooks/index.js';
 import UserRequest from '../../reducers/UserRequest.js';
 import _debounce from 'lodash.debounce';
@@ -11,13 +11,16 @@ import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import SuccessMsg from '../common/successMsg/SuccessMsg.js';
 import { HiOutlineAtSymbol } from "react-icons/hi2";
+import { PiRobotDuotone } from "react-icons/pi";
 import './FindId.css';
+import Spinners from '../common/spinners/Spinners.js';
+import CompleteMsg from '../common/complete/CompleteMsg.js';
 
 
 
 const FindId = () => {
     const { findUserId, nonLoginMemberAuthNumberRequest } = UserRequest();
-    const { state } = useContext(UserContext);
+    const { state, dispatch } = useContext(UserContext);
 
     const [authNumber, handleAuthNumber, setAutnNumber] = useInput('');
     const [authToggle, setAuthToggle] = useState(false);
@@ -34,6 +37,7 @@ const FindId = () => {
     }
     const authSubmit = _debounce(async() => {
         try {
+            dispatch({ type: "NON_USER_MAIL_AUTH_REQUEST" })
             const number = await nonLoginMemberAuthNumberRequest({ name, email }); 
             if(statusCode(number.status, 2)) return setAuthToggle(true) //성공 시 
         } catch(err) {
@@ -50,6 +54,8 @@ const FindId = () => {
 
     const findIdSubmit = _debounce(async() => {
         try {
+
+            dispatch({ type: "USER_FIND_ID_REQUEST" })
             const findId = await findUserId({ authNumber }); 
             // 여기선 쿠키 2개 보냄
             
@@ -76,52 +82,57 @@ const FindId = () => {
 
     return (
         <div className='form_wrap'>
-            <h3 className='form_title gap_20'>
-                <HiOutlineAtSymbol />
-                <strong>이메일 인증으로 찾기</strong>
-            </h3>
-            <form onSubmit={handleAuthNumberSubmit}>
-                <div className='gap_20'>
-                    <Label htmlFor="userName" content="이름" className={"label_type1"} />
-                    <Input 
-                        id="userName" 
-                        type="text" 
-                        required={true} 
-                        placeholder="이름을 입력해주세요." 
-                        className={"input_type1"} 
-                        name="userName" 
-                        value={name} 
-                        evt="onChange" 
-                        onChange={handleName} 
-                        disabled={authToggle && true}
-                    />
-                </div>
-                <div className='gap_20'>
-                    <Label htmlFor="userEmail" content="이메일" className={"label_type1"} />
-                    <Input 
-                        id="userEmail" 
-                        type="email" 
-                        required={true} 
-                        placeholder="인증할 이메일을 입력해주세요." 
-                        className={"input_type1"} 
-                        name="userEmail" 
-                        value={email} 
-                        evt="onChange" 
-                        onChange={handleEmail} 
-                        disabled={authToggle && true}
-                    />
-                </div>
-               
-                <div className='align_c gapt_30'>
-                    <Button className={'button_type2'} disabled={authToggle && true}>
-                        인증번호 보내기
-                    </Button>
-                    <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                        {state.mailAuthErrorMessage && <p> {state.mailAuthErrorMessage }</p>}
-                    </ErrorMsg>
-                </div>
-            </form>
-
+            {!state.findIdDone && (
+                <Fragment>
+                     <h3 className='form_title gap_20'>
+                        <HiOutlineAtSymbol />
+                        <strong>이메일 인증으로 찾기</strong>
+                    </h3>
+                    <form onSubmit={handleAuthNumberSubmit}>
+                        <div className='gap_20'>
+                            <Label htmlFor="userName" content="이름" className={"label_type1"} />
+                            <Input 
+                                id="userName" 
+                                type="text" 
+                                required={true} 
+                                placeholder="이름을 입력해주세요." 
+                                className={"input_type1"} 
+                                name="userName" 
+                                value={name} 
+                                evt="onChange" 
+                                onChange={handleName} 
+                                disabled={authToggle && true}
+                            />
+                        </div>
+                        <div className='gap_20'>
+                            <Label htmlFor="userEmail" content="이메일" className={"label_type1"} />
+                            <Input 
+                                id="userEmail" 
+                                type="email" 
+                                required={true} 
+                                placeholder="인증할 이메일을 입력해주세요." 
+                                className={"input_type1"} 
+                                name="userEmail" 
+                                value={email} 
+                                evt="onChange" 
+                                onChange={handleEmail} 
+                                disabled={authToggle && true}
+                            />
+                        </div>
+                    
+                    {state.authNonUserMailLoading ? (<Spinners />) : (
+                        <div className='align_c gapt_30'>
+                            <Button className={'button_type2'} disabled={authToggle && true}>
+                                인증번호 보내기
+                            </Button>
+                            <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                                {state.mailAuthErrorMessage && <p> {state.mailAuthErrorMessage }</p>}
+                            </ErrorMsg>
+                        </div>
+                    )}
+                    </form>
+                </Fragment>
+            )}
             {authToggle && (
                 <form onSubmit={handleFindIdSubmit}>
                   <div className='gap_20'>
@@ -148,23 +159,27 @@ const FindId = () => {
                         callback={() => setAuthTimeout(true)}
                     />
                 </div>
-                 <div className='align_c gapt_30'>
-                    <Button className={'button_type2'} disabled={authTimeout}>
-                        아이디 찾기
-                    </Button>
-                    <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                        {state.authNumberErrorMessage && <p> {state.authNumberErrorMessage }</p>}
-                    </ErrorMsg>
-                 </div>
-               
+                {state.findIdLoading ? (<Spinners />) : (
+                     <div className='align_c gapt_30'>
+                        <Button className={'button_type2'} disabled={authTimeout}>
+                            아이디 찾기
+                        </Button>
+                        {state.findIdError && (
+                            <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                                <p>{state.findIdError }</p>
+                            </ErrorMsg>
+                        )}
+                    </div>
+                )};
              </form>
             )}
             
             {/* 성공시 */}
-            {resMsg.id && (
-                <SuccessMsg className={"success_type"}>
-                    아이디는 <i className='check_txt'>{resMsg.id}</i> 입니다.
-                </SuccessMsg>
+            {state.findIdDone && resMsg.id && (
+                <CompleteMsg
+                    icon={<PiRobotDuotone />} 
+                    title={`아이디는 ${resMsg.id} 입니다.`}
+                />
             )}
         </div>
     )

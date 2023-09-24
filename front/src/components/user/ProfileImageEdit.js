@@ -22,7 +22,7 @@ const ProfileImageEdit = () => {
             {profileEdit ? (
                 <div className='profile_wrap'>
                     <div className='profile_img_wrap'>
-                        {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage.key}`} className="profileImage" alt="내 프로필 이미지" />} 
+                        {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user?.profileImage.key}`} className="profileImage" alt="내 프로필 이미지" />} 
                     </div>
                     <div className='profile_btn'>
                         <Button className={'button_type4'} onClick={handleProfileImageEdit} >
@@ -35,7 +35,7 @@ const ProfileImageEdit = () => {
             ) : (
                 <div className='profile_wrap'>
                     <div className='profile_img_wrap'>
-                        {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage.key}`} className="profileImage" alt="내 프로필 이미지" />} 
+                        {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user?.profileImage.key}`} className="profileImage" alt="내 프로필 이미지" />} 
                     </div>
                    <div className='profile_btn'>
                         <Button className={'button_type4'} onClick={handleProfileImageEdit} >

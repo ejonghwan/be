@@ -20,13 +20,13 @@ const WriteEdit = ({ editWriteRef, writes }) => {
     const { imageUpload, imageDelete } = useImageRequest();
     const { createWrite, editWrite } = WriteRequest();
 
-    const [imageData, setImageData] = useState({})
+    const [imageData, setImageData] = useState({});
 
     const [writeSubmitData, setWriteSubmitData] = useState({
         writeId: writes._id,
         title: writes.title,
         content: writes.content,
-        prevImageFulename:  writes.writeImages ?  writes.writeImages[0].key : null,
+        prevImageFulename: writes.writeImages.length ? writes.writeImages[0].key : null,
     });
 
 
@@ -39,7 +39,7 @@ const WriteEdit = ({ editWriteRef, writes }) => {
         try {
             if(!window.confirm('정말 수정하시겠습니까?')) return;
             const res = await editWrite(writeSubmitData) // 글 보내기
-            console.log(res)
+            
             if( imageData.file ) { 
                 await imageUpload({ ...imageData, _id: res._id }); 
                 await imageDelete({ fileName: writes.writeImages[0].key });
@@ -51,9 +51,9 @@ const WriteEdit = ({ editWriteRef, writes }) => {
     }, 1000)
 
 
-    useEffect(() => {
-        console.log(writeSubmitData)
-    }, [writeSubmitData])
+    // useEffect(() => {
+    //     console.log(writeSubmitData)
+    // }, [writeSubmitData])
 
     return (
         <div>
