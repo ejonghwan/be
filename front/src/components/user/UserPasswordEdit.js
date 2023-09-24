@@ -35,16 +35,15 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
         newPassword === newPasswordCheck ? setPasswordIsChecked(true) : setPasswordIsChecked(false);
         if(prevPassword && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected ) setSubmitActive(true);
         if(!prevPasswordCheck && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected) setSubmitActive(true);
-        console.log('prevPasswordMatched????', prevPasswordMatched)
-        if(prevPasswordMatched) setSubmitActive(true);
-    }, [prevPasswordCheck, newPasswordCheck, prevPassword, newPassword, newPasswordCheck, passwordIsChecked, passwordProtected, prevPasswordMatched]);
+        if(prevPassword === newPassword) setSubmitActive(false);
+    }, [prevPasswordCheck, newPasswordCheck, prevPassword, newPassword, newPasswordCheck, passwordIsChecked, passwordProtected]);
 
 
     // 요청
     const handlePasswordEditSubmit = useCallback(async e => {
         e.preventDefault();
         prevPasswordCheck ? prevPasswordEdit() : newPasswordEdit();
-    }, [prevPasswordCheck, prevPassword, newPassword, state, passwordIsChecked, prevPasswordMatched])
+    }, [prevPasswordCheck, prevPassword, newPassword, state, passwordIsChecked])
 
 
     // 기존 비번 바꾸기
@@ -120,7 +119,7 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                 <strong>새 비밀번호 설정</strong>
             </h3>
             <SuccessMsg className={"success_type align_l gap_20"}>
-                아이디는 <i className='check_txt'>{state.user?.id }</i> 입니다.
+                아이디는 <i className='check_txt'>{state.user?.id || userId }</i> 입니다.
             </SuccessMsg>
              <form onSubmit={handlePasswordEditSubmit}>
                 {prevPasswordCheck && (

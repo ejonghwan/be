@@ -182,7 +182,7 @@ const UserRequest = () => {
         }
     }
    
-    // 회원인사람 인증번호 보내기 //
+    // 회원 + 로그인 인사람 인증번호 보내기 (회원이 로그인 한 상태에서 인증할 때)
      const memberAuthNumberRequest = async data => {
         try {
             // const accToken = localStorage.getItem('X-access-token');
@@ -208,7 +208,7 @@ const UserRequest = () => {
     }
    
 
-    // 비회원+비로그인 인증번호 보내기 
+    // 비회원 + 비로그인 인증번호 보내기  (회원가입)
      const nonMemberAuthNumberRequest = async data => {
         try {
             const { email, name } = data;
@@ -230,7 +230,7 @@ const UserRequest = () => {
     }
  
 
-    // 회원+비로그인 인증번호 보내기 
+    // 회원 + 비로그인 인증번호 보내기  (회원인데 로그인 안하고 정보 찾기)
      const nonLoginMemberAuthNumberRequest = async data => {
         try {
             const { email, name } = data;
@@ -242,12 +242,12 @@ const UserRequest = () => {
                 withCredentials: true // 쿠키 cors 통신 설정
             }
             const res = await axios.post(`${host}/api/auth/nonLoginMember/number`, data, config);
-            dispatch({ type: "AUTH_NUMBER_SUCCESS" })
+            dispatch({ type: "NON_USER_MAIL_AUTH_SUCCESS" })
             return res;
 
         } catch(err) {
             console.error('user request ', err);
-            dispatch({ type: "USER_MAIL_AUTH_FAILUE", data: err.response.data.message });
+            dispatch({ type: "NON_USER_MAIL_AUTH_FAILUE", data: err.response.data.message });
             return err.response;
         }
     }
@@ -343,12 +343,12 @@ const UserRequest = () => {
             }
 
             const findId = await axios.post(`${host}/api/users/find/id`, data, config);
-            dispatch({ type: "ERROR_LOADING_CLEAR"});
+            dispatch({ type: "USER_FIND_ID_SUCCESS"});
             return findId;
 
         } catch(err) {
             console.error(err)
-            dispatch({ type: "AUTH_NUMBER_FAILUE", data: err.response.data.message })
+            dispatch({ type: "USER_FIND_ID_FAILUE", data: err.response.data.message })
             return err.response
         }
     }

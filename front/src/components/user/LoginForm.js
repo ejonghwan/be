@@ -48,42 +48,42 @@ const LoginForm = () => {
 
     return (
         <div className="form_wrap">
-            {state.loginUserLoading ? (<Spinners />) : (
-                <form onSubmit={handleSubmit}>
-                    <div className='gap_20'>
-                        <Label htmlFor="userId" content="아이디" className={"label_type1"}/>
-                        <Input  
-                            id="userId" 
-                            type="text" 
-                            required={true} 
-                            placeholder="아이디를 입력해주세요." 
-                            className={"input_type1"}
-                            name="userId" 
-                            value={userId} 
-                            evt="onChange" 
-                            onChange={handleUserId} 
-                        />
-                    </div>
-                    <div className='gap_20'>
-                        <Label htmlFor="userPassword" content="비밀번호" className={"label_type1"}/>
-                        <Input  
-                            id="userPassword" 
-                            type="password" 
-                            required={true} 
-                            placeholder="비밀번호를 입력해주세요." 
-                            className={"input_type1"}
-                            name="userPassword" 
-                            value={userPassword} 
-                            evt="onChange" 
-                            onChange={handlePassword} 
-                        />
-                    </div>
+            <form onSubmit={handleSubmit}>
+                <div className='gap_20'>
+                    <Label htmlFor="userId" content="아이디" className={"label_type1"}/>
+                    <Input  
+                        id="userId" 
+                        type="text" 
+                        required={true} 
+                        placeholder="아이디를 입력해주세요." 
+                        className={"input_type1"}
+                        name="userId" 
+                        value={userId} 
+                        evt="onChange" 
+                        onChange={handleUserId} 
+                    />
+                </div>
+                <div className='gap_20'>
+                    <Label htmlFor="userPassword" content="비밀번호" className={"label_type1"}/>
+                    <Input  
+                        id="userPassword" 
+                        type="password" 
+                        required={true} 
+                        placeholder="비밀번호를 입력해주세요." 
+                        className={"input_type1"}
+                        name="userPassword" 
+                        value={userPassword} 
+                        evt="onChange" 
+                        onChange={handlePassword} 
+                    />
+                </div>
+                {state.loginUserLoading ? (<Spinners />) : (
                     <div className='align_c gapt_40'>
                         <Button className={'button_type2'}>로그인</Button>
                     </div>
-                    <ErrorMsg className={'error_type1 align_c gapt_30'}>{state.loginUserError}</ErrorMsg>
-                </form>
-            )}
+                )}
+                <ErrorMsg className={'error_type1 align_c gapt_30'}>{state.loginUserError}</ErrorMsg>
+            </form>
         </div>
     );
 };

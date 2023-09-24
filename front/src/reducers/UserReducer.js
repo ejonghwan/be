@@ -7,7 +7,6 @@ export const UserIntialState = {
     findIdErrorMessage: '',
     findPasswordErrorMessage: '',
     infoEditErrorMessage: '',
-    passwordEditErrorMessage: '',
     mailAuthErrorMessage: '',
     imageErrorMessage: '',
     globalErrorMessage: '',
@@ -40,6 +39,10 @@ export const UserIntialState = {
     authUserMailLoading: false,
     authUserMailDone: false,
     authUserMailError: null,
+
+    authNonUserMailLoading: false,
+    authNonUserMailDone: false,
+    authNonUserMailError: null,
     
     authNumberLoading: false,
     authNumberlDone: false,
@@ -52,6 +55,14 @@ export const UserIntialState = {
     changeUserPasswordLoading: false,
     changeUserPasswordDone: false,
     changeUserPasswordError: null,
+
+
+
+
+
+    findIdLoading: false,
+    findIdDone: false,
+    findIdError: null,
 
     user: {},
 }
@@ -253,6 +264,33 @@ const UserReducer = (state = UserIntialState, action) => {
                 }
 
 
+                // 테스트 중
+            case "NON_USER_MAIL_AUTH_REQUEST": 
+                return {
+                    ...state,
+                    authNonUserMailLoading: true,
+                }
+
+            case "NON_USER_MAIL_AUTH_SUCCESS": 
+                return {
+                    ...state,
+                    authNonUserMailLoading: false,
+                    authNonUserMailDone: true,
+                    authNonUserMailError:'',
+                   
+                }
+
+            case "NON_USER_MAIL_AUTH_FAILUE" : 
+                return {
+                    ...state,
+                    authNonUserMailLoading: false,
+                    authNonUserMailError: action.data
+                }
+
+
+
+
+
             case "AUTH_NUMBER_REQUEST": 
                 return {
                     ...state,
@@ -299,21 +337,9 @@ const UserReducer = (state = UserIntialState, action) => {
                 }
             
           
-
-
-
-
-
-
-
-
-
-                
-
             case "USER_PASSWORD_EDIT_REQUEST": 
                 return {
                     ...state,
-                    // passwordEditErrorMessage: '',
                     changeUserPasswordLoading: true,
                 }
 
@@ -321,7 +347,6 @@ const UserReducer = (state = UserIntialState, action) => {
             case "USER_PASSWORD_EDIT_SUCCESS": 
                 return {
                     ...state,
-                    // passwordEditErrorMessage: '',
                     changeUserPasswordLoading: false,
                     changeUserPasswordError: '',
                     changeUserPasswordDone: true,
@@ -331,9 +356,46 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     changeUserPasswordLoading: false,
-                    // passwordEditErrorMessage: action.data,
                     changeUserPasswordError: action.data
                 }
+
+
+
+            case "USER_FIND_ID_REQUEST": 
+                return {
+                    ...state,
+                    findIdLoading: true,
+                }
+                
+
+            case "USER_FIND_ID_SUCCESS": 
+                return {
+                    ...state,
+                    findIdLoading: false,
+                    findIdError: '',
+                    findIdDone: true,
+                }
+
+            case "USER_FIND_ID_FAILUE" : 
+                return {
+                    ...state,
+                    findIdLoading: false,
+                    findIdError: action.data
+                }
+
+
+
+            
+
+
+
+
+
+
+
+                
+
+            
 
 
 
