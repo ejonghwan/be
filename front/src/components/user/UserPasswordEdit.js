@@ -33,9 +33,11 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     // 인증이 모두 true인지
     useEffect(() => {
         newPassword === newPasswordCheck ? setPasswordIsChecked(true) : setPasswordIsChecked(false);
-        if(prevPassword && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected && !prevPasswordMatched) setSubmitActive(true)
-        if(!prevPasswordCheck && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected && !prevPasswordMatched) setSubmitActive(true)
-    }, [prevPasswordCheck, newPasswordCheck, prevPassword, newPassword, newPasswordCheck, passwordIsChecked, passwordProtected, prevPasswordMatched])
+        if(prevPassword && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected ) setSubmitActive(true);
+        if(!prevPasswordCheck && newPassword && newPasswordCheck && passwordIsChecked && passwordProtected) setSubmitActive(true);
+        console.log('prevPasswordMatched????', prevPasswordMatched)
+        if(prevPasswordMatched) setSubmitActive(true);
+    }, [prevPasswordCheck, newPasswordCheck, prevPassword, newPassword, newPasswordCheck, passwordIsChecked, passwordProtected, prevPasswordMatched]);
 
 
     // 요청
