@@ -2,6 +2,15 @@ export const ProjectIntialState = {
     successMessage: '',
     errorMessage: '',
     loading: false,
+
+    createProjectLoading: false,
+    createProjectDone: false,
+    createProjectError: false,
+
+
+
+
+
     createProject: {},
     project: {},
 }
@@ -24,20 +33,40 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
             
+
+
+
+
+
+            case "PROJECT_CREATE_REQUEST": 
+                return {
+                    ...state,
+                    createProjectLoading: true,
+                }
+
             case "PROJECT_CREATE_SUCCESS": 
                 // action  {type: "", data: ...} 
                 return {
                     ...state,
-                    loading: false,
+                    createProjectLoading: false,
+                    createProjectDone: true,
+                    createProjectError: '',
                     project: action.data,
                 }
 
             case "PROJECT_CREATE_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    createProjectLoading: false,
+                    createProjectError: action.data,
                 }
+
+
+
+
+
+
+
 
 
             case "A_PROJECT_LOAD_SUCCESS": 

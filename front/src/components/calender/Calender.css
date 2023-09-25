@@ -52,7 +52,7 @@
 .calendar .body .col {
     cursor: pointer;
     border-top: 1px solid var(--line-color1);
-    margin-right: 10px;
+    /* margin-right: 10px; */
     min-height: 100px;
 }
 
@@ -65,7 +65,20 @@
 .calendar .body .constructor .day,
 .calendar .body .instance .day{
     position: relative;
+    background: #ff4141;
+    color: var(--text-color-white);
+    border-radius: 20px;
 }
+
+.calendar .body .constructor.today .day,
+.calendar .body .instance.today .day{
+    position: relative;
+    background: #ff4141;
+    color: var(--text-color-white);
+    border-radius: 20px;
+}
+
+
 .calendar .body .constructor .day::after,
 .calendar .body .instance .day::after {
     content: '';
@@ -76,18 +89,62 @@
     right: 0;
     /* background-color: red; */
     border-radius: 50%;
-
-
     top: 3px;
     width: 22px;
     height: 22px;
     color: #fff;
-    background: #ff3131 url('../../assets/images/fire.png') no-repeat center/13px 16px;
+    background: url('../../assets/images/fire.png') no-repeat center/13px 16px;
 }
-/* .calendar .body .constructor .day,
-.calendar .body .instance .day{
-   background-color: blanchedalmond;
-}    */
+
+
+/* 형제선택으로 달력체크 */
+
+/* 존재 + 존재한테 */
+.calendar .body .constructor + .constructor .day,
+.calendar .body .constructor + .instance .day,
+.calendar .body .instance + .constructor .day,
+.calendar .body .instance + .instance .day {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* 존재x + 존재한테 */
+.calendar .body .cell + .cell.constructor .day, 
+.calendar .body .cell + .cell.instance .day{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+/* 마지막 존재 + x존재면 마지막 존재에게 */
+.calendar .body .cell + .constructor:has(+ .cell:not(.constructor)) .day,
+.calendar .body .cell + .constructor:has(+ .cell:not(.instance)) .day,
+.calendar .body .cell + .instance:has(+ .cell:not(.constructor)) .day,
+.calendar .body .cell + .instance:has(+ .cell:not(.instance)) .day {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    /* background-color: blue; */
+}
+
+/* 첫번쨰 존재의 다음 존재가 있으면 */
+.calendar .body .row .cell:first-child:has(+ .cell.constructor) .day,
+.calendar .body .row .cell:first-child:has(+ .cell.constructor) .day{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+/* 마지막은 무조건 */
+.calendar .body .row .cell:last-child .day,
+.calendar .body .row .cell:last-child .day{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+
+.calendar .col.selected.constructor > .day,
+.calendar .col.selected.instance > .day {
+    border-top: none;
+    color: var(--text-color-white);
+}
 
 
 
@@ -97,6 +154,14 @@
     padding: 5px 0;
     color: var(--text-color1);
     padding-left: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    margin-bottom: 5px;
+}
+
+.calendar .col > .day_cont {
+    padding-left: 7px;
+    padding-right: 7px;
 }
 
 

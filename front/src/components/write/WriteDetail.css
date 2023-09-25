@@ -28,6 +28,9 @@
 
 .write_wrap .project_link {
     color: var(--point-color);
+}
+
+.write_wrap .project_link:hover {
     text-decoration: underline;
 }
 

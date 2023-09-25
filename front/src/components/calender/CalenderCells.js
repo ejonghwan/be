@@ -32,8 +32,7 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                         className={`col cell ${
                             !isSameMonth(day, monthStart) ? 'disabled' : isSameDay(day, selectedDate)
                                 ? 'selected' : format(currentMonth, 'M') !== format(day, 'M')
-                                ? 'not-valid'
-                                : 'valid'} ${isSameDay(day, new Date()) ? `today` : ``} ${project.constructorUser.days?.map(userDay => isSameDay(day, new Date(userDay.date)) ? `constructor`:``).join(' ')} ${project.instanceUser?.map(user => user.days?.map((userDay, idx) => isSameDay(day, new Date(userDay.date)) ? `instance` : ``).join(' ')).join(' ')} `}
+                                ? 'not-valid' : 'valid'} ${isSameDay(day, new Date()) ? `today` : ``} ${project.constructorUser.days?.map(userDay => isSameDay(day, new Date(userDay.date)) ? `constructor instance`: null).join('')} ${project.instanceUser?.map(user => user.days?.map((userDay, idx) => isSameDay(day, new Date(userDay.date)) ? `instance constructor` : null).join(' ')).join(' ')} `}
                         key={day}
                         // onClick={() => onDateClick(parse(cloneDay))}
                         onClick={() => onDateClick(cloneDay, new Date(cloneDay))}
@@ -43,37 +42,39 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                         <span className={format(currentMonth, 'M') !== format(day, 'M') ? 'day text not-valid' : 'day'}>
                             {formattedDate}
                         </span>
-                        {/* 생성자 */}
-                        {
-                            project.constructorUser.days?.map((userDay, idx) => (
-                                <Fragment key={idx}>
-                                    { userDay.count >= 0 && isSameDay(day, new Date(userDay.date)) && (
-                                        <div className='certified_wrap'>
-                                            <div className='certified_img'>
-                                                <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${project.constructorUser._id.profileImage.key}`} alt="유저 프로파일" />
+                        <div className='day_cont'>
+                            {/* 생성자 */}
+                            {
+                                project.constructorUser.days?.map((userDay, idx) => (
+                                    <Fragment key={idx}>
+                                        { userDay.count >= 0 && isSameDay(day, new Date(userDay.date)) && (
+                                            <div className='certified_wrap'>
+                                                <div className='certified_img'>
+                                                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${project.constructorUser._id.profileImage.key}`} alt="유저 프로파일" />
+                                                </div>
+                                                <span className='certified_name'>{project.constructorUser._id.name}</span>
                                             </div>
-                                            <span className='certified_name'>{project.constructorUser._id.name}</span>
-                                        </div>
-                                    )}
-                                </Fragment>
-                            ))
-                        }
-                        {/* 참여유저 */}
-                        {
-                            project.instanceUser?.map(user => user.days?.map((userDay, idx) => (
-                                <Fragment key={idx}>
-                                    {userDay.count >= 0 && isSameDay(day, new Date(userDay.date)) && (
-                                        <div className='certified_wrap'>
-                                             <div className='certified_img'>
-                                                <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user._id.profileImage.key}`} alt="유저 프로파일" />
+                                        )}
+                                    </Fragment>
+                                ))
+                            }
+                            {/* 참여유저 */}
+                            {
+                                project.instanceUser?.map(user => user.days?.map((userDay, idx) => (
+                                    <Fragment key={idx}>
+                                        {userDay.count >= 0 && isSameDay(day, new Date(userDay.date)) && (
+                                            <div className='certified_wrap'>
+                                                <div className='certified_img'>
+                                                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user._id.profileImage.key}`} alt="유저 프로파일" />
+                                                </div>
+                                                <span className='certified_name'>{user._id.id}</span>
                                             </div>
-                                             <span className='certified_name'>{user._id.id}</span>
-                                        </div>
-                                    )}
-                                </Fragment>
-                            )))
-                        }
-                    </div>,
+                                        )}
+                                    </Fragment>
+                                )))
+                            }
+                        </div>
+                    </div>
                 );
                 day = addDays(day, 1); //day 하루씩 늘림 와일문 조건
             }
