@@ -1,0 +1,7 @@
+.delete_project_wrap {
+    
+}
+.delete_project_wrap .delete_check_text{
+    text-decoration: underline;
+    color: var(--point-color2);
+}

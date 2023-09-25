@@ -82,7 +82,7 @@ const LoginForm = () => {
                         <Button className={'button_type2'}>로그인</Button>
                     </div>
                 )}
-                <ErrorMsg className={'error_type1 align_c gapt_30'}>{state.loginUserError}</ErrorMsg>
+                {state.loginUserError && <ErrorMsg className={'error_type1 align_c gapt_30'}>{state.loginUserError}</ErrorMsg>}
             </form>
         </div>
     );

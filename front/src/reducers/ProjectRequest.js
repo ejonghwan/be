@@ -224,6 +224,30 @@ const ProjectRequest = () => {
         }
     }
 
+    const deleteProject = async data => {
+        try {
+            const { projectId, userId } = data;
+            if(!projectId) throw new Error('is not projectId');
+            if(userId && typeof userId !== 'string') throw new Error('type check instanceUser');
+            
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                data: data,
+                withCredentials: true,
+            };
+
+            const res = await axios.delete(`${host}/api/project`, config);
+            ProjectDispatch({ type: "PROJECT_DELETE_SUCCESS", data: res.data });
+            return res;
+        } catch(err) {
+            console.error(err.response.data);
+            ProjectDispatch({ type: "PROJECT_DELETE_FAILUE", data: err.response.data.message });
+        }
+    }
+
 
     
 
@@ -238,6 +262,7 @@ const ProjectRequest = () => {
         withdrawProject,
         addFriendProject,
         editProject,
+        deleteProject
     }
 }
 

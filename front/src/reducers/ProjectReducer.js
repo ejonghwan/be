@@ -5,8 +5,11 @@ export const ProjectIntialState = {
 
     createProjectLoading: false,
     createProjectDone: false,
-    createProjectError: false,
+    createProjectError: null,
 
+    deleteProjectLoading: false,
+    deleteProjectDone: false,
+    deleteProjectError: null,
 
 
 
@@ -59,6 +62,29 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     ...state,
                     createProjectLoading: false,
                     createProjectError: action.data,
+                }
+
+                
+            case "PROJECT_DELETE_REQUEST": 
+                return {
+                    ...state,
+                    deleteProjectLoading: true,
+                }
+
+            case "PROJECT_DELETE_SUCCESS": 
+                return {
+                    ...state,
+                    deleteProjectLoading: false,
+                    deleteProjectDone: true,
+                    deleteProjectError: '',
+                    project: {}
+                }
+
+            case "PROJECT_DELETE_FAILUE" : 
+                return {
+                    ...state,
+                    deleteProjectLoading: false,
+                    deleteProjectError: action.data,
                 }
 
 

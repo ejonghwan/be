@@ -22,6 +22,7 @@ import ProjectPublic from './ProjectPublic';
 import ViewDate from '../common/date/ViewDate';
 import './LoadProject.css';
 import WriteUpload from '../write/WriteUpload';
+import DeleteProject from './DeleteProject';
 
 
 const LoadProject = ({ projectId }) => {
@@ -33,6 +34,7 @@ const LoadProject = ({ projectId }) => {
     const editRef = useRef(null);
     const inviteRef = useRef(null);
     const projectAuthRef = useRef(null);
+    const projectDeleteRef = useRef(null);
     
     const handleLoadProject = async () => {
         try {
@@ -80,6 +82,7 @@ const LoadProject = ({ projectId }) => {
     const handleEditState = () => editRef.current.popupOpen();
     const handleFriendInvite = () => inviteRef.current.popupOpen();
     const handleAuthWrite = () => projectAuthRef.current.popupOpen();
+    const handleDeleteProject = () => projectDeleteRef.current.popupOpen();
  
 
     const handleAddFriend = async e => {
@@ -268,6 +271,14 @@ const LoadProject = ({ projectId }) => {
                 </div>
             )}
 
+            {state.user?._id === project.constructorUser?._id._id && 
+                <div className='align_c gapt_50'>
+                    <Button className={'button_type5'} onClick={handleDeleteProject}>
+                        이 습관 삭제하기
+                    </Button>
+                </div>
+            }   
+
             {/* 인증글 쓰기 */}
             <Popup
                 className={`popup_type_default write_detail`} 
@@ -307,6 +318,18 @@ const LoadProject = ({ projectId }) => {
                 <div className='add_friend align_c gapt_40'>
                     <Button type={'button'} className={"button_type2"} onClick={handleAddFriend}>초대 보내기</Button>
                 </div>
+            </Popup>
+
+            {/* 삭제 팝업 */}
+            <Popup 
+                className={`popup_type_default`} 
+                isHead={true} 
+                title={`습관 삭제하기`} 
+                closeClick={() => projectDeleteRef.current.popupClose()} 
+                dimd={true}  
+                ref={projectDeleteRef}
+            >
+                <DeleteProject />
             </Popup>
             
         </Fragment>

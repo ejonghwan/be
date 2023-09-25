@@ -19,6 +19,7 @@ import { SearchContext } from '../../context/SearchContext';
 import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
+import Spinners from '../common/spinners/Spinners';
 
 
 const CreateProjectDetail = () => {
@@ -271,15 +272,18 @@ const CreateProjectDetail = () => {
                          <Label htmlFor="private" content="비공개" className={"label_type1 gap_0"} />
                     </div>
                 </div>
-
-                <div className='align_c gapt_30'>
-                    <Button className={'button_type2'} >습관 생성</Button>
-                    {ProjectState.errorMessage && (
-                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                            {ProjectState.errorMessage }
-                        </ErrorMsg>
-                    )}
-                </div>
+                {ProjectState.createProjectLoading ? (<Spinners />) : (
+                    <Fragment>
+                        <div className='align_c gapt_30'>
+                            <Button className={'button_type2'} >습관 생성</Button>
+                            {ProjectState.errorMessage && (
+                                <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                                    {ProjectState.errorMessage }
+                                </ErrorMsg>
+                            )}
+                        </div>
+                    </Fragment>
+                )}
             </form>
         </div>
     );

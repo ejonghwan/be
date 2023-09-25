@@ -369,11 +369,12 @@ router.delete('/', auth, async (req, res) => {
         */
         await Promise.all([
             User.updateMany({ _id: userId }, { $pull: { "projects": project.id } }, { new: true }),
-            Images.deleteMany({ _id: project.projectImages }),
+            // Images.deleteMany({ _id: project.projectImages }),
             User.updateMany({ likeProject: project.id }, { $pull: { likeProject: project._id } }, { new: true }).exec(), //테스트 완료
             User.updateMany({ joinProjects: { _id: project.id } }, { $pull: { "joinProjects": { _id: project._id } } }, { new: true }).exec(), //테스트 완료
             Category.updateMany({ projects: { _id: project._id } }, { $pull: { "projects": project.id } }, { new: true }).exec(), //테스트 완료
             Write.deleteMany({ _id: project.writes })
+            // 글에 저장된 이미지도 삭제해야함
            
         ]);
         await Project.deleteMany({ _id: projectId }),
