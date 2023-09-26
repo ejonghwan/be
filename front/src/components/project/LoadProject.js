@@ -24,6 +24,7 @@ import './LoadProject.css';
 import WriteUpload from '../write/WriteUpload';
 import DeleteProject from './DeleteProject';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
+import Spinners from '../common/spinners/Spinners';
 
 
 const LoadProject = ({ projectId }) => {
@@ -72,7 +73,7 @@ const LoadProject = ({ projectId }) => {
         e.preventDefault();
         try {
             if(window.confirm('정말 탈퇴하시겠습니까?')) {
-                ProjectDispatch({ type: "PROJECT_REQUEST" });
+                ProjectDispatch({ type: "PROJECT_WITHDRAW_REQUEST" });
                 await withdrawProject({ projectId, userId: state.user._id });
             }
         } catch(err) {
@@ -87,17 +88,21 @@ const LoadProject = ({ projectId }) => {
  
 
     const handleAddFriend = async e => {
-        e.preventDefault();
-        
-        let addState = null;
-        if(friendData.length <= 0) return;
-        for(let i = 0; i < friendData.length; i++) {
-            addState = await addFriendProject({ projectId, userId: friendData[i]._id })
-        }
-        if(addState.status === 200) {
-            inviteRef.current.popupClose();
-            alert('친구를 초대했습니다.');
-            setFriendData([]);
+        try {
+            e.preventDefault();
+            let addState = null;
+            if(friendData.length <= 0) return;
+            ProjectDispatch({ type: "PROJECT_ADD_INVITE_REQUEST" })
+            for(let i = 0; i < friendData.length; i++) {
+                addState = await addFriendProject({ projectId, userId: friendData[i]._id })
+            }
+            if(addState.status === 200) {
+                inviteRef.current.popupClose();
+                alert('친구를 초대했습니다.');
+                setFriendData([]);
+            }
+        } catch(err) {
+            console.log(err)
         }
     }
 
@@ -286,7 +291,14 @@ const LoadProject = ({ projectId }) => {
                     {/* 습관에 가입한 유저만 */}
                     {project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0 && (
                         <div className='align_c gapt_30'>
-                            <Button className={'button_type5'} onClick={handleWithdrawProject}>이 습관 탈퇴하기</Button>
+                            {ProjectState.drowProjectLoading ? (<Spinners />) : (
+                                <Button className={'button_type5'} onClick={handleWithdrawProject}>이 습관 탈퇴하기</Button>
+                            )}
+                            {ProjectState.drowProjectError && (
+                                <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                                    {ProjectState.drowProjectError}
+                                </ErrorMsg>
+                            )}
                         </div>
                     )}
 
@@ -335,8 +347,15 @@ const LoadProject = ({ projectId }) => {
                     >
                         <UserSearch setFriendData={setFriendData} />
                         <div className='add_friend align_c gapt_40'>
-                            <Button type={'button'} className={"button_type2"} onClick={handleAddFriend}>초대 보내기</Button>
+                            {ProjectState.addInviteProjectLoading ? (<Spinners />) : (
+                                <Button type={'button'} className={"button_type2"} onClick={handleAddFriend}>초대 보내기</Button>
+                            )}
                         </div>
+                        {ProjectState.addInviteProjectError && (
+                            <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                                {ProjectState.addInviteProjectError}
+                            </ErrorMsg>
+                        )}
                     </Popup>
 
                     {/* 삭제 팝업 */}

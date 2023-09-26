@@ -1,8 +1,4 @@
 export const ProjectIntialState = {
-    successMessage: '',
-    errorMessage: '',
-    loading: false,
-
     createProjectLoading: false,
     createProjectDone: false,
     createProjectError: null,
@@ -27,7 +23,21 @@ export const ProjectIntialState = {
     rejectProjectDone: false,
     rejectProjectError: null,
     
+    drowProjectLoading: false,
+    drowProjectDone: false,
+    drowProjectError: null,
 
+    addInviteProjectLoading: false,
+    addInviteProjectDone: false,
+    addInviteProjectError: null,
+
+    editProjectLoading: false,
+    editProjectDone: false,
+    editProjectError: null,
+
+    createWriteLoading: false,
+    createWriteDone: false,
+    createWriteError: null,
 
     createProject: {},
     project: {},
@@ -36,11 +46,11 @@ export const ProjectIntialState = {
 
 const ProjectReducer = (state = ProjectIntialState, action) => {
     switch(action.type) {
-            case "PROJECT_REQUEST" : 
-                return {
-                    ...state,
-                    loading: true,
-                }
+            // case "PROJECT_REQUEST" : 
+            //     return {
+            //         ...state,
+            //         loading: true,
+            //     }
 
             // case "ERROR_LOADING_CLEAR" : 
             //     return {
@@ -49,13 +59,6 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
             //         successMessage: '',
             //         errorMessage: '',
             //     }
-
-            
-
-
-
-
-
 
 
             case "PROJECT_CREATE_REQUEST": 
@@ -203,34 +206,40 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     rejectProjectError: action.data,
                 }
 
-
-
-
-
-
-
-
-
+            case "PROJECT_WITHDRAW_REQUEST": 
+                return {
+                    ...state,
+                    drowProjectLoading: true,
+                }
 
             case "PROJECT_WITHDRAW_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
+                    drowProjectLoading: false,
+                    drowProjectDone: true,
+                    drowProjectError: '',
                     project: action.data,
                 }
 
             case "PROJECT_WITHDRAW_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    drowProjectLoading: false,
+                    drowProjectError: action.data,
                 }
-                
-            case "PROJECT_ADD_INVITE_SUCCESS": 
-            // console.log('reducer', action.data)
+
+            case "PROJECT_ADD_INVITE_REQUEST": 
                 return {
                     ...state,
-                    loading: false,
+                    addInviteProjectLoading: true,
+                }
+
+            case "PROJECT_ADD_INVITE_SUCCESS": 
+                return {
+                    ...state,
+                    addInviteProjectLoading: false,
+                    addInviteProjectDone: true,
+                    addInviteProjectError: '',
                     project: {
                         ...state.project,
                         joinUser: [...action.data]
@@ -240,16 +249,22 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
             case "PROJECT_ADD_INVITE_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    addInviteProjectLoading: false,
+                    addInviteProjectError: action.data,
                 }
 
-
-            case "PROJECT_EDIT_SUCCESS": 
-            // console.log('reducer', action.data)
+            case "PROJECT_EDIT_REQUEST": 
                 return {
                     ...state,
-                    loading: false,
+                    editProjectLoading: true,
+                }
+
+            case "PROJECT_EDIT_SUCCESS": 
+                return {
+                    ...state,
+                    editProjectLoading: false,
+                    editProjectDone: true,
+                    editProjectError: '',
                     project: {
                         ...state.project,
                         instanceUser: action.data.instanceUser,
@@ -264,14 +279,22 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
             case "PROJECT_EDIT_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    editProjectLoading: false,
+                    editProjectError: action.data,
+                }
+
+            case "WRITE_CREATE_REQUEST": 
+                return {
+                    ...state,
+                    createWriteLoading: true,
                 }
 
             case "WRITE_CREATE_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
+                    createWriteLoading: false,
+                    createWriteDone: true,
+                    createWriteError: '',
                     project: {
                         ...state.project,
                         writes: [...state.project.writes.concat(action.data)]
@@ -281,8 +304,8 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
             case "WRITE_CREATE_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    createWriteLoading: false,
+                    createWriteError: action.data,
                 }
             
 

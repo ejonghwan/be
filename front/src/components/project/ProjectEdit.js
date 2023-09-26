@@ -17,11 +17,13 @@ import ProjectRequest from '../../reducers/ProjectRequest';
 import './ProjectEdit.css';
 import ViewDate from '../common/date/ViewDate';
 import { changeViewDate } from '../../utils/utils';
+import Spinners from '../common/spinners/Spinners';
+import ErrorMsg from '../common/errorMsg/ErrorMsg';
 
 
 const ProjectEdit = ({ editRef }) => {
 
-    const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
+    const { ProjectState, ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
 
     // const [instanceUser, setInstanceUser] = useState([]);
     const [existCategorys, setExistCategorys] = useState([...project.categorys]);
@@ -93,7 +95,7 @@ const ProjectEdit = ({ editRef }) => {
     const handleProjectEdit = async e => {
         try {
             e.preventDefault();
-            ProjectDispatch({ type: "PROJECT_REQUEST" });
+            ProjectDispatch({ type: "PROJECT_EDIT_REQUEST" });
             await editProject(submitData);
             alert('수정 완료!');
             editRef.current.popupClose();
@@ -102,15 +104,9 @@ const ProjectEdit = ({ editRef }) => {
         }
     } 
 
-
     useEffect(() => {
         setProjectImages(project.projectImages);
     }, []);
-
-    useEffect(() => {
-        console.log(submitData)
-       
-    }, [submitData]);
 
 
     return (
@@ -213,8 +209,15 @@ const ProjectEdit = ({ editRef }) => {
 
 
             <div className='pos_button_wrap'>
-                <Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>
+                {ProjectState.editProjectLoading ? (<Spinners />) : (
+                    <Button className={"button_type2"} onClick={handleProjectEdit}>습관 수정</Button>
+                )}
             </div>
+            {ProjectState.editProjectError && (
+                <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                    {ProjectState.editProjectError}
+                </ErrorMsg>
+            )}
 
         </div>
     );
