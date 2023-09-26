@@ -83,6 +83,7 @@
     align-items: center;
     color: red;
     font-size: 1.2rem;
+    margin-right: 5px;
 }
 
 .write_list_like_wrap .hart_ico > svg {
@@ -91,9 +92,21 @@
     margin-right: 2px;
 }
 
+.write_list_like_wrap .comment_ico {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.write_list_like_wrap .comment_ico > svg {
+    line-height: 0;
+    margin-right: 2px;
+}
+
 
 .write_list_createdat {
     font-size: 1.2rem;
+    margin-left: auto;
 }
 
 .write_list_title ,

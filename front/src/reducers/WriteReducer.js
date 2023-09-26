@@ -56,9 +56,14 @@ export const WriteIntialState = {
     myWritesDone: false,
     myWritesError: null,
 
+    myCommentsLoading: false,
+    myCommentsDone: false,
+    myCommentsError: null,
+
     createWrites: {},
     writes: {},
     writeList: [], 
+    commentsList: [], 
 }
 
 
@@ -189,11 +194,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     deleteWriteLoading: false,
                     deleteWriteDone: true,
-                    // writes: {
-                    //     ...state.writes,
-                    //     title: action.data.title,
-                    //     content: action.data.content,
-                    // }
+                    writes: {}
                 };
 
             case "WRITE_DELETE_FAILUE" : 
@@ -529,6 +530,36 @@ const WriteReducer = (state = WriteIntialState, action) => {
             return {
                 ...state,
                 writeList: [],
+            };
+
+
+
+
+        case "MYCOMMENTS_LOAD_REQUEST": 
+            return {
+                ...state,
+                myCommentsLoading: true,
+            };
+
+        case "MYCOMMENTS_LOAD_SUCCESS": 
+            return {
+                ...state,
+                myCommentsLoading: false,
+                myCommentsDone: true,
+                commentsList: state.commentsList.concat(...action.data)
+            };
+
+        case "MYCOMMENTS_LOAD_FAILUE" : 
+            return {
+                ...state,
+                myCommentsLoading: false,
+                myCommentsError: action.data,
+            };
+
+        case "MYCOMMENTS_CLEAR_REQUEST": 
+            return {
+                ...state,
+                commentsList: [],
             };
 
 

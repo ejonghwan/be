@@ -19,6 +19,8 @@ import CreateProject from './project/CreateProject.js';
 import ProjectDetail from './project/ProjectDetail.js';
 import Write from './write/Write.js';
 import MyWritesList from './write/MyWritesList.js';
+import MyComments from './write/MyComments.js';
+
 
 
 
@@ -46,6 +48,8 @@ const RoutesPage = () => {
                 
                 <Route path='/write/detail/:_id' element={!state.loadUserLoading && state.isLogged  ? <Write page={'글 상세보기'} /> : <Protected page={'글 상세보기'} />}></Route> 
                 <Route path='/write/mylist' element={!state.loadUserLoading && state.isLogged  ? <MyWritesList page={'내 글'} /> : <Protected page={'내 글'} />}></Route>
+                <Route path='/comments/mylist' element={!state.loadUserLoading && state.isLogged  ? <MyComments page={'내 댓글'} /> : <Protected page={'내 댓글'} />}></Route>
+
 
                 <Route path='/project:id' element={<Project page={'습관보기'} />}></Route>
                 <Route path='/error' element={<Error page={'에러'}/>}></Route>

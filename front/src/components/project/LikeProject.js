@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback, Fragment, memo } from 'react';
+import { useState, useContext, useEffect, useCallback, Fragment, memo, useRef } from 'react';
 import { PiStarDuotone, PiHeartDuotone } from "react-icons/pi";
 import { UserContext } from '../../context/UserContext';
 import { ProjectContext } from '../../context/ProjectContext';
@@ -14,6 +14,8 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
     const { state, dispatch } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
     const [like, setLike] = useState(null)
+    const likeRef = useRef(false)
+    const unlikeRef = useRef(false)
 
     const handleProjectLike = e => {
         e.preventDefault();
@@ -21,6 +23,8 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
         e.preventDefault();
         likeApi(like)
         setLike(!like)
+        unlikeRef.current = false;
+        likeRef.current = true;
     } 
 
     const handleProjectUnlike = async e => {
@@ -29,13 +33,14 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
         e.preventDefault();
         likeApi(like)
         setLike(!like)
+        likeRef.current = false;
+        unlikeRef.current = true;
     } 
 
 
     // like state는 바로 번경되더라도 실제 요청은 1.5초 후에 클릭되는 상태에 따라 가게 debouce 작업. 
     const likeApi = useCallback(_debounce(async (like) => {
         try {
-            ProjectDispatch({ type: "PROJECT_REQUEST" })
             if(like) {
                 const resUnlike = await projectUnlike({ projectId, userId });
                 if(resUnlike.data) {
@@ -52,24 +57,29 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
         } catch(err) {
             console.log(err)
         }
-    }, 1000), []);
+    }, 1000), [state.user.likeProject]);
 
 
+
+    // useEffect(() => {
+    //     // 렌더링 시작 시 넘어온 likeProject값과 스토어 내정보 likeProject가 같으면 상태변경
+    //     state.user.likeProject.map(project => {
+    //         if(project === projectId) setLike(true)
+    //         if(project !== projectId) setLike(false)
+    //     })
+    // }, []);
 
     useEffect(() => {
-        // 렌더링 시작 시 넘어온 likeProject값과 스토어 내정보 likeProject가 같으면 상태변경
-        state.user.likeProject.map(project => {
-            if(project === projectId) setLike(true)
-            if(project !== projectId) setLike(false)
-        })
-    }, []);
+        // writes.likes?.filter(likeUser => likeUser === state.user._id).length > 0 ? true : false
+        state.user.likeProject?.filter(project => project === projectId).length > 0 ? setLike(true) : setLike(false)
+    }, [state.user.likeProject])
 
     return (
         <Fragment>
             <span className={`project_like_wrap ${className}`}>
                 {like && (
                     <Fragment>
-                        {like && <InfoState text={'좋아요!'} /> }
+                        {likeRef.current && <InfoState text={'좋아요!'} /> }
                         <Button type={'button'} className={`button_type4 project_like ico_hover_type1 like ${like && 'active'}`} onClick={handleProjectUnlike}>
                             <PiHeartDuotone />
                             <span className='blind'>이 습관 즐겨찾기 및 좋아요 취소</span>
@@ -79,7 +89,7 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
 
                 {!like && (
                     <Fragment>
-                        {!like && like !== null && <InfoState text={'좋아요 취소!'} /> }
+                        {unlikeRef.current && <InfoState text={'좋아요 취소!'} /> }
                         <Button type={'button'} className={`button_type4 project_like unlike ico_hover_type1 ${like && 'active'}`} onClick={handleProjectLike}>
                             
                             <PiHeartDuotone />

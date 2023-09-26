@@ -26,6 +26,26 @@ router.get('/', async (req, res) => {
 })
 
 
+//@ path    GET /api/comment/my/:userId/:page
+//@ doc     댓글 가져오기 (내 댓글만)
+//@ access  private
+router.get('/my/:userId/:page', async (req, res) => {
+    try {
+        const { userId, page } = req.params;
+        const p = parseInt(page);
+        const commnets = await Comment.find({"user._id": userId}).populate([{ path: "writeId", select: "_id title project", populate: { path: "project._id", select: "_id title" } }]).sort({ createdAt: -1 }).skip(p * 10).limit(10);;
+
+
+        res.status(200).json(commnets)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+
+})
+
+
+
 //@ path    POST /api/comment
 //@ doc     댓글 생성
 //@ access  private

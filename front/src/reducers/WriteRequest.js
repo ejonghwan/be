@@ -30,7 +30,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            ProjectDispatch({ type: "WRITE_CREATE_FAILUE", data: err.message });
+            ProjectDispatch({ type: "WRITE_CREATE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -49,7 +49,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "WRITE_LOAD_FAILUE", data: err.message });
+            WriteDispatch({ type: "WRITE_LOAD_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -70,7 +70,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "WRITE_LIKE_FAILUE", data: err.message });
+            WriteDispatch({ type: "WRITE_LIKE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -91,7 +91,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "WRITE_UNLIKE_FAILUE", data: err.message });
+            WriteDispatch({ type: "WRITE_UNLIKE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -113,7 +113,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "WRITE_EDIT_FAILUE", data: err.message });
+            WriteDispatch({ type: "WRITE_EDIT_FAILUE", data: err.response.data.message });
         };
     };
     
@@ -138,7 +138,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "WRITE_DELETE_FAILUE", data: err.message });
+            WriteDispatch({ type: "WRITE_DELETE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -162,7 +162,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "COMMENT_CREATE_FAILUE", data: err.message });
+            WriteDispatch({ type: "COMMENT_CREATE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -184,7 +184,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "COMMENT_LIKE_FAILUE", data: err.message });
+            WriteDispatch({ type: "COMMENT_LIKE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -206,7 +206,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "COMMENT_UNLIKE_FAILUE", data: err.message });
+            WriteDispatch({ type: "COMMENT_UNLIKE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -228,7 +228,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "COMMENT_EDIT_FAILUE", data: err.message });
+            WriteDispatch({ type: "COMMENT_EDIT_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -253,7 +253,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "COMMENT_DELETE_FAILUE", data: err.message });
+            WriteDispatch({ type: "COMMENT_DELETE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -277,7 +277,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "RECOMMENT_CREATE_FAILUE", data: err.message });
+            WriteDispatch({ type: "RECOMMENT_CREATE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -301,7 +301,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "RECOMMENT_LIKE_FAILUE", data: err.message });
+            WriteDispatch({ type: "RECOMMENT_LIKE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -324,7 +324,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "RECOMMENT_UNLIKE_FAILUE", data: err.message });
+            WriteDispatch({ type: "RECOMMENT_UNLIKE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -347,7 +347,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "RECOMMENT_EDIT_FAILUE", data: err.message });
+            WriteDispatch({ type: "RECOMMENT_EDIT_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -371,7 +371,7 @@ const WriteRequest = () => {
 
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "RECOMMENT_DELETE_FAILUE", data: err.message });
+            WriteDispatch({ type: "RECOMMENT_DELETE_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -389,10 +389,30 @@ const WriteRequest = () => {
 
             const res = await axios.get(`${host}/api/write/my/${userId}/${page}`, config);
             WriteDispatch({ type: "MYWRITES_LOAD_SUCCESS", data: res.data });
-            console.log(res)
             return res.data;
         } catch(err) {
-            WriteDispatch({ type: "MYWRITES_LOAD_FAILUE", data: err.message });
+            WriteDispatch({ type: "MYWRITES_LOAD_FAILUE", data: err.response.data.message });
+        };
+    };
+
+
+    const loadMyComments = async data => {
+        try {
+            const { userId, page } = data;
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+
+            const res = await axios.get(`${host}/api/comment/my/${userId}/${page}`, config);
+            WriteDispatch({ type: "MYCOMMENTS_LOAD_SUCCESS", data: res.data });
+            return res.data;
+        } catch(err) {
+            WriteDispatch({ type: "MYCOMMENTS_LOAD_FAILUE", data: err.response.data.message });
         };
     };
 
@@ -415,7 +435,8 @@ const WriteRequest = () => {
         unlikeRecomment,
         editRecomment,
         deleteRecomment,
-        loadMyWrites
+        loadMyWrites,
+        loadMyComments
     };
 }
 
