@@ -33,7 +33,7 @@ router.get('/my/:userId/:page', async (req, res) => {
     try {
         const { userId, page } = req.params;
         const p = parseInt(page);
-        const commnets = await Comment.find({"user._id": userId}).populate([{ path: "writeId", select: "_id title project", populate: { path: "project._id", select: "_id title" } }]).sort({ createdAt: -1 }).skip(p * 10).limit(10);;
+        const commnets = await Comment.find({"user._id": userId}).populate([{ path: "writeId", select: "_id title project", populate: { path: "project._id", select: "_id title projectImages" } }]).sort({ createdAt: -1 }).skip(p * 10).limit(10);;
 
 
         res.status(200).json(commnets)

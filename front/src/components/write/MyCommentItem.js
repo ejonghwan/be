@@ -1,17 +1,25 @@
 import { Link } from 'react-router-dom'; 
 import { PiHeartDuotone, PiChatTeardropDotsDuotone } from "react-icons/pi";
 import { changeViewDate } from '../../utils/utils';
+import IconData from '../common/icon/IconData';
 import './WriteListItem.css';
+import Button from '../common/form/Button';
 
 const MyCommentItem = ({ comments = [], isProjectName = false }) => {
 
     // console.log('wir', writes)
 
     return (
-        <ul className='write_list_wrap'>
+        <ul className='comments_list_wrap'>
+            {console.log(comments)}
             {comments?.map(comment => (
                 <li key={comment._id}>
+                    <div>
+                        {IconData[comment.writeId.project._id.projectImages]}
+                        <p>{comment.writeId.project._id.title} 중에서..</p>
+                    </div>
                     <div>{comment.content}</div>
+                    <Button>삭제</Button>
                     {/* <Link to={`/write/detail/${write._id}`} className='write_list_item'>
                         <div className='write_list_user_wrap'>
                             <div className='img_wrap'>

@@ -531,10 +531,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 ...state,
                 writeList: [],
             };
-
-
-
-
+            
         case "MYCOMMENTS_LOAD_REQUEST": 
             return {
                 ...state,
