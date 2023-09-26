@@ -120,7 +120,7 @@ const CreateProjectDetail = () => {
     const handleCreateProjectSubmit = async e => { 
         try {
             e.preventDefault();
-            ProjectDispatch({ type: "PROJECT_REQUEST" });
+            ProjectDispatch({ type: "PROJECT_CREATE_REQUEST" });
             const data = await createProject(submitData);
             if(data) {
                 alert(`${title} 습관이 생성 되었습니다!`)
@@ -275,7 +275,7 @@ const CreateProjectDetail = () => {
                 {ProjectState.createProjectLoading ? (<Spinners />) : (
                     <Fragment>
                         <div className='align_c gapt_30'>
-                            <Button className={'button_type2'} >습관 생성</Button>
+                            <Button className={'button_type2'}>습관 생성</Button>
                             {ProjectState.errorMessage && (
                                 <ErrorMsg className={'error_type1 align_c gapt_30'}>
                                     {ProjectState.errorMessage }

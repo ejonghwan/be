@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, Fragment, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ProjectRequest from '../../reducers/ProjectRequest';
 import { ProjectContext } from '../../context/ProjectContext';
 import { UserContext } from '../../context/UserContext';
@@ -12,20 +13,29 @@ import ErrorMsg from '../common/errorMsg/ErrorMsg';
 
 
 
-const DeleteProject = () => {
+const DeleteProject = ({ projectDeleteRef }) => {
 
+    const navi = useNavigate();
     const { deleteProject } = ProjectRequest();
     const { state } = useContext(UserContext);
     const { ProjectState, ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
     const [ deleteValue, setDeleteValue ] = useState('');
     const [ deleteState, setDeleteState ] = useState(false);
 
-    const handleDeleteProject = e => {
-        ProjectDispatch({ type: "PROJECT_DELETE_REQUEST" });
-        deleteProject({
-            projectId: [project._id],
-            userId: state.user._id
-        });
+    const handleDeleteProject = async () => {
+        try {
+            ProjectDispatch({ type: "PROJECT_DELETE_REQUEST" });
+            await deleteProject({
+                projectId: [project._id],
+                userId: state.user._id
+            });
+
+            alert('습관이 삭제되었습니다');
+            navi('/');
+            projectDeleteRef.current.popupClose();
+        } catch(err) {
+            console.log(err)
+        };
     };
 
     useEffect(() => {

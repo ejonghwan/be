@@ -74,7 +74,7 @@ const ProjectRequest = () => {
 
         } catch(err) {
             console.error(err);
-            ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err.message });
+            ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err.message.data.message });
         }
     }
 
@@ -245,8 +245,8 @@ const ProjectRequest = () => {
         } catch(err) {
             console.error(err.response.data);
             ProjectDispatch({ type: "PROJECT_DELETE_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     

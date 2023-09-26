@@ -11,7 +11,22 @@ export const ProjectIntialState = {
     deleteProjectDone: false,
     deleteProjectError: null,
 
+    aLoadProjectLoading: false,
+    aLoadProjectDone: false,
+    aLoadProjectError: null,
 
+    requestInfriendProjectLoading: false,
+    requestInfriendProjectDone: false,
+    requestInfriendProjectError: null,
+    
+    inviteProjectLoading: false,
+    inviteProjectDone: false,
+    inviteProjectError: null,
+    
+    rejectProjectLoading: false,
+    rejectProjectDone: false,
+    rejectProjectError: null,
+    
 
 
     createProject: {},
@@ -27,15 +42,17 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loading: true,
                 }
 
-            case "ERROR_LOADING_CLEAR" : 
-                return {
-                    ...state,
-                    loading: false,
-                    successMessage: '',
-                    errorMessage: '',
-                }
+            // case "ERROR_LOADING_CLEAR" : 
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         successMessage: '',
+            //         errorMessage: '',
+            //     }
 
             
+
+
 
 
 
@@ -63,7 +80,6 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     createProjectLoading: false,
                     createProjectError: action.data,
                 }
-
                 
             case "PROJECT_DELETE_REQUEST": 
                 return {
@@ -87,87 +103,113 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     deleteProjectError: action.data,
                 }
 
-
-
-
-
-
-
-
+            case "A_PROJECT_LOAD_REQUEST": 
+                return {
+                    ...state,
+                    aLoadProjectLoading: true,
+                }
 
             case "A_PROJECT_LOAD_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
+                    aLoadProjectLoading: false,
+                    aLoadProjectDone: true,
+                    aLoadProjectError: '',
                     project: action.data,
                 }
 
             case "A_PROJECT_LOAD_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    aLoadProjectLoading: false,
+                    aLoadProjectError: action.data,
                 }
-
 
             case "PROJECT_LIKE_INC_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
                     project: {...state.project, likeCount: state.project.likeCount + 1}
                 }
 
             case "PROJECT_LIKE_DEC_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
                     project: {...state.project, likeCount: state.project.likeCount - 1}
                 }
-
+                
+            case "PROJECT_REQUEST_REQUEST": 
+                return {
+                    ...state,
+                    requestInfriendProjectLoading: true,
+                }
             
             case "PROJECT_REQUEST_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
+                    requestInfriendProjectLoading: false,
+                    requestInfriendProjectDone: true,
+                    requestInfriendProjectError: '',
                     project: { ...state.project, joinUser: [ ...action.data ] },
                 }
 
             case "PROJECT_REQUEST_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    requestInfriendProjectLoading: false,
+                    requestInfriendProjectError: action.data
+                }
+            
+            case "PROJECT_INVITE_REQUEST": 
+                return {
+                    ...state,
+                    inviteProjectLoading: true,
                 }
 
-            
             case "PROJECT_INVITE_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
+                    inviteProjectLoading: false,
+                    inviteProjectDone: true,
+                    inviteProjectError: '',
                     project: action.data
                 }
 
             case "PROJECT_INVITE_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    inviteProjectLoading: false,
+                    inviteProjectError: action.data,
                 }
 
+            case "PROJECT_REJECT_REQUEST": 
+                return {
+                    ...state,
+                    rejectProjectLoading: true,
+                }
 
             case "PROJECT_REJECT_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
+                    rejectProjectLoading: false,
+                    rejectProjectDone: true,
+                    rejectProjectError: '',
                     project: {...state.project, joinUser: [...state.project.joinUser.filter(user => user._id._id !== action.data.userId)]},
                 }
 
             case "PROJECT_REJECT_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    errorMessage: action.data,
+                    rejectProjectLoading: false,
+                    rejectProjectError: action.data,
                 }
+
+
+
+
+
+
+
+
 
 
             case "PROJECT_WITHDRAW_SUCCESS": 
