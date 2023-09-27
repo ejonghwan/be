@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { PiHeartDuotone, PiChatTeardropDotsDuotone } from "react-icons/pi";
 import { changeViewDate } from '../../utils/utils';
 import IconData from '../common/icon/IconData';
-import './WriteListItem.css';
 import Button from '../common/form/Button';
+import './MyCommentItem.css';
 
 const MyCommentItem = ({ comments = [], isProjectName = false }) => {
 
@@ -11,9 +11,9 @@ const MyCommentItem = ({ comments = [], isProjectName = false }) => {
 
     return (
         <ul className='comments_list_wrap'>
-            {console.log(comments)}
+            {/* {console.log(comments)} */}
             {comments?.map(comment => (
-                <li key={comment._id}>
+                <li key={comment._id} className='comments_list_item'>
                     <div>
                         {IconData[comment.writeId.project._id.projectImages]}
                         <p>{comment.writeId.project._id.title} 중에서..</p>

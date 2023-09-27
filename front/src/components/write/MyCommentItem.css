@@ -2,6 +2,6 @@
     
 }
 
-.comments_list_wrap {
-    
+.comments_list_wrap .comments_list_item {
+    border: 1px solid red
 }
