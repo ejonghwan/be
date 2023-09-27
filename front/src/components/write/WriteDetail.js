@@ -94,7 +94,7 @@ const WriteDetail = ({ writeId }) => {
                                         </div>
                                         <div className='write_header_ico_wrap'>
                                             <WriteLike writeId={writeId} userId={state.user._id} writeLikeLen={writes.likeCount} />
-                                            <CommentIcon count={writes.commentCount} />
+                                            <CommentIcon count={writes.commentCount + writes.comments.map(comment => comment.recommentCount).reduce((acc, cur) => acc + cur, 0)} />
                                             {writes.user._id?._id === state.user._id && (
                                                 <Fragment>
                                                     <Button className={'button_type3 ico_hover_type2'} onClick={handleWriteEditState} title={'글 수정'}>

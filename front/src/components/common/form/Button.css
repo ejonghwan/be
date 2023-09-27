@@ -272,6 +272,40 @@ button:disabled {
 }
 
 
+.button_delete2 {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    /* background-color: var(--bg-box-color1); */
+    border-radius: 50%;
+    margin-left: 3px;
+}
+
+.button_delete2::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: var(--text-color2);
+    width: 1px;
+    height: 20px;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.button_delete2::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: var(--text-color2);
+    width: 1px;
+    height: 20px;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+
 
 .button_plus {
     padding: 10px;
@@ -305,6 +339,11 @@ button:disabled {
     transform: translate(-50%, -50%) rotate(90deg);
 }
 
+
+
+.button_more {
+    padding: 13px 40px 13px 25px !important;
+}
 
 
 

@@ -370,6 +370,18 @@ form {
     -webkit-box-orient: vertical;
 }
 
+.word_ellip_3 {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    text-align: left;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
 .color_red {
     color: var(--point-color2);
 }
@@ -422,7 +434,7 @@ form {
 
 .arrow_bottom {
     position: relative;
-    padding-right: 15px !important;
+    padding-right: 30px;
 }
 
 .arrow_bottom::before {
@@ -434,7 +446,7 @@ form {
     top: 0px;
     bottom: 0;
     margin: auto;
-    right: 0px;
+    right: 20px;
     background-color: #fff;
     transform: rotate(45deg);
     background-color: var(--arrow-color);
@@ -447,7 +459,7 @@ form {
     height: 1px;
     position: absolute;
     top: 0px;
-    right: -5px;
+    right: 15px;
     bottom: 0;
     margin: auto;
     background-color: var(--arrow-color);

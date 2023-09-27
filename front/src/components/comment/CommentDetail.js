@@ -52,7 +52,7 @@ const CommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId 
         commentMoreRef.current.popupClose();
     };
 
-    const handleEleteComment = async () => {
+    const handleDeleteComment = async () => {
         try {
             if(!window.confirm(`"${comment.content}" 코멘트를 정말 삭제하시겠습니까?`)) return;
             WriteDispatch({ type: "COMMENT_DELETE_REQUEST" })
@@ -148,7 +148,7 @@ const CommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId 
                             <PiPencilSimpleLineDuotone />
                             <span>수정</span>
                         </Button>
-                        <Button className={'button_type3 ico_hover_type1 delete'} onClick={handleEleteComment}>
+                        <Button className={'button_type3 ico_hover_type1 delete'} onClick={handleDeleteComment}>
                             <PiXSquareDuotone />
                             <span>삭제</span>
                         </Button>

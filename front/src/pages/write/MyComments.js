@@ -6,6 +6,7 @@ import WriteRequest from '../../reducers/WriteRequest';
 import Button from '../../components/common/form/Button';
 import NoData from '../../components/common/notData/NoData';
 import { PiFileXDuotone } from "react-icons/pi";
+import Spinners from '../../components/common/spinners/Spinners';
 import './MyComments.css';
 
 
@@ -54,9 +55,13 @@ const MyComments = ({ page }) => {
                 ) : (
                     <Fragment>
                         <MyCommentItem comments={WriteState.commentsList} isProjectName={true} />
-                        {!moreBtnHide && (
+                        {moreBtnHide ? (
+                            <div className='align_c gapt_50 gap_50'>더 이상 정보가 없습니다.</div>
+                        ) : (
                             <div className='align_c gapt_50'>
-                                <Button className={'button_type_2 hover_type1 arrow_bottom'} onClick={handleWritePageup}>더보기</Button>
+                                {WriteState.myCommentsLoading ? (<Spinners />) : (
+                                    <Button className={'button_type_2 hover_type1 arrow_bottom button_more'} onClick={handleWritePageup}>더보기</Button>
+                                )}
                             </div>
                         )}
                     </Fragment>

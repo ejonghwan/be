@@ -4,47 +4,55 @@ import { changeViewDate } from '../../utils/utils';
 import IconData from '../common/icon/IconData';
 import Button from '../common/form/Button';
 import './MyCommentItem.css';
+import { Fragment, useContext } from 'react';
+import { WriteContext } from '../../context/WriteContext';
+import WriteRequest from '../../reducers/WriteRequest';
+import Spinners from '../common/spinners/Spinners';
 
 const MyCommentItem = ({ comments = [], isProjectName = false }) => {
 
-    // console.log('wir', writes)
+    const { deleteMyComment } = WriteRequest();
+    const { WriteState, WriteDispatch } = useContext(WriteContext);
+
+    const handleDeleteComment = async (comment) => {
+        try {
+      
+            WriteDispatch({ type: "MYCOMMENTS_DELETE_REQUEST" })
+            // await deleteMyComment({
+            //     userId: comment.user._id,
+            //     writeId: comment.writeId._id,
+            //     commentId: comment._id
+            // })
+        } catch(err) {
+            console.log(err)
+        }
+    } 
 
     return (
         <ul className='comments_list_wrap'>
-            {/* {console.log(comments)} */}
             {comments?.map(comment => (
                 <li key={comment._id} className='comments_list_item'>
-                    <div>
-                        {IconData[comment.writeId.project._id.projectImages]}
-                        <p>{comment.writeId.project._id.title} 중에서..</p>
-                    </div>
-                    <div>{comment.content}</div>
-                    <Button>삭제</Button>
-                    {/* <Link to={`/write/detail/${write._id}`} className='write_list_item'>
-                        <div className='write_list_user_wrap'>
-                            <div className='img_wrap'>
-                                <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${write.user?._id.profileImage.key}`} alt="유저 프로필 이미지" />
+                    {WriteState.myCommentDeleteLoading ? (<Spinners />) : (
+                        <Fragment>
+                            <div className='project_image'>{IconData[comment.writeId.project._id.projectImages]}</div>
+                            <div>
+                                <div className='comments_list_content word_ellip_3'>{comment.content}</div>
+                                <Link to={`/write/detail/${comment.writeId._id}`} className='comments_list_write'>
+                                    <span className='tit'>{comment.writeId.title}</span> 글에 남긴 댓글
+                                </Link>
+                                <Link to={`/project/detail/${comment.writeId.project._id._id}`} className='comments_list_title'>
+                                    <span className='tit'>{comment.writeId.project._id.title}</span> 중에서...
+                                </Link>
+                                <div className='comments_date_wrap'>
+                                    <p>{changeViewDate(comment.createdAt, 'day')}</p>
+                                    {/* <p>수정일 {changeViewDate(comment.updatedAt, 'day')}</p> */}
+                                </div>
                             </div>
-                            <span className='write_list_id'>{write.user._id.id}</span>
-                        </div>
-                        <div className='write_list_title_wrap'>
-                            {isProjectName && <p className='gap_5'>{write.project?._id.title}</p>}
-                            <strong className='write_list_title word_ellip_1'>{write.title}</strong>
-                            <p className='write_list_conts word_ellip_1'>{write.content}</p>
-                        </div>
-                        <div className='write_list_like_wrap'>
-                            <span className='hart_ico'>
-                                <PiHeartDuotone />
-                                <span className='count'>{write.likeCount}</span>
-                            </span>
-                            <span className='comment_ico'>
-                                <PiChatTeardropDotsDuotone />
-                                <span className='count'>{write.commentCount}</span>
-                            </span>
-                            <span className='write_list_createdat'>{changeViewDate(write.createdAt, 'day')}</span>
-                        </div>
-                        
-                    </Link> */}
+                            <Button className={'button_reset button_delete2'} onClick={() => handleDeleteComment(comment)}>
+                                <span className='blind'>이 댓글 삭제</span>
+                            </Button>
+                        </Fragment>
+                    )}
                 </li>
             ))}
         </ul>

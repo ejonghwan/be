@@ -4,9 +4,6 @@ import { changeViewDate } from '../../utils/utils';
 import './WriteListItem.css';
 
 const WriteListItem = ({ writes, isProjectName = false }) => {
-
-    // console.log('wir', writes)
-
     return (
         <ul className='write_list_wrap'>
             {writes?.map(write => (
@@ -30,7 +27,7 @@ const WriteListItem = ({ writes, isProjectName = false }) => {
                             </span>
                             <span className='comment_ico'>
                                 <PiChatTeardropDotsDuotone />
-                                <span className='count'>{write.commentCount}</span>
+                                <span className='count'>{write.commentCount + write.comments?.map(comment => comment.recommentCount).reduce((acc, cur) => acc + cur, 0)}</span>
                             </span>
                             <span className='write_list_createdat'>{changeViewDate(write.createdAt, 'day')}</span>
                         </div>

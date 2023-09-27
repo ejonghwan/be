@@ -60,6 +60,10 @@ export const WriteIntialState = {
     myCommentsDone: false,
     myCommentsError: null,
 
+    myCommentDeleteLoading: false,
+    myCommentDeleteDone: false,
+    myCommentDeleteError: null,
+
     createWrites: {},
     writes: {},
     writeList: [], 
@@ -219,7 +223,8 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     createCommentDone: true,
                     writes: {
                         ...state.writes,
-                        comments: [action.data, ...state.writes.comments]
+                        comments: [action.data, ...state.writes.comments],
+                        commentCount: state.writes.commentCount + 1
                     }
                 };
 
@@ -323,7 +328,8 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     deleteCommentDone: true,
                     writes: {
                         ...state.writes,
-                        comments: state.writes.comments.filter(comment => comment._id !== action.data.commentId) 
+                        comments: state.writes.comments.filter(comment => comment._id !== action.data.commentId),
+                        commentCount: state.writes.commentCount - 1
                     }
                 };
 
@@ -344,9 +350,9 @@ const WriteReducer = (state = WriteIntialState, action) => {
             case "RECOMMENT_CREATE_SUCCESS": 
                 const idx = state.writes.comments.findIndex(comment => comment._id === action.data.commentId);
                 const selectComment = state.writes.comments[idx];
-                const recomments = [action.data.recomment, ...selectComment.recomments]
+                const recomments = [action.data.recomment, ...selectComment.recomments ]
                 const newComment = [...state.writes.comments]
-                newComment[idx] = { ...selectComment, recomments }
+                newComment[idx] = { ...selectComment, recomments, recommentCount: selectComment.recommentCount + 1}
 
                 return {
                     ...state,
@@ -491,7 +497,9 @@ const WriteReducer = (state = WriteIntialState, action) => {
                         comments: state.writes.comments.map(comment => {
                             if(comment._id === action.data.commentId) {
                                 comment.recomments = comment.recomments.filter(recomment => recomment._id !== action.data.recommentId);
+                                comment.recommentCount -= 1;
                             };
+                            
                             return comment;
                         })
                     }
@@ -559,6 +567,28 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 commentsList: [],
             };
 
+
+        case "MYCOMMENTS_DELETE_REQUEST": 
+            return {
+                ...state,
+                myCommentDeleteLoading: true,
+            };
+
+        case "MYCOMMENTS_DELETE_SUCCESS": 
+            return {
+                ...state,
+                myCommentDeleteLoading: false,
+                myCommentDeleteDone: true,
+                myCommentDeleteError: '',
+                commentsList: state.commentsList.concat(...action.data)
+            };
+
+        case "MYCOMMENTS_DELETE_FAILUE" : 
+            return {
+                ...state,
+                myCommentDeleteLoading: false,
+                myCommentDeleteError: action.data,
+            };
 
 
 
