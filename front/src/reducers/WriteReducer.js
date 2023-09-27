@@ -580,7 +580,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 myCommentDeleteLoading: false,
                 myCommentDeleteDone: true,
                 myCommentDeleteError: '',
-                commentsList: state.commentsList.concat(...action.data)
+                commentsList: state.commentsList.filter(comment => comment._id !== action.data.commentId)
             };
 
         case "MYCOMMENTS_DELETE_FAILUE" : 

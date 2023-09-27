@@ -1,38 +1,47 @@
+import { Fragment, useContext, useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import { PiHeartDuotone, PiChatTeardropDotsDuotone } from "react-icons/pi";
 import { changeViewDate } from '../../utils/utils';
 import IconData from '../common/icon/IconData';
 import Button from '../common/form/Button';
-import './MyCommentItem.css';
-import { Fragment, useContext } from 'react';
 import { WriteContext } from '../../context/WriteContext';
 import WriteRequest from '../../reducers/WriteRequest';
 import Spinners from '../common/spinners/Spinners';
+import './MyCommentItem.css';
+
 
 const MyCommentItem = ({ comments = [], isProjectName = false }) => {
 
     const { deleteMyComment } = WriteRequest();
     const { WriteState, WriteDispatch } = useContext(WriteContext);
+    const [ selectComment, setSelectComment ] = useState();
 
     const handleDeleteComment = async (comment) => {
         try {
-      
+            setSelectComment(comment._id)
             WriteDispatch({ type: "MYCOMMENTS_DELETE_REQUEST" })
-            // await deleteMyComment({
-            //     userId: comment.user._id,
-            //     writeId: comment.writeId._id,
-            //     commentId: comment._id
-            // })
+            await deleteMyComment({
+                userId: comment.user._id,
+                writeId: comment.writeId._id,
+                commentId: comment._id
+            })
         } catch(err) {
             console.log(err)
         }
     } 
 
+   
+
     return (
         <ul className='comments_list_wrap'>
+            { console.log(selectComment)}
             {comments?.map(comment => (
                 <li key={comment._id} className='comments_list_item'>
-                    {WriteState.myCommentDeleteLoading ? (<Spinners />) : (
+                    {WriteState.myCommentDeleteLoading && comment._id === selectComment ? (
+                        <div className='margin_c'>
+                            <Spinners />
+                        </div>
+                    ) : (
                         <Fragment>
                             <div className='project_image'>{IconData[comment.writeId.project._id.projectImages]}</div>
                             <div>
