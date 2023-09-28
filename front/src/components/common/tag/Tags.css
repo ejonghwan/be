@@ -10,12 +10,22 @@
 
 .tag_wrap > li {
     flex: 0 0 auto;
-    border: 1px solid var(--tag-color);
+    font-size: 1.3rem;
+}
+
+.tag_wrap > li > a {
     padding: 6px 10px;
+    display: inline-block;
+    border: 1px solid var(--tag-color);
     border-radius: 10px;
     color: var(--tag-color);
-    font-size: 1.3rem;
+    filter: saturate(80%);
+}
 
+.tag_wrap > li:hover > a {
+    filter: saturate(150%);
+    background-color: var(--tag-color);
+    color: var(--text-color-white);
 }
 
 .tag_wrap > li > span {

@@ -71,7 +71,10 @@ router.post('/login', async (req, res) => {
 
         // 파퓰레이트 하위는 아래처럼 쓰면됨 이거 정리해둬야됨  221109 하다감
         // const user = await User.findOne({ id: id }).populate({ path: "projects", populate: { path: "rank.a" } }).exec();
-        const user = await User.findOne({ id: id }).populate("projects joinProjects._id").exec();
+        const user = await User.findOne({ id: id }).populate([ 
+            {path : "projects", populate: {path: "constructorUser._id", select: "name"} },
+            {path : "joinProjects._id"} 
+        ]).exec();
         if(!user) return res.status(400).json({ message: "유저가 없습니다" })
 
         const match = await bcrypt.compare(password, user.password);

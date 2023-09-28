@@ -12,6 +12,15 @@
     white-space: nowrap;
     color: var(--text-color1);
     /* background-color: var(--bg-box-color1); */
+    /* filter: contrast(85%); */
+    filter: saturate(90%);
+    
+}
+
+[class*=button_type]:hover {
+    /* filter: contrast(100%); */
+    filter: saturate(150%);
+    
 }
 
 .button_reset {

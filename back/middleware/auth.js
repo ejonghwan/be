@@ -16,7 +16,10 @@ export const auth = async (req, res, next) => {
             const match = jwt.verify(accToken, process.env.JWT_KEY, {ignoreExpiration: true}) 
              // decode가 있으면 acc로 인증 
             if(match && match.exp > Date.now().valueOf() / 1000) { 
-                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate("projects joinProjects._id").exec();
+                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate([ 
+                    {path : "projects", populate: {path: "constructorUser._id", select: "name"} },
+                    {path : "joinProjects._id"} 
+                ]).exec();
                 req.user = { accToken, ...user._doc };
                 next();
 
@@ -28,7 +31,10 @@ export const auth = async (req, res, next) => {
                 console.log('auth /  acc 토큰 만료돼서 refresh 토큰 으로 인증하고 다시 발급');
 
                 const refreshTokenDecode = decodeURIComponent(getRefreshToken);
-                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0 }).populate("projects joinProjects._id").exec();
+                const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0 }).populate([ 
+                    {path : "projects", populate: {path: "constructorUser._id", select: "name"} },
+                    {path : "joinProjects._id"} 
+                ]).exec();
 
                 // db에 저장된 리프레시가 만료되었을 경우 => db토큰 새로 교체하고 acc토큰 발급
                 const dbToken = jwt.verify(user.token, process.env.JWT_KEY, {ignoreExpiration: true});

@@ -39,6 +39,10 @@ export const ProjectIntialState = {
     createWriteDone: false,
     createWriteError: null,
 
+    loadMyProjectsLoading: false,
+    loadMyProjectsDone: false,
+    loadMyProjectsError: null,
+
     createProject: {},
     project: {},
 }
@@ -308,7 +312,6 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     createWriteError: action.data,
                 }
             
-
             default: return { state }
     }
 }

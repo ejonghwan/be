@@ -14,7 +14,7 @@ import Error from './error.js';
 import StyleGuide from './guide/styleGuide.js';
 import { UserContext } from './../context/UserContext.js';
 import Protected from './protected/protectedPage.js';
-import Project from './project/Project.js';
+// import Project from './project/Project.js';
 import CreateProject from './project/CreateProject.js';
 import ProjectDetail from './project/ProjectDetail.js';
 import Write from './write/Write.js';
@@ -51,7 +51,7 @@ const RoutesPage = () => {
                 <Route path='/comments/mylist' element={!state.loadUserLoading && state.isLogged  ? <MyComments page={'내 댓글'} /> : <Protected page={'내 댓글'} />}></Route>
 
 
-                <Route path='/project:id' element={<Project page={'습관보기'} />}></Route>
+                {/* <Route path='/project:id' element={<Project page={'습관보기'} />}></Route> */}
                 <Route path='/error' element={<Error page={'에러'}/>}></Route>
                 <Route path='/style/:id' element={<StyleGuide />}></Route>
             </Routes>

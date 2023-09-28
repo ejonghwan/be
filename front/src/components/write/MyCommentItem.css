@@ -18,8 +18,8 @@
 
 .comments_list_wrap .comments_list_item .project_image {
     flex: 0 0 auto;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
@@ -28,8 +28,8 @@
 }
 
 .comments_list_wrap .comments_list_item .project_image > svg {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
 }
 
 

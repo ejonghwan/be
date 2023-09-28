@@ -36,6 +36,7 @@ const CreateProjectDetail = () => {
     const [joinUserValue, setJoinUserValue] = useState(''); // 인풋값
     const [joinUserList, setJoinUserList] = useState([]); //뿌리기 위해 여기서만 사용
     const [isUserSearchResult, setIsUserSearchResult] = useState(false)
+    const [titleVerifi, setTitleverifi ] = useState(false)
     const [submitData, setSubmitData] = useState({ 
         constructorUser: { _id: state.user._id },
         title: '',
@@ -137,6 +138,10 @@ const CreateProjectDetail = () => {
     };
     const { title, content, projectPublic, categorys } = submitData;
 
+    useEffect(() => {
+        console.log(titleVerifi, title.length)
+        title.length < 3 && title.length > 20 ? setTitleverifi(true) : setTitleverifi(false)
+    }, [title])
 
     
     return (
@@ -166,6 +171,7 @@ const CreateProjectDetail = () => {
                         onChange={handleValuesChange} 
                     />
                     <p className='g_sub_txt'>※ 습관 이름은 생성 후 수정이 불가능합니다.</p>
+                    {!titleVerifi && <p className='g_sub_txt'>※ 5~20 자까지 가능합니다.</p>}
                 </div>
                 <div className='gap_30'>
                     <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>
