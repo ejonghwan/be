@@ -485,6 +485,9 @@ form {
     transform: rotate(-45deg);
 }
 
+.h3_title {
+    font-size: 1.8rem;
+}
 
 
 @media screen and (max-width: 960px) {

@@ -1,8 +1,9 @@
 import { Fragment, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext.js';
 // import { Calender } from '../components/calender/Calender.js'
 import ProjectItems from '../components/project/ProjectItems.js';
-import CreateProject from '../components/project/CreateProject.js';
+import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import './home.css';
 
 const Home = ({ page }) => {
@@ -12,16 +13,26 @@ const Home = ({ page }) => {
     
     return (
         <Fragment>
-            <h2><span className='blind'>{page}</span></h2>
+            <h2 className='blind'><span>{page}</span></h2>
+
             <div className='b_conts full bg_gray'>
                 <div className='b_conts'>
+                    <h3 className='h3_title gap_20'>내가 진행중인 습관</h3>
                     <ul className='project_items_wrap'>
                         {state.user?.projects?.map(project => (
                             <li key={project._id} className='project_items'>
                                 <ProjectItems project={project} isRequestUser={true}/>
                             </li>
                         ))}
-                        <li><CreateProject /></li>
+                        <li>
+                            <div className='project_items new'>
+                                <span className='project_image'><PiFolderNotchPlusDuotone /></span>
+                                <Link to={`/createproject`}>
+                                    <span className='project_title arrow_right gapt_30'>새 습관 만들기</span>
+                                </Link>
+                            </div>
+                        
+                        </li>
                     </ul>
                     {/* <Calender /> */}
                     각 플젝마다 잔디밭 넣기

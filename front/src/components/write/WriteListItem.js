@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'; 
-import { PiHeartDuotone, PiChatTeardropDotsDuotone } from "react-icons/pi";
+import { PiHeartDuotone, PiChatTeardropDotsDuotone, PiHandHeartDuotone } from "react-icons/pi";
 import { changeViewDate } from '../../utils/utils';
 import './WriteListItem.css';
 
@@ -22,7 +22,7 @@ const WriteListItem = ({ writes, isProjectName = false }) => {
                         </div>
                         <div className='write_list_like_wrap'>
                             <span className='hart_ico'>
-                                <PiHeartDuotone />
+                                <PiHandHeartDuotone />
                                 <span className='count'>{write.likeCount}</span>
                             </span>
                             <span className='comment_ico'>

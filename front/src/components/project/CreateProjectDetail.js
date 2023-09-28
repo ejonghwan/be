@@ -140,7 +140,7 @@ const CreateProjectDetail = () => {
 
     useEffect(() => {
         console.log(titleVerifi, title.length)
-        title.length < 3 && title.length > 20 ? setTitleverifi(true) : setTitleverifi(false)
+        title.length < 3 || title.length > 20 ? setTitleverifi(false) : setTitleverifi(true)
     }, [title])
 
     
@@ -171,7 +171,7 @@ const CreateProjectDetail = () => {
                         onChange={handleValuesChange} 
                     />
                     <p className='g_sub_txt'>※ 습관 이름은 생성 후 수정이 불가능합니다.</p>
-                    {!titleVerifi && <p className='g_sub_txt'>※ 5~20 자까지 가능합니다.</p>}
+                    {!titleVerifi && <p className='g_sub_txt'>※ 5~20자까지만 가능합니다.</p>}
                 </div>
                 <div className='gap_30'>
                     <Label htmlFor="content" content="습관 내용" className={"label_type1"}/>

@@ -1,9 +1,10 @@
 import { Fragment } from 'react';
 import IconData from '../common/icon/IconData';
 import { changeViewDate } from '../../utils/utils';
-import { PiHandHeartDuotone, PiCrownSimpleDuotone, PiNoteDuotone, PiEyeClosedDuotone, PiUsersThreeDuotone, PiUserCirclePlusDuotone, PiHandEyeDuotone } from "react-icons/pi";
+import { PiHandHeartDuotone, PiCrownDuotone, PiNoteDuotone, PiEyeClosedDuotone, PiUsersThreeDuotone, PiUserCirclePlusDuotone, PiHandEyeDuotone } from "react-icons/pi";
 import './ProjectItems.css'
 import Tags from '../common/tag/Tags';
+import { Link } from 'react-router-dom';
 
 
 
@@ -16,7 +17,7 @@ const ProjectItems = ({ project, isRequestUser = false }) => {
                 <div className='project_image'>{IconData[project?.projectImages]}</div>
 
 
-                <div className=''>
+                <div className='info_inner'>
                     <div className='ico_wrap'>
                         {project?.projectPublic ? 
                             (<span title="공개" className='ico'><PiHandEyeDuotone /></span>) : 
@@ -41,27 +42,29 @@ const ProjectItems = ({ project, isRequestUser = false }) => {
                             <span className='sub'>{project?.joinUser.length}</span>
                         </div>
                     )}
-                     <div className='created_at'>{changeViewDate(project?.createdAt, 'day')}</div>
+                
                 </div>
                 
             </div>
            
 
 
-            <div title="습관장" className='ico_wrap'>
-                <span className='ico'><PiCrownSimpleDuotone /></span>
+            <div title="습관장" className='ico_wrap const_user'>
+                <span className='ico'><PiCrownDuotone /></span>
                 <span className='sub'>{project?.constructorUser._id.name}</span>
                 {/* {project?.constructorUser.rank} */}
             </div>
            
 
-            <strong className='project_title'>{project?.title}</strong>
-            <p className='project_conts'>{project?.content}</p>
-
+            <Link to={`/project/detail/${project._id}`}>
+                <strong className='project_title arrow_right'>{project?.title}</strong>
+            </Link>
+            <p className='project_conts word_ellip_2'>{project?.content}</p>
+            <div className='created_at'>{changeViewDate(project?.createdAt, 'day')}</div>
            
          
             {project.categorys.length > 0 && (
-                <div className='categorys gapt_30'>
+                <div className='categorys gapt_20'>
                     <Tags tags={project.categorys} isLink={true} isNoData={false} />
                 </div>
             )}
