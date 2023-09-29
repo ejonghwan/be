@@ -341,8 +341,9 @@ svg {
     height: auto;
     margin: 0 auto;
     padding: 30px 0;
-
 }
+
+
 
 
 .b_conts.full {
@@ -353,6 +354,9 @@ svg {
     background-color: var(--bg-box-color1);
 }
 
+.pd_0 {
+    padding: 0;
+}
 
 
 

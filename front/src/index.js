@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import ScrollTop from './components/common/scroll/ScrollToTop';
 import { BrowserRouter } from 'react-router-dom';
 import { ImageProvider } from './context/ImageContext';
 import { UserProvider } from './context/UserContext';
@@ -22,24 +23,21 @@ import "swiper/css/navigation";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
-    // <App />
-  // </React.StrictMode>
-
     <BrowserRouter>
-        <UserProvider>
-          <ProjectProvider>
-            <WriteProvider>
-              <ImageProvider>
-                <SearchProvider>
-                      <GlobalProvider>
-                        <App />
-                      </GlobalProvider>
-                </SearchProvider>
-              </ImageProvider>
-            </WriteProvider>
-          </ProjectProvider>
-        </UserProvider>
+      <ScrollTop />
+      <UserProvider>
+        <ProjectProvider>
+          <WriteProvider>
+            <ImageProvider>
+              <SearchProvider>
+                    <GlobalProvider>
+                      <App />
+                    </GlobalProvider>
+              </SearchProvider>
+            </ImageProvider>
+          </WriteProvider>
+        </ProjectProvider>
+      </UserProvider>
     </BrowserRouter>
 );
 

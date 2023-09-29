@@ -43,7 +43,12 @@ export const ProjectIntialState = {
     loadMyProjectsDone: false,
     loadMyProjectsError: null,
 
+    loadMyapplyProjectLoading: false,
+    loadMyapplyProjectDone: false,
+    loadMyapplyProjectError: null,
+
     createProject: {},
+    myapplyProject: [],
     project: {},
 }
 
@@ -310,6 +315,29 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     ...state,
                     createWriteLoading: false,
                     createWriteError: action.data,
+                }
+
+
+            case "PROJECT_MYAPPLY_LOAD_REQUEST": 
+                return {
+                    ...state,
+                    loadMyapplyProjectLoading: true,
+                }
+
+            case "PROJECT_MYAPPLY_LOAD_SUCCESS": 
+                return {
+                    ...state,
+                    loadMyapplyProjectLoading: false,
+                    loadMyapplyProjectDone: true,
+                    loadMyapplyProjectError: '',
+                    myapplyProject: action.data
+                }
+
+            case "PROJECT_MYAPPLY_LOAD_FAILUE" : 
+                return {
+                    ...state,
+                    loadMyapplyProjectLoading: false,
+                    loadMyapplyProjectError: action.data,
                 }
             
             default: return { state }

@@ -64,6 +64,36 @@ router.get('/:projectId', async (req, res) => {
 })
 
 
+//@ path    GET /api/project/myapply/:userId
+//@ doc     로드 프로젝 (내가 가입한 프로젝트)
+//@ access  public
+router.get('/myapply/:userId', async (req, res) => {
+    try {
+        const { projectId, userId } = req.params;
+        const project = await Project.find({ "instanceUser._id": userId }).populate([
+            { path: 'constructorUser._id', select: 'id profileImage email name createdAt' },
+            { path: 'instanceUser._id', select: 'id profileImage email name createdAt' },
+            { path: 'joinUser._id', select: 'id profileImage email name createdAt' },
+            { path: 'categorys._id', select: 'id profileImage email name' },
+            { path: 'likeUser', select: 'id profileImage email name createdAt' },
+            { 
+                path: 'writes', 
+                select: 'user title content likeCount commentCount comments createdAt updatedAt', 
+                populate: [
+                    { path: "user._id", select: 'id name profileImage' }, 
+                    { path:"comments", select: "recommentCount" }
+                ] 
+            } 
+        ]);
+        console.log(project)
+        res.status(200).json(project)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
 
 // 1. 내가 만든 프로젝트  (이건 데이터들 내장 갯수제한 )  
 // 2. 내가 가입한 프로젝트 나눠야겠구나  (이건 데이터들 몇개만 내려주고 더 요청하면 내려줌 갯수제한 없음)

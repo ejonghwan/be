@@ -38,9 +38,9 @@ const Menu = () => {
                 <li><Link to="/changepassword" className='list'><PiKeyDuotone /><span>비밀번호 변경</span></Link></li>
             </ul>
             <ul className='info_menu'>
-                <li><Link to="" className='list'><PiStackDuotone /><span>내 습관</span></Link></li>
-                <li><Link to="" className='list'><PiHeartDuotone /><span>좋아하는 습관</span></Link></li>
-                <li><Link to="" className='list'><PiSignInDuotone /><span>신청한 습관</span></Link></li>
+                <li><Link to="/project/myproject" className='list'><PiStackDuotone /><span>내 습관</span></Link></li>
+                <li><Link to="/project/mylike" className='list'><PiHeartDuotone /><span>좋아하는 습관</span></Link></li>
+                <li><Link to="/project/myapply" className='list'><PiSignInDuotone /><span>신청한 습관</span></Link></li>
             </ul>
             <ul className='info_menu'>
                 <li>

@@ -251,7 +251,28 @@ const ProjectRequest = () => {
     };
 
 
-    
+    const myApplyProject = async data => {
+        try {
+            const { userId } = data;
+            if(userId && typeof userId !== 'string') throw new Error('type check instanceUser');
+            
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            };
+
+            const res = await axios.get(`${host}/api/project/myapply/${userId}`, config);
+            ProjectDispatch({ type: "PROJECT_MYAPPLY_LOAD_SUCCESS", data: res.data });
+            return res;
+        } catch(err) {
+            console.error(err.response.data);
+            ProjectDispatch({ type: "PROJECT_MYAPPLY_LOAD_FAILUE", data: err.response.data.message });
+        };
+    };
+
 
 
     return {
@@ -264,7 +285,8 @@ const ProjectRequest = () => {
         withdrawProject,
         addFriendProject,
         editProject,
-        deleteProject
+        deleteProject,
+        myApplyProject
     }
 }
 
