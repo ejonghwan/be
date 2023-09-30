@@ -7,8 +7,7 @@ import { WriteContext } from '../context/WriteContext.js'
 
 
 
-// const host = process.env.REACT_APP_BACKEND_HOST;
-const host = 'https://port-0-hobbyist-back-euegqv2bln64g6o5.sel5.cloudtype.app'
+const host = process.env.REACT_APP_BACKEND_HOST;
 
 const useImageRequest = () => {
     const { imageState, imageDispatch } = useContext(ImageContext); 
