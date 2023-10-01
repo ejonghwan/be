@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PiChatCircleDotsDuotone, PiAlienDuotone, PiKeyDuotone, PiSunDuotone, PiSignOutDuotone, PiSignInDuotone, PiNoteDuotone, PiHeartDuotone, PiAtDuotone, PiMoonDuotone, PiStackDuotone } from "react-icons/pi";
 import { UserContext } from '../../../context/UserContext';
@@ -21,6 +21,7 @@ const Menu = () => {
         html.setAttribute('data-color', type)
         setThema(!thema)
     }
+
 
 
     return (

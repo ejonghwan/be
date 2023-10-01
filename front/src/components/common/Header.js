@@ -1,18 +1,24 @@
-import { Fragment, useContext } from 'react';
+import { Fragment, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import LoginUserInfo from '../user/LoginUserInfo';
 import { UserContext } from '../../context/UserContext.js';
+import { PiMagnifyingGlassDuotone } from "react-icons/pi";
+import Button from './form/Button';
 import './Header.css';
+import Popup from './popup/Popup';
+import SearchProject from '../project/SearchProject';
 
 const Header = () => {
     const { state, dispatch } = useContext(UserContext);
-
+    const searchProjectRef = useRef(null);
     // 이거 새로고침에도 없어짐;; 브라우저 종료하면 로컬저장소 없애는거 해야됨
     // window.onbeforeunload = function() {
     //   localStorage.removeItem('X-access-token');
     //   return '';
     // };
 
+
+    const handleSearchProject = () => searchProjectRef.current.popupOpen();
 
 
     return (
@@ -23,6 +29,12 @@ const Header = () => {
                     <li><Link to="/"><h1 className='logo'>HOBBYIST.</h1></Link></li>
                     <li><Link to="/projectlist" className='hover_type1'>습관 목록</Link></li>
                     <li><Link to="/project/create" className='hover_type1'>습관 만들기</Link></li>
+                    <li>
+                      <Button className={'button_type4 ico_hover_type1'} onClick={handleSearchProject}>
+                        <PiMagnifyingGlassDuotone />
+                        <span className='blind'>검색</span>
+                      </Button>
+                    </li>
                     {state?.isLogged ? (
                        <Fragment>
                         <li><LoginUserInfo /></li>
@@ -39,6 +51,19 @@ const Header = () => {
             </nav>
             
           </div>
+
+          <Popup 
+              className={`popup_type_default search_project`} 
+              isHead={true} 
+              title={`습관 검색`} 
+              closeClick={() => searchProjectRef.current.popupClose()} 
+              dimd={true}  
+              ref={searchProjectRef}
+          >
+              <SearchProject />
+          </Popup>
+
+          
         </header>
     );
 };

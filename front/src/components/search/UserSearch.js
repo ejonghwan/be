@@ -92,20 +92,23 @@ const UserSearch = ({ setFriendData = [] }) => {
                     <div>친구 검색중...</div>
                 ) : (
                     <ul className='search_result_user'>
-                        {SearchState.userSearch?.filter(user => user.id !== state.user.id).map(((user, idx) => <li key={idx} className='search_result_user_item'>{
-                            <button type='button' 
-                                className='button_reset' 
-                                title={`${user.id}님 초대`} 
-                                onClick={handleAddFriend({ name: user.name, _id: user._id })}
-                            >
-                                <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="유저 프로필 이미지" className='user_img'/>
-                                <strong className='user_name'>{user.name}</strong>
-                                <span className='user_id'>{user.id}</span>
-                                <span className='button_reset button_plus'>
-                                    <span className='blind'>{`친구추가된 목록에서 ${user.name} 없애기`}</span>
-                                </span>
-                            </button>
-                        }</li>))}
+                        {SearchState.userSearch?.filter(user => user.id !== state.user.id).map(((user, idx) => 
+                        <li key={idx} className='search_result_user_item'>
+                            {
+                                <button type='button' 
+                                    className='button_reset' 
+                                    title={`${user.id}님 초대`} 
+                                    onClick={handleAddFriend({ name: user.name, _id: user._id })}
+                                >
+                                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="유저 프로필 이미지" className='user_img'/>
+                                    <strong className='user_name'>{user.name}</strong>
+                                    <span className='user_id'>{user.id}</span>
+                                    <span className='button_reset button_plus'>
+                                        <span className='blind'>{`친구추가된 목록에서 ${user.name} 없애기`}</span>
+                                    </span>
+                                </button>
+                            }
+                        </li>))}
                     </ul>
                 )}
                 {/* 검색 결과가 없는 경우 */}
