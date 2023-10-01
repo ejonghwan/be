@@ -44,7 +44,7 @@ const Home = ({ page }) => {
                         <li>
                             <div className='project_items new'>
                                 <span className='project_image'><PiFolderNotchPlusDuotone /></span>
-                                <Link to={`/createproject`}>
+                                <Link to="/project/create">
                                     <span className='project_title arrow_right gapt_30'>새 습관 만들기</span>
                                 </Link>
                             </div>
