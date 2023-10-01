@@ -54,7 +54,7 @@ router.get('/:projectId', async (req, res) => {
                     { path: "user._id", select: 'id name profileImage' }, 
                     { path:"comments", select: "recommentCount" }
                 ] 
-            } //객체 2뎁스 퍼퓰. 이거 꼭 기억
+            }, //객체 2뎁스 퍼퓰. 이거 꼭 기억
         ]);
         res.status(200).json(project)
     } catch (err) {

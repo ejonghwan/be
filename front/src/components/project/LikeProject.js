@@ -42,37 +42,36 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
     const likeApi = useCallback(_debounce(async (like) => {
         try {
             if(like) {
+                if(project.likeUser?.filter(user => user._id === state.user._id).length === 0) return;
                 const resUnlike = await projectUnlike({ projectId, userId });
                 if(resUnlike.data) {
-                    ProjectDispatch({ type: "PROJECT_LIKE_DEC_SUCCESS" })
+                    ProjectDispatch({ type: "PROJECT_LIKE_DEC_SUCCESS", data: state.user._id })
                     setLike(!like)
                 }
             } else {
+                if(project.likeUser?.filter(user => user._id === state.user._id).length > 0) return;
                 const resLikeawait = await projectLike({ projectId, userId });
                 if(resLikeawait.data) {
-                    ProjectDispatch({ type: "PROJECT_LIKE_INC_SUCCESS" })
+                    ProjectDispatch({ type: "PROJECT_LIKE_INC_SUCCESS", data: {
+                        _id: state.user._id,
+                        profileImage: state.user.profileImage,
+                        id: state.user.id,
+                        email: state.user.email,
+                        name: state.user.name,
+                        createdAt: state.user.createdAt,
+                    } })
                     setLike(!like)
                 }
             }
         } catch(err) {
             console.log(err)
         }
-    }, 1000), [state.user.likeProject]);
+    }, 1000), [state.user.likeProject, project.likeUser]);
 
-
-
-    // useEffect(() => {
-    //     // 렌더링 시작 시 넘어온 likeProject값과 스토어 내정보 likeProject가 같으면 상태변경
-    //     state.user.likeProject.map(project => {
-    //         if(project === projectId) setLike(true)
-    //         if(project !== projectId) setLike(false)
-    //     })
-    // }, []);
 
     useEffect(() => {
-        // writes.likes?.filter(likeUser => likeUser === state.user._id).length > 0 ? true : false
-        state.user.likeProject?.filter(project => project === projectId).length > 0 ? setLike(true) : setLike(false)
-    }, [state.user.likeProject])
+        project.likeUser?.filter(user => user._id === state.user._id).length > 0 ? setLike(true) : setLike(false)
+    }, [project.likeUser])
 
     return (
         <Fragment>

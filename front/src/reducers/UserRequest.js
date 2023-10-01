@@ -411,9 +411,7 @@ const UserRequest = () => {
     // 프로젝트 좋아요
     const projectLike = async data => {
         try {
-            // const accToken = localStorage.getItem('X-access-token')
             if(!accToken) throw new Error('토큰 만료. 로그인해주세요');
-
             const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');

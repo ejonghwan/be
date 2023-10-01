@@ -138,15 +138,25 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
             case "PROJECT_LIKE_INC_SUCCESS": 
+            console.log('inc', action.data)
                 return {
                     ...state,
-                    project: {...state.project, likeCount: state.project.likeCount + 1}
+                    project: {
+                        ...state.project, 
+                        likeCount: state.project.likeCount + 1,
+                        likeUser: state.project.likeUser.concat(action.data)
+                    }
                 }
 
             case "PROJECT_LIKE_DEC_SUCCESS": 
+            console.log('dec', action.data)
                 return {
                     ...state,
-                    project: {...state.project, likeCount: state.project.likeCount - 1}
+                    project: {
+                        ...state.project, 
+                        likeCount: state.project.likeCount - 1,
+                        likeUser: state.project.likeUser.filter(user => user._id !== action.data)
+                    }
                 }
                 
             case "PROJECT_REQUEST_REQUEST": 
@@ -340,7 +350,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadMyapplyProjectError: action.data,
                 }
             
-            default: return { state }
+            default: return { ...state }
     }
 }
 

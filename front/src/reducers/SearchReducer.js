@@ -75,7 +75,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
 
                 
 
-            default: return { state }
+            default: return { ...state }
     }
 }
 

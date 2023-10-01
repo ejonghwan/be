@@ -1,6 +1,6 @@
 import { Fragment, useContext } from 'react';
 import { UserContext } from '../../context/UserContext.js';
-import ProjectItems from '../../components/project/ProjectItems.js';
+import ProjectItemsHorizon from '../../components/project/ProjectItemsHorizon.js';
 
 
 const MyLikeProject = ({ page }) => {
@@ -15,10 +15,10 @@ const MyLikeProject = ({ page }) => {
 
             <div className='b_conts full bg_gray'>
                 <div className='b_conts pd_0'>
-                    <ul className='project_items_wrap'>
-                        {state.user?.projects?.map(project => (
+                    <ul className='project_items_hor'>
+                        {state.user?.likeProject?.map(project => (
                             <li key={project._id} className='project_items'>
-                                <ProjectItems project={project} isRequestUser={true}/>
+                                <ProjectItemsHorizon project={project} isRequestUser={true}/>
                             </li>
                         ))}
                     </ul>

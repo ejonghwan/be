@@ -21,6 +21,7 @@ const router = express.Router();
 //@ access  public
 router.get('/load', auth, async (req, res) => {
     try {
+        // user db data 처리는 auth 미들웨어에 있음
         if(req.reftoken) {
             // auth 미들웨어에서 acc/ref 토큰 모두 만료되어 ref 다시 만들고 db에 저장 후 쿠키로 응답
             console.log('모두 만료돼서 디비 토큰 다시 저장하고 acc 다시 발급')
@@ -39,7 +40,6 @@ router.get('/load', auth, async (req, res) => {
     } catch(err) {
         console.error(err);
         res.status(501).clearCookie('X-refresh-token').end();
-        // res.status(500).json({ message: err.message })
     };
 });
 
@@ -72,8 +72,10 @@ router.post('/login', async (req, res) => {
         // 파퓰레이트 하위는 아래처럼 쓰면됨 이거 정리해둬야됨  221109 하다감
         // const user = await User.findOne({ id: id }).populate({ path: "projects", populate: { path: "rank.a" } }).exec();
         const user = await User.findOne({ id: id }).populate([ 
-            {path : "projects", populate: {path: "constructorUser._id", select: "name"} },
-            {path : "joinProjects._id"} 
+            { path: "projects", populate: {path: "constructorUser._id", select: "name"} },
+            { path: "joinProjects._id"},
+            { path: 'likeProject', select: '_id title likeCount instanceUser createdAt' },
+            { path: 'likeProject', select: '_id title likeCount instanceUser createdAt constructorUser projectImages', populate: {path: "constructorUser._id", select: "name"} },
         ]).exec();
         if(!user) return res.status(400).json({ message: "유저가 없습니다" })
 
@@ -144,7 +146,6 @@ router.post('/signup', async (req, res) => {
                     user.token = reftoken;
                     user.profileImage = { _id: "6369f7f0d94aae125a0bc833", key: "8e09735b-553e-4879-b94c-7a3a23a40ce4.jpeg" }; //기본이미지 일단 이거넣음. 임시
                     user.save().then(user => {
-                        // console.log('프로필 이미지 전달되는지 확인 ?????????????????', user)
                         res.status(201).end();
                     });
                 });

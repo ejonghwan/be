@@ -14,13 +14,13 @@ import Error from './error.js';
 import StyleGuide from './guide/styleGuide.js';
 import { UserContext } from './../context/UserContext.js';
 import Protected from './protected/protectedPage.js';
-// import CreateProject from './project/CreateProject.js';
 import CreateMyProject from './project/CreateMyProject.js';
 import ProjectDetail from './project/ProjectDetail.js';
 import Write from './write/Write.js';
 import MyWritesList from './write/MyWritesList.js';
 import MyComments from './write/MyComments.js';
 import MyProject from './project/MyProject.js';
+import MyLikeProject from './project/MyLikeProject.js';
 
 
 
@@ -51,7 +51,7 @@ const RoutesPage = () => {
                 <Route path='/write/mylist' element={!state.loadUserLoading && state.isLogged  ? <MyWritesList page={'내 글'} /> : <Protected page={'내 글'} />}></Route>
                 <Route path='/comments/mylist' element={!state.loadUserLoading && state.isLogged  ? <MyComments page={'내 댓글'} /> : <Protected page={'내 댓글'} />}></Route>
                 <Route path='/project/myproject' element={!state.loadUserLoading && state.isLogged  ? <MyProject page={'내 습관'} /> : <Protected page={'내 습관'} />}></Route>
-                <Route path='/project/mylike' element={!state.loadUserLoading && state.isLogged  ? <MyProject page={'좋아하는 습관'} /> : <Protected page={'좋아하는 습관'} />}></Route>
+                <Route path='/project/mylike' element={!state.loadUserLoading && state.isLogged  ? <MyLikeProject page={'좋아하는 습관'} /> : <Protected page={'좋아하는 습관'} />}></Route>
                 <Route path='/project/myapply' element={!state.loadUserLoading && state.isLogged  ? <MyProject page={'신청한 습관'} /> : <Protected page={'신청한 습관'} />}></Route>
 
 

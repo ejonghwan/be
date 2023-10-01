@@ -17,8 +17,9 @@ export const auth = async (req, res, next) => {
              // decode가 있으면 acc로 인증 
             if(match && match.exp > Date.now().valueOf() / 1000) { 
                 const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate([ 
-                    {path : "projects", populate: {path: "constructorUser._id", select: "name"} },
-                    {path : "joinProjects._id"} 
+                    { path: "projects", populate: {path: "constructorUser._id", select: "name"} },
+                    { path: "joinProjects._id" },
+                    { path: 'likeProject', select: '_id title likeCount instanceUser createdAt constructorUser projectImages', populate: {path: "constructorUser._id", select: "name"} },
                 ]).exec();
                 req.user = { accToken, ...user._doc };
                 next();
@@ -32,8 +33,9 @@ export const auth = async (req, res, next) => {
 
                 const refreshTokenDecode = decodeURIComponent(getRefreshToken);
                 const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0 }).populate([ 
-                    {path : "projects", populate: {path: "constructorUser._id", select: "name"} },
-                    {path : "joinProjects._id"} 
+                    { path: "projects", populate: {path: "constructorUser._id", select: "name"} },
+                    { path: "joinProjects._id" },
+                    { path: 'likeProject', select: '_id title likeCount instanceUser createdAt constructorUser projectImages', populate: {path: "constructorUser._id", select: "name"} },
                 ]).exec();
 
                 // db에 저장된 리프레시가 만료되었을 경우 => db토큰 새로 교체하고 acc토큰 발급

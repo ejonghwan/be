@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback, Fragment, useRef, } from 'react';
+import { useState, useContext, useEffect, useCallback, Fragment, useRef, memo } from 'react';
 import { PiStarDuotone, PiHeartDuotone } from "react-icons/pi";
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
@@ -97,4 +97,4 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
     );
 };
 
-export default WriteLike;
+export default memo(WriteLike);

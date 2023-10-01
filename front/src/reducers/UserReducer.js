@@ -115,6 +115,7 @@ const UserReducer = (state = UserIntialState, action) => {
                 }
 
             case "USER_LOAD_SUCCESS": 
+            console.log(action.data)
                 return {
                     ...state,
                     loadUserLoading: false,
@@ -465,7 +466,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     globalErrorMessage: action.data
                 }
 
-            default: return { state }
+            default: return { ...state }
     }
 }
 

@@ -595,7 +595,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
 
 
 
-            default: return { state }
+            default: return { ...state }
     }
 }
 
