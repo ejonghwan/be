@@ -14,7 +14,8 @@ import Error from './error.js';
 import StyleGuide from './guide/styleGuide.js';
 import { UserContext } from './../context/UserContext.js';
 import Protected from './protected/protectedPage.js';
-import CreateProject from './project/CreateProject.js';
+// import CreateProject from './project/CreateProject.js';
+import CreateMyProject from './project/CreateMyProject.js';
 import ProjectDetail from './project/ProjectDetail.js';
 import Write from './write/Write.js';
 import MyWritesList from './write/MyWritesList.js';
@@ -42,7 +43,7 @@ const RoutesPage = () => {
                 <Route path='/changepassword' element={!state.loadUserLoading && state.isLogged ? <ChangePassword page={'비밀번호 변경'} /> : <Protected page={'비밀번호 변경'} />}></Route>
 
 
-                <Route path='/project/create' element={!state.loadUserLoading && state.isLogged  ? <CreateProject page={'새 습관 만들기'} /> : <Protected page={'새 습관 만들기'} />}></Route>
+                <Route path='/project/create' element={!state.loadUserLoading && state.isLogged  ? <CreateMyProject page={'새 습관 만들기'} /> : <Protected page={'새 습관 만들기'} />}></Route>
                 <Route path='/project/detail/:_id' element={!state.loadUserLoading && state.isLogged  ? <ProjectDetail page={'습관 상세보기'} /> : <Protected page={'습관 상세보기'} />}></Route>
 
                 
