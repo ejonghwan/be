@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext, useMemo } from 'react';
+import axios from 'axios';
 import { useSearchParams, useNavigate, useLocation, createBrowserHistory } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
 import Cookies from 'universal-cookie';
@@ -65,7 +66,7 @@ const Signup = ({ page }) => {
     const [birthday, handleBirthday] = useInput('')
     const [birthdayLengthChecked, setBirthdayLengthChecked] = useState(false)
     const [profileImage, setProfileImage] = useState(null)
-  
+    axios.defaults.withCredentials = true;
 
     const handleTerms = useCallback(e => {
         // setTerms({
