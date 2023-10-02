@@ -144,7 +144,8 @@ const Signup = ({ page }) => {
         if(!successRoot) {
             alert('인증 후 15분이 지났거나 잘못된 접근입니다. 다시 인증해주세요')
             // navigate(-1)
-            navigate('/signuppage')
+            // navigate('/signuppage')
+            console.log(successRoot, 'successRoot')
             
         }
         // return () => cookies.remove('signup')

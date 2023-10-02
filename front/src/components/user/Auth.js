@@ -64,6 +64,9 @@ const Auth = () => {
                                 evt="onChange" 
                                 onChange={handleEmail} 
                             />
+                             <div className="gapt_15">
+                                <p>※ 회원가입을 하시려면 메일 인증을 해주세요.</p>
+                            </div>
                         </div>
                         <div className="align_c">
                             <Button className={"button_type2 gapt_30"}>인증메일 보내기</Button>
@@ -72,10 +75,6 @@ const Auth = () => {
                     <ErrorMsg className={'error_type1 align_c gapt_40'}>
                         {state.authNumberError && <span>{state.authNumberError}</span>}
                     </ErrorMsg>
-
-                    <div className="gapt_10">
-                        <p>※ 회원가입을 하시려면 메일 인증을 해주세요.</p>
-                    </div>
                 </Fragment>
             ) : (
             <SuccessMsg className={'success_type1'}>

@@ -29,7 +29,7 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                 
                 days.push(
                     <div
-                        className={`col cell constructor instance ${
+                        className={`col cell ${
                             !isSameMonth(day, monthStart) ? 'disabled' : isSameDay(day, selectedDate)
                                 ? 'selected' : format(currentMonth, 'M') !== format(day, 'M')
                                 ? 'not-valid' : 'valid'} ${isSameDay(day, new Date()) ? `today` : ``} ${project.constructorUser.days?.map(userDay => isSameDay(day, new Date(userDay.date)) && userDay.count >= 0 ? `constructor instance`: null).join('')} ${project.instanceUser?.map(user => user.days?.map((userDay, idx) => isSameDay(day, new Date(userDay.date)) && userDay.count >= 0 ? `instance constructor` : null).join(' ')).join(' ')} `}
