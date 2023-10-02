@@ -41,7 +41,6 @@ const App = () => {
     try {
       if(accToken && valid) {
           if(!accToken) throw new Error('is not acctoken');
-          // dispatch({ type: "LOADING" })
           await getUser(accToken);
           // searchParams.delete('valid') //이거 왜 안되지 ..
           // searchParams.delete('accToken')

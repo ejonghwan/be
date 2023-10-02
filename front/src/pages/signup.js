@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useContext, useMemo } from 'react';
-import axios from 'axios';
 import { useSearchParams, useNavigate, useLocation, createBrowserHistory } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
 import Cookies from 'universal-cookie';
@@ -10,7 +9,6 @@ import UserRequest from '../reducers/UserRequest.js';
 import { UserContext } from '../context/UserContext.js';
 import { questionData, statusCode, passwordChecked, englishChecked, stringLengthChecked, onlyNumChecked } from '../utils/utils.js'
 import SuccessMsg from '../components/common/successMsg/SuccessMsg.js';
-import './signup.css';
 import ErrorMsg from '../components/common/errorMsg/ErrorMsg.js';
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import Button from '../components/common/form/Button.js';
@@ -18,7 +16,7 @@ import Use from '../components/common/terms/use.js';
 import Info from '../components/common/terms/info.js';
 import Acc from '../components/common/accordion/Accordion.js';
 import Spinners from '../components/common/spinners/Spinners.js';
-
+import './signup.css';
 
 // 회원가입 시 메일인증
 // https://lakelouise.tistory.com/240
@@ -66,7 +64,6 @@ const Signup = ({ page }) => {
     const [birthday, handleBirthday] = useInput('')
     const [birthdayLengthChecked, setBirthdayLengthChecked] = useState(false)
     const [profileImage, setProfileImage] = useState(null)
-    axios.defaults.withCredentials = true;
 
     const handleTerms = useCallback(e => {
         // setTerms({
