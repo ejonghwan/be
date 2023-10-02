@@ -37,7 +37,6 @@ import './signup.css';
 const Signup = ({ page }) => {
     
     const { signupUser } = UserRequest();
-    // const { imageUpload } = ImageRequest();
     const { state, dispatch } = useContext(UserContext)
     const cookies = new Cookies();
     const successRoot = cookies.get('signup')
@@ -45,6 +44,7 @@ const Signup = ({ page }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const email = decodeURIComponent(searchParams.get('email'));
+    const valid = decodeURIComponent(searchParams.get('valid'));
 
     const [userId, handleUserId] = useInput('') 
     const [userPassword, handlePassword] = useInput('') 
@@ -137,18 +137,37 @@ const Signup = ({ page }) => {
     }, 500), [userId, userPassword, userName, passwordIsChecked, terms, questionType, result, phoneNumber, gender, birthday]);
 
 
-    useEffect(() => {
-         // 백엔드에서 15분 후에 만료되는 쿠키 전달. 쿠키가 없으면 다시 인증
-         alert(successRoot)
-        if(!successRoot) {
-            alert('인증 후 15분이 지났거나 잘못된 접근입니다. 다시 인증해주세요', successRoot)
-            // navigate(-1)
-            // navigate('/signuppage')
-            console.log(successRoot, 'successRoot')
+    // 쿠키에 15분을 담아준다고 해도 그게 만료됐을떄 어차피 새로고침을 하지않으면 이 페이지는 계속 있음
+    // useEffect(() => {
+    //      // 백엔드에서 15분 후에 만료되는 쿠키 전달. 쿠키가 없으면 다시 인증
+    //      alert(successRoot)
+    //     if(!successRoot) {
+    //         alert('인증 후 15분이 지났거나 잘못된 접근입니다. 다시 인증해주세요', successRoot)
+    //         // navigate(-1)
+    //         // navigate('/signuppage')
+    //         console.log(successRoot, 'successRoot')
             
+    //     }
+    //     // return () => cookies.remove('signup')
+    // }, [])
+
+    useEffect(() => {
+        if(!valid) {
+            alert('잘못된 접근입니다. 다시 인증해주세요', successRoot)
+            navigate('/signuppage')
+            console.log(successRoot, 'successRoot')
         }
-        // return () => cookies.remove('signup')
+
+        //인증된 페이지라서 사용자가 입력하지않고 페이지를 닫지 않았을 때 15분 후 강제로 닫힘
+        const checkTime = setTimeout(() => {
+            alert('15분이 초과 되었습니다. 다시 인증해주세요.')
+            navigate('/signuppage')
+        }, 1000 * 60 * 15)
+        return () => clearTimeout(checkTime)
     }, [])
+
+
+
 
     useEffect(() => { //비번 강화 체크 
         userPassword && passwordChecked(userPassword) ? setPasswordProtected(true) : setPasswordProtected(false)

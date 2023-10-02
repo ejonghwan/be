@@ -54,7 +54,8 @@ router.get('/signup', async (req, res) => {
 
         const encode = encodeURIComponent(match.email)
         const query = querystring.stringify({ valid: true, email: encode})
-        res.cookie('signup', true).redirect(`${process.env.DOMAIN}/signup?${query}`)
+        // res.cookie('signup', true, { expires: new Date(Date.now() + 1000 * 60 * 15)}).redirect(`${process.env.DOMAIN}/signup?${query}`) //ejs 에 있는 a 링크에 api 이동 후 매치가 되면 쿠키를 주는데 프론트에서 크리덴탈스를 true로 줄수 없어서 넘어간 쿼리스트링 값이 트루라면 프론트에서 쿠키를 설정함.
+        res.redirect(`${process.env.DOMAIN}/signup?${query}`)
         
        
     } catch(err) {
