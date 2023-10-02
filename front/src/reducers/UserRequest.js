@@ -17,6 +17,9 @@ import { getWithExpire, setWithExpire } from '../utils/utils.js';
 
 
 const host = process.env.REACT_APP_BACKEND_HOST;
+axios.defaults.withCredentials = true;
+
+
 const UserRequest = () => {
     const { dispatch } = useContext(UserContext); 
     // const accToken = localStorage.getItem('X-access-token');
