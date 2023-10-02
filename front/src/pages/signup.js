@@ -141,8 +141,9 @@ const Signup = ({ page }) => {
 
     useEffect(() => {
          // 백엔드에서 15분 후에 만료되는 쿠키 전달. 쿠키가 없으면 다시 인증
+         alert(successRoot)
         if(!successRoot) {
-            alert('인증 후 15분이 지났거나 잘못된 접근입니다. 다시 인증해주세요')
+            alert('인증 후 15분이 지났거나 잘못된 접근입니다. 다시 인증해주세요', successRoot)
             // navigate(-1)
             // navigate('/signuppage')
             console.log(successRoot, 'successRoot')
