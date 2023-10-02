@@ -54,7 +54,7 @@ router.get('/signup', async (req, res) => {
 
         const encode = encodeURIComponent(match.email)
         const query = querystring.stringify({ valid: true, email: encode})
-        res.cookie('signup', true, { expires: new Date(Date.now() + 1000 * 60 * 15)}).redirect(`${process.env.DOMAIN}/signup?${query}`)
+        res.cookie('signup', true).redirect(`${process.env.DOMAIN}/signup?${query}`)
         
        
     } catch(err) {
