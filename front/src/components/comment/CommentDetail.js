@@ -13,13 +13,14 @@ import { WriteContext } from '../../context/WriteContext';
 import './CommentDetail.css';
 import RecommentCreate from './RecommentCreate';
 import RecommentDetail from './RecommentDetail';
+import Spinners from '../common/spinners/Spinners';
 
 
 
 const CommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId = true, comment}) => {
     const { state } = useContext(UserContext);
     const { deleteComment } = WriteRequest();
-    const { WriteState: { writes } , WriteDispatch } = useContext(WriteContext);
+    const { WriteState, WriteState: { writes } , WriteDispatch } = useContext(WriteContext);
     const [selectIdx, setSelectIdx] = useState(0);
     const [ellip, setEllip] = useState(false);
     const [briefly, setBriefly] = useState(false);
@@ -156,7 +157,8 @@ const CommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId 
                    
                 </div>
 
-              
+                {WriteState.deleteCommentLoading && <Spinners full={true} />}
+                {WriteState.deleteCommentError && alert(WriteState.deleteCommentError)}
              
             </article>
 
@@ -171,7 +173,7 @@ const CommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId 
                     <span className='user_thum_createdat'>가입일 {changeViewDate(comment.user._id.createdAt, 'hour')}</span>
                 </div>
             </Popup>
-
+            
         </Fragment>
     );
 };

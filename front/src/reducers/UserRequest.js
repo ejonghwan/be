@@ -56,11 +56,15 @@ const UserRequest = () => {
             if(!gender || typeof gender !== 'string') throw new Error('is not gender');
             if(!birthday || typeof birthday !== 'string') throw new Error('is not birthday');
             
+            // 다크모드 초기값은시스템에서 유저가 설정해둔 값
+            const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let initTheme = isBrowserDarkMode ? 'dark' : 'light' //여기해야댐
+
             const config = {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true,
             }
-            const user = await axios.post(`${host}/api/users/signup`, data, config)
+            const user = await axios.post(`${host}/api/users/signup`, {...data, }, config)
             dispatch({ type: "USER_SIGNUP_SUCCESS" })
             return user;
 

@@ -16,7 +16,9 @@ import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
 import WriteEdit from './WriteEdit.js'
 import Comment from '../comment/Comment';
+import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import './WriteDetail.css';
+import Spinners from '../common/spinners/Spinners';
 
 
 const WriteDetail = ({ writeId }) => {
@@ -27,6 +29,8 @@ const WriteDetail = ({ writeId }) => {
     const { imageDelete } = ImageRequest();
     const editWriteRef = useRef(null);
     const navigate = useNavigate();
+
+    
 
 
     const handleWriteEditState = () => editWriteRef.current.popupOpen();
@@ -59,6 +63,7 @@ const WriteDetail = ({ writeId }) => {
 
     useEffect(() => {
         handleLoadWrite();
+        console.log('w?', WriteState, 'ww?', writes)
     }, [])
 
 
@@ -70,7 +75,7 @@ const WriteDetail = ({ writeId }) => {
             
             {WriteState.loadDone && (
                 <Fragment>
-                    {state.user.joinProjects?.filter(joinProject => joinProject._id !== null ).filter(joinProject => joinProject._id._id === writes.project?._id._id).length > 0 
+                    {state.user?.joinProjects?.filter(joinProject => joinProject._id !== null ).filter(joinProject => joinProject._id._id === writes.project?._id._id).length > 0 
                         || 
                     state.user.projects?.filter(project => project._id === writes.project?._id._id).length > 0 ? (
                             <Fragment>
@@ -105,6 +110,9 @@ const WriteDetail = ({ writeId }) => {
                                                         <PiFileXDuotone />
                                                         <span className='blind'>인증글 삭제</span>
                                                     </Button>
+
+                                                    {WriteState.deleteWriteLoading && <Spinners full={true} />}
+                                                    {WriteState.deleteWriteError && alert(WriteState.deleteWriteError)}
                                                 </Fragment>
                                             )}
                                         </div>
@@ -131,6 +139,12 @@ const WriteDetail = ({ writeId }) => {
                                 </div>
                             </div>
                         )
+                    }
+
+                    {state.loadError && 
+                        <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                            {state.loadError}
+                        </ErrorMsg>
                     }
                 </Fragment>
             )}

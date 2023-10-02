@@ -62,6 +62,10 @@ export const UserIntialState = {
     editUserProfileImageDone: false,
     editUserProfileImageError: null,
 
+    chageDarkModeLoading: false,
+    chageDarkModeDone: false,
+    chageDarkModeError: null,
+
     user: {},
 }
 
@@ -433,7 +437,6 @@ const UserReducer = (state = UserIntialState, action) => {
             case "PROJECT_LIKE_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
                     user: {
                         ...state.user,
                         likeProject: [action.data, ...state.user.likeProject]
@@ -443,7 +446,6 @@ const UserReducer = (state = UserIntialState, action) => {
             case "PROJECT_LIKE_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
                     globalErrorMessage: action.data
                 }
 
@@ -451,7 +453,6 @@ const UserReducer = (state = UserIntialState, action) => {
             case "PROJECT_UNLIKE_SUCCESS": 
                 return {
                     ...state,
-                    loading: false,
                     user: {
                         ...state.user,
                         likeProject: state.user.likeProject.filter(id => id !== action.data)
@@ -462,9 +463,45 @@ const UserReducer = (state = UserIntialState, action) => {
             case "PROJECT_UNLIKE_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
                     globalErrorMessage: action.data
                 }
+
+            case "CREATE_PROJECT_USER_PUSH" : 
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        projects: state.user.projects.concat(action.data)
+                    }
+                }
+
+
+            case "USER_DARKMODE_CHANGE_REQUEST": 
+                return {
+                    ...state,
+                    chageDarkModeLoading: true,
+                }
+
+            case "USER_DARKMODE_CHANGE_SUCCESS": 
+                return {
+                    ...state,
+                    chageDarkModeLoading: false,
+                    chageDarkModeDone: true,
+                    chageDarkModeError:'',
+                    user: {
+                        ...state.user,
+                        // darkMode: action.data
+                    }
+                }
+
+            case "USER_DARKMODE_CHANGE_FAILUE" : 
+                return {
+                    ...state,
+                    chageDarkModeLoading: false,
+                    chageDarkModeError: action.data
+                }
+
+            
 
             default: return { ...state }
     }

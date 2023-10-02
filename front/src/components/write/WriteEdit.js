@@ -11,12 +11,16 @@ import ImageUploadView from '../image/ImageUploadView';
 import useImageRequest from '../../reducers/ImageRequest.js';
 import WriteRequest from '../../reducers/WriteRequest';
 import './WriteEdit.css';
+import { WriteContext } from '../../context/WriteContext';
+import Spinners from '../common/spinners/Spinners';
+import ErrorMsg from '../common/errorMsg/ErrorMsg';
 
 
 
 const WriteEdit = ({ editWriteRef, writes }) => {
 
     const { state } = useContext(UserContext);
+    const { WriteState } = useContext(WriteContext)
     const { imageUpload, imageDelete } = useImageRequest();
     const { createWrite, editWrite } = WriteRequest();
 
@@ -37,7 +41,7 @@ const WriteEdit = ({ editWriteRef, writes }) => {
 
     const handleEditWriteSubmit = _debounce(async(e) => {
         try {
-            if(!window.confirm('정말 수정하시겠습니까?')) return;
+            // if(!window.confirm('정말 수정하시겠습니까?')) return;
             const res = await editWrite(writeSubmitData) // 글 보내기
             
             if( imageData.file ) { 
@@ -50,10 +54,6 @@ const WriteEdit = ({ editWriteRef, writes }) => {
         }
     }, 1000)
 
-
-    // useEffect(() => {
-    //     console.log(writeSubmitData)
-    // }, [writeSubmitData])
 
     return (
         <div>
@@ -88,7 +88,14 @@ const WriteEdit = ({ editWriteRef, writes }) => {
                 </Textarea>
             </div>
             <div className='align_c'>
-                <Button type={'button'} className={"button_type2"} onClick={handleEditWriteSubmit}>인증글 수정</Button>
+                {WriteState.editWriteLoading ? (<Spinners full={true}/>) : (
+                    <Button type={'button'} className={"button_type2"} onClick={handleEditWriteSubmit}>인증글 수정</Button>
+                )}
+                 {state.editWriteError && 
+                    <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                        {state.editWriteError}
+                    </ErrorMsg>
+                }
             </div>
         </div>
     );

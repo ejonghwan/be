@@ -5,12 +5,14 @@ import Button from '../common/form/Button';
 import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
 import './RecommentCreate.css'
+import Spinners from '../common/spinners/Spinners';
+import ErrorMsg from '../common/errorMsg/ErrorMsg';
 
 const RecommentCreate = ({ comment, setRecommentOpen, targetUser = null }) => {
 
     const { state } = useContext(UserContext);
     const [ submitContent, setSubmitContent ] = useState('');
-    const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
+    const { WriteState, WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
     const { createRecomment } = WriteRequest();
 
     const handleChangeContent = e => {
@@ -40,25 +42,33 @@ const RecommentCreate = ({ comment, setRecommentOpen, targetUser = null }) => {
 
     return (
         <div className='recomment_wrap'>
-            <div className='recomment_inner'>
-                <div className='recomment_form'>
-                    <span className='to_user'>{targetUser && `@${targetUser.name}`}</span>
-                    <Textarea 
-                        id={"content"}
-                        name={"content"}
-                        className={"textarea_type1 gap_5"} 
-                        value={submitContent}
-                        onChange={handleChangeContent}
-                        required={true} 
-                        placeholder={"댓글"}
-                        style={{height: '70px'}}
-                        
-                    >
-                    </Textarea>
-                    <Button className={"button_type7 line"} onClick={handleResetComment}>취소</Button>
-                    <Button className={"button_type7"} onClick={handleCreateRecomment} disabled={submitContent ? false : true} >답글</Button>
+             {WriteState.createRecommentLoading ? (<Spinners />) : (
+                <div className='recomment_inner'>
+                    <div className='recomment_form'>
+                        <span className='to_user'>{targetUser && `@${targetUser.name}`}</span>
+                        <Textarea 
+                            id={"content"}
+                            name={"content"}
+                            className={"textarea_type1 gap_5"} 
+                            value={submitContent}
+                            onChange={handleChangeContent}
+                            required={true} 
+                            placeholder={"댓글"}
+                            style={{height: '70px'}}
+                            
+                        >
+                        </Textarea>
+                        <Button className={"button_type7 line"} onClick={handleResetComment}>취소</Button>
+                        <Button className={"button_type7"} onClick={handleCreateRecomment} disabled={submitContent ? false : true} >답글</Button>
+                    </div>
                 </div>
-            </div>
+             )}
+
+            {state.createRecommentError && 
+                <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                    {state.createRecommentError}
+                </ErrorMsg>
+            }       
         </div>
     );
 };

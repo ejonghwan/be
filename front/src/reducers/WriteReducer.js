@@ -85,12 +85,14 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     loadLoading: false,
                     loadDone: true,
+                    loadError: '',
                     writes: {
                         ...action.data, 
-                        comments: action.data.comments.map(comment => {
-                            comment.recomments.reverse();
-                            return comment;
-                        }).reverse()
+                        // comments: action.data.comments.map(comment => { //대댓글 최신순 안함.
+                        //     comment.recomments.reverse();
+                        //     return comment;
+                        // }).reverse() 
+                        comments: action.data.comments.reverse()
                     }
                 };
 
@@ -112,6 +114,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     likeLoading: false,
                     likeDone: true,
+                    likeError: '',
                     writes: {
                         ...state.writes,
                         likeCount: state.writes.likeCount + 1,
@@ -138,6 +141,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     unlikeLoading: false,
                     unlikeDone: true,
+                    unlikeError: '',
                     writes: {
                         ...state.writes,
                         likeCount: state.writes.likeCount - 1,
@@ -163,6 +167,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     editWriteLoading: false,
                     editWriteDone: true,
+                    editWriteError: '',
                     writes: {
                         ...state.writes,
                         title: action.data.title,
@@ -198,6 +203,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     deleteWriteLoading: false,
                     deleteWriteDone: true,
+                    deleteWriteError: '',
                     writes: {}
                 };
 
@@ -221,6 +227,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     createCommentLoading: false,
                     createCommentDone: true,
+                    createCommentError: '',
                     writes: {
                         ...state.writes,
                         comments: [action.data, ...state.writes.comments],
@@ -247,6 +254,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     likeCommentLoading: false,
                     likeCommentDone: true,
+                    likeCommentError: '',
                     writes: {
                         ...state.writes,
                         comments: state.writes.comments.map(comment => comment._id === action.data.commentId ? 
@@ -273,6 +281,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     unlikeCommentLoading: false,
                     unlikeCommentDone: true,
+                    unlikeCommentError: '',
                     writes: {
                         ...state.writes,
                         comments: state.writes.comments.map(comment => comment._id === action.data.commentId ? 
@@ -295,11 +304,11 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 };
 
             case "COMMENT_EDIT_SUCCESS": 
-                console.log('re', action.data)
                 return {
                     ...state,
                     editCommentLoading: false,
                     editCommentDone: true,
+                    editCommentError: '',
                     writes: {
                         ...state.writes,
                         comments: state.writes.comments.map(comment => comment._id === action.data._id ? 
@@ -326,6 +335,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     deleteCommentLoading: false,
                     deleteCommentDone: true,
+                    deleteCommentError: '',
                     writes: {
                         ...state.writes,
                         comments: state.writes.comments.filter(comment => comment._id !== action.data.commentId),
@@ -350,7 +360,8 @@ const WriteReducer = (state = WriteIntialState, action) => {
             case "RECOMMENT_CREATE_SUCCESS": 
                 const idx = state.writes.comments.findIndex(comment => comment._id === action.data.commentId);
                 const selectComment = state.writes.comments[idx];
-                const recomments = [action.data.recomment, ...selectComment.recomments ]
+                // const recomments = [action.data.recomment, ...selectComment.recomments ]//대댓글 최신순 삭제
+                const recomments = [ ...selectComment.recomments, action.data.recomment ]
                 const newComment = [...state.writes.comments]
                 newComment[idx] = { ...selectComment, recomments, recommentCount: selectComment.recommentCount + 1}
 
@@ -358,6 +369,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     createRecommentLoading: false,
                     createRecommentDone: true,
+                    createRecommentError: '',
                     writes: {
                         ...state.writes,
                         comments: newComment
@@ -384,6 +396,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     likeRecommentLoading: false,
                     likeRecommentDone: true,
+                    unlikeRecommentError: '',
                     writes: {
                         ...state.writes,
                         comments: state.writes.comments.map(comment => {
@@ -420,6 +433,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     unlikeRecommentLoading: false,
                     unlikeRecommentDone: true,
+                    unlikeRecommentError: '',
                     writes: {
                         ...state.writes,
                         comments: state.writes.comments.map(comment => {
@@ -456,6 +470,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     editRecommentLoading: false,
                     editRecommentDone: true,
+                    editRecommentError: '',
                     writes: {
                         ...state.writes,
                         comments: state.writes.comments.map(comment => {
@@ -492,6 +507,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     ...state,
                     deleteRecommentLoading: false,
                     deleteRecommentDone: true,
+                    deleteRecommentError: '',
                     writes: {
                         ...state.writes,
                         comments: state.writes.comments.map(comment => {
@@ -524,6 +540,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 ...state,
                 myWritesLoading: false,
                 myWritesDone: true,
+                myWritesError: '',
                 writeList: state.writeList.concat(...action.data)
             };
 
@@ -551,6 +568,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 ...state,
                 myCommentsLoading: false,
                 myCommentsDone: true,
+                myCommentsError: '',
                 commentsList: state.commentsList.concat(...action.data)
             };
 
@@ -566,7 +584,6 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 ...state,
                 commentsList: [],
             };
-
 
         case "MYCOMMENTS_DELETE_REQUEST": 
             return {

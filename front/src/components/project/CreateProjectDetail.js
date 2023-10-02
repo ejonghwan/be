@@ -26,7 +26,7 @@ const CreateProjectDetail = () => {
 
     const { userSearch } = SearchRequest();
     const { createProject } = ProjectRequest();
-    const { state } = useContext(UserContext);
+    const { state, dispatch } = useContext(UserContext);
     const { SearchState, SearchDispatch } = useContext(SearchContext);
     const { ProjectState, ProjectDispatch } = useContext(ProjectContext);
     const navigate = useNavigate()
@@ -123,10 +123,14 @@ const CreateProjectDetail = () => {
             e.preventDefault();
             ProjectDispatch({ type: "PROJECT_CREATE_REQUEST" });
             const data = await createProject(submitData);
+            console.log('cc', data)
             if(data) {
+                dispatch({ type: "CREATE_PROJECT_USER_PUSH", data: data })
                 alert(`${title} 습관이 생성 되었습니다!`)
                 navigate(`/project/detail/${data._id}`);
             }
+            
+
         } catch(err) {
             console.log(err);
         }

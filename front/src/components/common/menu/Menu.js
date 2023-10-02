@@ -4,11 +4,13 @@ import { PiChatCircleDotsDuotone, PiAlienDuotone, PiKeyDuotone, PiSunDuotone, Pi
 import { UserContext } from '../../../context/UserContext';
 import { useGlobalState } from '../../../context/UiContext';
 import LogoutForm from '../../user/LogoutForm';
-import './Menu.css';
 import Button from '../form/Button';
+import DarkMode from '../darkMode/DarkMode';
+import './Menu.css';
+
 
 const Menu = () => {
-    const [thema, setThema] = useState(false);
+    // const [thema, setThema] = useState(false);
     const {state } = useContext(UserContext)
     const { name, email, id } = state.user;
 
@@ -16,11 +18,11 @@ const Menu = () => {
     const { menuOpen } = useGlobalState();
 
 
-    const handleThemaChange = type => {
-        let html = document.querySelector('html');
-        html.setAttribute('data-color', type)
-        setThema(!thema)
-    }
+    // const handleThemaChange = type => {
+    //     let html = document.querySelector('html');
+    //     html.setAttribute('data-color', type)
+    //     setThema(!thema)
+    // }
 
 
 
@@ -45,7 +47,7 @@ const Menu = () => {
             </ul>
             <ul className='info_menu'>
                 <li>
-                    {thema ? (
+                    {/* {thema ? (
                         <Button 
                             className={'button_type3 list'} 
                             onClick={() => handleThemaChange('light')}
@@ -55,7 +57,8 @@ const Menu = () => {
                             className={'button_type3 list'} 
                             onClick={() => handleThemaChange('dark')}
                         ><PiMoonDuotone /><span>어두운화면으로 보기</span></Button>
-                    )}
+                    )} */}
+                    <DarkMode />
                 </li>
                 <li>
                     <div className='list'>

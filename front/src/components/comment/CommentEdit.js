@@ -5,11 +5,13 @@ import Button from '../common/form/Button';
 import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
 import './CommentEdit.css';
+import Spinners from '../common/spinners/Spinners';
+import ErrorMsg from '../common/errorMsg/ErrorMsg';
 
 const CommentEdit = ({ comment, setEditOpen }) => {
    
     const { state } = useContext(UserContext);
-    const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
+    const { WriteState, WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
     const [ submitEditContent, setSubmitEditContent ] = useState(comment.content);
     const { editComment } = WriteRequest();
 
@@ -38,25 +40,34 @@ const CommentEdit = ({ comment, setEditOpen }) => {
 
     return (
         <div className='edit_comment_wrap'>
-            <div className='edit_comment_inner'>
-                <div className='edit_comment_form'>
-                    <Textarea 
-                        id={"content"}
-                        name={"content"}
-                        className={"textarea_type1 gap_5"} 
-                        value={submitEditContent}
-                        onChange={handleChangeContent}
-                        required={true} 
-                        placeholder={"수정 내용을 입력해주세요."}
-                        style={{height: '100px'}}
-                        
-                    >
-                        {/* {writeSubmitData.content} */}
-                    </Textarea>
-                    <Button className={"button_type7 line"} onClick={handleResetEditComment}>취소</Button>
-                    <Button className={"button_type7"} onClick={handleEditComment} disabled={submitEditContent && submitEditContent !== comment.content ? false : true} >수정</Button>
+            {WriteState.editCommentLoading ? (<Spinners />) : (
+                <div className='edit_comment_inner'>
+                    <div className='edit_comment_form'>
+                        <Textarea 
+                            id={"content"}
+                    
+                            name={"content"}
+                            className={"textarea_type1 gap_5"} 
+                            value={submitEditContent}
+                            onChange={handleChangeContent}
+                            required={true} 
+                            placeholder={"수정 내용을 입력해주세요."}
+                            style={{height: '100px'}}
+                            
+                        >
+                            {/* {writeSubmitData.content} */}
+                        </Textarea>
+                        <Button className={"button_type7 line"} onClick={handleResetEditComment}>취소</Button>
+                        <Button className={"button_type7"} onClick={handleEditComment} disabled={submitEditContent && submitEditContent !== comment.content ? false : true} >수정</Button>
+                    </div>
                 </div>
-            </div>
+            )}
+
+            {state.editCommentError && 
+                <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                    {state.editCommentError}
+                </ErrorMsg>
+            }
         </div>
     );
 };

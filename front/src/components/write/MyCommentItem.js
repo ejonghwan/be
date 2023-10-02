@@ -34,7 +34,6 @@ const MyCommentItem = ({ comments = [], isProjectName = false }) => {
 
     return (
         <ul className='comments_list_wrap'>
-            { console.log(selectComment)}
             {comments?.map(comment => (
                 <li key={comment._id} className='comments_list_item'>
                     {WriteState.myCommentDeleteLoading && comment._id === selectComment ? (

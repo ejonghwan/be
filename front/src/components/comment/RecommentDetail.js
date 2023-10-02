@@ -12,13 +12,14 @@ import RecommentLike from './RecommentLike';
 import RecommentEdit from './RecommentEdit';
 import RecommentCreate from './RecommentCreate';
 import './RecommentDetail.css';
+import Spinners from '../common/spinners/Spinners';
 
 
 
 const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId = true, comment, recomment }) => {
     const { state } = useContext(UserContext);
     const { deleteRecomment } = WriteRequest();
-    const { WriteState: { writes } , WriteDispatch } = useContext(WriteContext);
+    const { WriteState, WriteState: { writes } , WriteDispatch } = useContext(WriteContext);
     const [selectIdx, setSelectIdx] = useState(0);
     const [ellip, setEllip] = useState(false);
     const [briefly, setBriefly] = useState(false);
@@ -118,16 +119,17 @@ const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isI
                                     </Button>
                                 </div>
                             )}
+                           
                         </Fragment>
                     ) : (
                         <Fragment>
                             <RecommentEdit comment={comment} recomment={recomment} setEditOpen={setEditOpen} />
                         </Fragment>
                     )}
-
+                    
                     {/* 답글 아래 답글 다시 생성 */}
                     {recommentOpen && <RecommentCreate targetUser={recomment.user._id} comment={comment} setRecommentOpen={setRecommentOpen} />}
-        
+
                     
                     <Popup className={`popup_type_default recomment_more`} isHead={false} dimd={true} ref={commentMoreRef}>
                         <Button className={'button_type3 ico_hover_type1'} onClick={handleEditComment}>
@@ -140,6 +142,8 @@ const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isI
                         </Button>
                     </Popup>
                    
+                   {WriteState.deleteRecommentLoading && <Spinners full={true} />}
+                   {WriteState.deleteRecommentError && alert(WriteState.deleteRecommentError )}
                 </div>
 
               

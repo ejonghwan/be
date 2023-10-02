@@ -6,12 +6,14 @@ import WriteRequest from '../../reducers/WriteRequest';
 import { WriteReducer } from '../../reducers';
 import './CommentCreate.css'
 import { WriteContext } from '../../context/WriteContext';
+import Spinners from '../common/spinners/Spinners';
+import ErrorMsg from '../common/errorMsg/ErrorMsg';
 
 const CommentCreate = ({ comments }) => {
 
     const { state } = useContext(UserContext);
     const [ submitContent, setSubmitContent ] = useState('');
-    const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
+    const { WriteState, WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
     const { createComment } = WriteRequest();
 
     const handleChangeContent = e => {
@@ -46,24 +48,34 @@ const CommentCreate = ({ comments }) => {
                 <div className='create_comment_img'>
                     <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage.key}`} alt="유저 프로필 이미지" />
                 </div>
-                <div className='create_comment_form'>
-                    <Textarea 
-                        id={"content"}
-                        name={"content"}
-                        className={"textarea_type1 gap_5"} 
-                        value={submitContent}
-                        onChange={handleChangeContent}
-                        required={true} 
-                        placeholder={"댓글"}
-                        style={{height: '100px'}}
-                        
-                    >
-                        {/* {writeSubmitData.content} */}
-                    </Textarea>
-                    <Button className={"button_type7 line"} onClick={handleResetComment}>취소</Button>
-                    <Button className={"button_type7"} onClick={handleCreateComment} disabled={submitContent ? false : true} >댓글</Button>
-                </div>
+                {WriteState.createCommentLoading ? (
+                    <div className='create_comment_form'><Spinners /></div>
+                ) : (
+                    <div className='create_comment_form'>
+                        <Textarea 
+                            id={"content"}
+                            name={"content"}
+                            className={"textarea_type1 gap_5"} 
+                            value={submitContent}
+                            onChange={handleChangeContent}
+                            required={true} 
+                            placeholder={"댓글"}
+                            style={{height: '100px'}}
+                        >
+                            {/* {writeSubmitData.content} */}
+                        </Textarea>
+                        <Button className={"button_type7 line"} onClick={handleResetComment}>취소</Button>
+                        <Button className={"button_type7"} onClick={handleCreateComment} disabled={submitContent ? false : true} >댓글</Button>
+                    </div>
+                )}
+                {state.createCommentError && 
+                    <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                        {state.createCommentError}
+                    </ErrorMsg>
+                }
+                
             </div>
+
         </div>
     );
 };
