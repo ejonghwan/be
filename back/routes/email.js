@@ -54,7 +54,7 @@ router.get('/signup', async (req, res) => {
 
         const encode = encodeURIComponent(match.email)
         const query = querystring.stringify({ valid: true, email: encode})
-        res.cookie('signup', true, { expires: new Date(Date.now() + 1800000)}).redirect(`${process.env.DOMAIN}/signup?${query}`)
+        res.cookie('signup', true, { expires: new Date(Date.now() + 1000 * 60 * 15)}).redirect(`${process.env.DOMAIN}/signup?${query}`)
        
     } catch(err) {
         console.error(err)
@@ -126,8 +126,6 @@ router.post('/member/number', auth, mailAuthNumber, async (req, res) => {
         const { email, _id } = req.body;
         if(!email || typeof email !== 'string') return res.status(400).json({ message: 'is not email' }) 
         if(!_id) return res.status(400).json({ message: 'is not _id' }) 
-       
-        console.log('number api : ', req.authCode)
 
         res.cookie('authCode', req.authCode, { expires: new Date(Date.now() + 180000), httpOnly: true });
         res.status(200).json({ message: '인증번호를 입력해주세요.', email})
@@ -146,8 +144,6 @@ router.post('/nonMember/number', mailAuthNumber, async (req, res) => {
         const { email, _id } = req.body;
         if(!email || typeof email !== 'string') return res.status(400).json({ message: 'is not email' }) 
         if(!_id) return res.status(400).json({ message: 'is not _id' }) 
-       
-        console.log('number api : ', req.authCode)
 
         res.cookie('authCode', req.authCode, { expires: new Date(Date.now() + 180000), httpOnly: true });
         res.status(200).json({ message: '인증번호를 입력해주세요.', email})
@@ -163,12 +159,9 @@ router.post('/nonMember/number', mailAuthNumber, async (req, res) => {
 //@ access  public
 router.post('/nonLoginMember/number', nonLoginAuthNumber, async (req, res) => {
     try {
-        console.log(req.body)
         const { name, email } = req.body;
         if(!email || typeof email !== 'string') return res.status(400).json({ message: 'is not email' }) 
         if(!name) return res.status(400).json({ message: 'is not name' }) 
-       
-        console.log('number api : ', req.authCode, req._id)
 
         res.cookie('authCode', req.authCode, { expires: new Date(Date.now() + 180000), httpOnly: true });
         res.cookie('_id', req._id, { expires: new Date(Date.now() + 180000), httpOnly: true });

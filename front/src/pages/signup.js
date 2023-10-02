@@ -16,6 +16,7 @@ import Button from '../components/common/form/Button.js';
 import Use from '../components/common/terms/use.js';
 import Info from '../components/common/terms/info.js';
 import Acc from '../components/common/accordion/Accordion.js';
+import Spinners from '../components/common/spinners/Spinners.js';
 
 
 // 회원가입 시 메일인증
@@ -110,7 +111,7 @@ const Signup = ({ page }) => {
         try {   
             if(!userId && !userPassword && !userName && !passwordIsChecked && !terms && !questionType && !result && !phoneNumber && !gender && !birthday && !profileImage) return;
 
-            dispatch({ type: "LOADING", loadingMessage: "회원가입 중.." })
+            dispatch({ type: "USER_SIGNUP_REQEUST" })
             const singupData = {
                 id: userId, 
                 password: userPassword, 
@@ -120,31 +121,33 @@ const Signup = ({ page }) => {
                 phoneNumber, 
                 gender, 
                 birthday,
-            }
+            };
        
             // 이미지모델에 등록되면 어디에서 요청했는지에 따라 그 아이디값을 각 모델에 보냄
             // 이미지는 default 기본이미지 넣고 나중에 개인정보 수정에서 수정하는걸로 
            
-            const user = await signupUser(singupData)
+            const user = await signupUser(singupData);
 
             if(statusCode(user.status, 2)) {
                 alert('회원 가입이 완료되었습니다. 기존 페이지는 닫아주세요')
                 // 로그인 페이지 만들면 로그인으로 
                 navigate('/login')
-            }
-            // try 에러나면 catch로 가긴함
+            };
         } catch(err) {
             console.error('view ', err)
-        }
-    }, 500), [userId, userPassword, userName, passwordIsChecked, terms, questionType, result, phoneNumber, gender, birthday])
+        };
+    }, 500), [userId, userPassword, userName, passwordIsChecked, terms, questionType, result, phoneNumber, gender, birthday]);
 
 
     useEffect(() => {
+         // 백엔드에서 15분 후에 만료되는 쿠키 전달. 쿠키가 없으면 다시 인증
         if(!successRoot) {
-            alert('잘못된 접근입니다. 다시 인증해주세요')
-            navigate(-1)
+            alert('인증 후 15분이 지났거나 잘못된 접근입니다. 다시 인증해주세요')
+            // navigate(-1)
+            navigate('/signuppage')
+            
         }
-        cookies.remove('signup')
+        // return () => cookies.remove('signup')
     }, [])
 
     useEffect(() => { //비번 강화 체크 
@@ -196,9 +199,11 @@ const Signup = ({ page }) => {
         */
         <div className='b_conts'>
             <h2>{page}</h2>
+           
                 <div className='form_wrap'>
-                
+                <span className='gap_15'>※ 인증된 페이지는 15분 후에 만료됩니다.</span>
                 <form onSubmit={handleSubmit}>
+                    
                     <ul className='Profile_info_wrap'>
                         <li>
                             <strong className='Profile_info_tit'>
@@ -443,9 +448,11 @@ const Signup = ({ page }) => {
                     </div>
                    
                     <div className='align_c gapt_30'>
-                        <Button className={`button_type2 ${submitActive ? 'checked' : 'none'}`} disabled={submitActive ? false : true}>
-                            회원가입
-                        </Button>
+                        {state.signupUserLoading ? (<Spinners />) : (
+                            <Button className={`button_type2 ${submitActive ? 'checked' : 'none'}`} disabled={submitActive ? false : true}>
+                                회원가입
+                            </Button>
+                        )}
                         <ErrorMsg className={'error_type1 align_c gapt_30'}>
                             {state.signupUserError && <p> {state.signupUserError}</p>}
                         </ErrorMsg>
