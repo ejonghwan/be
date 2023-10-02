@@ -64,7 +64,7 @@ const UserRequest = () => {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true,
             }
-            const user = await axios.post(`${host}/api/users/signup`, {...data, }, config)
+            const user = await axios.post(`${host}/api/users/signup`, {...data, darkMode: initTheme}, config)
             dispatch({ type: "USER_SIGNUP_SUCCESS" })
             return user;
 

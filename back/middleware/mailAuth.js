@@ -40,7 +40,7 @@ export const mailAuth = async (req, res, next) => {
             // 가입이 이미 되어있으면 로그인으로, 안되어있으면 회원가입으로 
             user ? templateName = 'authSigninMail' : templateName = 'authSignupMail';
             
-            ejs.renderFile(`${__dirname}/template/${templateName}.ejs`, {emailAuthToken : token}, (err, data) => {
+            ejs.renderFile(`${__dirname}/template/${templateName}.ejs`, {emailAuthToken : token, host: process.env.REACT_APP_BACKEND_HOST}, (err, data) => {
                 if(err) {return console.error('ejs render error')}
                 if(data) { mailTemplate = data;}
             })

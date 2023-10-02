@@ -115,8 +115,8 @@ body {
 
 .blind {
     position: absolute;
-    left: -999px;
-    top: -999px;
+    left: -99999px;
+    top: -99999px;
     width: 1px;
     height: 1px;
     overflow: hidden;
