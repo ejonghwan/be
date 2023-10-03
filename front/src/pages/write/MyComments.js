@@ -44,7 +44,7 @@ const MyComments = ({ page }) => {
             <div className='writes_align'>최근 순</div>
             {WriteState.myCommentsLoading && <div>로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....</div>}
             {WriteState.myCommentsDone && (
-                 WriteState.myCommentsDone.length === 0 ? (
+                 WriteState.commentsList.length === 0 ? (
                     <Fragment>
                         <NoData 
                             icon={<PiFileXDuotone />}

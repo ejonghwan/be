@@ -7,7 +7,7 @@ import Tags from '../common/tag/Tags';
 import { Link } from 'react-router-dom';
 import './ProjectItemsHorizon.css';
 
-const ProjectItemsHorizon = ({ project }) => {
+const ProjectItemsHorizon = ({ project, isContent = false }) => {
     return (
         <Fragment>
             <div className='info_wrap'>
@@ -36,7 +36,7 @@ const ProjectItemsHorizon = ({ project }) => {
                 </div>
                 
             </div>
-            <p className='project_conts word_ellip_2'>{project?.content}</p>
+            {isContent && <p className='project_conts word_ellip_2'>{project?.content}</p>}
         
         </Fragment>
     );

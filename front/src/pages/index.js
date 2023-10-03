@@ -21,6 +21,7 @@ import MyWritesList from './write/MyWritesList.js';
 import MyComments from './write/MyComments.js';
 import MyProject from './project/MyProject.js';
 import MyLikeProject from './project/MyLikeProject.js';
+import MyRequestProject from './project/MyRequestProject.js';
 
 
 
@@ -33,7 +34,7 @@ const RoutesPage = () => {
         <Layout>
             <Routes>
                 <Route path='/' element={<Home page={'메인페이지'}/>}></Route>
-                <Route path='/projectlist' element={!state.loadUserLoading && state.isLogged  ? <About page={'친구들 습관보기'} /> : <Protected page={'친구들 습관보기'}/>}></Route>
+                <Route path='/project/list' element={!state.loadUserLoading && state.isLogged  ? <About page={'친구들 습관보기'} /> : <Protected page={'친구들 습관보기'}/>}></Route>
                 <Route path='/profile' element={!state.loadUserLoading && state.isLogged  ? <Profile page={'내 정보'} /> : <Protected page={'내 정보'} />}></Route>
                 <Route path='/login' element={ <Login page={'로그인'}/>}></Route>
                 <Route path='/signup' element={<Signup page={'회원가입'} />}></Route>
@@ -52,7 +53,7 @@ const RoutesPage = () => {
                 <Route path='/comments/mylist' element={!state.loadUserLoading && state.isLogged  ? <MyComments page={'내 댓글'} /> : <Protected page={'내 댓글'} />}></Route>
                 <Route path='/project/myproject' element={!state.loadUserLoading && state.isLogged  ? <MyProject page={'내 습관'} /> : <Protected page={'내 습관'} />}></Route>
                 <Route path='/project/mylike' element={!state.loadUserLoading && state.isLogged  ? <MyLikeProject page={'좋아하는 습관'} /> : <Protected page={'좋아하는 습관'} />}></Route>
-                <Route path='/project/myapply' element={!state.loadUserLoading && state.isLogged  ? <MyProject page={'신청한 습관'} /> : <Protected page={'신청한 습관'} />}></Route>
+                <Route path='/project/myapply' element={!state.loadUserLoading && state.isLogged  ? <MyRequestProject page={'습관 신청/초대'} /> : <Protected page={'습관 신청/초대'} />}></Route>
 
 
                 <Route path='/error' element={<Error page={'에러'}/>}></Route>

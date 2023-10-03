@@ -17,7 +17,11 @@ export const auth = async (req, res, next) => {
              // decode가 있으면 acc로 인증 
             if(match && match.exp > Date.now().valueOf() / 1000) { 
                 const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0, token: 0 }).populate([ 
-                    { path: "projects", populate: {path: "constructorUser._id", select: "name"} },
+                    { path: "projects", 
+                        populate: [
+                            {path: "constructorUser._id", select: "name"},
+                            {path: "joinUser._id", select: "name id"},
+                        ] },
                     { path: "joinProjects._id" },
                     { path: 'likeProject', select: '_id title likeCount instanceUser createdAt constructorUser projectImages', populate: {path: "constructorUser._id", select: "name"} },
                 ]).exec();
@@ -33,7 +37,11 @@ export const auth = async (req, res, next) => {
 
                 const refreshTokenDecode = decodeURIComponent(getRefreshToken);
                 const user = await User.findOne({ id: match.id }).select({ password: 0, qeustion: 0 }).populate([ 
-                    { path: "projects", populate: {path: "constructorUser._id", select: "name"} },
+                    { path: "projects", 
+                        populate: [
+                            {path: "constructorUser._id", select: "name"},
+                            {path: "joinUser._id", select: "name id"},
+                        ] },
                     { path: "joinProjects._id" },
                     { path: 'likeProject', select: '_id title likeCount instanceUser createdAt constructorUser projectImages', populate: {path: "constructorUser._id", select: "name"} },
                 ]).exec();

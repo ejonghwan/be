@@ -30,7 +30,7 @@ const Menu = () => {
             <ul className='info_menu'>
                 <li><Link to="/project/myproject" className='list'><PiStackDuotone /><span>내 습관</span></Link></li>
                 <li><Link to="/project/mylike" className='list'><PiHeartDuotone /><span>좋아하는 습관</span></Link></li>
-                <li><Link to="/project/myapply" className='list'><PiSignInDuotone /><span>신청한 습관</span></Link></li>
+                <li><Link to="/project/myapply" className='list'><PiSignInDuotone /><span>습관 신청/초대</span></Link></li>
             </ul>
             <ul className='info_menu'>
                 <li>

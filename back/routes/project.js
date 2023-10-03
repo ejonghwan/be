@@ -202,7 +202,7 @@ router.patch('/join/accept/:projectId/:userId', auth, async (req, res) => {
             ]),
             User.findByIdAndUpdate(userId, { "joinProjects.$[ele].state": true }, { arrayFilters: [{"ele._id": projectId}], new: true })
         ])
-        res.status(200).json(project)
+        res.status(200).json({ project, projectId, userId })
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -441,10 +441,10 @@ router.patch('/like', auth, async (req, res) => {
         }
 
         const [ project, user ] = await Promise.all([
-            Project.findByIdAndUpdate(projectId, { $push: {likeUser: userId }, $inc: { likeCount: 1 } }, { new: true }),
+            Project.findByIdAndUpdate(projectId, { $push: {likeUser: userId }, $inc: { likeCount: 1 } }, { new: true }).populate({ path: 'constructorUser._id', select: 'name' }).select('constructorUser _id title projectImages likeCount instanceUser createdAt'),
             User.updateOne({_id: userId}, { $push: { likeProject: projectId } }, { new: true }), 
         ])
-        res.status(201).json(projectId);
+        res.status(201).json(project);
 
        
     } catch (err) {

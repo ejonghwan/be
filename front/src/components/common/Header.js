@@ -27,14 +27,14 @@ const Header = () => {
             <nav>
                 <ul className='header_nav'>
                     <li><Link to="/"><h1 className='logo'>HOBBYIST.</h1></Link></li>
-                    <li><Link to="/projectlist" className='hover_type1'>습관 목록</Link></li>
-                    <li><Link to="/project/create" className='hover_type1'>습관 만들기</Link></li>
                     <li>
                       <Button className={'button_type4 ico_hover_type1'} onClick={handleSearchProject}>
                         <PiMagnifyingGlassDuotone />
                         <span className='blind'>검색</span>
                       </Button>
                     </li>
+                    <li><Link to="/project/list" className='hover_type1'>습관 목록</Link></li>
+                    <li><Link to="/project/create" className='hover_type1'>습관 만들기</Link></li>
                     {state?.isLogged ? (
                        <Fragment>
                         <li><LoginUserInfo /></li>

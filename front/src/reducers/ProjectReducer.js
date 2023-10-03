@@ -193,7 +193,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     inviteProjectLoading: false,
                     inviteProjectDone: true,
                     inviteProjectError: '',
-                    project: action.data
+                    project: action.data.project
                 }
 
             case "PROJECT_INVITE_FAILUE" : 

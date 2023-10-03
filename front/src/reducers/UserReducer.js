@@ -66,6 +66,14 @@ export const UserIntialState = {
     chageDarkModeDone: false,
     chageDarkModeError: null,
 
+    inviteMylistProjectLoading: false,
+    inviteMylistProjectDone: false,
+    inviteMylistProjectError: null,
+
+    rejectMylistProjectLoading: false,
+    rejectMylistProjectDone: false,
+    rejectMylistProjectError: null,
+
     user: {},
 }
 
@@ -440,7 +448,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     user: {
                         ...state.user,
-                        likeProject: [action.data, ...state.user.likeProject]
+                        likeProject: state.user.likeProject.concat(action.data)
                     }
                 }
 
@@ -456,7 +464,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     user: {
                         ...state.user,
-                        likeProject: state.user.likeProject.filter(id => id !== action.data)
+                        likeProject: state.user.likeProject.filter(project => project._id !== action.data)
                     },
                     
                 }
@@ -501,6 +509,69 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     chageDarkModeLoading: false,
                     chageDarkModeError: action.data
+                }
+
+
+            case "MYLIST_PROJECT_INVITE_REQUEST": 
+                return {
+                    ...state,
+                    inviteMylistProjectLoading: true,
+                }
+
+            case "MYLIST_PROJECT_INVITE_SUCCESS":
+                console.log('action.data', action.data)
+                return {
+                    ...state,
+                    inviteMylistProjectLoading: false,
+                    inviteMylistProjectDone: true,
+                    inviteMylistProjectError:'',
+                    user: {
+                        ...state.user,
+                        projects: state.user.projects.map(project => {
+                            if(project._id === action.data.projectId) {
+                                project.joinUser = project.joinUser.filter(user => user._id._id !== action.data.userId)
+                            }
+                            return project
+                        })
+                    }
+                }
+
+            case "MYLIST_PROJECT_INVITE_FAILUE" : 
+                return {
+                    ...state,
+                    inviteMylistProjectLoading: false,
+                    inviteMylistProjectError: action.data
+                }
+
+
+            case "MYLIST_PROJECT_REJECT_REQUEST": 
+                return {
+                    ...state,
+                    rejectMylistProjectLoading: true,
+                }
+
+            case "MYLIST_PROJECT_REJECT_SUCCESS":
+                return {
+                    ...state,
+                    rejectMylistProjectLoading: false,
+                    rejectMylistProjectDone: true,
+                    rejectMylistProjectError:'',
+                    user: {
+                        ...state.user,
+                        projects: state.user.projects.map(project => {
+                            if(project._id === action.data.projectId) {
+                                project.joinUser = project.joinUser.filter(user => user._id._id !== action.data.userId)
+                            }
+                            return project
+                        })
+                    }
+                }
+
+            case "MYLIST_PROJECT_REJECT_FAILUE" : 
+                return {
+                    ...state,
+                    rejectMylistProjectLoading: false,
+                    rejectMylistProjectError: action.data
                 }
 
             

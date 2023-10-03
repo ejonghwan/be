@@ -429,6 +429,8 @@ const UserRequest = () => {
                 withCredentials: true,
             };
             const like = await axios.patch(`${host}/api/project/like`, data, config); 
+            
+        console.log('reduc', like)
             dispatch({ type: "PROJECT_LIKE_SUCCESS", data: like.data });
             return like;
             
@@ -488,6 +490,51 @@ const UserRequest = () => {
         };
     }
 
+      // 프로젝트 초대수락
+      const inviteMyListProject = async data => {
+        try {
+    
+            const { projectId, userId } = data;
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+            const res = await axios.patch(`${host}/api/project/join/accept/${projectId}/${userId}`, {}, config);
+            dispatch({ type: "MYLIST_PROJECT_INVITE_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            dispatch({ type: "MYLIST_PROJECT_INVITE_FAILUE", data: err.response.data.message });
+        }
+    }
+
+
+    // 프로젝트 초대거절
+     const rejectMyListProject = async data => {
+        try {
+            const { projectId, userId } = data;
+            if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+            const res = await axios.patch(`${host}/api/project/join/reject/${projectId}/${userId}`, {}, config);
+            dispatch({ type: "MYLIST_PROJECT_REJECT_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            dispatch({ type: "MYLIST_PROJECT_REJECT_FAILUE", data: err.response.data.message });
+        }
+    }
 
 
     return {
@@ -509,6 +556,9 @@ const UserRequest = () => {
         projectLike,
         projectUnlike,
         changeDarkmode,
+        inviteMyListProject,
+        rejectMyListProject
+
     }
 }
 

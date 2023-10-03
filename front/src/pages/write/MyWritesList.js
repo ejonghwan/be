@@ -44,7 +44,7 @@ const WritesList = ({ page }) => {
             <div className='writes_align'>최근 순</div>
             {WriteState.myWritesLoading && <div>로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....</div>}
             {WriteState.myWritesDone && (
-                 WriteState.writeList.length === 0 ? (
+                 WriteState.writeList?.length === 0 ? (
                     <Fragment>
                         <NoData 
                             icon={<PiFileXDuotone />}

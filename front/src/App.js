@@ -58,7 +58,7 @@ const App = () => {
 
   useEffect(() => {
     let html = document.querySelector('html');
-    html.setAttribute('data-color', state.user?.darkMode || 'right');
+    html.setAttribute('data-color', state.user?.darkMode || 'light');
   }, [state.user])
 
 

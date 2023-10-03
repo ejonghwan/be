@@ -171,6 +171,39 @@ button.line:hover {
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+/* x 버튼 */
+.button_type_success {
+    position: relative;
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+}
+
+.button_type_success::before {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    transform-origin: center center;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.button_type_success::after {
+    background-color: var(--arrow-color);
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    transform-origin: center center;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
 
 .button_type_arrow_r,
 .button_type_arrow_l  {

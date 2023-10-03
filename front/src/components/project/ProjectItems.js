@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const ProjectItems = ({ project, isRequestUser = false }) => {
+const ProjectItems = ({ project, isRequestUser = false, isTags = true }) => {
     // console.log(project)
     return (
         <Fragment>
@@ -63,7 +63,7 @@ const ProjectItems = ({ project, isRequestUser = false }) => {
             <div className='created_at'>{changeViewDate(project?.createdAt, 'day')}</div>
            
          
-            {project.categorys.length > 0 && (
+            {isTags && project.categorys.length > 0 && (
                 <div className='categorys gapt_20'>
                     <Tags tags={project.categorys} isLink={true} isNoData={false} />
                 </div>

@@ -72,9 +72,12 @@ router.post('/login', async (req, res) => {
         // 파퓰레이트 하위는 아래처럼 쓰면됨 이거 정리해둬야됨  221109 하다감
         // const user = await User.findOne({ id: id }).populate({ path: "projects", populate: { path: "rank.a" } }).exec();
         const user = await User.findOne({ id: id }).populate([ 
-            { path: "projects", populate: {path: "constructorUser._id", select: "name"} },
+            { path: "projects", 
+                populate: [
+                    {path: "constructorUser._id", select: "name"},
+                    {path: "joinUser._id", select: "name id"},
+                ] },
             { path: "joinProjects._id"},
-            { path: 'likeProject', select: '_id title likeCount instanceUser createdAt' },
             { path: 'likeProject', select: '_id title likeCount instanceUser createdAt constructorUser projectImages', populate: {path: "constructorUser._id", select: "name"} },
         ]).exec();
         if(!user) return res.status(400).json({ message: "유저가 없습니다" })
