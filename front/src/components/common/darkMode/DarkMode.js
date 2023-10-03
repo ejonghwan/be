@@ -1,29 +1,33 @@
-import { Fragment, useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { PiSunDuotone, PiMoonDuotone } from "react-icons/pi";
 import Button from '../form/Button';
 import _debounce from 'lodash.debounce';
-// import './Menu.css';
+import { UserContext } from '../../../context/UserContext';
+import UserRequest from '../../../reducers/UserRequest';
 
 
-const DarkMode = () => {
+const DarkMode = ({ className = '' }) => {
 
-    const [thema, setThema] = useState(false);
-    const [themaApiState, setThemaApiState] = useState(false)
-    const handleThemaChange = type => {
+    const { state, dispatch } = useContext(UserContext);
+    const { changeDarkmode } = UserRequest();
+    const [thema, setThema] = useState(state.user.darkMode);
+    const [themaApiState, setThemaApiState] = useState(false);
+    const handleThemaChange = mode => {
         let html = document.querySelector('html');
-        html.setAttribute('data-color', type)
-        setThema(!thema)
-        handleThemaChageRequest()
-    }
+        html.setAttribute('data-color', mode);
+        setThema(mode);
+        handleThemaChageRequest(mode);
+    };
 
-    const handleThemaChageRequest = useCallback(_debounce(() => {
-        console.log('mode c')
-        setThemaApiState(!themaApiState)
-    }, 1000), [themaApiState])
+    const handleThemaChageRequest = useCallback(_debounce((mode) => {
+        dispatch({ type: "USER_DARKMODE_CHANGE_REQUEST" });
+        changeDarkmode({ userId: state.user._id, mode: mode });
+        setThemaApiState(!themaApiState);
+    }, 500), [themaApiState]);
 
     return (
-        <Fragment>
-            {thema ? (
+        <div className={`${className}`}>
+            {thema === 'dark' ? (
                 <Button 
                     className={'button_type3 list'} 
                     onClick={() => handleThemaChange('light')}
@@ -34,7 +38,7 @@ const DarkMode = () => {
                     onClick={() => handleThemaChange('dark')}
                 ><PiMoonDuotone /><span>어두운화면으로 보기</span></Button>
             )}
-        </Fragment>
+        </div>
     );
 };
 

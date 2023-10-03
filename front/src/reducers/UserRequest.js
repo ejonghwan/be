@@ -21,7 +21,7 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 
 const UserRequest = () => {
     const { dispatch } = useContext(UserContext); 
-    // const accToken = localStorage.getItem('X-access-token');
+    ;
     const accToken = getWithExpire('X-access-token')
 
    // 회원가입 유저
@@ -136,7 +136,7 @@ const UserRequest = () => {
     // 로그아웃 유저 
      const logoutUser = async () => {
         try {
-            // const accToken = localStorage.getItem('X-access-token');
+            ;
             if(!accToken) throw new Error('is not acctoken');
             const config = {
                 headers: {
@@ -161,7 +161,7 @@ const UserRequest = () => {
     // 이름 수정 
      const userInfoEditUser = async data => {
         try {
-            // const accToken = localStorage.getItem('X-access-token');
+            ;
             if(!accToken) throw new Error('user request error. is not acc token');
 
             const { name, gender, birthday, phoneNumber, _id } = data;
@@ -191,7 +191,7 @@ const UserRequest = () => {
     // 회원 + 로그인 인사람 인증번호 보내기 (회원이 로그인 한 상태에서 인증할 때)
      const memberAuthNumberRequest = async data => {
         try {
-            // const accToken = localStorage.getItem('X-access-token');
+            ;
             if(!accToken) return;
             const { email, _id } = data;
             if(!email && typeof email !== 'string') throw new Error('user request error. is not email');
@@ -262,7 +262,7 @@ const UserRequest = () => {
     // 이메일 수정 
      const emailEditUser = async data => {
         try {
-            // const accToken = localStorage.getItem('X-access-token')
+            
             if(!accToken) throw new Error('is not acctoken');
             const { email, _id } = data;
             if(!email || typeof email !== 'string') throw new Error('user request error. is not email');
@@ -289,7 +289,7 @@ const UserRequest = () => {
     // 이전 비번을 알고 있는 경우 비번수정 (로그인 된 상태)
      const prevPasswordEditUser = async data => {
         try {
-            // const accToken = localStorage.getItem('X-access-token')
+            
             if(!accToken) throw new Error('user request error. is not accToken');
             
             const { prevPassword, newPassword, _id, newPasswordCheck } = data;
@@ -389,7 +389,7 @@ const UserRequest = () => {
     // 회원탈퇴
      const secession = async data => {
         try {
-            // const accToken = localStorage.getItem('X-access-token')
+            
             if(!accToken) throw new Error('토큰 만료. 로그인해주세요');
 
             const { id, password } = data;
@@ -441,7 +441,7 @@ const UserRequest = () => {
       // 프로젝트 좋아요 취소
       const projectUnlike = async data => {
         try {
-            // const accToken = localStorage.getItem('X-access-token')
+            
             if(!accToken) throw new Error('토큰 만료. 로그인해주세요');
 
             const { projectId, userId } = data;
@@ -460,9 +460,34 @@ const UserRequest = () => {
 
         } catch(err) {
             console.error(err);
-            dispatch({ type: "PROJECT_UNLIKE_FAILUE", data: err.response.data.message })
+            dispatch({ type: "PROJECT_UNLIKE_FAILUE", data: err.response.data.message });
         };
     }
+
+     // 다크모드 변경
+     const changeDarkmode = async data => {
+        try {
+            if(!accToken) throw new Error('토큰 만료. 로그인해주세요');
+
+            const { userId, mode } = data;
+            if(!mode || typeof mode !== 'string') throw new Error('is not mode');
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'X-access-token': accToken,
+                },
+                withCredentials: true,
+            };
+            const res = await axios.patch(`${host}/api/users/darkmode/change`, data, config); 
+            dispatch({ type: "USER_DARKMODE_CHANGE_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            dispatch({ type: "USER_DARKMODE_CHANGE_FAILUE", data: err.response.data.message });
+        };
+    }
+
 
 
     return {
@@ -483,6 +508,7 @@ const UserRequest = () => {
         secession,
         projectLike,
         projectUnlike,
+        changeDarkmode,
     }
 }
 

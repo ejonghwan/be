@@ -216,10 +216,10 @@ router.patch('/edit/email', auth, async(req, res) => {
 router.post('/edit/password', auth, async (req, res) => {
     try {
         const { _id, prevPassword, newPassword, newPasswordCheck } = req.body;
-        if(!mongoose.isValidObjectId(_id)) return res.status(400).json({ message: '_id가 없습니다.' }) 
-        if(!prevPassword && typeof prevPassword !== 'string') return res.status(400).json({ message: '변경 전 비밀번호가 없습니다.' }) 
-        if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: '새로운 비밀번호가 없습니다.' }) 
-        if(newPassword !== newPasswordCheck) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' })
+        if(!mongoose.isValidObjectId(_id)) return res.status(400).json({ message: '_id가 없습니다.' }) ;
+        if(!prevPassword && typeof prevPassword !== 'string') return res.status(400).json({ message: '변경 전 비밀번호가 없습니다.' });
+        if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: '새로운 비밀번호가 없습니다.' });
+        if(newPassword !== newPasswordCheck) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' });
 
         const user = await User.findById(_id);
         const matched = await bcrypt.compare(prevPassword, user.password);
@@ -232,7 +232,7 @@ router.post('/edit/password', auth, async (req, res) => {
                 bcrypt.hash(newPassword, salt, (err, hash) => {
                     user.password = hash;
                     user.save();
-                    res.status(201).end()
+                    res.status(201).end();
                 });
             });
         };
@@ -250,14 +250,14 @@ router.post('/edit/password', auth, async (req, res) => {
 router.post('/find/password', async (req, res) => {
     try {
         const { _id, newPassword, newPasswordCheck } = req.body;
-        if(!_id && typeof _id !== 'string') return res.status(400).json({ message: '아이디가 없습니다.' }) 
+        if(!_id && typeof _id !== 'string') return res.status(400).json({ message: '아이디가 없습니다.' }) ;
         if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' }) 
-        if(newPassword !== newPasswordCheck) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' })
+        if(newPassword !== newPasswordCheck) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' });
 
-        const user = await User.findOne({id: _id})
-        if(!user) return res.status(400).json({ message: 'is not user' })
-        const prevPasswordMatched = await bcrypt.compare(newPassword, user.password)
-        if(prevPasswordMatched) return res.status(401).json({ message: '이전 비밀번호랑 같습니다.', matched: true })
+        const user = await User.findOne({id: _id});
+        if(!user) return res.status(400).json({ message: 'is not user' });
+        const prevPasswordMatched = await bcrypt.compare(newPassword, user.password);
+        if(prevPasswordMatched) return res.status(401).json({ message: '이전 비밀번호랑 같습니다.', matched: true });
       
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newPassword, salt, (err, hash) => {
@@ -268,9 +268,9 @@ router.post('/find/password', async (req, res) => {
         });
     } catch(err) {
         console.error(err)
-        res.status(500).json({ message: err.message })
-    }
-})
+        res.status(500).json({ message: err.message });
+    };
+});
 
 
 /* 인증로직 간단하게 
@@ -301,15 +301,15 @@ router.post('/find/id', async (req, res) => {
         const match = await bcrypt.compare(authNumber, getAuthCode);
         if(!match) return res.status(400).json({ message: '인증번호가 다릅니다'});
 
-        const user = await User.findById(get_id)
+        const user = await User.findById(get_id);
         if(!user) return  res.status(500).json({ message: '유저가 없습니다. 회원가입해주세요' });
 
-        res.status(200).json({id: user.id})
+        res.status(200).json({id: user.id});
     } catch(err) {
-        console.error(err)
-        res.status(500).json({ message: err.message })
-    }
-})
+        console.error(err);
+        res.status(500).json({ message: err.message });
+    };
+});
 
 
 
@@ -332,12 +332,12 @@ router.post('/find/id/question', async (req, res) => {
         if(user.question.questionType !== questionType) return  res.status(500).json({ message: '질문과 답이 등록된 정보와 다릅니다' });
         if(user.question.result !== result) return  res.status(500).json({ message: '질문의 답이 등록된 정보와 다릅니다' });
 
-        res.status(200).json({id: user.id})
+        res.status(200).json({id: user.id});
     } catch(err) {
         console.error(err)
-        res.status(500).json({ message: err.message })
-    }
-})
+        res.status(500).json({ message: err.message });
+    };
+});
 
 
 
@@ -376,12 +376,12 @@ router.post('/delete', auth, async (req, res) => {
         const categoryList = [];
         for(let i = 0; i < projectList.length; i++) {
             categoryList.push(...projectList[i].categorys);
-        }
+        };
         const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], []) //중복제거
         projectList.map(async item => {
             // 유저 삭제 시 유저가 만든 카테고리에 연결된 프로젝트 아이디 삭제
             await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": item._id } }, { new: true }) //후 ..삭제됐다!!!
-        })
+        });
 
         // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트 - 테스트 완료
         if(user && passwordMatch) {
@@ -402,11 +402,11 @@ router.post('/delete', auth, async (req, res) => {
                     { $pull: { "joinUser": { _id: user._id } } },
                     { new: true }
                 )
-            ])
+            ]);
             // 테스트 다 끝나면 활성화 - 테스트완료
             await User.deleteOne({ id: id });
             res.status(201).clearCookie('X-refresh-token').end();
-        }
+        };
 
         // 유저를 삭제하면 
         /*
@@ -433,8 +433,29 @@ router.post('/delete', auth, async (req, res) => {
     } catch(err) {
         console.error(err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
+
+
+
+
+//@ path    POST /api/users/darkmode/change
+//@ doc     질답으로 아이디 찾기
+//@ access  public
+router.patch('/darkmode/change', async (req, res) => {
+    try {
+        const { userId, mode } = req.body;
+        if(!mode) return res.status(400).json({ message: '모드값이 없습니다.' });
+        await User.findOneAndUpdate({ _id: userId }, { darkMode: mode });
+        res.status(200).json({ mode });
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ message: err.message });
+    };
+});
+
+
+
 
 
 

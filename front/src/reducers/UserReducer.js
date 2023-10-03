@@ -71,7 +71,8 @@ export const UserIntialState = {
 
 
 const UserReducer = (state = UserIntialState, action) => {
-    switch(action.type) {
+    
+        switch(action.type) {
             case "LOADING" : return {
                 ...state,
                 loading: true,
@@ -482,7 +483,8 @@ const UserReducer = (state = UserIntialState, action) => {
                     chageDarkModeLoading: true,
                 }
 
-            case "USER_DARKMODE_CHANGE_SUCCESS": 
+            case "USER_DARKMODE_CHANGE_SUCCESS":
+                console.log(action.data) 
                 return {
                     ...state,
                     chageDarkModeLoading: false,
@@ -490,7 +492,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     chageDarkModeError:'',
                     user: {
                         ...state.user,
-                        // darkMode: action.data
+                        darkMode: action.data.mode
                     }
                 }
 

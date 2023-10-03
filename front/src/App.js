@@ -27,14 +27,15 @@ const App = () => {
       if(!accToken) return;
 
       // 로그아웃/시간후로그아웃 제외 예상치못하게 로그아웃되어 있는 경우 무한로딩 뜨는 문제해결
-       if(!state.isLogged) dispatch({ type: "LOADING_CLEAR" })
+       if(!state.isLogged) dispatch({ type: "LOADING_CLEAR" });
 
       dispatch({ type: "USER_LOAD_REQUEST" });
       await getUser(); 
+      
 
     } catch(err) {
       console.error('catch?', err);
-    } 
+    } ;
   };
 
   const userEmailLoad = async () => { //메일로 유입되는 유저는 acc토큰 넘겨줌
@@ -42,21 +43,23 @@ const App = () => {
       if(accToken && valid) {
           if(!accToken) throw new Error('is not acctoken');
           await getUser(accToken);
-          // searchParams.delete('valid') //이거 왜 안되지 ..
-          // searchParams.delete('accToken')
-          window.location.href = '/'
-      }
+          window.location.href = '/';
+      };
     } catch(err) {
       console.error(err)
-    }
-  }
+    };
+  };
   
 
   useEffect(() => {
-    userLoad()
-    userEmailLoad()
-    // dispatch({type: "ERROR_LOADING_CLEAR"})
-  }, [])
+    userLoad();
+    userEmailLoad();
+  }, []);
+
+  useEffect(() => {
+    let html = document.querySelector('html');
+    html.setAttribute('data-color', state.user?.darkMode || 'right');
+  }, [state.user])
 
 
  
