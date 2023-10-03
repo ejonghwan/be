@@ -57,8 +57,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let initTheme = isBrowserDarkMode ? 'dark' : 'light';
     let html = document.querySelector('html');
-    html.setAttribute('data-color', state.user?.darkMode || 'light');
+    html.setAttribute('data-color', state.user?.darkMode || initTheme);
   }, [state.user])
 
 

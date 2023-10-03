@@ -60,7 +60,7 @@ const UserRequest = () => {
             
             // 다크모드 초기값은시스템에서 유저가 설정해둔 값
             const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            let initTheme = isBrowserDarkMode ? 'dark' : 'light' //여기해야댐
+            let initTheme = isBrowserDarkMode ? 'dark' : 'light';
 
             const config = {
                 headers: { "Content-Type": "application/json" },
@@ -430,7 +430,6 @@ const UserRequest = () => {
             };
             const like = await axios.patch(`${host}/api/project/like`, data, config); 
             
-        console.log('reduc', like)
             dispatch({ type: "PROJECT_LIKE_SUCCESS", data: like.data });
             return like;
             

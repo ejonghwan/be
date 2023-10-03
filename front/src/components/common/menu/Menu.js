@@ -37,7 +37,7 @@ const Menu = () => {
                     <DarkMode />
                 </li>
                 <li>
-                    <div className='list'>
+                    <div className='list logout'>
                         <PiSignOutDuotone /><LogoutForm />
                     </div>
                 </li>
