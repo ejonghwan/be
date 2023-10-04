@@ -43,6 +43,8 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                             {formattedDate}
                         </span>
                         <div className='day_cont'>
+                            {project.constructorUser?.days[0].date}
+                           
                             {/* 생성자 */}
                             {
                                 project.constructorUser.days?.map((userDay, idx) => (
@@ -58,6 +60,7 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                                     </Fragment>
                                 ))
                             }
+                            
                             {/* 참여유저 */}
                             {
                                 project.instanceUser?.map(user => user.days?.map((userDay, idx) => (
