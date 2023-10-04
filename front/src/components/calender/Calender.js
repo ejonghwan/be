@@ -56,7 +56,6 @@ const Calender = ({ project }) => {
     return (
         <Fragment>
             <article className="calendar">
-                {format(new Date('2023/9/9'), 'yyyy-M-d')}
                 <CalenderHeader
                     currentMonth={currentMonth}
                     prevMonth={prevMonth}

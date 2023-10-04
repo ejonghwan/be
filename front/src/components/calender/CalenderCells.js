@@ -32,7 +32,7 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                         className={`col cell ${
                             !isSameMonth(day, monthStart) ? 'disabled' : isSameDay(day, selectedDate)
                                 ? 'selected' : format(currentMonth, 'M') !== format(day, 'M')
-                                ? 'not-valid' : 'valid'} ${project.constructorUser.days?.map(userDay => isSameDay(day, new Date(userDay.date)) && userDay.count >= 0 ? `constructor` : null).join('')} ${project.instanceUser?.map(user => user.days?.map((userDay, idx) => isSameDay(day, new Date(userDay.date)) && userDay.count >= 0 ? `constructor` : null).join(' ')).join(' ')} ${isSameDay(day, new Date()) ? `today` : ``}`}
+                                ? 'not-valid' : 'valid'} ${project.constructorUser.days?.map(userDay => isSameDay(day, new Date(userDay.date.replaceAll('-', '/'))) && userDay.count >= 0 ? `constructor` : null).join('')} ${project.instanceUser?.map(user => user.days?.map((userDay, idx) => isSameDay(day, new Date(userDay.date.replaceAll('-', '/'))) && userDay.count >= 0 ? `constructor` : null).join(' ')).join(' ')} ${isSameDay(day, new Date()) ? `today` : ``}`}
                         key={day}
                         // onClick={() => onDateClick(parse(cloneDay))}
                         onClick={() => onDateClick(cloneDay, new Date(cloneDay))}
@@ -43,13 +43,11 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                             {formattedDate}
                         </span>
                         <div className='day_cont'>
-                            {project.constructorUser?.days[0].date}
-                           
                             {/* 생성자 */}
                             {
-                                project.constructorUser.days?.map((userDay, idx) => (
-                                    <Fragment key={idx}>
-                                        { userDay.count >= 0 && isSameDay(day, new Date(userDay.date)) && (
+                                project.constructorUser.days?.map((userDay, idx) => {
+                                    return <Fragment key={idx}>
+                                        { userDay.count >= 0 && isSameDay(day, new Date(userDay.date.replaceAll('-', '/'))) && (
                                             <div className='certified_wrap'>
                                                 <div className='certified_img'>
                                                     <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${project.constructorUser._id.profileImage.key}`} alt="유저 프로파일" />
@@ -58,14 +56,14 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                                             </div>
                                         )}
                                     </Fragment>
-                                ))
+                                })
                             }
                             
                             {/* 참여유저 */}
                             {
                                 project.instanceUser?.map(user => user.days?.map((userDay, idx) => (
                                     <Fragment key={idx}>
-                                        {userDay.count >= 0 && isSameDay(day, new Date(userDay.date)) && (
+                                        {userDay.count >= 0 && isSameDay(day, new Date(userDay.date.replaceAll('-', '/'))) && (
                                             <div className='certified_wrap'>
                                                 <div className='certified_img'>
                                                     <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user._id.profileImage.key}`} alt="유저 프로파일" />
