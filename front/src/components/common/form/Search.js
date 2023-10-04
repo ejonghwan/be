@@ -5,7 +5,7 @@ import Label from "./Label";
 import Button from "./Button";
 import './Search.css';
 
-const Search = ({ id, className, type, placeholder, name, value, onChange, isLabel = false, labelCont, isButton = false, buttonCont, buttonType, buttonClick, buttonIcon, isSearchResult = false, children, handleInputReset }) => {
+const Search = ({ id, className = '', type, placeholder, name, value, onChange, isLabel = false, labelCont, isButton = false, buttonCont, buttonType, buttonClick, buttonIcon, isSearchResult = false, children, handleInputReset }) => {
     return (
         <div className="search_wrap">
             {isLabel && <Label htmlFor={id} content={labelCont} className={`label_type1 search_label ${className}`} /> } 
@@ -22,7 +22,8 @@ const Search = ({ id, className, type, placeholder, name, value, onChange, isLab
                 <div className="is_button">
                     {value && ( 
                         <div className="search_button_wrap">
-                            <Button className={`button_type_search reset_button ${className}`} onClick={handleInputReset} type={"button"}><PiXCircleDuotone /></Button>
+                            <Button className={`button_delete2 reset_button hover_type1 ${className}`} onClick={handleInputReset} type={"button"}></Button>
+                            {/* <Button className={`button_type_search reset_button ${className}`} onClick={handleInputReset} type={"button"}><PiXCircleDuotone /></Button> */}
                         </div>
                     )}
                     {isButton && (

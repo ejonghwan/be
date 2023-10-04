@@ -75,6 +75,7 @@ export const UserIntialState = {
     rejectMylistProjectError: null,
 
     user: {},
+    requestMyProject: []
 }
 
 
@@ -572,6 +573,29 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state,
                     rejectMylistProjectLoading: false,
                     rejectMylistProjectError: action.data
+                }
+
+
+            case "MYLIST_PROJECT_REQUEST_REQUEST": 
+                return {
+                    ...state,
+                    requestMylistProjectLoading: true,
+                }
+
+            case "MYLIST_PROJECT_REQUEST_SUCCESS":
+                return {
+                    ...state,
+                    requestMylistProjectLoading: false,
+                    requestMylistProjectDone: true,
+                    requestMylistProjectError:'',
+                    requestMyProject: action.data
+                }
+
+            case "MYLIST_PROJECT_REQUEST_FAILUE" : 
+                return {
+                    ...state,
+                    requestMylistProjectLoading: false,
+                    requestMylistProjectError: action.data
                 }
 
             

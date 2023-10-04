@@ -2,6 +2,13 @@ export const SearchIntialState = {
     successMessage: '',
     errorMessage: '',
     loading: false,
+
+
+    searchUserLoading: false,
+    searchUserDone: false,
+    searchUserError: false,
+
+
     userSearch: [],
     categorySearch: [],
     projectSearch: [],
@@ -10,37 +17,48 @@ export const SearchIntialState = {
 
 const SearchReducer = (state = SearchIntialState, action) => {
     switch(action.type) {
-            case "SEARCH_REQUEST" : 
+            // case "SEARCH_REQUEST" : 
+            //     return {
+            //         ...state,
+            //         loading: true,
+            //     }
+
+            // case "ERROR_LOADING_CLEAR" : 
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         successMessage: '',
+            //         errorMessage: '',
+            //     }
+
+            case "USER_SEARCH_REQUEST": 
                 return {
                     ...state,
-                    loading: true,
+                    searchUserLoading: true,
                 }
-
-            case "ERROR_LOADING_CLEAR" : 
-                return {
-                    ...state,
-                    loading: false,
-                    successMessage: '',
-                    errorMessage: '',
-                }
-
             
             case "USER_SEARCH_SUCCESS": 
                 // action  {type: "", data: ...} 
                 return {
                     ...state,
-                    loading: false,
+                    searchUserLoading: false,
+                    searchUserDone: true,
+                    searchUserError: '',
                     userSearch: action.data
                 }
 
             case "USER_SEARCH_FAILUE" : 
                 return {
                     ...state,
-                    loading: false,
-                    signupErrorMessage: action.data,
+                    searchUserLoading: false,
+                    searchUserError: action.data,
                 }
 
 
+
+
+
+                
             case "CATEGORY_SEARCH_SUCCESS": 
                 return {
                     ...state,

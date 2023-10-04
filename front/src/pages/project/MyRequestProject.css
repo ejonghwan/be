@@ -5,6 +5,13 @@
     width: 100%;
 }
 
+.friend_list .invite_friend h4 > span,
+.friend_list .request_friend h4 > span {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+
 .friend_list .request_friend {
     margin-top: 15px;
     font-size: 1.3rem;

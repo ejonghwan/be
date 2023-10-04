@@ -221,8 +221,10 @@ const CreateProjectDetail = () => {
                         handleInputReset={handleUserValueReset}
                     >
                         
-                        {SearchState.loading ? (
-                            <div>친구 검색중...</div>
+                        {SearchState.searchUserLoading ? (
+                            <div className='search_result_user'>
+                                <Spinners full={true} />
+                            </div>
                         ) : (
                             <ul className='search_result_user'>
                                 {SearchState.userSearch?.filter(user => user.id !== state.user.id).map(((user, idx) => <li key={idx} className='search_result_user_item'>{
@@ -243,6 +245,11 @@ const CreateProjectDetail = () => {
                         )}
                         {/* 검색 결과가 없는 경우 */}
                         {!SearchState.loading && SearchState.userSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"검색한 친구는 회원이 아닙니다."} subText={" 다시 검색해보세요."}/>}
+                        {SearchState.searchUserError && (
+                            <ErrorMsg className={'error_type1 align_c gapt_30'}>
+                              {SearchState.searchUserError}
+                          </ErrorMsg>
+                        )}
                     </Search>
                     <div className='category_wrap gapt_10'>
                         <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete} contentName={"친구"} isNoData={false}/>

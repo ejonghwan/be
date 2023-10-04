@@ -536,6 +536,28 @@ const UserRequest = () => {
     }
 
 
+    // 내가 신청한 프로젝트
+     const requestMyProject = async data => {
+        try {
+            const { userId } = data;
+            if(!userId || typeof userId !== 'string') throw new Error('is not userId');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+                },
+                withCredentials: true,
+            }
+            const res = await axios.get(`${host}/api/project/myrequest/${userId}`, config);
+            dispatch({ type: "MYLIST_PROJECT_REQUEST_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            dispatch({ type: "MYLIST_PROJECT_REQUEST_FAILUE", data: err.response.data.message });
+        }
+    }
+
+
     return {
         emailAuth, 
         signupUser, 
@@ -556,7 +578,8 @@ const UserRequest = () => {
         projectUnlike,
         changeDarkmode,
         inviteMyListProject,
-        rejectMyListProject
+        rejectMyListProject,
+        requestMyProject
 
     }
 }

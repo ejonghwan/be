@@ -10,6 +10,7 @@ import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
 import './UserSearch.css';
+import Spinners from '../common/spinners/Spinners';
 
 
 const UserSearch = ({ setFriendData = [] }) => {
@@ -88,8 +89,10 @@ const UserSearch = ({ setFriendData = [] }) => {
                 onChange={handleSearchCange}
                 handleInputReset={handleUserValueReset}
             >
-                {SearchState.loading ? (
-                    <div>친구 검색중...</div>
+                 {SearchState.searchUserLoading ? (
+                    <div className='search_result_user'>
+                        <Spinners full={true} />
+                    </div>
                 ) : (
                     <ul className='search_result_user'>
                         {SearchState.userSearch?.filter(user => user.id !== state.user.id).map(((user, idx) => 
@@ -117,9 +120,9 @@ const UserSearch = ({ setFriendData = [] }) => {
             <div className='category_wrap gapt_10'>
                 <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete} contentName={"친구"} isNoData={false}/>
             </div>
-            {ProjectState.errorMessage && (
+            {SearchState.searchUserError && (
                 <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                    {ProjectState.errorMessage}
+                    {SearchState.searchUserError}
                 </ErrorMsg>
             )}
         </Fragment>

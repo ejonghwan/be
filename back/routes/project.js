@@ -69,7 +69,7 @@ router.get('/:projectId', async (req, res) => {
 //@ access  public
 router.get('/myapply/:userId', async (req, res) => {
     try {
-        const { projectId, userId } = req.params;
+        const { userId } = req.params;
         const project = await Project.find({ "instanceUser._id": userId }).populate([
             { path: 'constructorUser._id', select: 'id profileImage email name createdAt' },
             { path: 'instanceUser._id', select: 'id profileImage email name createdAt' },
@@ -85,7 +85,6 @@ router.get('/myapply/:userId', async (req, res) => {
                 ] 
             } 
         ]);
-        console.log(project)
         res.status(200).json(project)
     } catch (err) {
         console.error('server:', err);
@@ -93,6 +92,23 @@ router.get('/myapply/:userId', async (req, res) => {
     }
 })
 
+
+//@ path    GET /api/project/myrequest/:userId
+//@ doc     로드 프로젝 (내가 가입 신청한 프로젝트)
+//@ access  public
+router.get('/myrequest/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const project = await Project.find({ "joinUser._id": userId }).populate([
+            { path: 'constructorUser._id', select: 'name' },
+        ]).select("_id title likeCount instanceUser createdAt projectImages");
+        console.log(project)
+        res.status(200).json(project)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
 
 
 // 1. 내가 만든 프로젝트  (이건 데이터들 내장 갯수제한 )  
