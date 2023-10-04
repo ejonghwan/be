@@ -64,13 +64,27 @@ const CreateProjectDetail = () => {
         for(let i = 0; i < equalsFillter.length; i++) {
             inCategoryName.push({ categoryName: equalsFillter[i] })
         }
-        setSubmitData(prev => ({...prev, categorys: [...prev.categorys, ...inCategoryName]}))
+        
+        // 기존에 있는 카테고리네임 중복제거
+        let defaultNameFilter = [...submitData.categorys, ...inCategoryName].reduce((acc, cur) => {
+            if( acc.findIndex(({ categoryName }) => categoryName === cur.categoryName) === -1 ) {
+                acc.push(cur);
+                return acc;
+            }
+            return acc;
+        }, [])
+
+        setSubmitData(prev => ({...prev, categorys: [...defaultNameFilter]}))
         setCategoryValue('')
     }, [categoryValue])
 
     const handleTagDelete = (e, tagName) => {
         setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}))
     }
+
+    useEffect(() => {
+        console.log(submitData.categorys)
+    }, [submitData])
 
    
 

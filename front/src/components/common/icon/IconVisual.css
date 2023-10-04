@@ -18,7 +18,7 @@
 .icon_wrap .icon > svg {
     width: 60%;
     height: 60%;
-    color: var(--text-color1);
+    color: var(--icon-color1);
     position: absolute;
     top: 50%;
     left: 50%;

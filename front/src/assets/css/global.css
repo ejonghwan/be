@@ -18,7 +18,9 @@
     --hover-color3:rgba(9, 9, 9, 0.258);
     --hover-color4:#fff;
     --hover-color5: #f6fbff;
+
     --icon-color: #666666;
+    --icon-color1: #555;
     --scroll-color: #868686;
     --scroll-bg-color: #ffffff;
     --disabled-bg-color: #d9d9d9;
@@ -49,7 +51,7 @@
     --line-color1: #f4f4f4;
     --line-color2: #ddd;
     --line-color3: #c3c3c3;
-
+    --revers-color: #fff;
     --mobile: 960px;
 
 }
@@ -57,29 +59,48 @@
 
 :root[data-color=dark] {
     
-    --point-color: #509af9;
+    --point-color: #448deb;
     --point-color2: #cf1f1f;
-    --main-bg-color: black;
-    --header-bg-color: #f4f4f4;
-    --hover-color: #f4f4f4;
-    --hover-color2: #000000;
-    --icon-color: #666666;
-    --scroll-color: #545151;
-    --scroll-bg-color: #0d1117;
+    --main-bg-color: #121213;
+    --header-bg-color: #121213;
+    --hover-color: #2f2f2f;
+    --hover-color2:rgb(53, 53, 53);
+    --hover-color3:rgba(201, 201, 201, 0.258);
+    --hover-color4:#000000;
+    --hover-color5: #151515;
+    --icon-color: #bfbfbf;
+    --icon-color1: #dcdcdc;
+    --scroll-color: #666666;
+    --scroll-bg-color: #121213;
+    --disabled-bg-color: #464646;
+    --disabled-color: #6c6c6c;
+    --box-shadow: 3px 7px 24px rgba(0, 0, 0, 0.3);
+    --tag-color: #55a5f4;
+    --arrow-color: #7f7f7f;
     
     
-    --text-color-white: #fff;
-    --text-color1: #555;
+    
+    --text-color-white: #ffffff;
+    --text-color0: #dadada;
+    --text-color1: #a1a1a1; 
+    --text-color2: #7b7b7b;
     --text-error-color: red;
+    --text-success-color: #2e9e64;
     
-    --bg-box-white: #fff;
-    --bg-box-color1: rgb(240, 240, 240); 
-    --bg-box-color2: #ddd; 
-    --bg-box-color3: #efefef;; 
+    --bg-box-white: #121213;
+    --bg-box-black: #000000;
+    --bg-box-color0: #1b1b1c; 
+    /* --bg-box-color1: rgb(240, 240, 240);  */
+    --bg-box-color1: #1b1b1c;
+    --bg-box-color2: #343435; 
+    --bg-box-color3: #1f1f1f;; 
+    --bg-box-color4: #444; 
+    --bg-box-opacity: #ffffffd9; 
 
-    --line-color1: #f4f4f4;
-    --line-color2: #ddd;
-
+    --line-color1: #333333;
+    --line-color2: #2d2d2d;
+    --line-color3: #656565;
+    --revers-color: #000;
     --mobile: 960px;
 }
 

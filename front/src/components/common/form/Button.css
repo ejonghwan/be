@@ -11,14 +11,12 @@
     font-size: 1.5rem;
     white-space: nowrap;
     color: var(--text-color1);
-    /* background-color: var(--bg-box-color1); */
-    /* filter: contrast(85%); */
+    background-color: var(--bg-box-color1);
     filter: saturate(90%);
     
 }
 
 [class*=button_type]:hover {
-    /* filter: contrast(100%); */
     filter: saturate(150%);
     
 }
@@ -27,6 +25,7 @@
     border: none;
     cursor: pointer;
     background-color: var(--bg-color-white);
+    color: var(--text-color1);
 }
 
 
@@ -280,7 +279,7 @@ button:disabled {
     pointer-events: none;
 }
 
-
+/* 
 .button_delete {
     padding: 10px;
     position: relative;
@@ -298,6 +297,7 @@ button:disabled {
     background-color: var(--text-color2);
     width: 1px;
     height: 9px;
+    transform-origin: 50% 50%;
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
@@ -310,9 +310,44 @@ button:disabled {
     background-color: var(--text-color2);
     width: 1px;
     height: 9px;
+    transform-origin: 50% 50%;
     transform: translate(-50%, -50%) rotate(45deg);
+} */
+
+
+
+.button_delete {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    border-radius: 50%;
+    background-color: var(--bg-box-color1);
+    margin-left: 3px;
 }
 
+.button_delete::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 10px;
+    background-color: var(--text-color2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.button_delete::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 10px;
+    background-color: var(--text-color2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
 
 .button_delete2 {
     width: 40px;
