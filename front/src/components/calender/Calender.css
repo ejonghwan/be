@@ -79,7 +79,7 @@
 }
 
 
-.calendar .body .constructor .day::after,
+/* .calendar .body .constructor .day::after,
 .calendar .body .instance .day::after {
     content: '';
     width: 10px;
@@ -87,14 +87,13 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    /* background-color: red; */
     border-radius: 50%;
     top: 3px;
     width: 22px;
     height: 22px;
     color: #fff;
     background: url('../../assets/images/fire.png') no-repeat center/13px 16px;
-}
+} */
 
 
 /* 형제선택으로 달력체크 */
@@ -151,7 +150,7 @@
 
 .calendar .col > .day {
     display: block;
-    padding: 5px 0;
+    padding: 2px 0;
     color: var(--text-color1);
     padding-left: 3px;
     padding-left: 7px;
@@ -220,15 +219,15 @@
 }
 
 .certified_img {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     border-radius: 10px;
     overflow: hidden;
     margin-right: 3px;
 }
 
 .certified_name {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--text-color1);
 }
 
