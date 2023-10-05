@@ -348,7 +348,7 @@ const LoadProject = ({ projectId }) => {
                         <UserSearch setFriendData={setFriendData} />
                         <div className='add_friend align_c gapt_40'>
                             {ProjectState.addInviteProjectLoading ? (<Spinners />) : (
-                                <Button type={'button'} className={"button_type2"} onClick={handleAddFriend}>초대 보내기</Button>
+                                <Button type={'button'} className={"button_type2"} onClick={handleAddFriend} disabled={friendData.length === 0 && true} >초대 보내기</Button>
                             )}
                         </div>
                         {ProjectState.addInviteProjectError && (

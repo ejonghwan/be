@@ -132,8 +132,8 @@
 }
 
 /* 마지막은 무조건 */
-.calendar .body .row .cell:last-child .day,
-.calendar .body .row .cell:last-child .day{
+.calendar .body .row .cell.constructor:last-child .day,
+.calendar .body .row .cell.instance:last-child .day{
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
@@ -175,7 +175,7 @@
      font-size: 1rem;
      font-weight: 400;
      position: absolute; 
-     top: 8px;
+     top: 5px;
      left: 25px;
      margin: 0 auto;
 }
