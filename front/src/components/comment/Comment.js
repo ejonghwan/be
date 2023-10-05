@@ -13,7 +13,7 @@ const Comment = ({ comments = [] }) => {
             <CommentCreate comments={comments} />
             {WriteState.createCommentLoading && <div>댓글 생성 중.......</div>}
             
-            {comments.map((comment, idx) => (
+            {comments?.map((comment, idx) => (
                 <Fragment key={comment._id}>
                     <CommentDetail 
                         comment={comment}
