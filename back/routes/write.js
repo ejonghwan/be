@@ -131,7 +131,7 @@ router.post('/', async (req, res) => {
 
         const date = new Date();
         const curDate = new Date(date.setHours(date.getHours() + 9));
-        const nowDate = `${curDate.getFullYear()}-` + `${curDate.getMonth() + 1}-` + `${curDate.getDate()}`;
+        const nowDate = `${curDate.getFullYear()},` + `${curDate.getMonth() + 1},` + `${curDate.getDate()}`;
         const isConstructor = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id } ] }, )
         const isConstructorDate = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
     
@@ -247,7 +247,7 @@ router.delete('/', async (req, res) => {
        
         // 글삭제 시 ins에 있던 해당 일 count삭제
         // 230621 생각해보니 현재 날짜가 아니라 작성한 날짜를 찾아야함.
-        const nowDate = `${deleteWriteDate.getFullYear()}-` + `${deleteWriteDate.getMonth() + 1}-` + `${deleteWriteDate.getDate()}`;
+        const nowDate = `${deleteWriteDate.getFullYear()},` + `${deleteWriteDate.getMonth() + 1},` + `${deleteWriteDate.getDate()}`;
        
         const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId } ] }, );
         const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, );
