@@ -117,7 +117,7 @@ const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, 
                                     handleCalcTime(write.createdAt) === handleCalcTime(currentMonth)).length === 0 && 
                                     <NoData 
                                         icon={<PiSmileyXEyesDuotone />} 
-                                        title={'오늘은 인증글이 없습니다.'} 
+                                        title={`${changeViewDate(currentMonth)} 인증글이 없습니다.`} 
                                         subText={'인증글을 남겨주세요.'} 
                                     />
                                 }

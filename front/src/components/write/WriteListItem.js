@@ -16,7 +16,7 @@ const WriteListItem = ({ writes, isProjectName = false }) => {
                             <span className='write_list_id'>{write.user._id.id}</span>
                         </div>
                         <div className='write_list_title_wrap'>
-                            {isProjectName && <p className='gap_5'>{write.project?._id.title}</p>}
+                            {isProjectName && <p className='gap_5'>{write?.project?._id?.title}</p>}
                             <strong className='write_list_title word_ellip_1'>{write.title}</strong>
                             <p className='write_list_conts word_ellip_1'>{write.content}</p>
                         </div>

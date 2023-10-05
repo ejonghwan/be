@@ -10,7 +10,7 @@ import Login from './login.js';
 import FindId from './findid.js';
 import FindPassword from './findpassword.js';
 import ChangePassword from './changepassword.js';
-import Error from './error.js';
+import ErrorPage from './error/ErrorPage.js';
 import StyleGuide from './guide/styleGuide.js';
 import { UserContext } from './../context/UserContext.js';
 import Protected from './protected/protectedPage.js';
@@ -56,7 +56,8 @@ const RoutesPage = () => {
                 <Route path='/project/myapply' element={!state.loadUserLoading && state.isLogged  ? <MyRequestProject page={'습관 신청/초대'} /> : <Protected page={'습관 신청/초대'} />}></Route>
 
 
-                <Route path='/error' element={<Error page={'에러'}/>}></Route>
+                <Route path='/page/error/404' element={<ErrorPage />}></Route>
+                <Route path="/*" element={<ErrorPage />} />
                 <Route path='/style/:id' element={<StyleGuide />}></Route>
             </Routes>
 

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { WriteContext } from '../context/WriteContext';
 import { ProjectContext } from '../context/ProjectContext';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 const host = process.env.REACT_APP_BACKEND_HOST;
@@ -9,7 +10,7 @@ const WriteRequest = () => {
     const { WriteDispatch } = useContext(WriteContext); 
     const { ProjectDispatch } = useContext(ProjectContext); 
     const accToken = localStorage.getItem('X-access-token');
-
+    const navigate = useNavigate();
 
     const createWrite = async data => {
         try {
@@ -45,8 +46,10 @@ const WriteRequest = () => {
                 withCredentials: true,
             }
             const res = await axios.get(`${host}/api/write/${_id}`, config);
+            if(res.data === null) return navigate('/page/error/404');
             WriteDispatch({ type: "WRITE_LOAD_SUCCESS", data: res.data });
 
+            
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "WRITE_LOAD_FAILUE", data: err.response.data.message });

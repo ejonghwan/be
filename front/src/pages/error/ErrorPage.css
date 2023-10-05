@@ -1,0 +1,25 @@
+.error_wrap {
+    position: relative;
+    height: 100% !important;
+}
+
+.error_wrap .no_data_wrap {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.error_wrap .no_data_wrap > .icon > svg {
+    width: 70px;
+    height: 70px;
+}
+
+.error_wrap .title {
+    font-size: 2rem;
+}
+
+.error_wrap .sub_text {
+    margin-top: 10px;
+    font-size: 1.5rem;
+}

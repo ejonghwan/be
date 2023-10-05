@@ -56,6 +56,7 @@ router.get('/:writeId', async (req, res) => {
                 ]}, // 이거 값 확인
             { path: "project._id", select: 'title' },
         ]);
+        console.log('back?', write)
         res.status(200).json(write)
     } catch (err) {
         console.error('server:', err);
