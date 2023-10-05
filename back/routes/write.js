@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { auth } from '../middleware/auth.js' ;
+import moment from 'moment';
 
 // model 
 import Write from '../models/write.js';
@@ -129,9 +130,11 @@ router.post('/', async (req, res) => {
         //     }], //days로 달력/잔디 같이씀
         // },],
 
-        const date = new Date();
-        const curDate = new Date(date.setHours(date.getHours() + 9));
-        const nowDate = `${curDate.getFullYear()},` + `${curDate.getMonth() + 1},` + `${curDate.getDate()}`;
+        // const date = new Date();
+        // const curDate = new Date(date.setHours(date.getHours() + 9));
+        // const nowDate = `${curDate.getFullYear()},` + `${curDate.getMonth() + 1},` + `${curDate.getDate()}`;
+        const date = moment();
+        const nowDate = date.format("YYYY/MM/DD")
         const isConstructor = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id } ] }, )
         const isConstructorDate = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
     
@@ -243,11 +246,11 @@ router.delete('/', async (req, res) => {
     try {
         const { userId, writeId, projectId } = req.body;
         const write = await Write.findById(writeId);
-        const deleteWriteDate = new Date(write.createdAt);
-       
-        // 글삭제 시 ins에 있던 해당 일 count삭제
-        // 230621 생각해보니 현재 날짜가 아니라 작성한 날짜를 찾아야함.
-        const nowDate = `${deleteWriteDate.getFullYear()},` + `${deleteWriteDate.getMonth() + 1},` + `${deleteWriteDate.getDate()}`;
+
+        const deleteWriteDate = moment(write.createdAt);
+        const nowDate = deleteWriteDate.format("YYYY/MM/DD")
+
+        console.log('del??', deleteWriteDate, nowDate)
        
         const isConstructor = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId } ] }, );
         const isConstructorDate = await Project.findOne( { $and: [{ _id: projectId }, { "constructorUser._id": userId }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, );
