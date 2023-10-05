@@ -134,7 +134,7 @@ router.post('/', async (req, res) => {
         // const curDate = new Date(date.setHours(date.getHours() + 9));
         // const nowDate = `${curDate.getFullYear()},` + `${curDate.getMonth() + 1},` + `${curDate.getDate()}`;
         const date = moment();
-        const nowDate = date.format("YYYY/MM/DD")
+        const nowDate = date.add(9, 'h').format("YYYY/MM/DD")
         const isConstructor = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id } ] }, )
         const isConstructorDate = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
     
@@ -248,7 +248,7 @@ router.delete('/', async (req, res) => {
         const write = await Write.findById(writeId);
 
         const deleteWriteDate = moment(write.createdAt);
-        const nowDate = deleteWriteDate.format("YYYY/MM/DD")
+        const nowDate = deleteWriteDate.add(9, 'h').format("YYYY/MM/DD")
 
         console.log('del??', deleteWriteDate, nowDate)
        
