@@ -19,15 +19,26 @@ const Popup = forwardRef(({ children, className, isHead = false, title, closeCli
 	});
 
     const handlePopClose = () => {
-		// document.body.style.overflow = '';
-		document.body.classList.remove('popup_active');
-		setPopOpen(false)
+        const { body } = document;
+        if(body.classList.contains('popup_active')) {
+            body.classList.remove('popup_active');
+            window.scrollTo(0, Number(body.getAttribute('data-scrolly')));
+            body.removeAttribute('data-scrolly');
+            setPopOpen(false)
+        }
+	
 	}
 
+
 	useEffect(() => {
+        const yOffset = window.pageYOffset;
+        const body = document.body;
 		if(popOpen) {
-			// document.body.style.overflow = 'hidden';
-			document.body.classList.add('popup_active');
+            if(!body.classList.contains('popup_active')) {
+                body.classList.add('popup_active');
+                body.setAttribute('data-scrolly', yOffset.toString());
+                body.style.top = `-${yOffset}px`;
+            }
 		}
 	}, [popOpen])
 
