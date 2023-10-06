@@ -52,6 +52,7 @@
     --line-color2: #ddd;
     --line-color3: #c3c3c3;
     --revers-color: #fff;
+    --overview-color: #999;
     --mobile: 960px;
 
 }
@@ -101,6 +102,7 @@
     --line-color2: #2d2d2d;
     --line-color3: #656565;
     --revers-color: #000;
+    --overview-color: rgb(33, 33, 35);
     --mobile: 960px;
 }
 

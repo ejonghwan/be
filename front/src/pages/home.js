@@ -6,6 +6,7 @@ import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import ProjectRequest from '../reducers/ProjectRequest.js';
 import { ProjectContext } from '../context/ProjectContext.js';
 import './home.css';
+import DaysPanel from '../components/dayspanel/DaysPanel.js';
 
 
 
@@ -53,6 +54,10 @@ const Home = ({ page }) => {
                 </div>
             </div>
 
+
+            <div className='b_conts'>
+                <DaysPanel />
+            </div>
             <div className='b_conts'>
                 <h3 className='h3_title gap_20'>내가 진행중인 습관</h3>
                 

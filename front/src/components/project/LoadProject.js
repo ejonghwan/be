@@ -25,12 +25,14 @@ import WriteUpload from '../write/WriteUpload';
 import DeleteProject from './DeleteProject';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import Spinners from '../common/spinners/Spinners';
+import DaysPanel from '../dayspanel/DaysPanel';
 
 
 const LoadProject = ({ projectId }) => {
     const { loadProject, inviteProject, rejectProject, withdrawProject, addFriendProject, editProject } = ProjectRequest();
     const { state } = useContext(UserContext);
     const { ProjectState, ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
+    const [ userClasses, setUserClasses ] = useState('')
 
     const [friendData, setFriendData] = useState([])
     const editRef = useRef(null);
@@ -106,11 +108,19 @@ const LoadProject = ({ projectId }) => {
         }
     }
 
- 
+
+    useEffect(() => {
+        setUserClasses(() => {
+            if(state.user?._id === project.constructorUser?._id._id) return 'const';
+            if(project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0) return 'inst';
+            return 'visitor';
+        })
+    }, [state, project])
 
     useEffect(() => {
         handleLoadProject();
     }, [])
+
 
     return (
         // 로드프로젝은 로그인 한 사람만 볼 수 있음
@@ -130,8 +140,7 @@ const LoadProject = ({ projectId }) => {
                                 // {txt: 'UpdateAt ', date: changeViewDate(project.updatedAt, 'second')},
                             ]} />
                         </div>
-                        
-                        {state.user?._id === project.constructorUser?._id._id && (
+                        {userClasses === 'const' ? (
                             <div className='constructor_options'>
                                 <span>
                                     <Button className={'button_type4 ico_hover_type2'} onClick={handleEditState}>
@@ -146,7 +155,7 @@ const LoadProject = ({ projectId }) => {
                                     </Button>
                                 </span>
                             </div>
-                        )}
+                        ) : (null)}
                     </div>
                     {/* 모두 보임 */}
                     <div className='gapt_10 pos_rel'>
@@ -164,16 +173,29 @@ const LoadProject = ({ projectId }) => {
                     </div>
 
                     {/* 습관에 가입한 유저 + 생성자만 보임 */}
-                    {state.user?._id === project.constructorUser?._id._id || 
-                    project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0 ? 
+                    {userClasses === 'const' || userClasses === 'inst' ?
                     (
                         <Fragment>
+                            {/* 인증버튼 */}
                             <div className='align_c gapt_30'>
                                 <Button className={'button_type2'} onClick={handleAuthWrite}>오늘 습관 인증</Button>
                             </div>
+
+                            {/* 달력 */}
                             <div className='gapt_50'>
                                 <Calender project={project} />
                             </div>
+
+                            {/* 한눈에 보기 패널 판 */}
+                            <div>
+                                <h3 className='gapt_50 gap_10'>{new Date().getFullYear()}년 습관 한눈에 보기</h3>
+                                <DaysPanel userDays={
+                                    userClasses === 'const' ? project.constructorUser?.days : 
+                                    project.instanceUser?.filter(user => user._id._id === state.user._id)[0].days
+                                } />
+                            </div>
+
+                            {/* 습관 참여유저 */}
                             <div className='part_user'>
                                 <h3 className='gapt_50 gap_10'>습관에 참여한 친구들</h3>
                                 {project.instanceUser && project.instanceUser.length > 0 ? (
@@ -182,6 +204,8 @@ const LoadProject = ({ projectId }) => {
                                     <NoData icon={<PiUsersDuotone />} title={"이 습관을 같이 하는 친구가 없습니다."} />
                                 )}
                             </div>
+
+                            {/* 습관 인증글 */}
                             <div>
                                 <h3 className='gapt_50 gap_10'>모든 습관 인증글</h3>
                                 {project.writes.length > 0 ? (

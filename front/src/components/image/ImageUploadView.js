@@ -14,7 +14,7 @@ const ImageUploadView = ({ path, setImageData, className = '', initailImageSrc =
 
     const handleInputChange = e => {
         const imageData = e.target.files[0];
-        if(imageData.size > 1024 * 1024 * 5) return alert('1MB 이하의 사진만 등록 가능합니다.');
+        if(imageData.size > 1024 * 1024 * 5) return alert('1MB 이하 파일만 등록할 수 있습니다.\n\n' + '지금 파일 용량 : ' + (Math.round(imageData.size / 1024 / 1024 * 100) / 100) + 'MB');
         setFile(imageData);
         setFileName(imageData.name);
         const fileReader = new FileReader();

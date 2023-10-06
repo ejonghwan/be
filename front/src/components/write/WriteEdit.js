@@ -45,8 +45,9 @@ const WriteEdit = ({ editWriteRef, writes }) => {
             const res = await editWrite(writeSubmitData) // 글 보내기
             
             if( imageData.file ) { 
+                console.log(writes?.writeImages[0]?.key)
+                if(writes?.writeImages[0]?.key) { await imageDelete({ fileName: writes?.writeImages[0]?.key }); }
                 await imageUpload({ ...imageData, _id: res._id }); 
-                await imageDelete({ fileName: writes.writeImages[0].key });
             };
             editWriteRef.current.popupClose();
         } catch(err) {

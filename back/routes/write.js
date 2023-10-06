@@ -139,7 +139,6 @@ router.post('/', async (req, res) => {
         const isConstructor = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id } ] }, )
         const isConstructorDate = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
     
-        console.log('back date?', date, nowDate)
 
         // #### constructor ####  - 230621 테스트완료 (생성자 + 인스유저에 모두 있을 경우도 완료)
         // 오늘 쓴 인증글이 있다면 count만 ++
