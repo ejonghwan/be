@@ -3,6 +3,7 @@
     display: flex;
     overflow-x: scroll;
     padding-bottom: 7px;
+    padding-top: 15px;
 }
 
 .overview_wrap .week {
@@ -19,6 +20,7 @@
     height: 12px;
     background-color: var(--overview-color);
     border-radius: 2px;
+    position: relative;
 }
 
 
@@ -53,3 +55,25 @@
 }
 
 
+
+.overview_wrap .hover_date {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    background-color: var(--scroll-bg-color);
+    padding: 1px 0;
+    opacity: 0;
+    font-size: 1.2rem;
+    z-index: -1;
+    text-align: center;
+    width: 60px;
+    border-radius: 4px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: all .2s .1s;
+} 
+
+.overview_wrap .week .day:hover .hover_date {
+    opacity: 1;
+    z-index: 10;
+}

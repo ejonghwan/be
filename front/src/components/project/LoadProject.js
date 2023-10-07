@@ -188,7 +188,7 @@ const LoadProject = ({ projectId }) => {
 
                             {/* 한눈에 보기 패널 판 */}
                             <div>
-                                <h3 className='gapt_50 gap_10'>{new Date().getFullYear()}년 습관 한눈에 보기</h3>
+                                <h3 className='gapt_50 gap_10'>{new Date().getFullYear()}년 내 진행상태</h3>
                                 <DaysPanel userDays={
                                     userClasses === 'const' ? project.constructorUser?.days : 
                                     project.instanceUser?.filter(user => user._id._id === state.user._id)[0].days

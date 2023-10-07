@@ -57,9 +57,7 @@ const ProjectItems = ({ project, isRequestUser = false, isTags = true, isDaysPan
             <p className='project_conts word_ellip_2'>{project?.content}</p>
             <div className='created_at'>{changeViewDate(project?.createdAt, 'day')}</div>
            
-           <div className='gapt_10'>
-                {isDaysPanel && <DaysPanel userDays={userDaysData} />}
-           </div>
+            {isDaysPanel && <DaysPanel userDays={userDaysData} />}
     
             {isTags && project.categorys.length > 0 && (
                 <div className='categorys gapt_20'>

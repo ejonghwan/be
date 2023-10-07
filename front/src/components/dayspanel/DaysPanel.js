@@ -1,4 +1,4 @@
-import { useEffect, useMemo, memo, useRef } from 'react';
+import { useEffect, useMemo, memo, useRef, Fragment } from 'react';
 import { format } from 'date-fns';
 import './DaysPanel.css';
 
@@ -17,7 +17,7 @@ const DaysPanel = ({ className = '', userDays = [] }) => {
           };
         };
         
-        let d = 0;
+        let dayNum = 0;
         let week = 51;
         
         //시간을 제외한 오늘 날짜
@@ -27,13 +27,13 @@ const DaysPanel = ({ className = '', userDays = [] }) => {
         //날짜 넣기
         while (week !== -1) {
           //? 요일 구하기
-          const dayOfDate = new Date(new Date(todayStr).setDate(new Date(todayStr).getDate() - d)).getDay();
+          const dayOfDate = new Date(new Date(todayStr).setDate(new Date(todayStr).getDate() - dayNum)).getDay();
           //0~6은 일~토를 가리키는 것을 이용해 할당
-          daysArr[week][dayOfDate].date = new Date(new Date(todayStr).setDate(new Date(todayStr).getDate() - d)).toISOString().substr(0, 10);
+          daysArr[week][dayOfDate].date = new Date(new Date(todayStr).setDate(new Date(todayStr).getDate() - dayNum)).toISOString().substr(0, 10);
           if (dayOfDate === 0) {
             week -= 1;
           }
-          d += 1;
+          dayNum += 1;
         };
         return daysArr;
       };
@@ -55,8 +55,9 @@ const DaysPanel = ({ className = '', userDays = [] }) => {
                     {day.map(panelDay => (
                         <span 
                             className={`day ${userDays.map(userDay => format(new Date(userDay.date), 'yyyy/MM/dd') === format(new Date(panelDay.date), 'yyyy/MM/dd') ? `active lv_${userDay.count}` : null ).join(' ')}`} 
-                            key={panelDay.date} 
-                            title={panelDay.date}>
+                            key={panelDay.date}
+                          >
+                            <span className='hover_date'>{format(new Date(panelDay.date), 'yy.M.dd')}</span>
                         </span>
                     ))}
                 </div>
