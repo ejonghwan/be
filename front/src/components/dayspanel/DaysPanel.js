@@ -52,12 +52,13 @@ const DaysPanel = ({ className = '', userDays = [] }) => {
          
             {panelDataRef.current?.map((day, idx) => (
                 <div key={idx} className='week'>
-                    {day.map(panelDay => (
+                    {day.map((panelDay, idx) => (
                         <span 
                             className={`day ${userDays.map(userDay => format(new Date(userDay.date), 'yyyy/MM/dd') === format(new Date(panelDay.date), 'yyyy/MM/dd') ? `active lv_${userDay.count}` : null ).join(' ')}`} 
-                            key={panelDay.date}
+                            key={idx}
+                            title={panelDay.date}
                           >
-                            <span className='hover_date'>{format(new Date(panelDay.date), 'yy.M.dd')}</span>
+                            {/* <span className='hover_date'>{format(new Date(panelDay.date), 'yy.M.dd')}</span> */}
                         </span>
                     ))}
                 </div>

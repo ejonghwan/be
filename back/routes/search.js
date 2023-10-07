@@ -5,20 +5,18 @@ import { auth } from '../middleware/auth.js' ;
 // model 
 import Project from '../models/project.js';
 import User from '../models/users.js';
-import Category from '../models/category.js';
+// import Category from '../models/category.js';
 
 const router = express.Router();
 
 
-//@ path    GET /api/search/:searchText
+//@ path    GET /api/search/project/:searchText
 //@ doc     프로젝트, 글 검색 
 //@ access  public
-router.get('/:searchText', async (req, res) => {
+router.get('/project/:searchText', async (req, res) => {
     try {
-        
         // front에서 보낼 때 encodeURIComponent("룰루")
         const { searchText } = req.params;
-
         const search = await Project.find({
            $or: [
             {
@@ -34,10 +32,7 @@ router.get('/:searchText', async (req, res) => {
             }
         ]
         });
- 
-         console.log('search result', search)
          res.status(200).json(search);
-
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -74,8 +69,6 @@ router.get('/user/:user', async (req, res) => {
             name
             
         */
- 
-        //  console.log('findUser result', findUser)
          res.status(200).json(findUser);
 
     } catch (err) {
@@ -84,7 +77,6 @@ router.get('/user/:user', async (req, res) => {
     }
 })
 
-// 카테고리 검색 하나 만들자
 
 
 

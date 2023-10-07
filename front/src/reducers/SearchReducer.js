@@ -8,6 +8,10 @@ export const SearchIntialState = {
     searchUserDone: false,
     searchUserError: false,
 
+    searchProjectsLoading: false,
+    searchProjectsDone: false,
+    searchProjectsError: false,
+
 
     userSearch: [],
     categorySearch: [],
@@ -17,19 +21,6 @@ export const SearchIntialState = {
 
 const SearchReducer = (state = SearchIntialState, action) => {
     switch(action.type) {
-            // case "SEARCH_REQUEST" : 
-            //     return {
-            //         ...state,
-            //         loading: true,
-            //     }
-
-            // case "ERROR_LOADING_CLEAR" : 
-            //     return {
-            //         ...state,
-            //         loading: false,
-            //         successMessage: '',
-            //         errorMessage: '',
-            //     }
 
             case "USER_SEARCH_REQUEST": 
                 return {
@@ -57,6 +48,32 @@ const SearchReducer = (state = SearchIntialState, action) => {
 
 
 
+            case "PROJECT_SEARCH_REQUEST": 
+                return {
+                    ...state,
+                    searchProjectsLoading: true,
+                }
+
+            case "PROJECT_SEARCH_SUCCESS": 
+                return {
+                    ...state,
+                    searchProjectsLoading: false,
+                    searchProjectsDone: true,
+                    searchProjectsError: '',
+                    projectSearch: action.data,
+                }
+
+            case "PROJECT_SEARCH_FAILUE" : 
+                return {
+                    ...state,
+                    searchProjectsLoading: false,
+                    searchProjectsError: action.data,
+                }
+
+                
+
+                
+
 
                 
             case "CATEGORY_SEARCH_SUCCESS": 
@@ -75,23 +92,9 @@ const SearchReducer = (state = SearchIntialState, action) => {
                 }
 
 
-            case "PROJECT_SEARCH_SUCCESS": 
-                return {
-                    ...state,
-                    loginErrorMessage: '',
-                    loading: false,
-                    user: action.data,
-                    isLogged: true,
-                }
 
-            case "PROJECT_SEARCH_FAILUE" : 
-                return {
-                    ...state,
-                    loading: false,
-                    loginErrorMessage: action.data,
-                }
 
-                
+
 
             default: return { ...state }
     }

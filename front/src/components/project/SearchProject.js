@@ -1,8 +1,59 @@
-import { Fragment } from 'react';
+import { Fragment, useContext, useState, useCallback, memo } from 'react';
 import Search from '../common/form/Search';
-import './SearchProject.css'
+import { PiSmileyXEyesDuotone, PiMagnifyingGlassDuotone  } from "react-icons/pi";
+import SearchRequest from '../../reducers/SearchRequest';
+import { UserContext } from '../../context/UserContext';
+import { SearchContext } from '../../context/SearchContext';
+import _debounce from 'lodash.debounce';
+import { ProjectContext } from '../../context/ProjectContext';
+import ErrorMsg from '../common/errorMsg/ErrorMsg';
+import Spinners from '../common/spinners/Spinners';
+import NoData from '../common/notData/NoData';
+import './SearchProject.css';
+import { Link } from 'react-router-dom';
+
+
 
 const SearchProject = () => {
+    const { projectSearch } = SearchRequest();
+    const { state } = useContext(UserContext);
+    const { SearchState, SearchDispatch } = useContext(SearchContext);
+    const { ProjectState, ProjectState: { project } } = useContext(ProjectContext);
+
+    const [searchValue, setSearchValue] = useState(''); // 인풋값
+    const [isSearchResult, setIsSearchResult] = useState(false)
+    // const [submitData, setSubmitData] = useState({ 
+    //     joinUser: [],
+    // });
+
+
+
+    // 검색 관련 이벤트a
+    const handleSearchCange = e => {
+        setSearchValue(e.target.value)
+        handleSearchProjects(e.target.value) 
+        //그리고 useCallback 안에서는 state를 구독하지 않기 때문에 변화 값을 인자로 넘겨줘야함 
+    }
+
+    // 검색
+    const handleSearchProjects = useCallback(_debounce(async (searchText) => {
+        try {
+            if(searchText === '') return setIsSearchResult(false);
+            SearchDispatch({ type: "PROJECT_SEARCH_REQUEST" })
+            await projectSearch(searchText);
+          } catch(err) {
+            console.err(err)
+          }
+        setIsSearchResult(true)
+    }, 500), [])
+
+     // 엑스버튼
+     const handleResetSearchValue = () => {
+        setSearchValue('');
+        setIsSearchResult(false);
+     };
+    
+  
     return (
         <Fragment>
             {/* PiClockCountdownDuotone */}
@@ -12,45 +63,46 @@ const SearchProject = () => {
                 placeholder={"다른 습관을 검색해보세요."}
                 isLabel={true}
                 isButton={false} 
-                // value={joinUserValue}
+                value={searchValue}
                 buttonType={"button"}
-                // isSearchResult={isUserSearchResult}
-                // onChange={handleSearchCange}
-                // handleInputReset={handleUserValueReset}
+                isSearchResult={isSearchResult}
+                onChange={handleSearchCange}
+                handleInputReset={handleResetSearchValue}
             >
-                {/* {SearchState.loading ? (
-                    <div>친구 검색중...</div>
+                {SearchState.searchProjectsLoading ? (
+                    <Fragment>
+                        <Spinners />
+                    </Fragment>
                 ) : (
-                    <ul className='search_result_user'>
-                        {SearchState.userSearch?.filter(user => user.id !== state.user.id).map(((user, idx) => <li key={idx} className='search_result_user_item'>{
-                            <button type='button' 
-                                className='button_reset' 
-                                title={`${user.id}님 초대`} 
-                                onClick={handleAddFriend({ name: user.name, _id: user._id })}
-                            >
-                                <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="유저 프로필 이미지" className='user_img'/>
-                                <strong className='user_name'>{user.name}</strong>
-                                <span className='user_id'>{user.id}</span>
-                                <span className='button_reset button_plus'>
-                                    <span className='blind'>{`친구추가된 목록에서 ${user.name} 없애기`}</span>
-                                </span>
-                            </button>
-                        }</li>))}
-                    </ul>
-                )} */}
-                {/* 검색 결과가 없는 경우 */}
-                {/* {!SearchState.loading && SearchState.userSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"검색한 친구는 회원이 아닙니다."} subText={" 다시 검색해보세요."}/>} */}
+                    <Fragment>
+                         <ul className='search_result_wrap'>
+                            {SearchState.projectSearch?.map((project, idx) => (
+                                <li className='search_result_item'>
+                                    <Link to="/search/result/total" className='link'>
+                                        <span className='icon'><PiMagnifyingGlassDuotone /></span>
+                                        <p className='title word_ellip_1'>
+                                            {project.title.slice(0, project.title?.match(searchValue)?.index)}<strong className='search_value'>{searchValue}</strong>{project.title?.slice(searchValue.length + project.title?.match(searchValue)?.index)}
+                                            
+                                        </p>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </Fragment>
+                )}
+                 {/* 검색 결과가 없는 경우 */}
+                 {!SearchState.searchProjectsLoading && SearchState.projectSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"관련 내용이 없습니다."}/>}
             </Search>
             {/* <div className='category_wrap gapt_10'>
                 <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete} contentName={"친구"} isNoData={false}/>
             </div> */}
-            {/* {ProjectState.errorMessage && (
+            {SearchState.searchProjectsError && (
                 <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                    {ProjectState.errorMessage}
+                    {SearchState.searchProjectsError}
                 </ErrorMsg>
-            )} */}
+            )}
         </Fragment>
     );
 };
 
-export default SearchProject;
+export default memo(SearchProject);

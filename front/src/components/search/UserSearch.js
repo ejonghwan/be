@@ -41,7 +41,7 @@ const UserSearch = ({ setFriendData = [] }) => {
         // useCallback을 사용하면서 joinUserValue를 구독하지 않아, 서치인풋이 리렌더링이 되어도 이 함수의 주소값의 변화가 없음. 중요. debounce 사용하면서 디바운스 계속 호출되던 이슈. 
         try {
             if(userName === '') return setIsUserSearchResult(false);
-            SearchDispatch({ type: "SEARCH_REQUEST" })
+            SearchDispatch({ type: "USER_SEARCH_REQUEST" })
             await userSearch(userName);
           } catch(err) {
             console.err(err)
@@ -115,7 +115,7 @@ const UserSearch = ({ setFriendData = [] }) => {
                     </ul>
                 )}
                 {/* 검색 결과가 없는 경우 */}
-                {!SearchState.loading && SearchState.userSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"검색한 친구는 회원이 아닙니다."} subText={" 다시 검색해보세요."}/>}
+                {!SearchState.searchUserLoading && SearchState.userSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"검색한 친구는 회원이 아닙니다."} subText={" 다시 검색해보세요."}/>}
             </Search>
             <div className='category_wrap gapt_10'>
                 <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete} contentName={"친구"} isNoData={false}/>

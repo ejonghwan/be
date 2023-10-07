@@ -28,6 +28,10 @@
 }
 
 
+.search_project .popup_body .search_result {
+    box-shadow: none;
+}
+
 /* line */
 /* #header .header_nav > li:first-child::after {
     content: none;

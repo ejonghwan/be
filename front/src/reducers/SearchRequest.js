@@ -8,7 +8,7 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 const SearchRequest = () => {
     const { SearchDispatch } = useContext(SearchContext); 
 
-   // 유저 검색
+    // 유저 검색
      const userSearch = async userName => {
         try {
             if(!userName || typeof userName !== 'string') throw new Error('넘어온 이름값이 잘못되었습니다');
@@ -26,10 +26,29 @@ const SearchRequest = () => {
         }
     }
 
+    // 습관 검색
+     const projectSearch = async searchText => {
+        try {
+            if(!searchText || typeof searchText !== 'string') throw new Error('넘어온 검색값이 잘못되었습니다');
+            let encodeName = encodeURIComponent(searchText);
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+            const res = await axios.get(`${host}/api/search/project/${encodeName}`, config);
+            SearchDispatch({ type: "PROJECT_SEARCH_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            SearchDispatch({ type: "PROJECT_SEARCH_FAILUE", data: err.response.data.message });
+        }
+    }
+
 
 
     return {
         userSearch, 
+        projectSearch,
     }
 }
 

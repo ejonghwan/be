@@ -188,7 +188,7 @@ const LoadProject = ({ projectId }) => {
 
                             {/* 한눈에 보기 패널 판 */}
                             <div>
-                                <h3 className='gapt_50 gap_10'>{new Date().getFullYear()}년 내 진행상태</h3>
+                                <h3 className='gapt_50'>{new Date().getFullYear()}년 내 진행상태</h3>
                                 <DaysPanel userDays={
                                     userClasses === 'const' ? project.constructorUser?.days : 
                                     project.instanceUser?.filter(user => user._id._id === state.user._id)[0].days
@@ -205,15 +205,15 @@ const LoadProject = ({ projectId }) => {
                                 )}
                             </div>
 
-                            {/* 습관 인증글 */}
-                            <div>
+                            {/* 습관 인증글 나중에 추가*/}
+                            {/* <div>
                                 <h3 className='gapt_50 gap_10'>모든 습관 인증글</h3>
                                 {project.writes.length > 0 ? (
                                     <WriteListItem writes={project.writes.reverse()} />
                                 ) : (
                                     <NoData icon={<PiPencilSimpleSlashDuotone />} title={"인증글이 하나도 없습니다."} />
                                 )}
-                            </div>
+                            </div> */}
                         </Fragment>
                     ) : (
                         <div className='align_c gapt_30'>
@@ -370,7 +370,7 @@ const LoadProject = ({ projectId }) => {
                         ref={inviteRef}
                     >
                         <UserSearch setFriendData={setFriendData} />
-                        <div className='add_friend align_c gapt_40'>
+                        <div className='add_friend align_c gapt_10'>
                             {ProjectState.addInviteProjectLoading ? (<Spinners />) : (
                                 <Button type={'button'} className={"button_type2"} onClick={handleAddFriend} disabled={friendData.length === 0 && true} >초대 보내기</Button>
                             )}

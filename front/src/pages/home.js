@@ -6,7 +6,6 @@ import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import ProjectRequest from '../reducers/ProjectRequest.js';
 import { ProjectContext } from '../context/ProjectContext.js';
 import './home.css';
-import DaysPanel from '../components/dayspanel/DaysPanel.js';
 
 
 
@@ -27,10 +26,14 @@ const Home = ({ page }) => {
     return (
         <Fragment>
             <h2 className='blind'><span>{page}</span></h2>
-
+            {state.loadUserLoading && (
+                <div>
+                    스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......
+                </div>
+            )}
             <div className='b_conts full bg_gray'>
                 <div className='b_conts pd_0'>
-                    <h3 className='h3_title gap_20'>내가 진행중인 습관</h3>
+                    <h3 className='h3_title gap_20'>{state.user._id ? '내가 진행중인 습관' : '로그인 후 습관을 만들어보세요.'}</h3>
                     <ul className='project_items_wrap'>
                         {/* 내가 만든 습관 */}
                         {state.user?.projects?.map(project => (
@@ -41,7 +44,7 @@ const Home = ({ page }) => {
                         {/* 신청해서 진행하는 습관 */}
                         {myapplyProject?.map(project => (
                             <li key={project._id} className='project_items'>
-                                <ProjectItems project={project} isRequestUser={true} isDaysPanel={true} userDaysData={project.instanceUser.filter(user => user._id._id === state.user._id)[0].days} />
+                                <ProjectItems project={project} isRequestUser={true} isDaysPanel={true} userDaysData={project.instanceUser?.filter(user => user._id._id === state.user._id)[0]?.days} />
                             </li>
                         ))}
                         <li>

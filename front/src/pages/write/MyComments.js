@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import MyCommentItem from '../../components/write/MyCommentItem';
 import { WriteContext } from '../../context/WriteContext';
 import { UserContext } from '../../context/UserContext';
