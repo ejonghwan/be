@@ -384,7 +384,7 @@ const LoadProject = ({ projectId }) => {
 
                     {/* 삭제 팝업 */}
                     <Popup 
-                        className={`popup_type_default`} 
+                        className={`popup_type_default delete_project_pop`} 
                         isHead={true} 
                         title={`습관 삭제하기`} 
                         closeClick={() => projectDeleteRef.current.popupClose()} 

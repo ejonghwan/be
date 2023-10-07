@@ -5,17 +5,16 @@ import { PiHandHeartDuotone, PiCrownDuotone, PiNoteDuotone, PiEyeClosedDuotone, 
 import './ProjectItems.css'
 import Tags from '../common/tag/Tags';
 import { Link } from 'react-router-dom';
+import DaysPanel from '../dayspanel/DaysPanel';
 
 
 
-const ProjectItems = ({ project, isRequestUser = false, isTags = true }) => {
-    // console.log(project)
+const ProjectItems = ({ project, isRequestUser = false, isTags = true, isDaysPanel = false, userDaysData = [] }) => {
     return (
         <Fragment>
             
             <div className='info_wrap'>
                 <div className='project_image'>{IconData[project?.projectImages]}</div>
-
 
                 <div className='info_inner'>
                     <div className='ico_wrap'>
@@ -42,13 +41,9 @@ const ProjectItems = ({ project, isRequestUser = false, isTags = true }) => {
                             <span className='sub'>{project?.joinUser.length}</span>
                         </div>
                     )}
-                
-                </div>
-                
+                </div>     
             </div>
            
-
-
             <div title="습관장" className='ico_wrap const_user'>
                 <span className='ico'><PiCrownDuotone /></span>
                 <span className='sub'>{project?.constructorUser._id.name}</span>
@@ -62,7 +57,10 @@ const ProjectItems = ({ project, isRequestUser = false, isTags = true }) => {
             <p className='project_conts word_ellip_2'>{project?.content}</p>
             <div className='created_at'>{changeViewDate(project?.createdAt, 'day')}</div>
            
-         
+           <div className='gapt_10'>
+                {isDaysPanel && <DaysPanel userDays={userDaysData} />}
+           </div>
+    
             {isTags && project.categorys.length > 0 && (
                 <div className='categorys gapt_20'>
                     <Tags tags={project.categorys} isLink={true} isNoData={false} />

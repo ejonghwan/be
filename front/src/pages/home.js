@@ -32,14 +32,16 @@ const Home = ({ page }) => {
                 <div className='b_conts pd_0'>
                     <h3 className='h3_title gap_20'>내가 진행중인 습관</h3>
                     <ul className='project_items_wrap'>
+                        {/* 내가 만든 습관 */}
                         {state.user?.projects?.map(project => (
                             <li key={project._id} className='project_items'>
-                                <ProjectItems project={project} isRequestUser={true}/>
+                                <ProjectItems project={project} isRequestUser={true} isDaysPanel={true} userDaysData={project.constructorUser?.days} />
                             </li>
                         ))}
+                        {/* 신청해서 진행하는 습관 */}
                         {myapplyProject?.map(project => (
                             <li key={project._id} className='project_items'>
-                                <ProjectItems project={project} isRequestUser={true}/>
+                                <ProjectItems project={project} isRequestUser={true} isDaysPanel={true} userDaysData={project.instanceUser.filter(user => user._id._id === state.user._id)[0].days} />
                             </li>
                         ))}
                         <li>
@@ -54,16 +56,21 @@ const Home = ({ page }) => {
                 </div>
             </div>
 
+            <div className='b_conts'>
+                <h3 className='h3_title gap_20'>습관 목록</h3>
+
+            </div>
 
             <div className='b_conts'>
-                <DaysPanel />
-            </div>
-            <div className='b_conts'>
-                <h3 className='h3_title gap_20'>내가 진행중인 습관</h3>
-                
+                <h3 className='h3_title gap_20'>인기 습관</h3>
                     디비에서 좋아요 표시 많은거 뽑아서 습관 목록
 
-                    <h3>달력 일자로 ? 각 플젝마다 잔디밭 넣기 </h3>
+            </div>
+
+            <div className='b_conts'>
+                <h3 className='h3_title gap_20'>인원 많은 습관</h3>
+                    디비에서 좋아요 표시 많은거 뽑아서 습관 목록
+
             </div>
         </Fragment>
      

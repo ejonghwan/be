@@ -1,7 +1,8 @@
-import { useContext } from 'react'
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ProjectContext } from '../context/ProjectContext';
-import { getWithExpire } from '../utils/utils.js'
-import axios from 'axios'
+import { getWithExpire } from '../utils/utils.js';
+import axios from 'axios';
 
 
 const host = process.env.REACT_APP_BACKEND_HOST;
@@ -9,6 +10,7 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 const ProjectRequest = () => {
     const { ProjectDispatch } = useContext(ProjectContext); 
     const accToken = getWithExpire('X-access-token');
+    const navigate = useNavigate();
 
     // 프로젝트 생성
      const createProject = async data => {
@@ -46,6 +48,7 @@ const ProjectRequest = () => {
                 withCredentials: true,
             }
             const res = await axios.get(`${host}/api/project/${projectId}`, config);
+            if(res.data === null) return navigate('/page/error/404');
             ProjectDispatch({ type: "A_PROJECT_LOAD_SUCCESS", data: res.data });
 
             return res.data;
