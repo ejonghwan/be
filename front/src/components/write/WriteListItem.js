@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { PiHeartDuotone, PiChatTeardropDotsDuotone, PiHandHeartDuotone } from "react-icons/pi";
 import { changeViewDate } from '../../utils/utils';
 import './WriteListItem.css';
+import NotProfileImg from '../user/NotProfileImg';
 
 const WriteListItem = ({ writes, isProjectName = false }) => {
     return (
@@ -11,7 +12,11 @@ const WriteListItem = ({ writes, isProjectName = false }) => {
                     <Link to={`/write/detail/${write._id}`} className='write_list_item'>
                         <div className='write_list_user_wrap'>
                             <div className='img_wrap'>
-                                <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${write.user?._id.profileImage.key}`} alt="유저 프로필 이미지" />
+                                {write.user?._id.profileImage?.key ? (
+                                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${write.user?._id.profileImage?.key}`} alt="유저 프로필 이미지" />
+                                ) : (
+                                    <NotProfileImg style={{ fontSize: "1.4rem" }} firstString={write.user?._id.profileImage?.firstString} userBgColor={write.user?._id.profileImage?.bg}/>
+                                )}
                             </div>
                             <span className='write_list_id'>{write.user._id.id}</span>
                         </div>

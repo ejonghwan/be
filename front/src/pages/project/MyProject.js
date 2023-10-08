@@ -71,7 +71,7 @@ const MyProject = ({ page }) => {
                             ))}
                         </ul>
                         {myapplyProject.length === 0 && (
-                                <div className='align_c'>
+                            <div className='align_c'>
                                 <CompleteMsg 
                                     icon={<PiFolderDashedDuotone />}
                                     title={'내가 가입한 습관이 없습니다.'}

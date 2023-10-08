@@ -75,9 +75,7 @@ const WriteDetail = ({ writeId }) => {
             
             {WriteState.loadDone && (
                 <Fragment>
-                    {state.user?.joinProjects?.filter(joinProject => joinProject._id !== null ).filter(joinProject => joinProject._id._id === writes.project?._id._id).length > 0 
-                        || 
-                    state.user.projects?.filter(project => project._id === writes.project?._id._id).length > 0 ? (
+                    {state.user.joinProjects?.filter(joinProject => joinProject._id !== null ).filter(joinProject => joinProject._id._id === writes.project?._id._id).length > 0 || state.user.projects?.filter(project => project._id === writes.project?._id._id).length > 0 ? (
                             <Fragment>
                                 <div className='write_header'>
                                     <div className='write_header_item'>

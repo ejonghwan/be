@@ -191,7 +191,7 @@ const LoadProject = ({ projectId }) => {
                                 <h3 className='gapt_50'>{new Date().getFullYear()}년 내 진행상태</h3>
                                 <DaysPanel userDays={
                                     userClasses === 'const' ? project.constructorUser?.days : 
-                                    project.instanceUser?.filter(user => user._id._id === state.user._id)[0].days
+                                    project.instanceUser?.filter(user => user._id._id === state.user._id)[0]?.days
                                 } />
                             </div>
 
@@ -270,8 +270,7 @@ const LoadProject = ({ projectId }) => {
                     )}   
 
                     {/* 습관 생성자가 로그인했을때만 보임 */}
-                    {state.user?._id === project.constructorUser?._id._id && 
-                    (
+                    {state.user?._id === project.constructorUser?._id._id && (
                     <Fragment>
                         {/* 신청한 친구는 false 이고 있어야함 */}
                         <div>

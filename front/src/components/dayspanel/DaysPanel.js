@@ -54,7 +54,7 @@ const DaysPanel = ({ className = '', userDays = [] }) => {
                 <div key={idx} className='week'>
                     {day.map((panelDay, idx) => (
                         <span 
-                            className={`day ${userDays.map(userDay => format(new Date(userDay.date), 'yyyy/MM/dd') === format(new Date(panelDay.date), 'yyyy/MM/dd') ? `active lv_${userDay.count}` : null ).join(' ')}`} 
+                            className={`day ${userDays.map(userDay => userDay.count >= 0 && format(new Date(userDay.date), 'yyyy/MM/dd') === format(new Date(panelDay.date), 'yyyy/MM/dd') ? `active lv_${userDay.count}` : null ).join(' ')}`} 
                             key={idx}
                             title={panelDay.date}
                           >

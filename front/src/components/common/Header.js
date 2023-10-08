@@ -4,22 +4,16 @@ import LoginUserInfo from '../user/LoginUserInfo';
 import { UserContext } from '../../context/UserContext.js';
 import { PiMagnifyingGlassDuotone } from "react-icons/pi";
 import Button from './form/Button';
-import './Header.css';
 import Popup from './popup/Popup';
 import SearchProject from '../project/SearchProject';
+import './Header.css';
+
 
 const Header = () => {
-    const { state, dispatch } = useContext(UserContext);
+    const { state } = useContext(UserContext);
     const searchProjectRef = useRef(null);
-    // 이거 새로고침에도 없어짐;; 브라우저 종료하면 로컬저장소 없애는거 해야됨
-    // window.onbeforeunload = function() {
-    //   localStorage.removeItem('X-access-token');
-    //   return '';
-    // };
-
 
     const handleSearchProject = () => searchProjectRef.current.popupOpen();
-
 
     return (
         <header id='header'>
@@ -45,8 +39,6 @@ const Header = () => {
                         <li><Link to="/signuppage" className='hover_type1'>회원가입</Link></li>
                       </Fragment>
                     )}
-                    {/* <li><Link to="/signup">signup</Link></li> */}
-                    {/* <li><Link to="/style">style</Link></li> */}
                 </ul>
             </nav>
             

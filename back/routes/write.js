@@ -110,35 +110,17 @@ router.post('/', async (req, res) => {
         ]);
 
         write.save();
-        /*
-            5.30 인증글을 작성하면 
-            0. 글쓴이가 프로젝트 리더이면 생성자로, 아니면 인스턴스 유저에서 돌아가게 분기처리
-            1. 프로젝트 찾고 
-            2. 프로젝트 안에 인스턴스 유저찾고 
-            3. 그 안에 days에 date: `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` 이렇게 [{ date: "20235", count: 1 }], 있으면 count: $int++
-        */
-        // days필드엔 `${new Date().getFullYear()}` + `${new Date().getMonth() + 1}` 이렇게 [{ date: "20235", count: 1 }] 이런식으로 
-
-        // db 구조
-        // _id: ''
-        // constructorUser: {}
-        // instanceUser: [{
-        //     _id: { type: mongoose.Schema.Types.ObjectId, required: true, index: true, ref: 'user'},
-        //     rank: { type: String, required: true, default: 'e'},
-        //     days: [{ 
-        //         date: { type: String }, 
-        //         count: { type: Number, default: 0, },
-        //     }], //days로 달력/잔디 같이씀
-        // },],
 
         // const date = new Date();
         // const curDate = new Date(date.setHours(date.getHours() + 9));
         // const nowDate = `${curDate.getFullYear()},` + `${curDate.getMonth() + 1},` + `${curDate.getDate()}`;
         const date = moment();
-        const nowDate = date.add(9, 'h').format("YYYY/MM/DD")
+        // const nowDate = date.add(9, 'h').format("YYYY/MM/DD")
+        const nowDate = date.format("YYYY/MM/DD")
         const isConstructor = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id } ] }, )
         const isConstructorDate = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
     
+        console.log('nowDate?', nowDate, date.format("YYYY/MM/DD HH:mm:ss"))
 
         // #### constructor ####  - 230621 테스트완료 (생성자 + 인스유저에 모두 있을 경우도 완료)
         // 오늘 쓴 인증글이 있다면 count만 ++
@@ -248,7 +230,8 @@ router.delete('/', async (req, res) => {
         const write = await Write.findById(writeId);
 
         const deleteWriteDate = moment(write.createdAt);
-        const nowDate = deleteWriteDate.add(9, 'h').format("YYYY/MM/DD")
+        // const nowDate = deleteWriteDate.add(9, 'h').format("YYYY/MM/DD")
+        const nowDate = deleteWriteDate.format("YYYY/MM/DD")
 
         console.log('del??', deleteWriteDate, nowDate)
        

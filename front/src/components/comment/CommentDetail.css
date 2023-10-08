@@ -95,11 +95,13 @@
 }
 
 
-.comment_user_thum_wrap .user_thum_img_wrap > img {
-    width: 40px;
-    height: 40px;
+.comment_user_thum_wrap .user_thum_img_wrap > img,
+.comment_user_thum_wrap .user_thum_img_wrap > .not_profileImg {
+    width: 35px;
+    height: 35px;
     border-radius: 40%;
 }
+
 
 .comment_user_thum_wrap .user_thum_id {
     display: block;

@@ -385,11 +385,13 @@ button:disabled {
 
 
 .button_plus {
-    padding: 10px;
+    /* padding: 10px; */
     position: relative;
     background-color: var(--bg-box-color1);
-    border-radius: 50%;
+    border-radius: 40%;
     margin-left: 3px;
+    width: 30px;
+    height: 30px;
 }
 
 .button_plus::after {
@@ -397,10 +399,10 @@ button:disabled {
     display: block;
     position: absolute;
     top: 50%;
-    right: 50%;
+    left: 50%;
     background-color: var(--text-color2);
     width: 1px;
-    height: 9px;
+    height: 12px;
     transform: translate(-50%, -50%);
 }
 
@@ -409,10 +411,10 @@ button:disabled {
     display: block;
     position: absolute;
     top: 50%;
-    right: 50%;
+    left: 50%;
     background-color: var(--text-color2);
     width: 1px;
-    height: 9px;
+    height: 12px;
     transform: translate(-50%, -50%) rotate(90deg);
 }
 

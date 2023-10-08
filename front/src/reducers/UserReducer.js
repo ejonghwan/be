@@ -598,6 +598,15 @@ const UserReducer = (state = UserIntialState, action) => {
                     requestMylistProjectError: action.data
                 }
 
+            case "MY_PROJECTS_DELETE_SUCCESS":
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        projects: state.user.projects.filter(project => project._id !== action.data.projectId)
+                    }
+                }
+
             
 
             default: return { ...state }

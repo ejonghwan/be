@@ -62,11 +62,15 @@ const UserRequest = () => {
             const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
             let initTheme = isBrowserDarkMode ? 'dark' : 'light';
 
+            // 이미지가 없을 경우 랜덤컬러와 스펠링 저장
+            const colors = ['#428f80', '#42788f', '#428f4d', '#7e8f42', '#8f8942', '#955877', '#4468a9', '#44a9a5', '#50844b', '#4b7e84',]
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
             const config = {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true,
             }
-            const user = await axios.post(`${host}/api/users/signup`, {...data, darkMode: initTheme}, config)
+            const user = await axios.post(`${host}/api/users/signup`, {...data, darkMode: initTheme, profileImage: { bg: randomColor, firstString: id.slice(0, 1) }}, config)
             dispatch({ type: "USER_SIGNUP_SUCCESS" })
             return user;
 

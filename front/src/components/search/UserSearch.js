@@ -11,6 +11,7 @@ import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
 import './UserSearch.css';
 import Spinners from '../common/spinners/Spinners';
+import NotProfileImg from '../user/NotProfileImg';
 
 
 const UserSearch = ({ setFriendData = [] }) => {
@@ -102,8 +103,13 @@ const UserSearch = ({ setFriendData = [] }) => {
                                     className='button_reset' 
                                     title={`${user.id}님 초대`} 
                                     onClick={handleAddFriend({ name: user.name, _id: user._id })}
-                                >
-                                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="유저 프로필 이미지" className='user_img'/>
+                                >   
+                                    {user.profileImage?.key ? (
+                                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage?.key}`} alt="유저 프로필 이미지" className='user_img'/>
+                                    ) : (
+                                        <NotProfileImg style={{ fontSize: "1.5rem" }} firstString={user.profileImage.firstString} userBgColor={user.profileImage.bg} />
+                                    )}
+                                    
                                     <strong className='user_name'>{user.name}</strong>
                                     <span className='user_id'>{user.id}</span>
                                     <span className='button_reset button_plus'>

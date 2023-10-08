@@ -13,6 +13,7 @@ import RecommentEdit from './RecommentEdit';
 import RecommentCreate from './RecommentCreate';
 import './RecommentDetail.css';
 import Spinners from '../common/spinners/Spinners';
+import NotProfileImg from '../user/NotProfileImg';
 
 
 
@@ -80,7 +81,11 @@ const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isI
             <article className={`recomment_user_thum_wrap ${className} ${align}`}>
                 <div className='recomment_user_thum_inner'>
                     <div className="user_thum_img_wrap" style={imgStyle}>
-                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${recomment.user?._id.profileImage.key}`} alt="유저 프로필 이미지" />
+                        {recomment.user?._id.profileImage?.key ? (
+                            <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${recomment.user?._id.profileImage?.key}`} alt="유저 프로필 이미지" />
+                        ) : (
+                            <NotProfileImg userBgColor={recomment.user?._id.profileImage?.bg} firstString={recomment.user?._id.profileImage?.firstString} />
+                        )}
                     </div>
                     {!editOpen ? (
                         <Fragment>

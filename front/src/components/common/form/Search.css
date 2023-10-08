@@ -97,3 +97,11 @@
     height: 25px;
     border-radius: 40%;
 }
+
+.search_result .search_result_user .search_result_user_item .not_profileImg {
+    width: 25px;
+    height: 25px;
+    border-radius: 40%;
+}
+
+

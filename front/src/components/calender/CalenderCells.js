@@ -3,6 +3,7 @@ import { Fragment, memo } from 'react';
 import { format, addMonths, subMonths } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
+import NotProfileImg from '../user/NotProfileImg';
 
 
 // https://date-fns.org/v2.28.0/docs/subYears
@@ -50,7 +51,12 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                                         { userDay.count >= 0 && isSameDay(day, new Date(userDay.date)) && (
                                             <div className='certified_wrap'>
                                                 <div className='certified_img'>
-                                                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${project.constructorUser._id.profileImage.key}`} alt="유저 프로파일" />
+                                                    {project.constructorUser._id.profileImage?.key ? (
+                                                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${project.constructorUser._id.profileImage?.key}`} alt="유저 프로파일" />
+                                                    ) : (
+                                                        <NotProfileImg style={{ fontSize: "1.2rem" }} firstString={project.constructorUser._id.profileImage?.firstString} userBgColor={project.constructorUser._id.profileImage?.bg} />
+                                                    ) }
+                                                   
                                                 </div>
                                                 <span className='certified_name'>{project.constructorUser._id.name}</span>
                                             </div>
@@ -66,7 +72,12 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                                         {userDay.count >= 0 && isSameDay(day, new Date(userDay.date)) && (
                                             <div className='certified_wrap'>
                                                 <div className='certified_img'>
-                                                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user._id.profileImage.key}`} alt="유저 프로파일" />
+                                                    {user._id.profileImage?.key ? (
+                                                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user._id.profileImage?.key}`} alt="유저 프로파일" />
+                                                    ) : (
+                                                        <NotProfileImg style={{ fontSize: "1.2rem" }} firstString={user._id.profileImage?.firstString} userBgColor={user._id.profileImage?.bg} />
+                                                    )}
+                                                    
                                                 </div>
                                                 <span className='certified_name'>{user._id.id}</span>
                                             </div>

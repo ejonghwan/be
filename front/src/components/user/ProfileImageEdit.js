@@ -4,6 +4,7 @@ import ImageUploadForm from '../image/ImageUploadForm.js'
 import { UserContext } from '../../context/UserContext.js';
 import Button from '../common/form/Button.js';
 import './ProfileImageEdit.css'
+import NotProfileImg from './NotProfileImg.js';
 
 
 const ProfileImageEdit = () => {
@@ -22,7 +23,11 @@ const ProfileImageEdit = () => {
             {profileEdit ? (
                 <div className='profile_wrap'>
                     <div className='profile_img_wrap'>
-                        {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user?.profileImage.key}`} className="profileImage" alt="내 프로필 이미지" />} 
+                        {state.user.profileImage.key ? (
+                            <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user?.profileImage?.key}`} className="profileImage" alt="내 프로필 이미지" />
+                        ) : (
+                            <NotProfileImg style={{ fontSize: "4rem" }} firstString={state.user?.profileImage?.firstString} userBgColor={state.user?.profileImage?.bg} />
+                        )} 
                     </div>
                     <div className='profile_btn'>
                         <Button className={'button_type4'} onClick={handleProfileImageEdit} >
@@ -35,7 +40,11 @@ const ProfileImageEdit = () => {
             ) : (
                 <div className='profile_wrap'>
                     <div className='profile_img_wrap'>
-                        {state.user.profileImage && <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user?.profileImage.key}`} className="profileImage" alt="내 프로필 이미지" />} 
+                        {state.user.profileImage.key ? (
+                            <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user?.profileImage.key}`} className="profileImage" alt="내 프로필 이미지" />
+                        ): (
+                            <NotProfileImg style={{ fontSize: "4rem" }} firstString={state.user?.profileImage?.firstString} userBgColor={state.user?.profileImage?.bg}/>
+                        )} 
                     </div>
                    <div className='profile_btn'>
                         <Button className={'button_type4'} onClick={handleProfileImageEdit} >

@@ -82,10 +82,6 @@ const CreateProjectDetail = () => {
         setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}))
     }
 
-    useEffect(() => {
-        console.log(submitData.categorys)
-    }, [submitData])
-
    
 
     // 검색 관련 이벤트
@@ -137,14 +133,11 @@ const CreateProjectDetail = () => {
             e.preventDefault();
             ProjectDispatch({ type: "PROJECT_CREATE_REQUEST" });
             const data = await createProject(submitData);
-            console.log('cc', data)
             if(data) {
                 dispatch({ type: "CREATE_PROJECT_USER_PUSH", data: data })
                 alert(`${title} 습관이 생성 되었습니다!`)
                 navigate(`/project/detail/${data._id}`);
             }
-            
-
         } catch(err) {
             console.log(err);
         }
@@ -157,7 +150,6 @@ const CreateProjectDetail = () => {
     const { title, content, projectPublic, categorys } = submitData;
 
     useEffect(() => {
-        console.log(titleVerifi, title.length)
         title.length < 3 || title.length > 20 ? setTitleverifi(false) : setTitleverifi(true)
     }, [title])
 

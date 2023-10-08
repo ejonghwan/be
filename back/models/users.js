@@ -19,7 +19,9 @@ const UserSchema = mongoose.Schema({
      },
      profileImage: { 
         _id: { type: Types.ObjectId, ref: 'image' },
-        key: { type: String, required: true, },
+        key: { type: String  },
+        bg: { type: String },
+        firstString: { type: String }
      },
      projects: [{ type: Types.ObjectId, ref: 'project'}],
      joinProjects: [

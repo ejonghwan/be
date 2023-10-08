@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { ProjectContext } from '../context/ProjectContext';
 import { getWithExpire } from '../utils/utils.js';
 import axios from 'axios';
+import { UserContext } from '../context/UserContext';
 
 
 const host = process.env.REACT_APP_BACKEND_HOST;
 
 const ProjectRequest = () => {
     const { ProjectDispatch } = useContext(ProjectContext); 
+    const { dispatch } = useContext(UserContext);
     const accToken = getWithExpire('X-access-token');
     const navigate = useNavigate();
 
@@ -246,6 +248,7 @@ const ProjectRequest = () => {
 
             const res = await axios.delete(`${host}/api/project`, config);
             ProjectDispatch({ type: "PROJECT_DELETE_SUCCESS", data: res.data });
+            dispatch({ type: "MY_PROJECTS_DELETE_SUCCESS", data: res.data })
             return res;
         } catch(err) {
             console.error(err.response.data);

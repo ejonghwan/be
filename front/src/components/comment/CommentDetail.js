@@ -14,6 +14,7 @@ import './CommentDetail.css';
 import RecommentCreate from './RecommentCreate';
 import RecommentDetail from './RecommentDetail';
 import Spinners from '../common/spinners/Spinners';
+import NotProfileImg from '../user/NotProfileImg';
 
 
 
@@ -81,7 +82,12 @@ const CommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId 
             <article className={`comment_user_thum_wrap ${className} ${align}`}>
                 <div className='comment_user_thum_inner'>
                     <div className="user_thum_img_wrap" style={imgStyle}>
-                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${comment.user?._id.profileImage.key}`} alt="유저 프로필 이미지" />
+                        {comment.user?._id.profileImage?.key ? (
+                            <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${comment.user?._id.profileImage?.key}`} alt="유저 프로필 이미지" />
+                        ) : (
+                            <NotProfileImg firstString={comment.user?._id.profileImage?.firstString} userBgColor={comment.user?._id.profileImage?.bg} />
+                        )}
+                        
                     </div>
                     {!editOpen ? (
                         <Fragment>

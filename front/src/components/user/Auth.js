@@ -14,7 +14,6 @@ import Spinners from '../common/spinners/Spinners';
 
 
 const Auth = () => {
-
     const { emailAuth } = UserRequest();
     const {state, dispatch} = useContext(UserContext);
 

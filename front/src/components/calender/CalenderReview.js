@@ -101,14 +101,12 @@ const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, 
                 >
 
                     {virtualEndNum.map((item, idx) => {
-
                         return (
                             <SwiperSlide key={idx} virtualIndex={idx}>
-                                
                                 <WriteListItem 
                                     writes={
                                         item?.filter(write => 
-                                            handleCalcTime(write.createdAt) === handleCalcTime(currentMonth)).reverse()
+                                            handleCalcTime(write.createdAt) === handleCalcTime(currentMonth))
                                     } 
                                 />
 

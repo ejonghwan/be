@@ -8,6 +8,7 @@ import './CommentCreate.css'
 import { WriteContext } from '../../context/WriteContext';
 import Spinners from '../common/spinners/Spinners';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
+import NotProfileImg from '../user/NotProfileImg';
 
 const CommentCreate = ({ comments }) => {
 
@@ -46,7 +47,11 @@ const CommentCreate = ({ comments }) => {
             </div>
             <div className='create_comment_inner'>
                 <div className='create_comment_img'>
-                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage.key}`} alt="유저 프로필 이미지" />
+                    {state.user.profileImage?.key ? (
+                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${state.user.profileImage?.key}`} alt="유저 프로필 이미지" />
+                    ) : (
+                        <NotProfileImg userBgColor={state.user.profileImage?.bg} firstString={state.user.profileImage?.firstString} />
+                    )}
                 </div>
                 {WriteState.createCommentLoading ? (
                     <div className='create_comment_form'><Spinners /></div>

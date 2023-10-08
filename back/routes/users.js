@@ -138,8 +138,6 @@ router.post('/signup', async (req, res) => {
       
         const user = await new User(req.body, { token: null });
 
-        // default 프로필 이미지 6369f7f0d94aae125a0bc833. 디비에서 삭제 말자
-
         bcrypt.genSalt(10, async (err, salt) => {
             // password hash
             bcrypt.hash(user.password, salt, async (err, hash) => {
@@ -147,7 +145,7 @@ router.post('/signup', async (req, res) => {
                 user.password = hash;
                 jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: "30 days" }, (err, reftoken) => {
                     user.token = reftoken;
-                    user.profileImage = { _id: "6369f7f0d94aae125a0bc833", key: "8e09735b-553e-4879-b94c-7a3a23a40ce4.jpeg" }; //기본이미지 일단 이거넣음. 임시
+                    // user.profileImage = { _id: "6369f7f0d94aae125a0bc833", key: "8e09735b-553e-4879-b94c-7a3a23a40ce4.jpeg" }; //기본이미지 일단 이거넣음. 임시
                     user.save().then(user => {
                         res.status(201).end();
                     });

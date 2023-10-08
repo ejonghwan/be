@@ -404,22 +404,12 @@ router.patch('/edit/:projectId', auth, async (req, res) => {
 
 //@ path    DELETE /api/project
 //@ doc     삭제 프로젝
-//@ access  private  (테스트 끝나면 auth 미들웨어 붙여야됨)
+//@ access  private 
 router.delete('/', auth, async (req, res) => {
     try {
         const { userId, projectId } = req.body;
         const project = await Project.findById(projectId)
-        /*
-            *중요. 프로젝트삭제하면 글, 코멘트, 리코멘트 모두 삭제하지만 글, 코멘트, 리코멘트는 삭제해도 나머진 남겨놔야함. (삭제되었다고 코멘트만)
-
-            프로젝트 삭제하면 해당 "프로젝트"아이디
-            1. 프로젝트디비에서 삭제 o
-            2. 생성한 유저디비에서 (인스턴스는 안해도됨, 조인, 좋아요 필드) 삭제 o
-
-            4. 글디비에서 삭제 o
-            5. 카테고리디비에서 삭제 o
-            6. 이미지디비에서 삭제 o
-        */
+      
         await Promise.all([
             User.updateMany({ _id: userId }, { $pull: { "projects": project.id } }, { new: true }),
             // Images.deleteMany({ _id: project.projectImages }),
@@ -432,7 +422,7 @@ router.delete('/', auth, async (req, res) => {
         ]);
         await Project.deleteMany({ _id: projectId }),
         
-        res.status(201).end();
+        res.status(201).json({ projectId: project._id });
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

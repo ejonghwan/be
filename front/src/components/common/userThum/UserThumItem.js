@@ -3,6 +3,7 @@ import { changeViewDate } from '../../../utils/utils';
 import Button from '../form/Button';
 import Popup from '../popup/Popup';
 import './UserThum.css';
+import NotProfileImg from '../../user/NotProfileImg';
 
 
 const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, buttonName buttonType, onClick*/ buttons = [], align = 'horizon', imgStyle, isId = true}) => {
@@ -21,7 +22,11 @@ const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, 
                 {users.map((user, idx) => (
                     <li key={user._id._id}>
                         <div className="user_thum_imgwrap" style={imgStyle}>
-                            <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user._id.profileImage.key}`} alt="유저 프로필 이미지" />
+                            {user._id.profileImage?.key ? (
+                                <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user._id.profileImage?.key}`} alt="유저 프로필 이미지" />
+                            ) : (
+                                <NotProfileImg firstString={user._id.profileImage?.firstString} userBgColor={user._id.profileImage?.bg} />
+                            )}
                         </div>
                         {isText && (
                             <div className='user_thum_txtwrap'>
