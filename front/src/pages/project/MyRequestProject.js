@@ -81,9 +81,9 @@ const MyRequestProject = ({ page }) => {
 
                 <div className='b_conts pd_0'>
                     <h3 className='h3_title gap_20 gapt_50'>내 습관에 신청한 친구</h3>
-                    {state.user?.projects?.lnegth > 0 ? (
+                    {state.user?.projects?.length > 0 ? (
                         <ul className='project_items_hor friend_list'>
-                            {state.user?.projects?.map(project => (
+                            {state.user.projects?.map(project => (
                                 <li key={project._id} className='project_items'>
                                     <ProjectItemsHorizon project={project} isRequestUser={true}/>
                                     <div className='request_friend'>

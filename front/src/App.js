@@ -32,7 +32,6 @@ const App = () => {
       dispatch({ type: "USER_LOAD_REQUEST" });
       await getUser(); 
       
-
     } catch(err) {
       console.error('catch?', err);
     } ;

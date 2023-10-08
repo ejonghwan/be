@@ -45,7 +45,7 @@ const RecommentCreate = ({ comment, setRecommentOpen, targetUser = null }) => {
              {WriteState.createRecommentLoading ? (<Spinners />) : (
                 <div className='recomment_inner'>
                     <div className='recomment_form'>
-                        <span className='to_user'>{targetUser && `@${targetUser.name}`}</span>
+                        <span className='to_user'>{targetUser && `@${targetUser.name} 한테 메시지..`}</span>
                         <Textarea 
                             id={"content"}
                             name={"content"}

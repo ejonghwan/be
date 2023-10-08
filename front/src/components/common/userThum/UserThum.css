@@ -74,6 +74,7 @@
     display: inline-flex;
     max-width: inherit;
     flex: 0 0 auto;
+    margin-bottom: 5px;
 }
 
 .user_thum_wrap.horizontal_type1 .user_thum_imgwrap {
@@ -83,11 +84,14 @@
 
 .user_thum_wrap.horizontal_type1 .user_thum_imgwrap > img,
 .user_thum_wrap.horizontal_type1 .user_thum_imgwrap > .not_profileImg {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-bottom: 0px;
 }
 
+.user_thum_imgwrap.pop_user .not_profileImg {
+    font-size: 6rem;
+}
 
 .user_button_wrap {
     display: flex;

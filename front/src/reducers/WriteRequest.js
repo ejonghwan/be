@@ -3,10 +3,12 @@ import { WriteContext } from '../context/WriteContext';
 import { ProjectContext } from '../context/ProjectContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { UserContext } from '../context/UserContext';
 
 const host = process.env.REACT_APP_BACKEND_HOST;
 
 const WriteRequest = () => {
+    const { dispatch } = useContext(UserContext);
     const { WriteDispatch } = useContext(WriteContext); 
     const { ProjectDispatch } = useContext(ProjectContext); 
     const accToken = localStorage.getItem('X-access-token');
@@ -28,7 +30,7 @@ const WriteRequest = () => {
             }
             const res = await axios.post(`${host}/api/write`, data, config);
             ProjectDispatch({ type: "WRITE_CREATE_SUCCESS", data: res.data });
-
+            // dispatch({ type: "MY_PROJECTS_UPDATE_SUCCESS", data: res.data }); //이거 해야됨
             return res.data;
         } catch(err) {
             ProjectDispatch({ type: "WRITE_CREATE_FAILUE", data: err.response.data.message });

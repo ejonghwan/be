@@ -607,6 +607,17 @@ const UserReducer = (state = UserIntialState, action) => {
                     }
                 }
 
+            case "MY_PROJECTS_UPDATE_SUCCESS":
+
+            console.log('re?', action.data)
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        // projects: state.user.projects.filter(project => project._id !== action.data.projectId)
+                    }
+                }
+
             
 
             default: return { ...state }

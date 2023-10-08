@@ -50,14 +50,18 @@ const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, 
             </ul>
 
             <Popup className={`popup_type_default profile_${selectIdx}`} isHead={true} title={`${users[selectIdx]._id.name}님 회원정보`} closeClick={() => userInfoRef.current.popupClose()} dimd={true} idx={selectIdx} ref={userInfoRef}>
-                <div className="user_thum_imgwrap">
-                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${users[selectIdx]._id.profileImage.key}`} alt="유저 프로필 이미지" />
+                <div className="user_thum_imgwrap pop_user">
+                    {users[selectIdx]?._id.profileImage?.key ? (
+                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${users[selectIdx]._id.profileImage?.key}`} alt="유저 프로필 이미지" />
+                    ) : (
+                        <NotProfileImg firstString={users[selectIdx]._id.profileImage?.firstString} userBgColor={users[selectIdx]._id.profileImage?.bg} />
+                    )}
                 </div>
                 <div className='user_thum_txtwrap'>
                     <span className='user_thum_name'>{users[selectIdx]._id.name} 님</span>
                     <span className='user_thum_id'>{users[selectIdx]._id.id}</span>
                     <span className='user_thum_email'>{users[selectIdx]._id.email}</span>
-                    <span className='user_thum_createdat'>가입일 {changeViewDate(users[selectIdx]._id.createdAt, 'hour')}</span>
+                    <span className='user_thum_createdat'>가입일 {changeViewDate(users[selectIdx]._id.createdAt, 'day')}</span>
                 </div>
             </Popup>
 

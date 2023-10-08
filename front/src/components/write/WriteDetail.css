@@ -23,11 +23,12 @@
 
 .write_wrap .write_body .write_img_wrap {
     max-width: 500px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
 }
 
 .write_wrap .project_link {
     color: var(--point-color);
+    
 }
 
 .write_wrap .project_link:hover {
@@ -47,4 +48,12 @@
 
 .write_wrap .write_delete svg {
     color: var(--point-color2);
+}
+
+.write_wrap .write_header .not_profileImg {
+    font-size: 1.3rem;
+}
+
+.write_wrap .write_header .user_thum_wrap > li {
+    background-color: transparent;
 }

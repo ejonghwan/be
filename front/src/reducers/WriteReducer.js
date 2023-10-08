@@ -89,7 +89,7 @@ const WriteReducer = (state = WriteIntialState, action) => {
                     loadError: '',
                     writes: {
                         ...action.data, 
-                        // comments: action.data.comments.map(comment => { //대댓글 최신순 안함.
+                        // comments: action.data.comments.map(comment => { //대댓글은 최신순 안함.
                         //     comment.recomments.reverse();
                         //     return comment;
                         // }).reverse() 

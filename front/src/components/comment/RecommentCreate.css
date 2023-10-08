@@ -49,6 +49,6 @@
 .recomment_wrap .to_user {
    position: absolute;
    font-size: 1.2rem;
-   top: -18px;
+   bottom: 15px;
 }
 

@@ -63,7 +63,6 @@ const WriteDetail = ({ writeId }) => {
 
     useEffect(() => {
         handleLoadWrite();
-        console.log('w?', WriteState, 'ww?', writes)
     }, [])
 
 

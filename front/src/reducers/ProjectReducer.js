@@ -316,7 +316,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     createWriteError: '',
                     project: {
                         ...state.project,
-                        writes: [...state.project.writes.concat(action.data)]
+                        writes: [...state.project.writes.concat(action.data.write)]
                     },
                 }
 
