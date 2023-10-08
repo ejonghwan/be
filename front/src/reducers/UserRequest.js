@@ -112,6 +112,30 @@ const UserRequest = () => {
             return err.response;
         };
     };
+   
+    
+    // 유저 프로젝트만 불러오기
+     const getUserProjects = async userId => {
+        try {
+            console.log(userId)
+            if(!userId || typeof userId !== 'string') throw new Error('is not id');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken,
+                },
+                withCredentials: true
+            }
+
+            const user = await axios.get(`${host}/api/users/load/projects/${userId}`, config);
+            dispatch({ type: "MY_PROJECTS_UPDATE_SUCCESS", data: user.data });
+            return user;
+        } catch(err) {
+            console.error(err);
+            dispatch({ type: "MY_PROJECTS_UPDATE_FAILUE", data: err.response.data.message });
+            return err.response;
+        };
+    };
 
 
     // 로그인 유저
@@ -583,7 +607,8 @@ const UserRequest = () => {
         changeDarkmode,
         inviteMyListProject,
         rejectMyListProject,
-        requestMyProject
+        requestMyProject,
+        getUserProjects
 
     }
 }

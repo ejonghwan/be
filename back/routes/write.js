@@ -120,7 +120,7 @@ router.post('/', async (req, res) => {
         const isConstructor = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id } ] }, )
         const isConstructorDate = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id }, { "constructorUser.days": {$elemMatch : { date: nowDate } } } ] }, )
     
-        // console.log('nowDate?', nowDate, date.format("YYYY/MM/DD HH:mm:ss"))
+        console.log('nowDate?', date.add(9, 'h').format("YYYY/MM/DD HH:mm:ss"), 'onlyformat', date.format("YYYY/MM/DD HH:mm:ss"))
 
         // #### constructor ####  - 230621 테스트완료 (생성자 + 인스유저에 모두 있을 경우도 완료)
         // 오늘 쓴 인증글이 있다면 count만 ++
@@ -179,13 +179,12 @@ router.post('/', async (req, res) => {
         }
         // #### instance ####
         
-
-        const [_, resProject] = await Promise.all([
+        await Promise.all([
             User.updateOne({_id: user._id}, { $push: { writes: write._id } }, { new: true }),
             Project.updateOne({_id: project._id}, { $push: { writes: write._id } }, { new: true }),
         ])
 
-        res.status(201).json({ write, resProject });
+        res.status(201).json({ write: write });
 
         
     } catch (err) {

@@ -81,7 +81,6 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 };
 
             case "WRITE_LOAD_SUCCESS": 
-            console.log('redu load?', action.data)
                 return {
                     ...state,
                     loadLoading: false,

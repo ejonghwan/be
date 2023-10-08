@@ -74,6 +74,10 @@ export const UserIntialState = {
     rejectMylistProjectDone: false,
     rejectMylistProjectError: null,
 
+    updateMyProjectsLoading: false,
+    updateMyProjectsDone: false,
+    updateMyProjectsError: null,
+
     user: {},
     requestMyProject: []
 }
@@ -607,15 +611,37 @@ const UserReducer = (state = UserIntialState, action) => {
                     }
                 }
 
-            case "MY_PROJECTS_UPDATE_SUCCESS":
-
-            console.log('re?', action.data)
+                
+            case "MY_PROJECTS_UPDATE_REQUEST": 
                 return {
                     ...state,
+                    updateMyProjectsLoading: true,
+                }
+
+            case "MY_PROJECTS_UPDATE_SUCCESS":
+                return {
+                    ...state,
+                    updateMyProjectsLoading: false,
+                    updateMyProjectsDone: true,
+                    updateMyProjectsError: '',
                     user: {
                         ...state.user,
-                        // projects: state.user.projects.filter(project => project._id !== action.data.projectId)
+                        projects: state.user.projects.map(project => {
+                            action.data.projects.map(resProjects => {
+                                if(project._id === resProjects._id) {
+                                    project.constructorUser.days = resProjects.constructorUser.days;
+                                }
+                            })
+                            return project
+                        })
                     }
+                }
+
+            case "MY_PROJECTS_UPDATE_FAILUE" : 
+                return {
+                    ...state,
+                    updateMyProjectsLoading: false,
+                    updateMyProjectsError: action.data
                 }
 
             

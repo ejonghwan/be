@@ -138,7 +138,6 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
             case "PROJECT_LIKE_INC_SUCCESS": 
-            console.log('inc', action.data)
                 return {
                     ...state,
                     project: {
@@ -149,7 +148,6 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
             case "PROJECT_LIKE_DEC_SUCCESS": 
-            console.log('dec', action.data)
                 return {
                     ...state,
                     project: {

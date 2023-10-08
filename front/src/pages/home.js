@@ -6,22 +6,31 @@ import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import ProjectRequest from '../reducers/ProjectRequest.js';
 import { ProjectContext } from '../context/ProjectContext.js';
 import './home.css';
+import UserRequest from '../reducers/UserRequest.js';
 
 
 
 const Home = ({ page }) => {
 
-    const { state } = useContext(UserContext);
+    const { state, dispatch } = useContext(UserContext);
     const { ProjectState: { myapplyProject } } = useContext(ProjectContext);
     const { myApplyProject } = ProjectRequest();
+    const { getUserProjects } = UserRequest();
 
     const handleLoadApplyProject = () => {
-        myApplyProject({ userId: state.user._id })
-    } 
+        myApplyProject({ userId: state.user._id });
+    }; 
+
+    const handleUserProjectsUpdate = () => {
+        dispatch({ type: "MY_PROJECTS_UPDATE_REQUEST" });
+        getUserProjects(state.user._id);
+    };
     
     useEffect(() => {
         state.loadUserDone && handleLoadApplyProject();
-    }, [state.loadUserDone])
+        state.loadUserDone && handleUserProjectsUpdate();
+    }, [state.loadUserDone]);
+
 
     return (
         <Fragment>

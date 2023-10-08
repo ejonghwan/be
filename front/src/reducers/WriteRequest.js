@@ -30,8 +30,7 @@ const WriteRequest = () => {
             }
             const res = await axios.post(`${host}/api/write`, data, config);
             ProjectDispatch({ type: "WRITE_CREATE_SUCCESS", data: res.data });
-            // dispatch({ type: "MY_PROJECTS_UPDATE_SUCCESS", data: res.data }); //이거 해야됨
-            return res.data;
+            return res.data.write;
         } catch(err) {
             ProjectDispatch({ type: "WRITE_CREATE_FAILUE", data: err.response.data.message });
         };

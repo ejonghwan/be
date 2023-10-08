@@ -43,6 +43,22 @@ router.get('/load', auth, async (req, res) => {
     };
 });
 
+//@ path    GET /api/users/load/projects/:userId
+//@ doc     로드 유저 프로젝트
+//@ access  public
+router.get('/load/projects/:userId', auth, async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const projects = await User.findById(userId).populate({path: 'projects', select: 'constructorUser instanceUser'}).select('projects')
+
+        res.status(201).json( projects )
+    } catch(err) {
+        console.error(err)
+        res.status(500).json({ message: err.message })
+    }
+});
+
+
 
 
 //@ path    GET /api/users/
