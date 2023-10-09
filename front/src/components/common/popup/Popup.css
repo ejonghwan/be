@@ -109,3 +109,18 @@
 .popup.user_search_pop {
     width: 400px;
 }
+
+
+.popup_type_default.search_project {
+    transform: none;
+    width: 460px;
+    top: 20%;
+    left: calc(50% - 230px);
+}
+
+.popup_type_default.user_search_pop {
+    transform: none;
+    width: 400px;
+    top: 20%;
+    left: calc(50% - 200px);
+}

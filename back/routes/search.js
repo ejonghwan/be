@@ -10,6 +10,9 @@ import User from '../models/users.js';
 const router = express.Router();
 
 
+
+// 검색 스킵작업 + 상세페이지 작업하면 끝
+
 //@ path    GET /api/search/project/:searchText
 //@ doc     프로젝트, 글 검색 
 //@ access  public
@@ -85,6 +88,7 @@ router.get('/recent/load/:userId', async (req, res) => {
     try {
         const { userId } = req.params;
          const userSearchData = await User.findById(userId).select("prevSearch");
+         userSearchData.prevSearch = userSearchData.prevSearch.reverse().slice(0, 10)
          res.status(200).json(userSearchData);
     } catch (err) {
         console.error('server:', err);
