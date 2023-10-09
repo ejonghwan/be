@@ -169,8 +169,12 @@ const CommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId 
             </article>
 
             <Popup className={`popup_type_default profile_${selectIdx}`} isHead={true} title={`${comment.user._id.name}님 회원정보`} closeClick={() => userInfoRef.current.popupClose()} dimd={true} idx={selectIdx} ref={userInfoRef}>
-                <div className="user_thum_imgwrap">
-                    <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${comment.user._id.profileImage.key}`} alt="유저 프로필 이미지" />
+                <div className="user_thum_imgwrap pop_user">
+                    {comment.user._id.profileImage?.key ? (
+                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${comment.user._id.profileImage?.key}`} alt="유저 프로필 이미지" />
+                    ) : (
+                        <NotProfileImg userBgColor={comment.user._id.profileImage?.bg} firstString={comment.user._id.profileImage?.firstString}/>
+                    )}
                 </div>
                 <div className='user_thum_txtwrap'>
                     <span className='user_thum_name'>{comment.user._id.name} 님</span>

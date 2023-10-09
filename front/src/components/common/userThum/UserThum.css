@@ -88,7 +88,7 @@
     height: 25px;
     margin-bottom: 0px;
 }
-
+.write_wrap .write_header .user_thum_imgwrap.pop_user .not_profileImg,
 .user_thum_imgwrap.pop_user .not_profileImg {
     font-size: 6rem;
 }

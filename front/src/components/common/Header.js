@@ -52,7 +52,7 @@ const Header = () => {
               dimd={true}  
               ref={searchProjectRef}
           >
-              <SearchProject />
+              <SearchProject searchProjectRef={searchProjectRef}/>
           </Popup>
 
           

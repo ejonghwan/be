@@ -45,10 +45,75 @@ const SearchRequest = () => {
     }
 
 
+    
+    // 이전 검색어 로드
+    const recentSearch = async (userId) => {
+        try {
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId값이 잘못되었습니다');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+            const res = await axios.get(`${host}/api/search/recent/load/${userId}`, config);
+            SearchDispatch({ type: "RECENT_SEARCH_LOAD_SUCCESS", data: res.data.prevSearch });
+
+        } catch(err) {
+            console.error(err);
+            SearchDispatch({ type: "RECENT_SEARCH_LOAD_FAILUE", data: err.response.data.message });
+        }
+    }
+
+       // 이전 검색어 추가
+       const recentSearchAdd = async data => {
+        try {
+            const { userId, searchText } = data;
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId값이 잘못되었습니다');
+            if(!searchText || typeof searchText !== 'string') throw new Error('넘어온 searchText값이 잘못되었습니다');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+            let encodeName = encodeURIComponent(searchText);
+            const res = await axios.patch(`${host}/api/search/recent/add/${userId}/${encodeName}`, {}, config);
+            SearchDispatch({ type: "RECENT_SEARCH_ADD_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            SearchDispatch({ type: "RECENT_SEARCH_ADD_FAILUE", data: err.response.data.message });
+        }
+    }
+
+      // 이전 검색어 삭제
+      const recentSearchdelete = async data => {
+        try {
+            const { userId, searchText } = data;
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId값이 잘못되었습니다');
+            if(!searchText || typeof searchText !== 'string') throw new Error('넘어온 searchText값이 잘못되었습니다');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+            let encodeName = encodeURIComponent(searchText);
+            const res = await axios.patch(`${host}/api/search/recent/delete/${userId}/${encodeName}`, {}, config);
+            SearchDispatch({ type: "RECENT_SEARCH_DELETE_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            SearchDispatch({ type: "RECENT_SEARCH_DELETE_FAILUE", data: err.response.data.message });
+        }
+    }
+
+
+
+
+
 
     return {
         userSearch, 
         projectSearch,
+        recentSearch,
+        recentSearchAdd,
+        recentSearchdelete
     }
 }
 

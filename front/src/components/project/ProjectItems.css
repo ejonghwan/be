@@ -97,9 +97,10 @@
 }
 
 .project_items_wrap .const_user svg {
-    width: 20px;
-    height: 20px;
-    margin-top: 2px;
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+    margin-right: 3px;
 }
 
 

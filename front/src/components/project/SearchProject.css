@@ -46,3 +46,13 @@
 .search_project .search_result_item .search_value {
     color: var(--point-color)
 }
+
+.search_project .search_button {
+    justify-content: center;
+}
+
+.search_project .search_button > svg {
+    color: var(--text-color2);
+    width: 20px;
+    height: 20px
+}

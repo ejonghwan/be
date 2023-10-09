@@ -78,6 +78,50 @@ router.get('/user/:user', async (req, res) => {
 })
 
 
+//@ path    GET /api/search/recent/load/:userId
+//@ doc     이전 검색어
+//@ access  public
+router.get('/recent/load/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+         const userSearchData = await User.findById(userId).select("prevSearch");
+         res.status(200).json(userSearchData);
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
+//@ path    PATCH /api/search/recent/add/:userId/:searchText
+//@ doc     이전 검색어 추가
+//@ access  public
+router.patch('/recent/add/:userId/:searchText', async (req, res) => {
+    try {
+        const { userId, searchText } = req.params; 
+        console.log(req.params,  userId, searchText)
+         const userSearchData = await User.findByIdAndUpdate(userId, { $push: { prevSearch: searchText } }, { new: true }).select("prevSearch")
+         res.status(201).json(searchText);
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+//@ path    PATCH /api/search/recent/delete/:userId/:searchText
+//@ doc     이전 검색어 삭제
+//@ access  public
+router.patch('/recent/delete/:userId/:searchText', async (req, res) => {
+    try {
+        const { userId, searchText } = req.params; 
+        console.log(req.params,  userId, searchText)
+         const userSearchData = await User.findByIdAndUpdate(userId, { $pull: { prevSearch: searchText } }, { new: true }).select("prevSearch")
+         res.status(201).json(searchText);
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
 
 
 

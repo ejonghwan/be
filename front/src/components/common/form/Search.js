@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { PiXCircleDuotone } from "react-icons/pi";
 import Input from "./Input";
 import Label from "./Label";
 import Button from "./Button";

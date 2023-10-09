@@ -3,7 +3,6 @@ export const SearchIntialState = {
     errorMessage: '',
     loading: false,
 
-
     searchUserLoading: false,
     searchUserDone: false,
     searchUserError: false,
@@ -12,10 +11,23 @@ export const SearchIntialState = {
     searchProjectsDone: false,
     searchProjectsError: false,
 
+    recentSearchLoading: false,
+    recentSearchDone: false,
+    recentSearchError: false,
+
+    recentSearchAddLoading: false,
+    recentSearchAddDone: false,
+    recentSearchAddError: false,
+
+    recentSearchDeleteLoading: false,
+    recentSearchDeleteDone: false,
+    recentSearchDeleteError: false,
+
 
     userSearch: [],
     categorySearch: [],
     projectSearch: [],
+    recentText: [],
 }
 
 
@@ -46,6 +58,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                 }
 
 
+            
 
 
             case "PROJECT_SEARCH_REQUEST": 
@@ -91,6 +104,76 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     // isLogged: false,
                 }
 
+
+
+            case "RECENT_SEARCH_LOAD_REQUEST": 
+                return {
+                    ...state,
+                    recentSearchLoading: true,
+                }
+
+            case "RECENT_SEARCH_LOAD_SUCCESS": 
+                return {
+                    ...state,
+                    recentSearchLoading: false,
+                    recentSearchDone: true,
+                    recentSearchError: '',
+                    recentText: action.data.reverse(),
+                }
+
+            case "RECENT_SEARCH_LOAD_FAILUE" : 
+                return {
+                    ...state,
+                    recentSearchLoading: false,
+                    recentSearchError: action.data,
+                }
+            
+
+            case "RECENT_SEARCH_ADD_REQUEST": 
+                return {
+                    ...state,
+                    recentSearchAddLoading: true,
+                }
+
+            case "RECENT_SEARCH_ADD_SUCCESS": 
+                return {
+                    ...state,
+                    recentSearchAddLoading: false,
+                    recentSearchAddDone: true,
+                    recentSearchAddError: '',
+                    recentText: [action.data, ...state.recentText],
+                }
+
+            case "RECENT_SEARCH_ADD_FAILUE" : 
+                return {
+                    ...state,
+                    recentSearchAddLoading: false,
+                    recentSearchAddError: action.data,
+                }
+
+
+                
+            case "RECENT_SEARCH_DELETE_REQUEST": 
+                return {
+                    ...state,
+                    recentSearchDeleteLoading: true,
+                }
+
+            case "RECENT_SEARCH_DELETE_SUCCESS": 
+                return {
+                    ...state,
+                    recentSearchDeleteLoading: false,
+                    recentSearchDeleteDone: true,
+                    recentSearchDeleteError: '',
+                    recentText: state.recentText.filter(text => text !== action.data),
+                }
+
+            case "RECENT_SEARCH_DELETE_FAILUE" : 
+                return {
+                    ...state,
+                    recentSearchDeleteLoading: false,
+                    recentSearchDeleteError: action.data,
+                }
 
 
 
