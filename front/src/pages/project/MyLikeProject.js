@@ -14,7 +14,6 @@ const MyLikeProject = ({ page }) => {
             <div className='b_conts'>
                 <h2 className='gap_0'>{page}</h2>
             </div>
-
             <div className='b_conts full bg_gray'>
                 <div className='b_conts pd_0'>
                     <ul className='project_items_hor'>

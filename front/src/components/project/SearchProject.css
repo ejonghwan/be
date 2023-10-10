@@ -54,6 +54,7 @@
 
 .search_project .search_button {
     justify-content: center;
+    background-color: transparent;
 }
 
 .search_project .search_button > svg {

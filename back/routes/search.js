@@ -20,6 +20,22 @@ router.get('/project/:searchText', async (req, res) => {
     try {
         // front에서 보낼 때 encodeURIComponent("룰루")
         const { searchText } = req.params;
+        
+        // const test = await Project.find({
+        //    $or: [
+        //     {
+        //         title: {
+        //             $regex: searchText,
+        //             $options: 'i',
+        //         }, 
+        //     }, 
+        //     {   content: {
+        //             $regex: searchText,
+        //             $options: 'i',
+        //         }
+        //     }
+        // ]
+        // }).count();
         const search = await Project.find({
            $or: [
             {
@@ -35,6 +51,8 @@ router.get('/project/:searchText', async (req, res) => {
             }
         ]
         });
+
+        console.log(test)
          res.status(200).json(search);
     } catch (err) {
         console.error('server:', err);

@@ -81,7 +81,7 @@ const SearchProject = ({ searchProjectRef }) => {
         setSearchValue(title)
     } 
 
-    const handleSearchKeyPress = e => {
+    const handleSearchKeyUp = e => {
         if(e.key === 'Enter') {
             handleSearchSubmit();
         }
@@ -99,7 +99,7 @@ const SearchProject = ({ searchProjectRef }) => {
                 value={searchValue}
                 isSearchResult={isSearchResult}
                 onChange={handleSearchCange}
-                onKeyPress={handleSearchKeyPress}
+                onKeyUp={handleSearchKeyUp}
                 handleInputReset={handleResetSearchValue}
                 isButton={true} 
                 buttonType={"button"}

@@ -22,7 +22,7 @@ import MyComments from './write/MyComments.js';
 import MyProject from './project/MyProject.js';
 import MyLikeProject from './project/MyLikeProject.js';
 import MyRequestProject from './project/MyRequestProject.js';
-
+import ProjectsSearchDetail from './search/ProjectsSearchDetail.js';
 
 
 
@@ -55,6 +55,7 @@ const RoutesPage = () => {
                 <Route path='/project/mylike' element={!state.loadUserLoading && state.isLogged  ? <MyLikeProject page={'좋아하는 습관'} /> : <Protected page={'좋아하는 습관'} />}></Route>
                 <Route path='/project/myapply' element={!state.loadUserLoading && state.isLogged  ? <MyRequestProject page={'습관 신청/초대'} /> : <Protected page={'습관 신청/초대'} />}></Route>
 
+                <Route path='/search/result/total/:searchValue' element={<ProjectsSearchDetail page={'검색 결과'} />}></Route>
 
                 <Route path='/page/error/404' element={<ErrorPage />}></Route>
                 <Route path="/*" element={<ErrorPage />} />

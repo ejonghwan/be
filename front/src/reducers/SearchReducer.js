@@ -34,7 +34,7 @@ export const SearchIntialState = {
 
     userSearch: [],
     categorySearch: [],
-    projectSearch: [],
+    projectSearchData: [],
     recentText: [],
     relationSearch: []
 
@@ -83,7 +83,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     searchProjectsLoading: false,
                     searchProjectsDone: true,
                     searchProjectsError: '',
-                    projectSearch: action.data,
+                    projectSearchData: action.data,
                 }
 
             case "PROJECT_SEARCH_FAILUE" : 
