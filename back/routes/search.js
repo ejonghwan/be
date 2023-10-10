@@ -42,6 +42,33 @@ router.get('/project/:searchText', async (req, res) => {
     }
 })
 
+//@ path    GET /api/search/project/relation/:searchText
+//@ doc     프로젝트, 글 검색 연관 검색
+//@ access  public
+router.get('/project/relation/:searchText', async (req, res) => {
+    try {
+        const { searchText } = req.params;
+        const search = await Project.find({
+           $or: [
+            {
+                title: {
+                    $regex: searchText,
+                    $options: 'i',
+                }, 
+            }, 
+            {   content: {
+                    $regex: searchText,
+                    $options: 'i',
+                }
+            }
+        ]
+        }).select('title').limit(10);
+         res.status(200).json(search);
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
 
 
 //@ path    GET /api/search/:userId

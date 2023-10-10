@@ -16,7 +16,7 @@ import './SearchProject.css';
 
 
 const SearchProject = ({ searchProjectRef }) => {
-    const { projectSearch, recentSearchAdd } = SearchRequest();
+    const { projectRelationSearch, recentSearchAdd } = SearchRequest();
     const { state } = useContext(UserContext);
     const { SearchState, SearchState: { recentText }, SearchDispatch } = useContext(SearchContext);
     const { ProjectState, ProjectState: { project } } = useContext(ProjectContext);
@@ -37,8 +37,8 @@ const SearchProject = ({ searchProjectRef }) => {
     const handleSearchProjects = useCallback(_debounce(async (searchText) => {
         try {
             if(searchText === '') return setIsSearchResult(false);
-            SearchDispatch({ type: "PROJECT_SEARCH_REQUEST" })
-            await projectSearch(searchText);
+            SearchDispatch({ type: "PROJECT_SEARCH_RELATION_REQUEST" })
+            await projectRelationSearch(searchText);
 
           } catch(err) {
             console.err(err)
@@ -93,7 +93,7 @@ const SearchProject = ({ searchProjectRef }) => {
                 ) : (
                     <Fragment>
                          <ul className='search_result_wrap'>
-                            {SearchState.projectSearch?.map((project, idx) => (
+                            {SearchState.relationSearch?.map((project, idx) => (
                                 <li className='search_result_item' key={idx}>
                                     <Link to={`/search/result/total/${searchValue}`} className='link' onClick={() => searchProjectRef.current.popupClose()}>
                                         <span className='icon'><PiMagnifyingGlassDuotone /></span>
@@ -107,11 +107,11 @@ const SearchProject = ({ searchProjectRef }) => {
                     </Fragment>
                 )}
                  {/* 검색 결과가 없는 경우 */}
-                 {!SearchState.searchProjectsLoading && SearchState.projectSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"관련 내용이 없습니다."}/>}
+                 {!SearchState.searchProjectsRelationLoading && SearchState.relationSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"관련 내용이 없습니다."}/>}
             </Search>
-            {SearchState.searchProjectsError && (
+            {SearchState.searchProjectsRelationError && (
                 <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                    {SearchState.searchProjectsError}
+                    {SearchState.searchProjectsRelationError}
                 </ErrorMsg>
             )}
 

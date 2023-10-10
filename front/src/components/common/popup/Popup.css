@@ -114,8 +114,12 @@
 .popup_type_default.search_project {
     transform: none;
     width: 460px;
-    top: 20%;
+    top: 100px;
     left: calc(50% - 230px);
+}
+
+.popup_type_default.search_project .search_result {
+    max-height: 340px;
 }
 
 .popup_type_default.user_search_pop {

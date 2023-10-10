@@ -23,6 +23,10 @@ const SearchRecent = ({ searchProjectRef }) => {
         recentSearchdelete({ userId: state.user._id, searchText: searchText })
     }
 
+    const handleRecentSearchDeleteAll = () => {
+
+    }
+
     useEffect(() => {
         handleLoadRecentSearch();
     }, [])
@@ -45,6 +49,15 @@ const SearchRecent = ({ searchProjectRef }) => {
                     ))}
                 </ul>
             )}
+            <div className='delete_all_wrap'>
+                {/* <Button className="button_type_close hover_type1" onClick={() => handleRecentSearchDeleteAll()}>
+                    <span >전체삭제</span>
+                </Button> */}
+                <Button className="button_reset hover_type1" onClick={() => handleRecentSearchDeleteAll()}>
+                    <span >전체삭제</span>
+                </Button>
+                
+            </div>
            
         </article>
     );

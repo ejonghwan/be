@@ -11,6 +11,10 @@ export const SearchIntialState = {
     searchProjectsDone: false,
     searchProjectsError: false,
 
+    searchProjectsRelationLoading: false,
+    searchProjectsRelationDone: false,
+    searchProjectsRelationError: false,
+
     recentSearchLoading: false,
     recentSearchDone: false,
     recentSearchError: false,
@@ -28,6 +32,8 @@ export const SearchIntialState = {
     categorySearch: [],
     projectSearch: [],
     recentText: [],
+    relationSearch: []
+
 }
 
 
@@ -81,6 +87,29 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     ...state,
                     searchProjectsLoading: false,
                     searchProjectsError: action.data,
+                }
+
+                
+            case "PROJECT_SEARCH_RELATION_REQUEST": 
+                return {
+                    ...state,
+                    searchProjectsRelationLoading: true,
+                }
+
+            case "PROJECT_SEARCH_RELATION_SUCCESS": 
+                return {
+                    ...state,
+                    searchProjectsRelationLoading: false,
+                    searchProjectsRelationDone: true,
+                    searchProjectsRelationError: '',
+                    relationSearch: action.data,
+                }
+
+            case "PROJECT_SEARCH_RELATION_FAILUE" : 
+                return {
+                    ...state,
+                    searchProjectsRelationRelationLoading: false,
+                    searchProjectsRelationError: action.data,
                 }
 
                 

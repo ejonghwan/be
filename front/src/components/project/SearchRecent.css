@@ -1,3 +1,13 @@
 .search_result.recent .search_result_item{
     display: flex;
 }
+
+
+.search_result.recent .delete_all_wrap {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.search_result.recent .delete_all_wrap button {
+    font-size: 1.2rem;
+}
