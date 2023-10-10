@@ -55,11 +55,6 @@ router.get('/project/relation/:searchText', async (req, res) => {
                     $regex: searchText,
                     $options: 'i',
                 }, 
-            }, 
-            {   content: {
-                    $regex: searchText,
-                    $options: 'i',
-                }
             }
         ]
         }).select('title').limit(10);
@@ -148,6 +143,23 @@ router.patch('/recent/delete/:userId/:searchText', async (req, res) => {
         console.log(req.params,  userId, searchText)
          const userSearchData = await User.findByIdAndUpdate(userId, { $pull: { prevSearch: searchText } }, { new: true }).select("prevSearch")
          res.status(201).json(searchText);
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+// http://localhost:8080/api/search/recent/delete/all/65223bfdd8eb0e9d3bd79929
+
+//@ path    PATCH /api/search/recent/deleteall/:userId
+//@ doc     이전 검색어 삭제
+//@ access  public
+router.patch('/recent/deleteall/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params; 
+         const userSearchData = await User.findByIdAndUpdate(userId, { $unset: { prevSearch: 1 } }, { strict: false })
+         console.log('userSearchData', userSearchData)
+         res.status(201).end();
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

@@ -85,6 +85,7 @@ const SearchRequest = () => {
        const recentSearchAdd = async data => {
         try {
             const { userId, searchText } = data;
+            console.log('?????', searchText)
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId값이 잘못되었습니다');
             if(!searchText || typeof searchText !== 'string') throw new Error('넘어온 searchText값이 잘못되었습니다');
             const config = {
@@ -121,6 +122,24 @@ const SearchRequest = () => {
         }
     }
 
+      // 이전 검색어 모두 삭제
+      const recentSearchDeleteAll = async data => {
+        try {
+            const { userId } = data;
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId값이 잘못되었습니다');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+            const res = await axios.patch(`${host}/api/search/recent/deleteall/${userId}`, { data }, config);
+            SearchDispatch({ type: "RECENT_SEARCH_ALLDELETE_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            SearchDispatch({ type: "RECENT_SEARCH_ALLDELETE_FAILUE", data: err.response.data.message });
+        }
+    }
+
 
 
 
@@ -132,7 +151,8 @@ const SearchRequest = () => {
         recentSearch,
         recentSearchAdd,
         recentSearchdelete,
-        projectRelationSearch
+        projectRelationSearch,
+        recentSearchDeleteAll
     }
 }
 

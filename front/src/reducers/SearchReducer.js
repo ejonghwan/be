@@ -27,6 +27,10 @@ export const SearchIntialState = {
     recentSearchDeleteDone: false,
     recentSearchDeleteError: false,
 
+    recentSearchAllDeleteLoading: false,
+    recentSearchAllDeleteDone: false,
+    recentSearchAllDeleteError: false,
+
 
     userSearch: [],
     categorySearch: [],
@@ -147,7 +151,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     recentSearchLoading: false,
                     recentSearchDone: true,
                     recentSearchError: '',
-                    recentText: action.data.reverse(),
+                    recentText: action.data,
                 }
 
             case "RECENT_SEARCH_LOAD_FAILUE" : 
@@ -202,6 +206,29 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     ...state,
                     recentSearchDeleteLoading: false,
                     recentSearchDeleteError: action.data,
+                }
+
+
+            case "RECENT_SEARCH_ALLDELETE_REQUEST": 
+                return {
+                    ...state,
+                    recentSearchAllDeleteLoading: true,
+                }
+
+            case "RECENT_SEARCH_ALLDELETE_SUCCESS": 
+                return {
+                    ...state,
+                    recentSearchAllDeleteLoading: false,
+                    recentSearchAllDeleteDone: true,
+                    recentSearchAllDeleteError: '',
+                    recentText: []
+                }
+
+            case "RECENT_SEARCH_ALLDELETE_FAILUE" : 
+                return {
+                    ...state,
+                    recentSearchAllDeleteLoading: false,
+                    recentSearchAllDeleteError: action.data,
                 }
 
 

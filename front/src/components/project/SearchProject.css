@@ -15,6 +15,7 @@
 .search_project .search_result_item {
     /* border: 1px solid blue; */
     width: 100%;
+    display: flex;
 }
 
 .search_project .search_result_item .link {
@@ -37,6 +38,10 @@
     color: var(--text-color2);
     opacity: .6;
     /* border: 1px solid red; */
+}
+
+.search_project .search_result_item .icon.search_txt svg {
+    margin-right: 0;
 }
 
 .search_project .search_result_item .title {

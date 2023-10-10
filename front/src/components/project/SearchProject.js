@@ -1,8 +1,8 @@
-import { Fragment, useContext, useState, useCallback, memo, useEffect } from 'react';
+import { Fragment, useContext, useState, useCallback, memo, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
 import Search from '../common/form/Search';
-import { PiSmileyXEyesDuotone, PiMagnifyingGlassDuotone  } from "react-icons/pi";
+import { PiSmileyXEyesDuotone, PiMagnifyingGlassDuotone, PiArrowSquareInDuotone  } from "react-icons/pi";
 import SearchRequest from '../../reducers/SearchRequest';
 import { UserContext } from '../../context/UserContext';
 import { SearchContext } from '../../context/SearchContext';
@@ -11,12 +11,13 @@ import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import Spinners from '../common/spinners/Spinners';
 import NoData from '../common/notData/NoData';
 import SearchRecent from './SearchRecent';
+import Button from '../common/form/Button';
 import './SearchProject.css';
 
 
 
 const SearchProject = ({ searchProjectRef }) => {
-    const { projectRelationSearch, recentSearchAdd } = SearchRequest();
+    const { projectRelationSearch, recentSearchAdd, recentSearchdelete } = SearchRequest();
     const { state } = useContext(UserContext);
     const { SearchState, SearchState: { recentText }, SearchDispatch } = useContext(SearchContext);
     const { ProjectState, ProjectState: { project } } = useContext(ProjectContext);
@@ -24,6 +25,7 @@ const SearchProject = ({ searchProjectRef }) => {
 
     const [searchValue, setSearchValue] = useState(''); // 인풋값
     const [isSearchResult, setIsSearchResult] = useState(false);
+    const SearchValueRef = useRef('');
 
 
     // 검색 관련 이벤트a
@@ -39,7 +41,7 @@ const SearchProject = ({ searchProjectRef }) => {
             if(searchText === '') return setIsSearchResult(false);
             SearchDispatch({ type: "PROJECT_SEARCH_RELATION_REQUEST" })
             await projectRelationSearch(searchText);
-
+            SearchValueRef.current = searchText;
           } catch(err) {
             console.err(err)
           }
@@ -53,18 +55,35 @@ const SearchProject = ({ searchProjectRef }) => {
      };
 
     // 검색
-    const handleSearchSubmit = () => {
+    const handleSearchSubmit = async (_, resentValue) => { // jsx에서 넘길 때 첫번째 인자는 event임. 주의
         if(!state.isLogged) return;
-        searchProjectRef.current.popupClose()
-        navigate(`/search/result/total/${searchValue}`)
+        let isResentValue = resentValue || searchValue; // 연관 검색어를 클릭하면 인자값을 적용. 아니면 인풋값을 적용 
         let searchTextmatched = false;
+        SearchValueRef.current = isResentValue;
+
         for(let i = 0; i < recentText.length; i++) {
-            if(recentText[i] === searchValue) searchTextmatched = true;
+            if(recentText[i] === isResentValue) searchTextmatched = true;
         };
 
-        if(!searchTextmatched) {
-            SearchDispatch({ type: "RECENT_SEARCH_ADD_REQUEST" })
-            recentSearchAdd({ userId: state.user._id, searchText: searchValue })
+        if(searchTextmatched) { // 같은게 있다면 기존 검색어는 remove 후 다시 추가. 동기적으로 
+            SearchDispatch({ type: "RECENT_SEARCH_DELETE_REQUEST" })
+            await recentSearchdelete({ userId: state.user._id, searchText: isResentValue })
+        };
+
+        SearchDispatch({ type: "RECENT_SEARCH_ADD_REQUEST" });
+        await recentSearchAdd({ userId: state.user._id, searchText: isResentValue });
+
+        searchProjectRef.current.popupClose();
+        navigate(`/search/result/total/${isResentValue}`);
+    };
+
+    const handleSearchTextChange = (title) => {
+        setSearchValue(title)
+    } 
+
+    const handleSearchKeyPress = e => {
+        if(e.key === 'Enter') {
+            handleSearchSubmit();
         }
     }
 
@@ -80,6 +99,7 @@ const SearchProject = ({ searchProjectRef }) => {
                 value={searchValue}
                 isSearchResult={isSearchResult}
                 onChange={handleSearchCange}
+                onKeyPress={handleSearchKeyPress}
                 handleInputReset={handleResetSearchValue}
                 isButton={true} 
                 buttonType={"button"}
@@ -95,12 +115,23 @@ const SearchProject = ({ searchProjectRef }) => {
                          <ul className='search_result_wrap'>
                             {SearchState.relationSearch?.map((project, idx) => (
                                 <li className='search_result_item' key={idx}>
-                                    <Link to={`/search/result/total/${searchValue}`} className='link' onClick={() => searchProjectRef.current.popupClose()}>
+                                    <Link 
+                                        to={`/search/result/total/${project.title}`} 
+                                        className='link' 
+                                        onClick={e => handleSearchSubmit(e, project.title)}
+                                    >
                                         <span className='icon'><PiMagnifyingGlassDuotone /></span>
-                                        <p className='title word_ellip_1'>
+                                        {/* <p className='title word_ellip_1'>
                                             {project.title.slice(0, project.title?.match(searchValue)?.index)}<strong className='search_value'>{searchValue}</strong>{project.title?.slice(searchValue.length + project.title?.match(searchValue)?.index)}
+                                        </p> */}
+                                        <p className='title word_ellip_1'>
+                                            {project.title.slice(0, project.title?.match(SearchValueRef.current)?.index)}<strong className='search_value'>{SearchValueRef.current}</strong>{project.title?.slice(SearchValueRef.current.length + project.title?.match(SearchValueRef.current)?.index)}
                                         </p>
                                     </Link>
+                                    <Button className="button_reset hover_type1" onClick={() => handleSearchTextChange(project.title)}>
+                                        <span className='icon search_txt'><PiArrowSquareInDuotone /></span>
+                                        <span className='blind'>이 검색어 검색창으로 이동</span>
+                                    </Button>
                                 </li>
                             ))}
                         </ul>
@@ -116,7 +147,7 @@ const SearchProject = ({ searchProjectRef }) => {
             )}
 
            {/* 최근 검색어 */}
-           {state.isLogged && !isSearchResult && <SearchRecent searchProjectRef={searchProjectRef} />}
+           {state.isLogged && !isSearchResult && <SearchRecent handleSearchSubmit={handleSearchSubmit}/>}
         </Fragment>
     );
 };
