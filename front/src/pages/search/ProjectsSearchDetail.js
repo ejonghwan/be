@@ -18,16 +18,15 @@ const ProjectsSearchDetail = ({ page }) => {
     useEffect(() => {
         SearchDispatch({ type: "PROJECT_SEARCH_REQUEST" })
         projectSearch({ searchText: searchValue, pageNum })
-        console.log(projectSearchData, searchAllLength)
+        // console.log('페이징 변경될때 검색', projectSearchData, searchAllLength)
         
     }, [pageNum])
 
     useEffect(() => {
         SearchDispatch({ type: "PROJECT_SEARCH_REQUEST" })
         projectSearch({ searchText: searchValue, pageNum })
-        console.log(projectSearchData, searchAllLength)
-        
-    }, [])
+        // console.log('첫로딩 검색', projectSearchData, searchAllLength);
+    }, [searchValue])
 
     /*
         통합검색은 페이지네이션으로 적용. 이유는 사용자가 전에 검색했던 데이터를 대략적으로 몇페이지에 있는지 알 수 있게 하기 위해..
@@ -49,7 +48,8 @@ const ProjectsSearchDetail = ({ page }) => {
             ) : (
                 <div className='b_conts full bg_gray'>
                     <div className='b_conts pd_0'>
-                        <p className='gap_20'><strong className='point_color1'>{searchValue}</strong>에 대한 결과</p>
+                        <p className='gap_5'><strong className='point_color1'>{searchValue}</strong>에 대한 결과</p>
+                        <p className='gap_20'>총 <strong className='point_color1'>{searchAllLength}</strong> 건</p>
                         <ul className='project_items_hor'>
                             {projectSearchData.map(project => (
                                 <li key={project._id} className='project_items'>

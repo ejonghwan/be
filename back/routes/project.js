@@ -287,6 +287,15 @@ router.post('/', auth, async (req, res) => {
     try {
         const { constructorUser, instanceUser, rank, title, content, write, projectPublic, categorys, joinUser, promise } = req.body; //joinUser 는 배열
         
+        const isLimitProject = await User.findById(constructorUser._id).select("projects")
+        
+        if(isLimitProject.projects.length >= 11) {
+            throw new Error('습관은 10개까지만 생성할 수 있습니다. 진행하던 습관을 삭제해주세요.')
+        }
+        console.log(isLimitProject, isLimitProject.projects.length)
+        
+
+
         // 프로젝트 생성
         const newProject = await new Project(req.body);
         newProject.save();

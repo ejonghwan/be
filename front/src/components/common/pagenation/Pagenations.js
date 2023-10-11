@@ -32,9 +32,9 @@ const Pagenations = ({ searchAllLength, pageNum, setPageNum, testlength = 525 })
                 </Button>
             </div>
 
-            {Array(Math.floor(searchAllLength / pageGroupNumberRef.current)).fill(null).map((_, idx) => {
+            {Array(Math.ceil(searchAllLength / pageGroupNumberRef.current)).fill(null).map((_, idx) => {
                 return (
-                    <Fragment>
+                    <Fragment key={idx}>
                         {idx >= (pageGroupMinLen * pageGroupNumberRef.current) &&  idx < (pageGroupMaxLen * pageGroupNumberRef.current) && (
                             <Button 
                                 className={`button_reset page_number_item hover_type1 ${pageNum === idx + 1 ? 'active' : ''}`}

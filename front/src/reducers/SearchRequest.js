@@ -26,6 +26,7 @@ const SearchRequest = () => {
         }
     }
 
+
     // 습관 검색
      const projectSearch = async data => {
         try {
@@ -48,6 +49,8 @@ const SearchRequest = () => {
 
     // 연관 검색
      const projectRelationSearch = async searchText => {
+
+        console.log('request 이거 가는지')
         try {
             if(!searchText || typeof searchText !== 'string') throw new Error('넘어온 검색값이 잘못되었습니다');
             let encodeName = encodeURIComponent(searchText);
@@ -55,7 +58,7 @@ const SearchRequest = () => {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true,
             }
-            const res = await axios.get(`${host}/api/search/project/relation/${encodeName}`, config);
+            const res = await axios.get(`${host}/api/search/relation/project/${encodeName}`, config);
             SearchDispatch({ type: "PROJECT_SEARCH_RELATION_SUCCESS", data: res.data });
 
         } catch(err) {

@@ -11,7 +11,14 @@ const router = express.Router();
 
 
 
-// 검색 스킵작업 + 상세페이지 작업하면 끝
+
+/*
+    api 뭐지.. 이슈 
+    1. /project/:searchText/:pageNum
+    2. /project/relation/:searchText/:pageNum
+    이렇게 api 분리하면 두번째로 요청해도 첫번째꺼로 감
+*/
+
 
 //@ path    GET /api/search/project/:searchText/:pageNum
 //@ doc     프로젝트, 글 검색 
@@ -19,6 +26,7 @@ const router = express.Router();
 router.get('/project/:searchText/:pageNum', async (req, res) => {
     try {
         // front에서 보낼 때 encodeURIComponent("룰루")
+        console.log('??모지 ???')
         const { searchText, pageNum } = req.params;
         const page = parseInt(pageNum);
         
@@ -51,7 +59,7 @@ router.get('/project/:searchText/:pageNum', async (req, res) => {
                 }
             }
         ]
-        }).sort({ createdAt: -1 }).skip(page * 10).limit(10);
+        }).sort({ createdAt: -1 }).skip((page - 1) * 10).limit(10);
 
          res.status(200).json({ search, searchAllLength });
     } catch (err) {
@@ -60,11 +68,12 @@ router.get('/project/:searchText/:pageNum', async (req, res) => {
     }
 })
 
-//@ path    GET /api/search/project/relation/:searchText
+//@ path    GET /api/search/relation/project/:searchText
 //@ doc     프로젝트, 글 검색 연관 검색
 //@ access  public
-router.get('/project/relation/:searchText', async (req, res) => {
+router.get('/relation/project/:searchText', async (req, res) => {
     try {
+        console.log('이걸로 와야되는데 ???')
         const { searchText } = req.params;
         const search = await Project.find({
            $or: [
@@ -75,7 +84,7 @@ router.get('/project/relation/:searchText', async (req, res) => {
                 }, 
             }
         ]
-        }).select('title').limit(10);
+        }).sort({ createdAt: -1 }).select('title').limit(10);
          res.status(200).json(search);
     } catch (err) {
         console.error('server:', err);
@@ -106,12 +115,6 @@ router.get('/user/:user', async (req, res) => {
             }
         ]
         }).populate({ path: 'id' });
-        /* 
-            퍼퓰 
-            id: "jjongrrr"
-            name
-            
-        */
          res.status(200).json(findUser);
 
     } catch (err) {

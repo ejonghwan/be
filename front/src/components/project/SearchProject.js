@@ -19,7 +19,7 @@ import './SearchProject.css';
 const SearchProject = ({ searchProjectRef }) => {
     const { projectRelationSearch, recentSearchAdd, recentSearchdelete } = SearchRequest();
     const { state } = useContext(UserContext);
-    const { SearchState, SearchState: { recentText }, SearchDispatch } = useContext(SearchContext);
+    const { SearchState, SearchState: { recentText, relationSearch }, SearchDispatch } = useContext(SearchContext);
     const { ProjectState, ProjectState: { project } } = useContext(ProjectContext);
     const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ const SearchProject = ({ searchProjectRef }) => {
         //그리고 useCallback 안에서는 state를 구독하지 않기 때문에 변화 값을 인자로 넘겨줘야함 
     }
 
-    // 검색
+    // 연관 검색
     const handleSearchProjects = useCallback(_debounce(async (searchText) => {
         try {
             if(searchText === '') return setIsSearchResult(false);
@@ -113,7 +113,7 @@ const SearchProject = ({ searchProjectRef }) => {
                 ) : (
                     <Fragment>
                          <ul className='search_result_wrap'>
-                            {SearchState.relationSearch?.map((project, idx) => (
+                            {relationSearch?.map((project, idx) => (
                                 <li className='search_result_item' key={idx}>
                                     <Link 
                                         to={`/search/result/total/${project.title}`} 
