@@ -27,15 +27,17 @@ const SearchRequest = () => {
     }
 
     // 습관 검색
-     const projectSearch = async searchText => {
+     const projectSearch = async data => {
         try {
+            const { searchText, pageNum } = data;
             if(!searchText || typeof searchText !== 'string') throw new Error('넘어온 검색값이 잘못되었습니다');
+            if(!pageNum || typeof pageNum !== 'number') throw new Error('넘어온 숫자값이 잘못되었습니다');
             let encodeName = encodeURIComponent(searchText);
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
             }
-            const res = await axios.get(`${host}/api/search/project/${encodeName}`, config);
+            const res = await axios.get(`${host}/api/search/project/${encodeName}/${pageNum}`, config);
             SearchDispatch({ type: "PROJECT_SEARCH_SUCCESS", data: res.data });
 
         } catch(err) {

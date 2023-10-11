@@ -13,29 +13,30 @@ const router = express.Router();
 
 // 검색 스킵작업 + 상세페이지 작업하면 끝
 
-//@ path    GET /api/search/project/:searchText
+//@ path    GET /api/search/project/:searchText/:pageNum
 //@ doc     프로젝트, 글 검색 
 //@ access  public
-router.get('/project/:searchText', async (req, res) => {
+router.get('/project/:searchText/:pageNum', async (req, res) => {
     try {
         // front에서 보낼 때 encodeURIComponent("룰루")
-        const { searchText } = req.params;
+        const { searchText, pageNum } = req.params;
+        const page = parseInt(pageNum);
         
-        // const test = await Project.find({
-        //    $or: [
-        //     {
-        //         title: {
-        //             $regex: searchText,
-        //             $options: 'i',
-        //         }, 
-        //     }, 
-        //     {   content: {
-        //             $regex: searchText,
-        //             $options: 'i',
-        //         }
-        //     }
-        // ]
-        // }).count();
+        const searchAllLength = await Project.find({
+           $or: [
+            {
+                title: {
+                    $regex: searchText,
+                    $options: 'i',
+                }, 
+            }, 
+            {   content: {
+                    $regex: searchText,
+                    $options: 'i',
+                }
+            }
+        ]
+        }).count();
         const search = await Project.find({
            $or: [
             {
@@ -50,10 +51,9 @@ router.get('/project/:searchText', async (req, res) => {
                 }
             }
         ]
-        });
+        }).sort({ createdAt: -1 }).skip(page * 10).limit(10);
 
-        console.log(test)
-         res.status(200).json(search);
+         res.status(200).json({ search, searchAllLength });
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import SearchRequest from '../../reducers/SearchRequest';
 import { PiFolderDashedDuotone } from "react-icons/pi";
 import './ProjectsSearchDetail.css';
@@ -6,17 +6,26 @@ import { SearchContext } from '../../context/SearchContext';
 import { Link, useParams } from 'react-router-dom';
 import CompleteMsg from '../../components/common/complete/CompleteMsg';
 import ProjectItemsHorizon from '../../components/project/ProjectItemsHorizon';
+import Pagenations from '../../components/common/pagenation/Pagenations';
 
 const ProjectsSearchDetail = ({ page }) => {
 
     const { projectSearch } = SearchRequest();
-    const { SearchState, SearchState: { projectSearchData }, SearchDispatch } = useContext(SearchContext);
+    const { SearchState, SearchState: { projectSearchData, searchAllLength }, SearchDispatch } = useContext(SearchContext);
     const { searchValue } = useParams();
+    const [ pageNum, setPageNum ] = useState(1);
 
     useEffect(() => {
         SearchDispatch({ type: "PROJECT_SEARCH_REQUEST" })
-        projectSearch(searchValue)
-        console.log(projectSearchData)
+        projectSearch({ searchText: searchValue, pageNum })
+        console.log(projectSearchData, searchAllLength)
+        
+    }, [pageNum])
+
+    useEffect(() => {
+        SearchDispatch({ type: "PROJECT_SEARCH_REQUEST" })
+        projectSearch({ searchText: searchValue, pageNum })
+        console.log(projectSearchData, searchAllLength)
         
     }, [])
 
@@ -40,7 +49,7 @@ const ProjectsSearchDetail = ({ page }) => {
             ) : (
                 <div className='b_conts full bg_gray'>
                     <div className='b_conts pd_0'>
-                        <p className='gap_20'><strong>{searchValue}</strong>에 대한 결과</p>
+                        <p className='gap_20'><strong className='point_color1'>{searchValue}</strong>에 대한 결과</p>
                         <ul className='project_items_hor'>
                             {projectSearchData.map(project => (
                                 <li key={project._id} className='project_items'>
@@ -48,18 +57,19 @@ const ProjectsSearchDetail = ({ page }) => {
                                 </li>
                             ))}
                         </ul>
-                        
                         {projectSearchData.length === 0 && (
                                 <div className='align_c'>
                                 <CompleteMsg 
                                     icon={<PiFolderDashedDuotone />}
-                                    title={'내가 좋아요한 습관이 없습니다.'}
-                                    subText={'다른 습관을 좋아해보세요.'}
+                                    title={`${searchValue}에 대한 내용이 없습니다.`}
+                                    subText={'다른 검색어로 검색해보세요.'}
                                 />
-                                
-                                <Link to="/project/list" className='button_type7 gapt_10'>다른 습관 보러가기</Link>
                             </div>
                         )}
+                    </div>
+
+                    <div className='gapt_30'>
+                        <Pagenations searchAllLength={searchAllLength} pageNum={pageNum} setPageNum={setPageNum} />
                     </div>
                 </div>
             )}

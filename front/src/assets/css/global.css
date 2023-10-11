@@ -12,6 +12,7 @@
     --point-color: #448deb;
     --point-color2: #cf1f1f;
     --main-bg-color: #fff;
+    --main-bg-color2:#f4f4f4;
     --header-bg-color: #f4f4f4;
     --hover-color: #f2f2f2;
     --hover-color2:rgb(226, 226, 226);
@@ -63,6 +64,7 @@
     --point-color: #448deb;
     --point-color2: #cf1f1f;
     --main-bg-color: #121213;
+    --main-bg-color2: rgb(37 37 38);
     --header-bg-color: #121213;
     --hover-color: #212121;
     --hover-color2:rgb(36, 36, 36);
@@ -224,7 +226,7 @@ button.hover_type3:hover {
 } 
 
 .ico_hover_type1:hover > svg {
-    transform: translateY(-2px);
+    transform: translateY(1px);
     color: var(--point-color);
 }
 
@@ -384,7 +386,13 @@ svg {
     padding: 0;
 }
 
+.point_color1 {
+    color: var(--point-color);
+}
 
+.point_color2 {
+    color: var(--point-color2);
+}
 
 form {
     width: 100%;

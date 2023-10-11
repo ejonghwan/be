@@ -228,9 +228,9 @@ button.line:hover {
     position: absolute;
     top: 50%;
     width: 7px;
-    transform-origin: right center;
-    left: 6px;
-    transform: rotate(45deg) translate(0);
+    /* transform-origin: right center; */
+    left: 50%;
+    transform: rotate(45deg) translate(-50%, -50%);
 }
 
 .button_type_arrow_r::after {
@@ -241,9 +241,9 @@ button.line:hover {
     position: absolute;
     top: 50%;
     width: 7px;
-    transform-origin: right center;
-    left: 6px;
-    transform: rotate(-45deg) translateX(0);
+    /* transform-origin: right center; */
+    left: 50%;
+    transform: rotate(-45deg) translate(-50%, -50%);
 }
 
 .button_type_arrow_l::before {
@@ -254,9 +254,9 @@ button.line:hover {
     position: absolute;
     top: 50%;
     width: 7px;
-    transform-origin: left center;
-    right: 6px;
-    transform: rotate(45deg) translate(0);
+    /* transform-origin: left center; */
+    right: 50%;
+    transform: rotate(135deg) translate(-50%, -50%);
 }
 
 .button_type_arrow_l::after {
@@ -267,9 +267,9 @@ button.line:hover {
     position: absolute;
     top: 50%;
     width: 7px;
-    transform-origin: left center;
-    right: 6px;
-    transform: rotate(-45deg) translateX(0);
+    /* transform-origin: left center; */
+    right: 50%;
+    transform: rotate(-135deg) translate(-50%, -50%);
 }
 
 

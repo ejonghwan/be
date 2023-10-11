@@ -33,10 +33,11 @@ export const SearchIntialState = {
 
 
     userSearch: [],
-    categorySearch: [],
-    projectSearchData: [],
-    recentText: [],
-    relationSearch: []
+    categorySearch: [], 
+    projectSearchData: [], // 검색한 습관
+    recentText: [], // 이전 검색
+    relationSearch: [], //연관 검색
+    searchAllLength: 0 // 검색된 총 db 갯수
 
 }
 
@@ -83,7 +84,8 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     searchProjectsLoading: false,
                     searchProjectsDone: true,
                     searchProjectsError: '',
-                    projectSearchData: action.data,
+                    projectSearchData: action.data.search,
+                    searchAllLength: action.data.searchAllLength
                 }
 
             case "PROJECT_SEARCH_FAILUE" : 
