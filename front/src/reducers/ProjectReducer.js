@@ -47,28 +47,19 @@ export const ProjectIntialState = {
     loadMyapplyProjectDone: false,
     loadMyapplyProjectError: null,
 
+    loadMyProjectLoading: false,
+    loadMyProjectDone: false,
+    loadMyProjectError: null,
+
     createProject: {},
     myapplyProject: [],
+    myProject: [],
     project: {},
 }
 
 
 const ProjectReducer = (state = ProjectIntialState, action) => {
     switch(action.type) {
-            // case "PROJECT_REQUEST" : 
-            //     return {
-            //         ...state,
-            //         loading: true,
-            //     }
-
-            // case "ERROR_LOADING_CLEAR" : 
-            //     return {
-            //         ...state,
-            //         loading: false,
-            //         successMessage: '',
-            //         errorMessage: '',
-            //     }
-
 
             case "PROJECT_CREATE_REQUEST": 
                 return {
@@ -347,6 +338,42 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadMyapplyProjectLoading: false,
                     loadMyapplyProjectError: action.data,
                 }
+
+
+
+            case "MYPROJECT_LOAD_REQUEST": 
+                return {
+                    ...state,
+                    loadMyProjectLoading: true,
+                }
+
+            case "MYPROJECT_LOAD_SUCCESS": 
+                return {
+                    ...state,
+                    loadMyProjectLoading: false,
+                    loadMyProjectDone: true,
+                    loadMyProjectError: '',
+                    myProject: action.data
+                }
+
+            case "MYPROJECT_LOAD_FAILUE" : 
+                return {
+                    ...state,
+                    loadMyProjectLoading: false,
+                    loadMyProjectError: action.data,
+                }
+
+
+            case "RESET_PROJECTS" : 
+                return {
+                    ...state,
+                    createProject: {},
+                    myapplyProject: [],
+                    myProject: [],
+                    project: {},
+                }
+
+            
             
             default: return { ...state }
     }

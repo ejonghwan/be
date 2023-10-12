@@ -31,13 +31,18 @@ export const SearchIntialState = {
     recentSearchAllDeleteDone: false,
     recentSearchAllDeleteError: false,
 
+    SearchTagLoading: false,
+    SearchTagDone: false,
+    SearchTagError: false,
+
 
     userSearch: [],
     categorySearch: [], 
     projectSearchData: [], // 검색한 습관
     recentText: [], // 이전 검색
     relationSearch: [], //연관 검색
-    searchAllLength: 0 // 검색된 총 db 갯수
+    searchAllLength: 0, // 검색된 총 db 갯수
+    searchTagAllLength: 0 //태그 검색 총 갯수
 
 }
 
@@ -232,6 +237,34 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     recentSearchAllDeleteLoading: false,
                     recentSearchAllDeleteError: action.data,
                 }
+
+
+
+            case "TAG_SEARCH_REQUEST": 
+                return {
+                    ...state,
+                    SearchTagLoading: true,
+                }
+
+            case "TAG_SEARCH_SUCCESS": 
+                return {
+                    ...state,
+                    SearchTagLoading: false,
+                    SearchTagDone: true,
+                    SearchTagError: '',
+                    categorySearch: action.data.category[0].projects,
+                    searchTagAllLength: action.data.searchTagAllLength
+                }
+
+            case "TAG_SEARCH_FAILUE" : 
+                return {
+                    ...state,
+                    SearchTagLoading: false,
+                    SearchTagError: action.data,
+                }
+
+
+                
 
 
 

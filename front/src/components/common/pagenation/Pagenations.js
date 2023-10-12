@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from 'react';
 import Button from '../form/Button';
 import './Pagenations.css';
 
-const Pagenations = ({ searchAllLength, pageNum, setPageNum, testlength = 525 }) => {
+const Pagenations = ({ allLength, pageNum, setPageNum, testlength = 525 }) => {
 
     const [pageGroupMinLen, setPageGroupMinLen] = useState(0); //0부터 +-
     const [pageGroupMaxLen, setPageGroupMaxLen] = useState(1);  //1부터 +-
@@ -32,7 +32,7 @@ const Pagenations = ({ searchAllLength, pageNum, setPageNum, testlength = 525 })
                 </Button>
             </div>
 
-            {Array(Math.ceil(searchAllLength / pageGroupNumberRef.current)).fill(null).map((_, idx) => {
+            {Array(Math.ceil(allLength / pageGroupNumberRef.current)).fill(null).map((_, idx) => {
                 return (
                     <Fragment key={idx}>
                         {idx >= (pageGroupMinLen * pageGroupNumberRef.current) &&  idx < (pageGroupMaxLen * pageGroupNumberRef.current) && (
@@ -48,7 +48,7 @@ const Pagenations = ({ searchAllLength, pageNum, setPageNum, testlength = 525 })
             <div className='next_btn_wrap'>
                 <Button 
                     onClick={handleNextPageGroup} 
-                    disabled={searchAllLength / pageGroupNumberRef.current <= pageGroupMaxLen * pageGroupNumberRef.current && true} 
+                    disabled={allLength / pageGroupNumberRef.current <= pageGroupMaxLen * pageGroupNumberRef.current && true} 
                     // 검색갯수 / 보여줄페이징 <= 페이징맥스넘버 * 보여줄페이징
                     className={'button_reset button_type4 button_type_arrow_r hover_type1'}
                 >

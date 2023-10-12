@@ -33,9 +33,39 @@ router.get('/', async (req, res) => {
     }
 })
 
+//@ path    GET /api/project/myprojects/:userId
+//@ doc     로드 프로젝 (내가 만든 습관)
+//@ access  public
+router.get('/myprojects/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const projects = await Project.find({ "constructorUser._id": userId }).populate([
+            { path: 'constructorUser._id', select: 'id profileImage email name createdAt' },
+            { path: 'instanceUser._id', select: 'id profileImage email name createdAt' },
+            { path: 'joinUser._id', select: 'id profileImage email name createdAt' },
+            { path: 'categorys._id', select: 'id profileImage email name' },
+            { path: 'likeUser', select: 'id profileImage email name createdAt' },
+            // { path: 'projectImages._id' }, 이미지는 안에 내장해둠
+            { 
+                path: 'writes', 
+                select: 'user title content likeCount commentCount comments createdAt updatedAt', 
+                populate: [
+                    { path: "user._id", select: 'id name profileImage' }, 
+                    { path:"comments", select: "recommentCount" }
+                ] 
+            }, //객체 2뎁스 퍼퓰. 이거 꼭 기억
+        ]);
+        console.log('p?', projects)
+        res.status(200).json(projects)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
 
 //@ path    GET /api/project/:projectId
-//@ doc     로드 프로젝 (특정)
+//@ doc     로드 프로젝 (상세)
 //@ access  public
 router.get('/:projectId', async (req, res) => {
     try {
@@ -290,7 +320,7 @@ router.post('/', auth, async (req, res) => {
         const isLimitProject = await User.findById(constructorUser._id).select("projects")
         
         if(isLimitProject.projects.length >= 11) {
-            throw new Error('습관은 10개까지만 생성할 수 있습니다. 진행하던 습관을 삭제해주세요.')
+            throw new Error('습관은 10개까지만 생성할 수 있습니다. \n 진행하던 습관을 삭제해주세요.')
         }
         console.log(isLimitProject, isLimitProject.projects.length)
         
@@ -498,26 +528,6 @@ router.patch('/unlike', auth, async (req, res) => {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
     }
-})
-
-
-//@ path    GET /api/project/category/:categoryName
-//@ doc     카테고리 검색
-//@ access  public
-router.get('/category/:categoryName', async (req, res) => {
-    try {
-        // 카테고리네임 프론트에서 encodeURIComponent("호호")
-        const { categoryName } = req.params;
-        const category = await Category.find({ categoryName: categoryName }, ).populate("projects")
-
-        // console.log(category)
-
-        res.status(201).json(category);
-    } catch (err) {
-        console.error('server:', err);
-        res.status(500).json({ message: err.message });
-    }
-
 })
 
 

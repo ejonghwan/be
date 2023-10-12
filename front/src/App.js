@@ -8,6 +8,7 @@ import { getQueryString, getWithExpire } from './utils/utils.js'
 import { ImageProvider } from './context/ImageContext.js'
 import { UserProvider, UserContext } from './context/UserContext.js'
 import UserRequest from './reducers/UserRequest.js'
+import Loader3 from './components/common/spinners/Loader3.js';
 // import { getUser } from './reducers/UserRequest.js'
 
 
@@ -66,8 +67,7 @@ const App = () => {
  
   return (
       <div className="App"> 
-        {state.loadUserLoading && <div>파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........파이어베이스 로드 참고하기...........</div>}
-        
+        {state.loadUserLoading && <Loader3 full={true} scale='3' />}
         <RoutesPage />
       </div>
   );

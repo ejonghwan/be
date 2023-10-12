@@ -7,18 +7,27 @@ import ProjectRequest from '../reducers/ProjectRequest.js';
 import { ProjectContext } from '../context/ProjectContext.js';
 import './home.css';
 import UserRequest from '../reducers/UserRequest.js';
+import Spinners from '../components/common/spinners/Spinners.js';
+import SkeletonItem from '../components/skeleton/SkeletonItem.js';
+import SkeletonCard from '../components/skeleton/SkeletonCard.js';
 
 
 
 const Home = ({ page }) => {
 
     const { state, dispatch } = useContext(UserContext);
-    const { ProjectState: { myapplyProject } } = useContext(ProjectContext);
-    const { myApplyProject } = ProjectRequest();
+    const { ProjectState, ProjectState: { myapplyProject, myProject }, ProjectDispatch } = useContext(ProjectContext);
+    const { myApplyProject, loadMyProject } = ProjectRequest();
     const { getUserProjects } = UserRequest();
 
     const handleLoadApplyProject = () => {
+        ProjectDispatch({ type: "PROJECT_MYAPPLY_LOAD_REQUEST" });
         myApplyProject({ userId: state.user._id });
+    }; 
+
+    const handleLoadMyProject = () => {
+        ProjectDispatch({ type: "MYPROJECT_LOAD_REQUEST" });
+        loadMyProject({ userId: state.user._id });
     }; 
 
     const handleUserProjectsUpdate = () => {
@@ -27,25 +36,39 @@ const Home = ({ page }) => {
     };
     
     useEffect(() => {
-        state.loadUserDone && handleLoadApplyProject();
-        state.loadUserDone && handleUserProjectsUpdate();
-    }, [state.loadUserDone]);
+        state.isLogged && handleLoadApplyProject();
+        state.isLogged && handleUserProjectsUpdate();
+        state.isLogged && handleLoadMyProject();
+    }, [state.loadUserDone, state.isLogged]);
 
 
     return (
         <Fragment>
             <h2 className='blind'><span>{page}</span></h2>
-            {state.loadUserLoading && (
-                <div>
-                    스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......
-                </div>
-            )}
+            {state.loadUserLoading && ( <div><Spinners /></div> )}
+           
             <div className='b_conts full bg_gray'>
                 <div className='b_conts pd_0'>
                     <h3 className='h3_title gap_20'>{state.user._id ? '내가 진행중인 습관' : '로그인 후 습관을 만들어보세요.'}</h3>
+                    {ProjectState.loadMyProjectLoading && (
+                       <ul className='project_items_wrap'>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                        </ul>
+                    )}
+                    {ProjectState.loadMyapplyProjectLoading && (
+                       <ul className='project_items_wrap'>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                        </ul>
+                    )}
                     <ul className='project_items_wrap'>
                         {/* 내가 만든 습관 */}
-                        {state.user?.projects?.map(project => (
+                        {myProject?.map(project => (
                             <li key={project._id} className='project_items'>
                                 <ProjectItems project={project} isRequestUser={true} isDaysPanel={true} userDaysData={project.constructorUser?.days} />
                             </li>

@@ -90,7 +90,6 @@ const SearchRequest = () => {
        const recentSearchAdd = async data => {
         try {
             const { userId, searchText } = data;
-            console.log('?????', searchText)
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId값이 잘못되었습니다');
             if(!searchText || typeof searchText !== 'string') throw new Error('넘어온 searchText값이 잘못되었습니다');
             const config = {
@@ -146,6 +145,25 @@ const SearchRequest = () => {
     }
 
 
+    // 태그 검색
+    const tagSearch = async data => {
+        try {
+            const { categoryName, pageNum } = data;
+            if(!categoryName || typeof categoryName !== 'string') throw new Error('넘어온 categoryName값이 잘못되었습니다');
+            const config = {
+                headers: { "Content-Type": "application/json", },
+                withCredentials: true,
+            }
+            const res = await axios.get(`${host}/api/search/category/${categoryName}/${pageNum}`, config);
+            SearchDispatch({ type: "TAG_SEARCH_SUCCESS", data: res.data });
+
+        } catch(err) {
+            console.error(err);
+            SearchDispatch({ type: "TAG_SEARCH_FAILUE", data: err.response.data.message });
+        }
+    }
+
+
 
 
 
@@ -157,7 +175,8 @@ const SearchRequest = () => {
         recentSearchAdd,
         recentSearchdelete,
         projectRelationSearch,
-        recentSearchDeleteAll
+        recentSearchDeleteAll,
+        tagSearch
     }
 }
 

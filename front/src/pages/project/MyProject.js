@@ -10,16 +10,24 @@ import { Link } from 'react-router-dom';
 const MyProject = ({ page }) => {
 
     const { state } = useContext(UserContext);
-    const { ProjectState, ProjectState: { myapplyProject } } = useContext(ProjectContext);
-    const { myApplyProject } = ProjectRequest();
+    const { ProjectState, ProjectState: { myapplyProject, myProject }, ProjectDispatch  } = useContext(ProjectContext);
+    const { myApplyProject, loadMyProject } = ProjectRequest();
 
     const handleLoadApplyProject = () => {
-        myApplyProject({ userId: state.user._id })
-    } 
+        ProjectDispatch({ type: "PROJECT_MYAPPLY_LOAD_REQUEST" });
+        myApplyProject({ userId: state.user._id });
+    }; 
+
+    const handleLoadMyProject = () => {
+        ProjectDispatch({ type: "MYPROJECT_LOAD_REQUEST" });
+        loadMyProject({ userId: state.user._id });
+    }; 
+
     
     useEffect(() => {
-        state.loadUserDone && handleLoadApplyProject();
-    }, [state.loadUserDone])
+        state.isLogged && handleLoadApplyProject();
+        state.isLogged && handleLoadMyProject();
+    }, [state.loadUserDone, state.isLogged])
 
     return (
         <Fragment>
@@ -28,7 +36,7 @@ const MyProject = ({ page }) => {
             </div>
 
             <div className='b_conts full bg_gray'>
-                {state.loadUserLoading ? (
+                {ProjectState.loadMyProjectLoading ? (
                     <div>
                         스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......
                     </div>
@@ -36,7 +44,7 @@ const MyProject = ({ page }) => {
                     <div className='b_conts pd_0'>
                         <h3 className='h3_title gap_20'>내가 만든 습관</h3>
                         <ul className='project_items_wrap'>
-                            {state.user?.projects?.map(project => (
+                            {myProject?.map(project => (
                                 <li key={project._id} className='project_items'>
                                     <ProjectItems project={project} isRequestUser={true} isDaysPanel={true} userDaysData={project.constructorUser?.days}/>
                                 </li>
@@ -54,7 +62,6 @@ const MyProject = ({ page }) => {
                         )}
                     </div>
                 )}
-
             
                 {ProjectState.loadMyapplyProjectLoading ? (
                     <div>

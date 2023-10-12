@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext.js';
 import { getWithExpire, setWithExpire } from '../utils/utils.js';
+import { ProjectContext } from '../context/ProjectContext.js';
 
 /*
     reducer에서 request 뺀 이유. 
@@ -21,7 +22,7 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 
 const UserRequest = () => {
     const { dispatch } = useContext(UserContext); 
-    ;
+    const { ProjectDispatch } = useContext(ProjectContext);
     const accToken = getWithExpire('X-access-token')
 
    // 회원가입 유저
@@ -176,6 +177,7 @@ const UserRequest = () => {
             localStorage.removeItem('X-access-token');
             const user = await axios.get(`${host}/api/users/logout`, config);
             dispatch({ type: "USER_LOGOUT_SUCCESS" });
+            ProjectDispatch({ type: "RESET_PROJECTS" });
             return user;
         } catch(err) {
             console.error(err);

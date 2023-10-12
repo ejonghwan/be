@@ -5,7 +5,7 @@ import { auth } from '../middleware/auth.js' ;
 // model 
 import Project from '../models/project.js';
 import User from '../models/users.js';
-// import Category from '../models/category.js';
+import Category from '../models/category.js';
 
 const router = express.Router();
 
@@ -26,7 +26,6 @@ const router = express.Router();
 router.get('/project/:searchText/:pageNum', async (req, res) => {
     try {
         // front에서 보낼 때 encodeURIComponent("룰루")
-        console.log('??모지 ???')
         const { searchText, pageNum } = req.params;
         const page = parseInt(pageNum);
         
@@ -73,7 +72,6 @@ router.get('/project/:searchText/:pageNum', async (req, res) => {
 //@ access  public
 router.get('/relation/project/:searchText', async (req, res) => {
     try {
-        console.log('이걸로 와야되는데 ???')
         const { searchText } = req.params;
         const search = await Project.find({
            $or: [
@@ -146,8 +144,7 @@ router.get('/recent/load/:userId', async (req, res) => {
 router.patch('/recent/add/:userId/:searchText', async (req, res) => {
     try {
         const { userId, searchText } = req.params; 
-        console.log(req.params,  userId, searchText)
-         const userSearchData = await User.findByIdAndUpdate(userId, { $push: { prevSearch: searchText } }, { new: true }).select("prevSearch")
+         await User.findByIdAndUpdate(userId, { $push: { prevSearch: searchText } }, { new: true }).select("prevSearch")
          res.status(201).json(searchText);
     } catch (err) {
         console.error('server:', err);
@@ -161,8 +158,7 @@ router.patch('/recent/add/:userId/:searchText', async (req, res) => {
 router.patch('/recent/delete/:userId/:searchText', async (req, res) => {
     try {
         const { userId, searchText } = req.params; 
-        console.log(req.params,  userId, searchText)
-         const userSearchData = await User.findByIdAndUpdate(userId, { $pull: { prevSearch: searchText } }, { new: true }).select("prevSearch")
+         await User.findByIdAndUpdate(userId, { $pull: { prevSearch: searchText } }, { new: true }).select("prevSearch");
          res.status(201).json(searchText);
     } catch (err) {
         console.error('server:', err);
@@ -178,13 +174,33 @@ router.patch('/recent/delete/:userId/:searchText', async (req, res) => {
 router.patch('/recent/deleteall/:userId', async (req, res) => {
     try {
         const { userId } = req.params; 
-         const userSearchData = await User.findByIdAndUpdate(userId, { $unset: { prevSearch: 1 } }, { strict: false })
-         console.log('userSearchData', userSearchData)
+         await User.findByIdAndUpdate(userId, { $unset: { prevSearch: 1 } }, { strict: false });
          res.status(201).end();
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
     }
+})
+
+
+
+//@ path    GET /api/search/category/:categoryName/:pageNum
+//@ doc     카테고리 검색
+//@ access  public
+router.get('/category/:categoryName/:pageNum', async (req, res) => {
+    try {
+        // 카테고리네임 프론트에서 encodeURIComponent("호호")
+        const { categoryName, pageNum } = req.params;
+        const page = parseInt(pageNum);
+        const category = await Category.find({ categoryName: categoryName }, ).sort({ createdAt: -1 }).skip((page - 1) * 10).limit(10).populate("projects").select()
+        const searchTagAllLength = await Category.find({ categoryName: categoryName }, ).count();
+
+        res.status(201).json({ category, searchTagAllLength });
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+
 })
 
 

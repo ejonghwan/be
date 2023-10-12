@@ -258,6 +258,29 @@ const ProjectRequest = () => {
     };
 
 
+    // 내 프로젝트 로드
+    const loadMyProject = async ({ userId }) => {
+        try {
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                    'X-access-token': accToken, 
+             },
+                withCredentials: true,
+            }
+            const res = await axios.get(`${host}/api/project/myprojects/${userId}`, config);
+            ProjectDispatch({ type: "MYPROJECT_LOAD_SUCCESS", data: res.data });
+
+            return res.data;
+        } catch(err) {
+            console.error(err);
+            ProjectDispatch({ type: "MYPROJECT_LOAD_FAILUE", data: err.response.data.message });
+        }
+    }
+
+
+    // 내가 신청한 프로젝트
     const myApplyProject = async data => {
         try {
             const { userId } = data;
@@ -293,7 +316,8 @@ const ProjectRequest = () => {
         addFriendProject,
         editProject,
         deleteProject,
-        myApplyProject
+        myApplyProject,
+        loadMyProject
     }
 }
 

@@ -12,7 +12,6 @@ import DaysPanel from '../dayspanel/DaysPanel';
 const ProjectItems = ({ project, isRequestUser = false, isTags = true, isDaysPanel = false, userDaysData = [] }) => {
     return (
         <Fragment>
-            
             <div className='info_wrap'>
                 <div className='project_image'>{IconData[project?.projectImages]}</div>
 

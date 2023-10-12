@@ -7,7 +7,7 @@ import Tags from '../common/tag/Tags';
 import { Link } from 'react-router-dom';
 import './ProjectItemsHorizon.css';
 
-const ProjectItemsHorizon = ({ project, isContent = false }) => {
+const ProjectItemsHorizon = ({ project, isContent = false, isTag = false }) => {
     return (
         <Fragment>
             <div className='info_wrap'>
@@ -37,6 +37,7 @@ const ProjectItemsHorizon = ({ project, isContent = false }) => {
                 
             </div>
             {isContent && <p className='project_conts word_ellip_2'>{project?.content}</p>}
+            {isTag && (<Tags tags={project?.categorys} isLink={true} isNoData={false} /> )}
         
         </Fragment>
     );
