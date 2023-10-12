@@ -45,13 +45,15 @@ const Home = ({ page }) => {
     return (
         <Fragment>
             <h2 className='blind'><span>{page}</span></h2>
-            {state.loadUserLoading && ( <div><Spinners /></div> )}
+            {/* {state.loadUserLoading && ( <div><Spinners /></div> )} */}
            
             <div className='b_conts full bg_gray'>
                 <div className='b_conts pd_0'>
                     <h3 className='h3_title gap_20'>{state.user._id ? '내가 진행중인 습관' : '로그인 후 습관을 만들어보세요.'}</h3>
                     {ProjectState.loadMyProjectLoading && (
                        <ul className='project_items_wrap'>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
                             <li className='project_items'><SkeletonCard /></li>
                             <li className='project_items'><SkeletonCard /></li>
                             <li className='project_items'><SkeletonCard /></li>
