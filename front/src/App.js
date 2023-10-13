@@ -67,7 +67,7 @@ const App = () => {
  
   return (
       <div className="App"> 
-        {state.loadUserLoading && <Loader3 full={true} scale='3' />}
+        {/* {state.loadUserLoading && <Loader3 full={true} scale='2' />} */}
         <RoutesPage />
       </div>
   );

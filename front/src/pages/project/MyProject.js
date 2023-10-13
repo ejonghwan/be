@@ -6,6 +6,8 @@ import { ProjectContext } from '../../context/ProjectContext.js';
 import CompleteMsg from '../../components/common/complete/CompleteMsg.js';
 import { PiFolderDashedDuotone } from "react-icons/pi";
 import { Link } from 'react-router-dom';
+import SkeletonCard from '../../components/skeleton/SkeletonCard.js';
+import SkeletonItem from '../../components/skeleton/SkeletonItem.js';
 
 const MyProject = ({ page }) => {
 
@@ -29,6 +31,11 @@ const MyProject = ({ page }) => {
         state.isLogged && handleLoadMyProject();
     }, [state.loadUserDone, state.isLogged])
 
+    useEffect(() => {
+        return () => ProjectDispatch({ type: "RESET_PROJECTS" });
+    }, [])
+
+
     return (
         <Fragment>
             <div className='b_conts'>
@@ -37,8 +44,18 @@ const MyProject = ({ page }) => {
 
             <div className='b_conts full bg_gray'>
                 {ProjectState.loadMyProjectLoading ? (
-                    <div>
-                        스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......
+                    <div className='b_conts pd_0'>
+                        <h3 className='h3_title gap_20'>
+                            <SkeletonItem style={{ width: "200px", height: "20px", borderRadius: "10px" }} />
+                        </h3>
+                        <ul className='project_items_wrap'>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                        </ul>
                     </div>
                 ) : (
                     <div className='b_conts pd_0'>
@@ -64,8 +81,18 @@ const MyProject = ({ page }) => {
                 )}
             
                 {ProjectState.loadMyapplyProjectLoading ? (
-                    <div>
-                        스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......
+                    <div className='b_conts pd_0'>
+                        <h3 className='h3_title gap_20 gapt_50'>
+                            <SkeletonItem style={{ width: "200px", height: "20px", borderRadius: "10px" }} />
+                        </h3>
+                        <ul className='project_items_wrap'>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                            <li className='project_items'><SkeletonCard /></li>
+                        </ul>
                     </div>
                 ) : (
                     <div className='b_conts pd_0'>

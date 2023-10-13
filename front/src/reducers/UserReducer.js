@@ -86,10 +86,7 @@ export const UserIntialState = {
 const UserReducer = (state = UserIntialState, action) => {
     
         switch(action.type) {
-            case "LOADING" : return {
-                ...state,
-                loading: true,
-            }
+            
             case "ERROR_LOADING_CLEAR" : 
                 return {
                     ...state,
@@ -98,12 +95,6 @@ const UserReducer = (state = UserIntialState, action) => {
                     imageErrorMessage: '',
                     globalErrorMessage: '',
                 }
-
-            // case "LOADING_CLEAR" : 
-            //     return {
-            //         ...state,
-            //         loading: false,
-            //     }
 
             case "USER_SIGNUP_REQEUST": 
                 return {
@@ -133,7 +124,6 @@ const UserReducer = (state = UserIntialState, action) => {
                 }
 
             case "USER_LOAD_SUCCESS": 
-            console.log(action.data)
                 return {
                     ...state,
                     loadUserLoading: false,
