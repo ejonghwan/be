@@ -289,8 +289,8 @@ const WriteRequest = () => {
     const likeRecomment = async data => {
         try {
             console.log('redu?', data)
-            const { user, commentId, recommentId } = data;
-            if(!user || typeof user !== 'string') throw new Error('넘어온 user 잘못되었습니다');
+            const { userId, commentId, recommentId } = data;
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 user 잘못되었습니다');
             if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
             if(!recommentId || typeof recommentId !== 'string') throw new Error('넘어온 recommentId 잘못되었습니다');
             const config = {
@@ -300,7 +300,7 @@ const WriteRequest = () => {
                 },
                 withCredentials: true,
             }
-
+            console.log('redu?', data)
             const res = await axios.patch(`${host}/api/recomment/like`, data, config);
             WriteDispatch({ type: "RECOMMENT_LIKE_SUCCESS", data: res.data });
 
@@ -312,8 +312,9 @@ const WriteRequest = () => {
 
     const unlikeRecomment = async data => {
         try {
-            const { user, commentId, recommentId } = data;
-            if(!user || typeof user !== 'object') throw new Error('넘어온 user 잘못되었습니다');
+            const { userId, commentId, recommentId } = data;
+            console.log('redu?', data)
+            if(!userId || typeof userId !== 'string') throw new Error('넘어온 user 잘못되었습니다');
             if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
             if(!recommentId || typeof recommentId !== 'string') throw new Error('넘어온 recommentId 잘못되었습니다');
             const config = {

@@ -1,0 +1,117 @@
+
+
+.project_items_square {
+    width: auto;
+    height: 100%;
+    border-radius: 12px;
+    display: flex;
+    margin: -5px;
+    overflow-x: scroll;
+}
+
+
+.project_items_square > li {
+    width: calc(20% - 10px);
+    margin: 5px;
+    flex: 0 0 auto;
+    border-radius: 12px;
+    background-color: var(--main-bg-color3);
+}
+
+.project_items_square .project_items {
+    padding: 15px 15px;
+}
+
+
+.project_items_square .project_items:hover .project_image {
+    transition: all .5s;
+    box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 10px inset;
+}
+
+
+.project_items_square .project_items:hover .const_user svg {
+    color: rgb(234, 179, 11);
+}
+
+.project_items_square .project_image {
+    flex: 0 0 auto;
+    margin-bottom: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-box-color1);
+}
+
+.project_items_square .project_image > svg {
+    width: 32px;
+    height: 32px;
+}
+
+.project_items_square .project_title {
+    font-size: 1.8rem;
+}
+
+.project_items_square .project_title:hover {
+    text-decoration: underline;
+    color: var(--point-color);
+}
+
+.project_items_square .project_conts {
+    margin-top: 5px;
+}
+
+
+.project_items_square .ico_wrap {
+    display: inline-flex;
+    line-height: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.project_items_square .ico_wrap + .ico_wrap {
+    margin-left:13px
+}
+
+.project_items_square .ico_wrap .sub {
+    margin-left: 3px;
+}
+
+.project_items_square .info_wrap {
+}
+
+.project_items_square .info_inner {
+    /* margin-top: 10px; */
+    margin-left: auto;
+    flex: 0 0 auto;
+}
+
+.project_items_square .const_user {
+    justify-content: flex-start;
+    margin-bottom: 30px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.project_items_square .const_user svg {
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+    margin-right: 3px;
+}
+
+
+.project_items_square .created_at {
+    color: var(--text-color2);
+    font-size: 1.3rem;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.project_items_square .tag_wrap {
+    margin-top: 10px;
+}
+

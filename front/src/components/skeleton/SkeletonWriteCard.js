@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import SkeletonItem from './SkeletonItem';
-import '../project/ProjectItems.css';
+import '../project/ProjectItems.css'
 
 const SkeletonWriteCard = () => {
     return (

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import SearchRequest from '../../reducers/SearchRequest';
 import { PiFolderDashedDuotone } from "react-icons/pi";
 import './ProjectsSearchDetail.css';
@@ -7,6 +7,8 @@ import { Link, useParams } from 'react-router-dom';
 import CompleteMsg from '../../components/common/complete/CompleteMsg';
 import ProjectItemsHorizon from '../../components/project/ProjectItemsHorizon';
 import Pagenations from '../../components/common/pagenation/Pagenations';
+import SkeletonSearchCard from '../../components/skeleton/SkeletonSearchCard';
+import SkeletonItem from '../../components/skeleton/SkeletonItem';
 
 const ProjectsSearchDetail = ({ page }) => {
 
@@ -40,40 +42,47 @@ const ProjectsSearchDetail = ({ page }) => {
             </div>
 
 
+            <div className='b_conts full bg_gray'>
+                <div className='b_conts pd_0'>
+                    {SearchState.searchProjectsLoading ? (
+                        <div>
+                            <SkeletonItem style={{ maxWidth: "150px", height: "10px", borderRadius: "4px"  }} className='gap_10' />
+                            <SkeletonItem style={{ maxWidth: "100px", height: "10px", borderRadius: "4px"  }} className='gap_20' />
+                            <ul className='project_items_hor'>
+                                {new Array(10).fill(null).map((_, idx) => <li key={idx} className='project_items'><SkeletonSearchCard /></li>)}
+                            </ul>
+                        </div>
+                        ) : (
+                            <Fragment>
+                                <p className='gap_5'><strong className='point_color1'>{searchValue}</strong>에 대한 결과</p>
+                                <p className='gap_20'>총 <strong className='point_color1'>{searchAllLength}</strong> 건</p>
+                                <ul className='project_items_hor'>
+                                    {projectSearchData.map(project => (
+                                        <li key={project._id} className='project_items'>
+                                            <ProjectItemsHorizon project={project} isRequestUser={true}/>
+                                        </li>
+                                    ))}
+                                </ul>
+                                {projectSearchData.length === 0 && (
+                                        <div className='align_c'>
+                                        <CompleteMsg 
+                                            icon={<PiFolderDashedDuotone />}
+                                            title={`${searchValue}에 대한 내용이 없습니다.`}
+                                            subText={'다른 검색어로 검색해보세요.'}
+                                        />
+                                    </div>
+                                )}
+                                
 
-            {SearchState.searchProjectsLoading ? (
-                <div>
-                    스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......
-                </div>
-            ) : (
-                <div className='b_conts full bg_gray'>
-                    <div className='b_conts pd_0'>
-                        <p className='gap_5'><strong className='point_color1'>{searchValue}</strong>에 대한 결과</p>
-                        <p className='gap_20'>총 <strong className='point_color1'>{searchAllLength}</strong> 건</p>
-                        <ul className='project_items_hor'>
-                            {projectSearchData.map(project => (
-                                <li key={project._id} className='project_items'>
-                                    <ProjectItemsHorizon project={project} isRequestUser={true}/>
-                                </li>
-                            ))}
-                        </ul>
-                        {projectSearchData.length === 0 && (
-                                <div className='align_c'>
-                                <CompleteMsg 
-                                    icon={<PiFolderDashedDuotone />}
-                                    title={`${searchValue}에 대한 내용이 없습니다.`}
-                                    subText={'다른 검색어로 검색해보세요.'}
-                                />
-                            </div>
+                                <div className='gapt_30'>
+                                    <Pagenations allLength={searchAllLength} pageNum={pageNum} setPageNum={setPageNum} />
+                                </div>
+                            </Fragment>
+                        
                         )}
-                    </div>
-
-                    <div className='gapt_30'>
-                        <Pagenations allLength={searchAllLength} pageNum={pageNum} setPageNum={setPageNum} />
-                    </div>
-                </div>
-            )}
             
+                </div>
+            </div>
         </div>
     );
 };

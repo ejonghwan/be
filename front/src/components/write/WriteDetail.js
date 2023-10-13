@@ -68,9 +68,7 @@ const WriteDetail = ({ writeId }) => {
 
     return (
         <div className='write_wrap'>
-            {WriteState.loadLoading && (
-                <div>로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중로딩중</div>
-                )}
+            {WriteState.loadLoading && (<Spinners />)}
             
             {WriteState.loadDone && (
                 <Fragment>

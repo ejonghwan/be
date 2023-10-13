@@ -15,6 +15,7 @@
     --point-color2: #cf1f1f;
     --main-bg-color: #fff;
     --main-bg-color2:#f4f4f4;
+    --main-bg-color3: #f0f0f0;
     --header-bg-color: #f4f4f4;
     --hover-color: #f2f2f2;
     --hover-color2:rgb(226, 226, 226);
@@ -67,6 +68,7 @@
     --point-color2: #cf1f1f;
     --main-bg-color: #121213;
     --main-bg-color2: rgb(37 37 38);
+    --main-bg-color3: #27272B;
     --header-bg-color: #121213;
     --hover-color: #212121;
     --hover-color2:rgb(36, 36, 36);
@@ -367,8 +369,9 @@ svg {
     /* height: 100%; */
     height: auto;
     margin: 0 auto;
-    padding: 30px 0;
+    padding: 50px 0;
 }
+
 
 .h_100 {
     height: 100%;
@@ -525,8 +528,17 @@ form {
     transform: rotate(-45deg);
 }
 
+.h3_title_wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
 .h3_title {
     font-size: 1.6rem;
+}
+
+.h3_title_wrap .more {
+    font-size: 1.3rem;
 }
 
 .loading_pos {

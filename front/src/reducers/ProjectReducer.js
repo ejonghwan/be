@@ -51,11 +51,20 @@ export const ProjectIntialState = {
     loadMyProjectDone: false,
     loadMyProjectError: null,
 
-    test: 'tt',
+    loadLankProjectsLoading: false,
+    loadLankProjectsDone: false,
+    loadLankProjectsError: null,
+
+    loadInsLankProjectsLoading: false,
+    loadInsLankProjectsDone: false,
+    loadInsLankProjectsError: null,
+    
 
     createProject: {},
     myapplyProject: [],
     myProject: [],
+    rankProjects: [],
+    insrankProjects: [],
     project: {},
 }
 
@@ -366,10 +375,61 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 }
 
 
+
+
+            case "PROJECT_RANK_LOAD_REQUEST": 
+                return {
+                    ...state,
+                    loadLankProjectsLoading: true,
+                }
+
+            case "PROJECT_RANK_LOAD_SUCCESS": 
+                return {
+                    ...state,
+                    loadLankProjectsLoading: false,
+                    loadLankProjectsDone: true,
+                    loadLankProjectsError: '',
+                    rankProjects: action.data
+                }
+
+            case "PROJECT_RANK_LOAD_FAILUE" : 
+                return {
+                    ...state,
+                    loadLankProjectsLoading: false,
+                    loadLankProjectsError: action.data,
+                }
+
+
+            case "PROJECT_INSRANK_LOAD_REQUEST": 
+                return {
+                    ...state,
+                    loadInsLankProjectsLoading: true,
+                }
+
+            case "PROJECT_INSRANK_LOAD_SUCCESS": 
+                return {
+                    ...state,
+                    loadInsLankProjectsLoading: false,
+                    loadInsLankProjectsDone: true,
+                    loadInsLankProjectsError: '',
+                    insrankProjects: action.data
+                }
+
+            case "PROJECT_INSRANK_LOAD_FAILUE" : 
+                return {
+                    ...state,
+                    loadInsLankProjectsLoading: false,
+                    loadInsLankProjectsError: action.data,
+                }
+
+
+
+
+
+
             case "RESET_PROJECTS" : 
                 return {
                     ...state,
-                    test: '',
                     createProject: {},
                     myapplyProject: [],
                     myProject: [],

@@ -32,8 +32,7 @@ const MyProject = ({ page }) => {
     }, [state.loadUserDone, state.isLogged])
 
     useEffect(() => {
-        return () => {ProjectDispatch({ type: "RESET_PROJECTS" }); 
-        console.log('나갈떄 ????') }
+        return () => ProjectDispatch({ type: "RESET_PROJECTS" });
     }, [])
 
 

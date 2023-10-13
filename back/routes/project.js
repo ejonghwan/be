@@ -33,6 +33,41 @@ router.get('/', async (req, res) => {
     }
 })
 
+
+//@ path    GET /api/project/Likes/rank
+//@ doc     로드 프로젝 (좋아요 순)
+//@ access  public
+router.get('/Likes/rank', async (req, res) => {
+    try {
+        const project = await Project.find().populate([
+            { path: 'constructorUser._id', select: 'name' },
+        ]).select("_id title likeCount instanceUser createdAt projectImages").sort({ likeCount: -1 });
+        res.status(200).json(project)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
+//@ path    GET /api/project/instance/rank
+//@ doc     로드 프로젝 (참여유저 높은 순)
+//@ access  public
+router.get('/instance/rank', async (req, res) => {
+    try {
+        const project = await Project.find().populate([
+            { path: 'constructorUser._id', select: 'name' },
+        ]).select("_id title likeCount instanceUser createdAt projectImages").sort({ instanceUser: -1 });
+        res.status(200).json(project)
+    } catch (err) {
+        console.error('server:', err);
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
+
+
 //@ path    GET /api/project/myprojects/:userId
 //@ doc     로드 프로젝 (내가 만든 습관)
 //@ access  public
@@ -132,7 +167,6 @@ router.get('/myrequest/:userId', async (req, res) => {
         const project = await Project.find({ "joinUser._id": userId }).populate([
             { path: 'constructorUser._id', select: 'name' },
         ]).select("_id title likeCount instanceUser createdAt projectImages");
-        console.log(project)
         res.status(200).json(project)
     } catch (err) {
         console.error('server:', err);

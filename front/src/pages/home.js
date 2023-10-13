@@ -9,15 +9,20 @@ import './home.css';
 import UserRequest from '../reducers/UserRequest.js';
 import SkeletonItem from '../components/skeleton/SkeletonItem.js';
 import SkeletonCard from '../components/skeleton/SkeletonCard.js';
+import ProjectItemsHorizon from '../components/project/ProjectItemsHorizon.js';
+import ProjectItemsSquare from '../components/project/ProjectItemsSquare.js';
 
 
 
 const Home = ({ page }) => {
 
     const { state, dispatch } = useContext(UserContext);
-    const { ProjectState, ProjectState: { myapplyProject, myProject }, ProjectDispatch } = useContext(ProjectContext);
-    const { myApplyProject, loadMyProject } = ProjectRequest();
+    const { ProjectState, ProjectState: { myapplyProject, myProject, rankProjects, insrankProjects }, ProjectDispatch } = useContext(ProjectContext);
+    const { myApplyProject, loadMyProject, loadRankProject, loadinstanceRankProject } = ProjectRequest();
     const { getUserProjects } = UserRequest();
+
+
+
     const handleLoadApplyProject = useCallback(() => {
         ProjectDispatch({ type: "PROJECT_MYAPPLY_LOAD_REQUEST" });
         myApplyProject({ userId: state.user._id });
@@ -40,8 +45,18 @@ const Home = ({ page }) => {
     }, [state.isLogged]);
 
     useEffect(() => {
+
+        ProjectDispatch({ type: "PROJECT_RANK_LOAD_REQUEST" })
+        loadRankProject();
+        loadinstanceRankProject();
+
+        console.log('?', rankProjects)
+
         return () => ProjectDispatch({ type: "RESET_PROJECTS" });
     }, [])
+
+
+    
 
 
     return (
@@ -91,19 +106,32 @@ const Home = ({ page }) => {
             </div>
 
             <div className='b_conts'>
-                <h3 className='h3_title gap_20'>습관 목록</h3>
-
+                <div className='h3_title_wrap gap_20'>
+                    <h3 className='h3_title'>인기 습관</h3>
+                    <Link to={'/project/list'} className='more'>더보기</Link>
+                </div>
+               
+                <ul className='project_items_square'>
+                    {rankProjects?.map(project => (
+                        <li key={project._id} className='project_items'>
+                            <ProjectItemsSquare project={project} isRequestUser={true}  />
+                        </li>
+                    ))}
+                </ul>
             </div>
 
-            <div className='b_conts'>
-                <h3 className='h3_title gap_20'>인기 습관</h3>
-                    디비에서 좋아요 표시 많은거 뽑아서 습관 목록
-
-            </div>
-
-            <div className='b_conts'>
-                <h3 className='h3_title gap_20'>인원 많은 습관</h3>
-                    디비에서 좋아요 표시 많은거 뽑아서 습관 목록
+            <div className='b_conts pd_0'>
+                <div className='h3_title_wrap gap_20'>
+                    <h3 className='h3_title'>인원 많은 습관</h3>
+                    <Link to={'/project/list'} className='more'>더보기</Link>
+                </div>
+                <ul className='project_items_square'>
+                    {insrankProjects?.map(project => (
+                        <li key={project._id} className='project_items'>
+                            <ProjectItemsSquare project={project} isRequestUser={true}  />
+                        </li>
+                    ))}
+                </ul>
 
             </div>
         </Fragment>

@@ -193,7 +193,9 @@ router.get('/category/:categoryName/:pageNum', async (req, res) => {
         const { categoryName, pageNum } = req.params;
         const page = parseInt(pageNum);
         const category = await Category.find({ categoryName: categoryName }, ).sort({ createdAt: -1 }).skip((page - 1) * 10).limit(10).populate("projects").select()
-        const searchTagAllLength = await Category.find({ categoryName: categoryName }, ).count();
+        const searchTagAllLength = await Category.find({ categoryName: categoryName } ).count();
+
+        console.log(searchTagAllLength)
 
         res.status(201).json({ category, searchTagAllLength });
     } catch (err) {

@@ -8,6 +8,7 @@ import NoData from '../../components/common/notData/NoData';
 import { PiFileXDuotone } from "react-icons/pi";
 import Spinners from '../../components/common/spinners/Spinners';
 import './MyComments.css';
+import SkeletonComment from '../../components/skeleton/SkeletonComment';
 
 
 
@@ -42,7 +43,11 @@ const MyComments = ({ page }) => {
         <div className='b_conts writes_list'>
             <h2>{page}</h2>
             <div className='writes_align'>최근 순</div>
-            {WriteState.myCommentsLoading && <div>로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....</div>}
+            {WriteState.myCommentsLoading && (
+                 <ul className='comments_list_wrap'>
+                    {new Array(10).fill(null).map((_, idx) => <li key={idx} className='comments_list_item'><SkeletonComment /></li>)}
+                </ul>
+            )}
             {WriteState.myCommentsDone && (
                  WriteState.commentsList.length === 0 ? (
                     <Fragment>

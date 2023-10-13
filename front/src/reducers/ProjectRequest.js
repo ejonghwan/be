@@ -304,6 +304,49 @@ const ProjectRequest = () => {
     };
 
 
+    
+
+    // 좋아요 많은 순서대로 
+    const loadRankProject = async () => {
+        try {
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                },
+                withCredentials: true,
+            };
+
+            const res = await axios.get(`${host}/api/project/Likes/rank`, config);
+            ProjectDispatch({ type: "PROJECT_RANK_LOAD_SUCCESS", data: res.data });
+            return res;
+        } catch(err) {
+            console.error(err.response.data);
+            ProjectDispatch({ type: "PROJECT_RANK_LOAD_FAILUE", data: err.response.data.message });
+        };
+    };
+
+    
+    // 참여유저 많은 순서대로 
+    const loadinstanceRankProject = async () => {
+        try {
+            const config = {
+                headers: { 
+                    "Content-Type": "application/json", 
+                },
+                withCredentials: true,
+            };
+
+            const res = await axios.get(`${host}/api/project/instance/rank`, config);
+            ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_SUCCESS", data: res.data });
+            return res;
+        } catch(err) {
+            console.error(err.response.data);
+            ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_FAILUE", data: err.response.data.message });
+        };
+    };
+
+
+
 
     return {
         createProject, 
@@ -317,7 +360,9 @@ const ProjectRequest = () => {
         editProject,
         deleteProject,
         myApplyProject,
-        loadMyProject
+        loadMyProject,
+        loadRankProject,
+        loadinstanceRankProject
     }
 }
 

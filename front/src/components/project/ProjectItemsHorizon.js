@@ -14,8 +14,8 @@ const ProjectItemsHorizon = ({ project, isContent = false, isTag = false }) => {
                 <div className='project_image'>{IconData[project?.projectImages]}</div>
                 
                 <div>
-                    <Link to={`/project/detail/${project._id}`}>
-                        <strong className='project_title arrow_right'>{project?.title}</strong>
+                    <Link to={`/project/detail/${project._id}`} >
+                        <strong className='project_title arrow_right word_ellip_1'>{project?.title}</strong>
                     </Link>
                     <div title="습관장" className='ico_wrap const_user'>
                         <span className='ico'><PiCrownDuotone /></span>

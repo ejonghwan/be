@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import SearchRequest from '../../reducers/SearchRequest';
 import { PiFolderDashedDuotone } from "react-icons/pi";
 import './TagSearchDetail.css';
@@ -7,6 +7,8 @@ import { Link, useParams } from 'react-router-dom';
 import CompleteMsg from '../../components/common/complete/CompleteMsg';
 import ProjectItemsHorizon from '../../components/project/ProjectItemsHorizon';
 import Pagenations from '../../components/common/pagenation/Pagenations';
+import SkeletonSearchCard from '../../components/skeleton/SkeletonSearchCard';
+import SkeletonItem from '../../components/skeleton/SkeletonItem';
 
 const TagSearchDetail = ({ page }) => {
 
@@ -39,39 +41,45 @@ const TagSearchDetail = ({ page }) => {
                 <h2 className='gap_0'>{page}</h2>      
             </div>
             
-            {SearchState.SearchTagLoading ? (
-                <div>
-                    스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......스켈레톤 로딩 .......
-                </div>
-            ) : (
-                <div className='b_conts full bg_gray tag_search_detail'>
-                    <div className='b_conts pd_0'>
-                        <p className='gap_5'><strong className='point_color1'>{tagValue}</strong>에 대한 결과</p>
-                        <p className='gap_20'>총 <strong className='point_color1'>{searchTagAllLength}</strong> 건</p>
-                        <ul className='project_items_hor'>
-                            {categorySearch.map(project => (
-                                <li key={project._id} className='project_items'>
-                                    <ProjectItemsHorizon project={project} isRequestUser={true} isTag={true}/>
-                                </li>
-                            ))}
-                        </ul>
-                        {categorySearch.length === 0 && (
-                                <div className='align_c'>
-                                <CompleteMsg 
-                                    icon={<PiFolderDashedDuotone />}
-                                    title={`${tagValue}에 대한 내용이 없습니다.`}
-                                    subText={'다른 검색어로 검색해보세요.'}
-                                />
+            <div className='b_conts full bg_gray tag_search_detail'>
+                <div className='b_conts pd_0'>
+                    {SearchState.SearchTagLoading ? (
+                        <div>
+                            <SkeletonItem style={{ maxWidth: "150px", height: "10px", borderRadius: "4px"  }} className='gap_10' />
+                            <SkeletonItem style={{ maxWidth: "100px", height: "10px", borderRadius: "4px"  }} className='gap_20' />
+                            <ul className='project_items_hor'>
+                                {new Array(10).fill(null).map((_, idx) => <li key={idx} className='project_items'><SkeletonSearchCard /></li>)}
+                            </ul>
+                        </div>
+                    ) : (
+                        <Fragment>
+                            <p className='gap_5'><strong className='point_color1'>{tagValue}</strong>에 대한 결과</p>
+                            <p className='gap_20'>총 <strong className='point_color1'>{categorySearch.length}</strong> 건</p>
+                            <ul className='project_items_hor'>
+                                {categorySearch.map(project => (
+                                    <li key={project._id} className='project_items'>
+                                        <ProjectItemsHorizon project={project} isRequestUser={true} isTag={true}/>
+                                    </li>
+                                ))}
+                            </ul>
+                            {categorySearch.length === 0 && (
+                                    <div className='align_c'>
+                                    <CompleteMsg 
+                                        icon={<PiFolderDashedDuotone />}
+                                        title={`${tagValue}에 대한 내용이 없습니다.`}
+                                        subText={'다른 검색어로 검색해보세요.'}
+                                    />
+                                </div>
+                            )}
+                        
+                            <div className='gapt_30'>
+                                <Pagenations allLength={categorySearch.length} pageNum={pageNum} setPageNum={setPageNum} />
                             </div>
-                        )}
-                    </div>
-
-                    <div className='gapt_30'>
-                        <Pagenations allLength={searchTagAllLength} pageNum={pageNum} setPageNum={setPageNum} />
-                    </div>
-                </div>
-            )}
+                    </Fragment>
+                    )}
             
+                </div>
+            </div>
         </div>
     );
 };
