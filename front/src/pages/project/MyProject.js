@@ -32,7 +32,8 @@ const MyProject = ({ page }) => {
     }, [state.loadUserDone, state.isLogged])
 
     useEffect(() => {
-        return () => ProjectDispatch({ type: "RESET_PROJECTS" });
+        return () => {ProjectDispatch({ type: "RESET_PROJECTS" }); 
+        console.log('나갈떄 ????') }
     }, [])
 
 
@@ -49,12 +50,7 @@ const MyProject = ({ page }) => {
                             <SkeletonItem style={{ width: "200px", height: "20px", borderRadius: "10px" }} />
                         </h3>
                         <ul className='project_items_wrap'>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
+                            {new Array(10).fill(null).map((_, idx) => <li key={idx} className='project_items'><SkeletonCard /></li>)}
                         </ul>
                     </div>
                 ) : (

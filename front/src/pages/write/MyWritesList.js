@@ -8,6 +8,9 @@ import './MyWritesList.css';
 import NoData from '../../components/common/notData/NoData';
 import { PiFileXDuotone } from "react-icons/pi";
 import Spinners from '../../components/common/spinners/Spinners';
+import SkeletonCard from '../../components/skeleton/SkeletonCard';
+import SkeletonItem from '../../components/skeleton/SkeletonItem';
+import SkeletonWriteCard from '../../components/skeleton/SkeletonWriteCard';
 
 const WritesList = ({ page }) => {
 
@@ -24,9 +27,7 @@ const WritesList = ({ page }) => {
     const handleLoadMyWrites = async () => {
         WriteDispatch({ type: "MYWRITES_LOAD_REQUEST" });
         const res = await loadMyWrites({ userId: state.user._id, page: writePage });
-        console.log('r?', res.length)
         res.length < 10 && setMoreBtnHide(true);
-        console.log(moreBtnHide)
     }
 
     useEffect(() => {
@@ -42,7 +43,19 @@ const WritesList = ({ page }) => {
         <div className='b_conts writes_list'>
             <h2>{page}</h2>
             <div className='writes_align'>최근 순</div>
-            {WriteState.myWritesLoading && <div>로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....로딩중....</div>}
+
+            {/* 스켈레톤 */}
+            {WriteState.myWritesLoading && <div>
+                <Fragment>
+                    <h3 className='h3_title gap_20'>
+                        <SkeletonItem style={{ width: "150px", height: "10px", borderRadius: "10px" }} />
+                    </h3>
+                    <ul className='write_list_wrap'>
+                        {new Array(10).fill(null).map((_, idx) => <li key={idx}className='write_list_item'><SkeletonWriteCard /></li>)}
+                    </ul>
+                </Fragment>
+                </div>}
+
             {WriteState.myWritesDone && (
                  WriteState.writeList?.length === 0 ? (
                     <Fragment>
@@ -54,6 +67,7 @@ const WritesList = ({ page }) => {
                     </Fragment>
                 ) : (
                     <Fragment>
+                        <h3 className='h3_title gap_20'>내가 작성한 글</h3>
                         <WriteListItem writes={WriteState.writeList} isProjectName={true} />
                         {moreBtnHide ? (
                             <div className='align_c gapt_50 gap_50'>더 이상 정보가 없습니다.</div>

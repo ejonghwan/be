@@ -51,6 +51,8 @@ export const ProjectIntialState = {
     loadMyProjectDone: false,
     loadMyProjectError: null,
 
+    test: 'tt',
+
     createProject: {},
     myapplyProject: [],
     myProject: [],
@@ -367,6 +369,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
             case "RESET_PROJECTS" : 
                 return {
                     ...state,
+                    test: '',
                     createProject: {},
                     myapplyProject: [],
                     myProject: [],

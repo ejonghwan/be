@@ -7,7 +7,6 @@ import ProjectRequest from '../reducers/ProjectRequest.js';
 import { ProjectContext } from '../context/ProjectContext.js';
 import './home.css';
 import UserRequest from '../reducers/UserRequest.js';
-import Spinners from '../components/common/spinners/Spinners.js';
 import SkeletonItem from '../components/skeleton/SkeletonItem.js';
 import SkeletonCard from '../components/skeleton/SkeletonCard.js';
 
@@ -53,14 +52,14 @@ const Home = ({ page }) => {
             <div className='b_conts full bg_gray'>
                 <div className='b_conts pd_0'>
                     {ProjectState.loadMyProjectLoading || ProjectState.loadMyapplyProjectLoading ? (
-                        <ul className='project_items_wrap'>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
-                            <li className='project_items'><SkeletonCard /></li>
-                        </ul>
+                        <Fragment>
+                            <h3 className='h3_title gap_20'>
+                                <SkeletonItem style={{ width: "200px", height: "20px", borderRadius: "10px" }} />
+                            </h3>
+                            <ul className='project_items_wrap'>
+                                {new Array(10).fill(null).map((_, idx) => <li key={idx} className='project_items'><SkeletonCard /></li>)}
+                            </ul>
+                        </Fragment>
                     ) : (
                         <Fragment>
                             <h3 className='h3_title gap_20'>{state.user._id ? '내가 진행중인 습관' : '로그인 후 습관을 만들어보세요.'}</h3>
