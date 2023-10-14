@@ -34,14 +34,17 @@ router.get('/', async (req, res) => {
 })
 
 
-//@ path    GET /api/project/Likes/rank
+//@ path    GET /api/project/Likes/rank/:pageNum/:limitNum
 //@ doc     로드 프로젝 (좋아요 순)
 //@ access  public
-router.get('/Likes/rank', async (req, res) => {
+router.get('/Likes/rank/:pageNum/:limitNum', async (req, res) => {
     try {
+        const { pageNum, limitNum } = req.params;
+        const page = parseInt(pageNum);
+        const limit = parseInt(limitNum);
         const project = await Project.find().populate([
             { path: 'constructorUser._id', select: 'name' },
-        ]).select("_id title likeCount instanceUser createdAt projectImages").sort({ likeCount: -1 });
+        ]).sort({ likeCount: -1 }).skip((page - 1) * limit).limit(limit).select("_id title likeCount instanceUser createdAt projectImages");
         res.status(200).json(project)
     } catch (err) {
         console.error('server:', err);
@@ -50,14 +53,17 @@ router.get('/Likes/rank', async (req, res) => {
 })
 
 
-//@ path    GET /api/project/instance/rank
+//@ path    GET /api/project/instance/rank/:pageNum/:limitNum
 //@ doc     로드 프로젝 (참여유저 높은 순)
 //@ access  public
-router.get('/instance/rank', async (req, res) => {
+router.get('/instance/rank/:pageNum/:limitNum', async (req, res) => {
     try {
+        const { pageNum, limitNum } = req.params;
+        const page = parseInt(pageNum);
+        const limit = parseInt(limitNum);
         const project = await Project.find().populate([
             { path: 'constructorUser._id', select: 'name' },
-        ]).select("_id title likeCount instanceUser createdAt projectImages").sort({ instanceUser: -1 });
+        ]).sort({ instanceUser: -1 }).skip((page - 1) * limit).limit(limit).select("_id title likeCount instanceUser createdAt projectImages");
         res.status(200).json(project)
     } catch (err) {
         console.error('server:', err);

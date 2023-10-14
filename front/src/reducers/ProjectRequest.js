@@ -307,8 +307,11 @@ const ProjectRequest = () => {
     
 
     // 좋아요 많은 순서대로 
-    const loadRankProject = async () => {
+    const loadRankProject = async ({ pageNum = 1, limitNum = 10 }) => {
         try {
+            if(typeof pageNum !== 'number') throw new Error('type check pageNum');
+            if(typeof limitNum !== 'number') throw new Error('type check limitNum');
+
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -316,7 +319,7 @@ const ProjectRequest = () => {
                 withCredentials: true,
             };
 
-            const res = await axios.get(`${host}/api/project/Likes/rank`, config);
+            const res = await axios.get(`${host}/api/project/Likes/rank/${pageNum}/${limitNum}`, config);
             ProjectDispatch({ type: "PROJECT_RANK_LOAD_SUCCESS", data: res.data });
             return res;
         } catch(err) {
@@ -327,8 +330,10 @@ const ProjectRequest = () => {
 
     
     // 참여유저 많은 순서대로 
-    const loadinstanceRankProject = async () => {
+    const loadinstanceRankProject = async ({  pageNum = 1, limitNum = 10 }) => {
         try {
+            if(typeof pageNum !== 'number') throw new Error('type check pageNum');
+            if(typeof limitNum !== 'number') throw new Error('type check limitNum');
             const config = {
                 headers: { 
                     "Content-Type": "application/json", 
@@ -336,7 +341,7 @@ const ProjectRequest = () => {
                 withCredentials: true,
             };
 
-            const res = await axios.get(`${host}/api/project/instance/rank`, config);
+            const res = await axios.get(`${host}/api/project/instance/rank/${pageNum}/${limitNum}`, config);
             ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_SUCCESS", data: res.data });
             return res;
         } catch(err) {

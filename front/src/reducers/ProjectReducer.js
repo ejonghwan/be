@@ -421,11 +421,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadInsLankProjectsLoading: false,
                     loadInsLankProjectsError: action.data,
                 }
-
-
-
-
-
+                
 
             case "RESET_PROJECTS" : 
                 return {

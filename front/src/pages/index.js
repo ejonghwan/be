@@ -5,7 +5,7 @@ import Loader3 from '../components/common/spinners/Loader3.js';
 
 const Layout = lazy(() => import('../components/common/Layout.js'));
 const Home = lazy(() => import('./home.js'));
-const About = lazy(() => import('./about.js'));
+const ProjectsList = lazy(() => import('./project/ProjectsList.js'));
 const Profile = lazy(() => import('./profile.js'));
 const Signup = lazy(() => import('./signup.js'));
 const SignupPage = lazy(() => import('./signupPage.js'));
@@ -37,7 +37,7 @@ const RoutesPage = () => {
             <Suspense fallback={<Loader3 full={true} scale='2' />}>
                 <Routes>
                     <Route path='/' element={<Home page={'메인페이지'}/>}></Route>
-                    <Route path='/project/list' element={!state.loadUserLoading && state.isLogged  ? <About page={'친구들 습관보기'} /> : <Protected page={'친구들 습관보기'}/>}></Route>
+                    <Route path='/project/list' element={<ProjectsList page={'습관목록'} />}></Route>
                     <Route path='/profile' element={!state.loadUserLoading && state.isLogged  ? <Profile page={'내 정보'} /> : <Protected page={'내 정보'} />}></Route>
                     <Route path='/login' element={ <Login page={'로그인'}/>}></Route>
                     <Route path='/signup' element={<Signup page={'회원가입'} />}></Route>

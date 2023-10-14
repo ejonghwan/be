@@ -9,7 +9,6 @@ import './home.css';
 import UserRequest from '../reducers/UserRequest.js';
 import SkeletonItem from '../components/skeleton/SkeletonItem.js';
 import SkeletonCard from '../components/skeleton/SkeletonCard.js';
-import ProjectItemsHorizon from '../components/project/ProjectItemsHorizon.js';
 import ProjectItemsSquare from '../components/project/ProjectItemsSquare.js';
 
 
@@ -47,10 +46,10 @@ const Home = ({ page }) => {
     useEffect(() => {
 
         ProjectDispatch({ type: "PROJECT_RANK_LOAD_REQUEST" })
-        loadRankProject();
-        loadinstanceRankProject();
+        loadRankProject({ pageNum: 1, limitNum: 10 });
+        ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_REQUEST" })
+        loadinstanceRankProject({ pageNum: 1, limitNum: 10 });
 
-        console.log('?', rankProjects)
 
         return () => ProjectDispatch({ type: "RESET_PROJECTS" });
     }, [])
@@ -125,7 +124,7 @@ const Home = ({ page }) => {
                     <h3 className='h3_title'>인원 많은 습관</h3>
                     <Link to={'/project/list'} className='more'>더보기</Link>
                 </div>
-                <ul className='project_items_square'>
+                <ul className='project_items_square gap_100'>
                     {insrankProjects?.map(project => (
                         <li key={project._id} className='project_items'>
                             <ProjectItemsSquare project={project} isRequestUser={true}  />

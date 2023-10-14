@@ -4,6 +4,10 @@
     /* color: var(--text-color1);  */
 }
 
+#header > .b_conts {
+    padding: 20px 0;
+}
+
 #header .header_nav {
     display: flex;
     align-items: center;

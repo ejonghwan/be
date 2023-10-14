@@ -192,10 +192,8 @@ router.get('/category/:categoryName/:pageNum', async (req, res) => {
         // 카테고리네임 프론트에서 encodeURIComponent("호호")
         const { categoryName, pageNum } = req.params;
         const page = parseInt(pageNum);
-        const category = await Category.find({ categoryName: categoryName }, ).sort({ createdAt: -1 }).skip((page - 1) * 10).limit(10).populate("projects").select()
+        const category = await Category.find({ categoryName: categoryName }, ).sort({ createdAt: -1 }).skip((page - 1) * 10).limit(10).populate("projects")
         const searchTagAllLength = await Category.find({ categoryName: categoryName } ).count();
-
-        console.log(searchTagAllLength)
 
         res.status(201).json({ category, searchTagAllLength });
     } catch (err) {

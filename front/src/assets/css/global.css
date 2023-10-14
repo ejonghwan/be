@@ -252,6 +252,7 @@ button.hover_type3:hover {
 .gapt_30 { margin-top: 30px !important; }
 .gapt_40 { margin-top: 40px !important; }
 .gapt_50 { margin-top: 50px !important; }
+.gapt_100 { margin-top: 100px !important; }
 .gap_0 { margin-bottom: 0px !important; }
 .gap_5 { margin-bottom: 5px !important; }
 .gap_10 { margin-bottom: 10px !important; }
@@ -260,6 +261,7 @@ button.hover_type3:hover {
 .gap_30 { margin-bottom: 30px !important; }
 .gap_40 { margin-bottom: 40px !important; }
 .gap_50 { margin-bottom: 50px !important; }
+.gap_100 { margin-bottom: 100px !important; }
 .gapr_10 {margin-right: 10px !important;}
 
 html {
