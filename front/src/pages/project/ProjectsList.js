@@ -28,6 +28,11 @@ const ProjectsList = ({ page }) => {
     }, [])
 
 
+    const handleLoadTEst = (a) => {
+        console.log('??', a)
+    }
+
+
     return (
         <Fragment>
             <div className='b_conts h2_title_wrap'>
@@ -38,7 +43,7 @@ const ProjectsList = ({ page }) => {
 
                     <div>
                         <Tab 
-                            tabHead={[<Button className={'button_reset'}>"좋아요 순"</Button>, <Button className={'button_reset'}>"참여인원 순"</Button>]} 
+                            tabHead={[<span>'좋아요 순'</span>, <span>'참여인원 순'</span>]} 
                             tabBody={[
                                 <ul className='project_items_hor'>
                                     {rankProjects?.map(project => (
@@ -57,6 +62,7 @@ const ProjectsList = ({ page }) => {
                             ].map((item, idx) => <Fragment key={idx}>{item}</Fragment>)} 
                             id={"map_tab"}
                             className={"info_wrap tab_type3"} 
+                            onClick={handleLoadTEst}
                         />
                     </div>
 
