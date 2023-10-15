@@ -3,8 +3,8 @@ import TabHead from './TabHead';
 import TabBody from './TabBody';
 import './Tab.css';
 
-const Tab = ({ tabHead, tabBody, id, className, onClick }) => {
-    const [Index, setIndex] = useState(0);
+const Tab = ({ tabHead, tabBody, id, className, onClick, initIdx = 0 }) => {
+    const [Index, setIndex] = useState(initIdx);
 
     return (
         <article className={className} id={id}>

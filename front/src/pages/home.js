@@ -107,7 +107,7 @@ const Home = ({ page }) => {
             <div className='b_conts'>
                 <div className='h3_title_wrap gap_20'>
                     <h3 className='h3_title'>인기 습관</h3>
-                    <Link to={'/project/list'} className='more'>더보기</Link>
+                    <Link to={'/project/list/likes'} className='more'>더보기</Link>
                 </div>
                
                 <ul className='project_items_square'>
@@ -122,7 +122,7 @@ const Home = ({ page }) => {
             <div className='b_conts pd_0'>
                 <div className='h3_title_wrap gap_20'>
                     <h3 className='h3_title'>인원 많은 습관</h3>
-                    <Link to={'/project/list'} className='more'>더보기</Link>
+                    <Link to={'/project/list/attend'} className='more'>더보기</Link>
                 </div>
                 <ul className='project_items_square gap_100'>
                     {insrankProjects?.map(project => (

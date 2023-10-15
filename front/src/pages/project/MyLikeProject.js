@@ -32,7 +32,7 @@ const MyLikeProject = ({ page }) => {
                                 title={'내가 좋아요한 습관이 없습니다.'}
                                 subText={'다른 습관을 좋아해보세요.'}
                             />
-                            <Link to="/project/list" className='button_type7 gapt_10'>다른 습관 보러가기</Link>
+                            <Link to="/project/list/likes" className='button_type7 gapt_10'>다른 습관 보러가기</Link>
                         </div>
                     )}
                 </div>
