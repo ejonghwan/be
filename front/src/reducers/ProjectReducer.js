@@ -51,6 +51,7 @@ export const ProjectIntialState = {
     loadMyProjectDone: false,
     loadMyProjectError: null,
 
+    
     loadLankProjectsLoading: false,
     loadLankProjectsDone: false,
     loadLankProjectsError: null,
@@ -64,8 +65,11 @@ export const ProjectIntialState = {
     myapplyProject: [],
     myProject: [],
     rankProjects: [],
+    rankMaxCount: '',
     insrankProjects: [],
+    insrankMaxCount: '',
     project: {},
+    
 }
 
 
@@ -389,7 +393,8 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadLankProjectsLoading: false,
                     loadLankProjectsDone: true,
                     loadLankProjectsError: '',
-                    rankProjects: action.data
+                    rankProjects: action.data.project,
+                    rankMaxCount: action.data.maxCount
                 }
 
             case "PROJECT_RANK_LOAD_FAILUE" : 
@@ -412,7 +417,8 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadInsLankProjectsLoading: false,
                     loadInsLankProjectsDone: true,
                     loadInsLankProjectsError: '',
-                    insrankProjects: action.data
+                    insrankProjects: action.data.project,
+                    insrankMaxCount: action.data.maxCount
                 }
 
             case "PROJECT_INSRANK_LOAD_FAILUE" : 

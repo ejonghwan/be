@@ -42,10 +42,11 @@ router.get('/Likes/rank/:pageNum/:limitNum', async (req, res) => {
         const { pageNum, limitNum } = req.params;
         const page = parseInt(pageNum);
         const limit = parseInt(limitNum);
+        const maxCount = await Project.find().count();
         const project = await Project.find().populate([
             { path: 'constructorUser._id', select: 'name' },
         ]).sort({ likeCount: -1 }).skip((page - 1) * limit).limit(limit).select("_id title likeCount instanceUser createdAt projectImages");
-        res.status(200).json(project)
+        res.status(200).json({project, maxCount})
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -61,10 +62,11 @@ router.get('/instance/rank/:pageNum/:limitNum', async (req, res) => {
         const { pageNum, limitNum } = req.params;
         const page = parseInt(pageNum);
         const limit = parseInt(limitNum);
+        const maxCount = await Project.find().count();
         const project = await Project.find().populate([
             { path: 'constructorUser._id', select: 'name' },
         ]).sort({ instanceUser: -1 }).skip((page - 1) * limit).limit(limit).select("_id title likeCount instanceUser createdAt projectImages");
-        res.status(200).json(project)
+        res.status(200).json({project, maxCount})
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
@@ -569,6 +571,11 @@ router.patch('/unlike', auth, async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 })
+
+
+
+
+
 
 
 export default router;
