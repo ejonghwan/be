@@ -21,52 +21,51 @@ const ProjectsList = ({ page }) => {
     const [ moreInsUserBtnHide, setMoreInsUserBtnHide ] = useState(false);
 
 
-
+    // 좋아요 순
     const handleLoadLikeRank = async () => {
         ProjectDispatch({ type: "PROJECT_RANK_LOAD_REQUEST" });
         const res = await loadRankProject({ pageNum: likeProjectPage, limitNum: 20 });
         rankProjects.length >= (res.data.maxCount - 20) && setMoreLikeBtnHide(true);
         setTabIdx(1)
     }
+    const handleLikeRankPageup = () => setLikeProjectPage(prev => prev += 1);
 
-    const handleLikeRankPageup =() => {
-        setLikeProjectPage(prev => prev += 1)
-    }
 
+
+    // 참여유저 순
     const handleLoadInsUser = async () => {
         ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_REQUEST" });
         const res = await loadinstanceRankProject({ pageNum: insUserProjectPage, limitNum: 20 });
         insrankProjects.length >= (res.data.maxCount - 20) && setMoreInsUserBtnHide(true);
         setTabIdx(0)
-    }
-
-    const handleInsUserRankPageup =() => {
-        setInsUserProjectPage(prev => prev += 1)
-    }
+    };
+    const handleInsUserRankPageup = () => setInsUserProjectPage(prev => prev += 1);
 
     
 
-   
+    // 탭을 눌렀을 때 데이터 요청
     const handleChangeTabValue = (curTabIdx) => {
         if(curTabIdx === 0 && rankProjects.length <= 0) handleLoadLikeRank();
         if(curTabIdx === 1 && insrankProjects.length <= 0) handleLoadInsUser();
     }
 
+    // 더보기 눌렀을때
     useEffect(() => {
-        if(tabName === 'likes') handleLoadLikeRank();
+       if(likeProjectPage === 1) return;
+       handleLoadLikeRank();
     }, [likeProjectPage])
 
     useEffect(() => {
-        if(tabName === 'attend') handleLoadInsUser();
+        if(insUserProjectPage === 1) return;
+        handleLoadInsUser();
     }, [insUserProjectPage])
 
 
-
-
-    // useEffect(() => {
-    //     if(tabName === 'likes') handleLoadLikeRank();
-    //     if(tabName === 'attend') handleLoadInsUser();
-    // }, [])
+    // params로 구분
+    useEffect(() => {
+        if(tabName === 'likes') handleLoadLikeRank();
+        if(tabName === 'attend') handleLoadInsUser();
+    }, [])
 
     return (
         <Fragment>
@@ -91,8 +90,8 @@ const ProjectsList = ({ page }) => {
                                    ) : (
                                        <Fragment>
                                             <ul className='project_items_hor gapt_20'>
-                                                {rankProjects?.map(project => (
-                                                    <li key={project._id} className='project_items'>
+                                                {rankProjects?.map((project, idx) => (
+                                                    <li key={idx} className='project_items'>
                                                         <ProjectItemsHorizon project={project} isRequestUser={true} />
                                                     </li>
                                                 ))}
@@ -110,7 +109,7 @@ const ProjectsList = ({ page }) => {
                                    )
                                ),
                                ProjectState.loadInsLankProjectsDone && (
-                                    rankProjects.length === 0 ? (
+                                    insrankProjects.length === 0 ? (
                                         <Fragment>
                                             <NoData 
                                                 icon={<PiFileXDuotone />}
@@ -120,8 +119,8 @@ const ProjectsList = ({ page }) => {
                                     ) : (
                                         <Fragment>
                                             <ul className='project_items_hor gapt_20'>
-                                                {insrankProjects?.map(project => (
-                                                    <li key={project._id} className='project_items'>
+                                                {insrankProjects?.map((project, idx) => (
+                                                    <li key={idx} className='project_items'>
                                                         <ProjectItemsHorizon project={project} isRequestUser={true} />
                                                     </li>
                                                 ))}
@@ -146,14 +145,8 @@ const ProjectsList = ({ page }) => {
                         />
                     </div>
                 </div>
-
-          
-               
             </div>
-
-            
         </Fragment>
-       
     );
 };
 
