@@ -51,7 +51,7 @@ export const ProjectIntialState = {
     loadMyProjectDone: false,
     loadMyProjectError: null,
 
-    
+
     loadLankProjectsLoading: false,
     loadLankProjectsDone: false,
     loadLankProjectsError: null,
@@ -393,7 +393,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadLankProjectsLoading: false,
                     loadLankProjectsDone: true,
                     loadLankProjectsError: '',
-                    rankProjects: action.data.project,
+                    rankProjects: state.rankProjects.concat(action.data.project),
                     rankMaxCount: action.data.maxCount
                 }
 
@@ -417,7 +417,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadInsLankProjectsLoading: false,
                     loadInsLankProjectsDone: true,
                     loadInsLankProjectsError: '',
-                    insrankProjects: action.data.project,
+                    insrankProjects: state.insrankProjects.concat(action.data.project),
                     insrankMaxCount: action.data.maxCount
                 }
 
