@@ -20,6 +20,11 @@
 }
 
 
+.project_items_hor .info_main {
+    margin-right: 20px
+}
+
+
 .project_items_hor .project_items:hover .project_image {
     transition: all .5s;
     box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 10px inset;
@@ -124,3 +129,14 @@
 
 
 
+
+
+@media screen and (max-width: 760px) {
+    .project_items_hor > li {
+        width: calc(100% - 10px);
+    }
+
+    .project_items_hor .project_items {
+        padding: 20px 10px;
+    }
+}

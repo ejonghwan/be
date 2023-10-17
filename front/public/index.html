@@ -13,6 +13,15 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="description" content="Web site created using create-react-app" />
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (navigator.userAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || navigator.userAgent.match(/LG|SAMSUNG|Samsung/) != null) {
+        document.body.classList.add('mobile')
+    } else {
+        document.body.classList.add('pc')
+    }
+    })
+  </script>
 </head>
 
 <body>

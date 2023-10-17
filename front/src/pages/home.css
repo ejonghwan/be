@@ -1,0 +1,47 @@
+.ins_wrap {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 100px;
+}
+
+.ins_wrap .h3_title_wrap,
+.likes_wrap .h3_title_wrap {
+    position: relative;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+.ins_wrap .h3_title_wrap .more,
+.likes_wrap .h3_title_wrap .more {
+    margin-left: 15px;
+}
+.ins_wrap .swiper-pagination,
+.likes_wrap .swiper-pagination {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-top: 10px;
+}
+
+
+
+/* .likes_wrap .swiper-horizontal {
+    padding-top: 20px;
+} */
+
+.project_items_btn.ins,
+.project_items_btn.likes {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+
+@media screen and (max-width: 760px) {
+    .ins_wrap .h3_title_wrap,
+    .likes_wrap .h3_title_wrap {
+        justify-content: space-between;
+    }
+
+    .ins_wrap {
+        margin-bottom: 50px;
+    }
+}

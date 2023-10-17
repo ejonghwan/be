@@ -72,7 +72,7 @@ const WritesList = ({ page }) => {
                         {moreBtnHide ? (
                             <div className='align_c gapt_50 gap_50'>더 이상 정보가 없습니다.</div>
                         ) : (
-                            <div className='align_c gapt_50'>
+                            <div className='align_c gapt_30'>
                                 {WriteState.myWritesLoading ? (<Spinners />) : (
                                     <Button className={'button_type_2 hover_type1 button_more arrow_bottom'} onClick={handleWritePageup}>더보기</Button>
                                 )}

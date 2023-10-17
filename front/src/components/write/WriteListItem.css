@@ -113,3 +113,10 @@
 .write_list_conts  {
     font-size: 1.3rem;
 }
+
+
+@media screen and (max-width: 760px) {
+    .write_list_wrap > li {
+        width: calc(100% - 10px);
+    }
+}

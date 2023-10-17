@@ -63,7 +63,7 @@ const MyComments = ({ page }) => {
                         {moreBtnHide ? (
                             <div className='align_c gapt_50 gap_50'>더 이상 정보가 없습니다.</div>
                         ) : (
-                            <div className='align_c gapt_50'>
+                            <div className='align_c gapt_30'>
                                 {WriteState.myCommentsLoading ? (<Spinners />) : (
                                     <Button className={'button_type_2 hover_type1 arrow_bottom button_more'} onClick={handleWritePageup}>더보기</Button>
                                 )}

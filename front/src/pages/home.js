@@ -1,15 +1,18 @@
 import { Fragment, useCallback, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { UserContext } from '../context/UserContext.js';
 import ProjectItems from '../components/project/ProjectItems.js';
 import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import ProjectRequest from '../reducers/ProjectRequest.js';
 import { ProjectContext } from '../context/ProjectContext.js';
-import './home.css';
 import UserRequest from '../reducers/UserRequest.js';
 import SkeletonItem from '../components/skeleton/SkeletonItem.js';
 import SkeletonCard from '../components/skeleton/SkeletonCard.js';
 import ProjectItemsSquare from '../components/project/ProjectItemsSquare.js';
+import './home.css';
+import Button from '../components/common/form/Button.js';
 
 
 
@@ -104,33 +107,93 @@ const Home = ({ page }) => {
                 </div>
             </div>
 
-            <div className='b_conts'>
-                <div className='h3_title_wrap gap_20'>
+            <div className='b_conts likes_wrap'>
+                <div className='h3_title_wrap gap_10'>
                     <h3 className='h3_title'>인기 습관</h3>
-                    <Link to={'/project/list/likes'} className='more'>더보기</Link>
-                </div>
-               
-                <ul className='project_items_square'>
-                    {rankProjects?.map(project => (
-                        <li key={project._id} className='project_items'>
-                            <ProjectItemsSquare project={project} isRequestUser={true}  />
-                        </li>
-                    ))}
-                </ul>
+                    <Link to={'/project/list/likes'} className='more arrow_right'>더보기</Link>
+                    <div className='project_items_btn likes mo_none'>
+                        <Button type={'button'} className='button_type_arrow_l button_reset projectlikePrev hover_type2' >
+                            <span className='blind'>이전 년도 보기</span>
+                        </Button>
+                        <Button type={'button'} className='button_type_arrow_r button_reset projectlikeNext hover_type2' >
+                            <span className='blind'>다음 년도 보기</span>
+                        </Button>
+                    </div>
+                </div> 
+                <Swiper
+                
+                    // spaceBetween={50}
+                    slidesPerView={2}
+                    onSlideChange={() => console.log('slide change')}
+                    onSwiper={(swiper) => console.log(swiper)}
+                    modules={[Navigation, Pagination, Scrollbar, A11y ]}
+                    navigation={{
+                        prevEl: '.projectlikePrev',
+                        nextEl: '.projectlikeNext',
+                    }}
+                    pagination={{
+                        type: 'fraction',
+                      }}
+                    freeMode={true}
+                    breakpoints={{
+                        760: {
+                            slidesPerView: 5
+                        }
+                    }}
+                    // navigation={true}
+                    >
+                        {rankProjects?.map((project, idx) => (
+                            <SwiperSlide className='project_items_square' key={idx} >
+                                <div className='project_items'>
+                                    <ProjectItemsSquare project={project} isRequestUser={true}  />
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                </Swiper>
             </div>
 
-            <div className='b_conts pd_0'>
-                <div className='h3_title_wrap gap_20'>
+            <div className='b_conts ins_wrap'>
+                <div className='h3_title_wrap gap_10'>
                     <h3 className='h3_title'>인원 많은 습관</h3>
-                    <Link to={'/project/list/attend'} className='more'>더보기</Link>
+                    <Link to={'/project/list/attend'} className='more arrow_right'>더보기</Link>
+                    <div className='project_items_btn ins mo_none'>
+                        <Button type={'button'} className='button_type_arrow_l button_reset projectinsPrev hover_type2' >
+                            <span className='blind'>이전 년도 보기</span>
+                        </Button>
+                        <Button type={'button'} className='button_type_arrow_r button_reset projectinsNext hover_type2' >
+                            <span className='blind'>다음 년도 보기</span>
+                        </Button>
+                    </div>
                 </div>
-                <ul className='project_items_square gap_100'>
-                    {insrankProjects?.map(project => (
-                        <li key={project._id} className='project_items'>
-                            <ProjectItemsSquare project={project} isRequestUser={true}  />
-                        </li>
-                    ))}
-                </ul>
+                <Swiper
+                    // spaceBetween={50}
+                    slidesPerView={2}
+                    onSlideChange={() => console.log('slide change')}
+                    onSwiper={(swiper) => console.log(swiper)}
+                    modules={[Navigation, Pagination, Scrollbar, A11y]}
+                    navigation={{
+                        prevEl: '.projectinsPrev',
+                        nextEl: '.projectinsNext',
+                    }}
+                    freeMode={true}
+                    breakpoints={{
+                        760: {
+                            slidesPerView: 5
+                        }
+                    }}
+                    pagination={{
+                        type: 'fraction',
+                      }}
+                    // navigation={true}
+                    >
+                        {insrankProjects?.map((project, idx) => (
+                            <SwiperSlide className='project_items_square' key={idx} >
+                                <div key={idx} className='project_items'>
+                                    <ProjectItemsSquare project={project} isRequestUser={true}  />
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                </Swiper>
 
             </div>
         </Fragment>

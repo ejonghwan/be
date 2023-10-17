@@ -31,6 +31,10 @@
     position: relative;
 }
 
+#header .header_nav > li .hover_type1 {
+    display: inline-block;
+}
+
 
 .search_project .popup_body .search_result {
     box-shadow: none;
@@ -62,3 +66,9 @@
     padding-bottom: 10px;
     
 } */
+
+@media screen and (max-width: 760px) {
+    #header > .b_conts {
+        padding: 20px 10px;
+    }
+}

@@ -5,7 +5,7 @@ import Label from '../common/form/Label';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 import './CreateProjectDetail.css';
-import { PiChatDotsDuotone, PiPlusCircleDuotone, PiUserCirclePlusDuotone, PiXCircleDuotone, PiSmileyXEyesDuotone  } from "react-icons/pi";
+import { PiChatDotsDuotone, PiPlusCircleDuotone, PiSmileyXEyesDuotone } from "react-icons/pi";
 import IconVisual from '../common/icon/IconVisual';
 import IconList from '../common/icon/IconList';
 import IconData from '../common/icon/IconData';

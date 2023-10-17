@@ -99,7 +99,7 @@ const ProjectsList = ({ page }) => {
                                            {moreLikeBtnHide ? (
                                                <div className='align_c gapt_50 gap_50'>더 이상 정보가 없습니다.</div>
                                            ) : (
-                                               <div className='align_c gapt_50'>
+                                               <div className='align_c gapt_20'>
                                                    {ProjectState.loadLankProjectsLoading ? (<Spinners />) : (
                                                        <Button className={'button_type_2 hover_type1 arrow_bottom button_more'} onClick={handleLikeRankPageup}>더보기</Button>
                                                    )}
@@ -128,7 +128,7 @@ const ProjectsList = ({ page }) => {
                                             {moreInsUserBtnHide ? (
                                                 <div className='align_c gapt_50 gap_50'>더 이상 정보가 없습니다.</div>
                                             ) : (
-                                                <div className='align_c gapt_50'>
+                                                <div className='align_c gapt_20'>
                                                     {ProjectState.loadInsLankProjectsLoading ? (<Spinners />) : (
                                                         <Button className={'button_type_2 hover_type1 arrow_bottom button_more'} onClick={handleInsUserRankPageup}>더보기</Button>
                                                     )}

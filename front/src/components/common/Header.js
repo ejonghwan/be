@@ -29,8 +29,16 @@ const Header = () => {
                         </Button>
                       </li>
                     )}
-                    <li><Link to="/project/list/likes" className='hover_type1'>습관 목록</Link></li>
-                    <li><Link to="/project/create" className='hover_type1'>습관 만들기</Link></li>
+                    <li className='mo_none'>
+                      <Link to="/project/list/likes" className='hover_type1'>
+                        <span>습관 목록</span>
+                      </Link>
+                      </li>
+                    <li className='mo_none'>
+                      <Link to="/project/create" className='hover_type1'>
+                        <span>습관 만들기</span>
+                      </Link>
+                    </li>
                     {state?.isLogged ? (
                        <Fragment>
                         <li><LoginUserInfo /></li>

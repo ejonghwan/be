@@ -32,7 +32,7 @@ const LoginUserInfo = () => {
                             )}
                         </div>
                     </li>
-                    <li className='user_profile_name'><strong>{name}</strong>님
+                    <li className='user_profile_name mo_none_flex'><strong>{name}</strong>님
                         <div className={`user_profile_icon ${menuOpen ? 'on' : ''}`}><PiSquaresFourDuotone /></div>
                     </li>
                 </ul>

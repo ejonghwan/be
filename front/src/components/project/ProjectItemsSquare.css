@@ -4,23 +4,22 @@
     width: auto;
     height: 100%;
     border-radius: 12px;
-    display: flex;
-    margin: -5px;
-    overflow-x: scroll;
+    /* display: flex; */
+    /* margin: -5px; */
+    /* overflow-x: scroll; */
 }
 
 
-.project_items_square > li {
-    width: calc(20% - 10px);
+.project_items_square .project_items {
+    /* width: calc(20% - 10px); */
     margin: 5px;
     flex: 0 0 auto;
     border-radius: 12px;
     background-color: var(--main-bg-color3);
-}
-
-.project_items_square .project_items {
     padding: 15px 15px;
 }
+
+
 
 
 .project_items_square .project_items:hover .project_image {

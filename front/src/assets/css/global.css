@@ -155,6 +155,16 @@ body {
     color: transparent !important;
 }
 
+body.pc .device_pc_none { display: none; }
+body.mobile .device_mo_none { display: none; }
+
+.pc_none {display: none !important;}
+.mo_none {display: block !important;}
+.pc_none_flex {display: none !important;}
+.mo_none_flex {display: flex !important;}
+
+
+
 .pos_rel {
     position: relative;
 }
@@ -199,8 +209,8 @@ button.hover_type1 {
     border-radius: 10px;    
 }
 
-a.hover_type1:hover, 
-button.hover_type1:hover {
+body.pc a.hover_type1:hover, 
+body.pc button.hover_type1:hover {
     background-color: var(--hover-color);
 } 
 
@@ -211,8 +221,8 @@ button.hover_type2 {
     
 }
 
-a.hover_type2:hover, 
-button.hover_type2:hover {
+body.pc a.hover_type2:hover, 
+body.pc button.hover_type2:hover {
     background-color: var(--hover-color3);
 } 
 
@@ -224,12 +234,12 @@ button.hover_type3 {
     
 }
 
-a.hover_type3:hover, 
-button.hover_type3:hover {
+body.pc a.hover_type3:hover, 
+body.pc button.hover_type3:hover {
     background-color: var(--hover-color4);
 } 
 
-.ico_hover_type1:hover > svg {
+body.pc .ico_hover_type1:hover > svg {
     transform: translateY(1px);
     color: var(--point-color);
 }
@@ -390,7 +400,7 @@ svg {
 }
 
 .pd_0 {
-    padding: 0;
+    padding: 0 !important;
 }
 
 .point_color1 {
@@ -554,11 +564,23 @@ form {
 @media screen and (max-width: 960px) {
     .b_conts {
         width: 100%;
-        padding: 30px 20px;
+        padding: 20px 10px;
     }
 }
 
 
 @media screen and (max-width: 760px) {
-    .b_conts {}
+    .pc_none { display: block !important; }
+    .mo_none { display: none !important; }
+    .pc_none_flex { display: flex !important; }
+    .mo_none_flex { display: none !important; }
+    
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
 }

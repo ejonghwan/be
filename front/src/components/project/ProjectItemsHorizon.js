@@ -13,7 +13,7 @@ const ProjectItemsHorizon = ({ project, isContent = false, isTag = false }) => {
             <div className='info_wrap'>
                 <div className='project_image'>{IconData[project?.projectImages]}</div>
                 
-                <div>
+                <div className='info_main'>
                     <Link to={`/project/detail/${project._id}`} >
                         <strong className='project_title arrow_right word_ellip_1'>{project?.title}</strong>
                     </Link>
