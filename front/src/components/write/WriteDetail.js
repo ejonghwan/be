@@ -89,7 +89,7 @@ const WriteDetail = ({ writeId }) => {
                                             />}
                                             <ViewDate dates={[
                                                 {txt: '작성일 ', date: changeViewDate(writes.createdAt, 'minute')},
-                                                {txt: '수정일 ', date: changeViewDate(writes.updatedAt, 'minute')},
+                                                // {txt: '수정일 ', date: changeViewDate(writes.updatedAt, 'minute')},
                                             ]} />
                                         </div>
                                         <div className='write_header_ico_wrap'>

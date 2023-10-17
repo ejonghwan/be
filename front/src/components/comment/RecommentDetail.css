@@ -138,3 +138,17 @@
 }
 
 
+
+
+
+@media screen and (max-width: 760px) {
+    .recomment_user_thum_wrap > .recomment_user_thum_inner {
+        gap: 10px;
+        margin-left: -20px;
+    }
+    .recomment_user_thum_wrap .user_thum_img_wrap > img, 
+    .recomment_user_thum_wrap .user_thum_img_wrap > .not_profileImg {
+        width: 30px;
+        height: 30px;
+    }
+}

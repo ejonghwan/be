@@ -11,7 +11,7 @@ const ProjectDetail = ({ page }) => {
     const { ProjectState } = useContext(ProjectContext);
     
     return (
-        <div className='b_conts'>
+        <div className='b_conts project_detail'>
             <h2>{page}</h2>
             {ProjectState.aLoadProjectLoading && (<Spinners />)}
             <LoadProject projectId={_id}/>

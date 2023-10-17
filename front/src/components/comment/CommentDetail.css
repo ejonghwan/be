@@ -127,3 +127,16 @@
 }
 
 
+
+
+@media screen and (max-width: 760px) {
+    .comment_user_thum_wrap > .comment_user_thum_inner {
+        gap: 10px;
+    }
+
+    .comment_user_thum_wrap .user_thum_img_wrap > img, 
+    .comment_user_thum_wrap .user_thum_img_wrap > .not_profileImg {
+        width: 30px;
+        height: 30px;
+    }
+}

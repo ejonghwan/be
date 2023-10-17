@@ -58,7 +58,7 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                                                     ) }
                                                    
                                                 </div>
-                                                <span className='certified_name'>{project.constructorUser._id.name}</span>
+                                                <span className='certified_name mo_none'>{project.constructorUser._id.name}</span>
                                             </div>
                                         )}
                                     </Fragment>
@@ -79,7 +79,7 @@ const CalenderCells = ({ currentMonth, selectedDate, onDateClick, project }) => 
                                                     )}
                                                     
                                                 </div>
-                                                <span className='certified_name'>{user._id.id}</span>
+                                                <span className='certified_name mo_none'>{user._id.id}</span>
                                             </div>
                                         )}
                                     </Fragment>

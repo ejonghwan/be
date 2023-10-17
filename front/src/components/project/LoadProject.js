@@ -125,8 +125,8 @@ const LoadProject = ({ projectId }) => {
         <Fragment>
             {ProjectState.aLoadProjectDone && (
                 <Fragment>
-                    <div className='align_c gapt_30'>
-                        <div className='gap_20 flex flex_r'>
+                    <div className='align_c'>
+                        <div className='gap_20 flex'>
                             <ProjectPublic txt={true} className={'gapr_10'}/>
                             <ViewDate dates={[
                                 {txt: ' ', date: changeViewDate(project?.createdAt, 'second')},

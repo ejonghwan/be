@@ -128,3 +128,28 @@
     top: 20%;
     left: calc(50% - 200px);
 }
+
+
+@media screen and (max-width: 760px) {
+    [class*=popup_type] {
+        width: 100%;
+        height: 100%;
+        max-height: initial;
+    }
+
+    [class*=profile_].popup {
+        width: 90%;
+        height: 400px;
+    }
+
+    .popup_type_default.user_search_pop {
+        top: 0;
+    }
+
+    #popup.profile_edit {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 55px;
+    }
+}
+

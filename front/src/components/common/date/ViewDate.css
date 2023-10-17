@@ -11,3 +11,13 @@
 .view_date_wrap .view_date_item + .view_date_item {
     margin-left: 10px;
 }
+
+
+@media screen and (max-width: 760px) {
+    .view_date_wrap {
+        flex-wrap: wrap;
+    }
+    .view_date_wrap .view_date_item + .view_date_item {
+        margin-left: 0px;
+    }
+}

@@ -1,3 +1,7 @@
+.project_detail {
+    margin-bottom: 50px;
+}
+
 .part_user .user_thum_wrap {
     flex-wrap: nowrap;
     overflow-x: scroll;

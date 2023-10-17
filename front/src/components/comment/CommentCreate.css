@@ -33,3 +33,14 @@
     overflow: hidden;
 }
 
+
+@media screen and (max-width: 760px) {
+    .create_comment_wrap .create_comment_img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .create_comment_wrap .create_comment_inner {
+        gap: 10px;
+    }
+}

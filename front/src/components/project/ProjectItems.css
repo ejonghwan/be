@@ -127,4 +127,12 @@ body.pc .project_items_wrap .project_title:hover {
     .project_items_wrap > li {
         width: calc(100% - 10px);
     }
+
+    .project_items_wrap .ico_wrap + .ico_wrap {
+        margin-left:8px
+    }
+
+    .project_items_wrap .project_items {
+        padding: 20px 15px;
+    }
 }
