@@ -16,13 +16,15 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
     const [fileName, setFileName] = useState("파일 선택");
     // const [persent, setPersent] = useState(0);
     const [imageUrl, setImageUrl] = useState(null);
-    const [imageSubmitState, setImageSubmitState] = useState(false);
+    // const [imageSubmitState, setImageSubmitState] = useState(false);
     // const { imageState, imageDispatch } = useContext(ImageContext);
     const { state } = useContext(UserContext);
 
     const handleInputChange = e => {
         const imageData = e.target.files[0];
-        if(imageData.size > 1024 * 1024 * 5) return alert('1MB 이하 파일만 등록할 수 있습니다.\n\n' + '지금 파일 용량 : ' + (Math.round(imageData.size / 1024 / 1024 * 100) / 100) + 'MB');
+        if(imageData.size > 1024 * 1024 * 5) {
+            return alert(`1MB 이하 파일만 등록할 수 있습니다.\n\n 지금 파일 용량 : ${(Math.round(imageData.size / 1024 / 1024 * 100) / 100)}MB`);
+        }
         setFile(imageData);
         setFileName(imageData.name);
         const fileReader = new FileReader();
@@ -49,7 +51,7 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
             }); 
 
             if(statusCode(number.status, 2)) {
-                setImageSubmitState(true); //성공 시
+                // setImageSubmitState(true); //성공 시
                 setUploadState(true);
                 alert('변경이 완료 되었습니다!');
                 return;

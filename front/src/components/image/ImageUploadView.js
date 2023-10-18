@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import _debounce from 'lodash.debounce';
 import { UserContext } from '../../context/UserContext.js';
 import { HiOutlineFolderOpen } from "react-icons/hi2";
 import './ImageUploadView.css';
