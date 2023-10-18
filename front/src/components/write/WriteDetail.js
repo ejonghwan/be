@@ -1,28 +1,26 @@
-import { useEffect, useContext, Fragment, useRef, useState } from 'react';
+import { useEffect, useContext, Fragment, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { WriteContext } from '../../context/WriteContext';
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
 import ImageRequest from '../../reducers/ImageRequest';
-import LikeIcon from '../common/icon/LikeIcon';
 import CommentIcon from '../common/icon/CommentIcon';
 import WriteLike from './WriteLike';
 import UserThumItem from '../common/userThum/UserThumItem';
 import ViewDate from '../common/date/ViewDate';
 import { changeViewDate } from '../../utils/utils';
 import Nodata from '../common/notData/NoData';
-import { PiGhostDuotone, PiGearDuotone, PiXCircleDuotone, PiFileXDuotone, PiChatDotsDuotone } from "react-icons/pi";
+import { PiGhostDuotone, PiGearDuotone, PiFileXDuotone } from "react-icons/pi";
 import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
 import WriteEdit from './WriteEdit.js'
 import Comment from '../comment/Comment';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
-import './WriteDetail.css';
 import Spinners from '../common/spinners/Spinners';
+import './WriteDetail.css';
 
 
 const WriteDetail = ({ writeId }) => {
-
     const { WriteState, WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
     const { state } = useContext(UserContext);
     const { loadWrite, deleteWrite } = WriteRequest();
@@ -30,20 +28,16 @@ const WriteDetail = ({ writeId }) => {
     const editWriteRef = useRef(null);
     const navigate = useNavigate();
 
-    
-
-
     const handleWriteEditState = () => editWriteRef.current.popupOpen();
-
 
     const handleLoadWrite = async () => {
         try {
             WriteDispatch({ type: "WRITE_LOAD_REQUEST" });
             await loadWrite(writeId);
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     const handleWriteDelete = async () => {
         try {
@@ -55,15 +49,15 @@ const WriteDetail = ({ writeId }) => {
                 writeId: writeId,
                 projectId: writes.project._id._id
             });
-            navigate(`/project/detail/${res.projectId}`)
+            navigate(`/project/detail/${res.projectId}`);
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     useEffect(() => {
         handleLoadWrite();
-    }, [])
+    }, []);
 
 
     return (

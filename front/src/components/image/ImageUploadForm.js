@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import _debounce from 'lodash.debounce';
-import { ImageContext } from '../../context/ImageContext.js';
 import { UserContext } from '../../context/UserContext.js';
 import useImageRequest from '../../reducers/ImageRequest.js';
 import { statusCode } from '../../utils/utils.js';
@@ -15,10 +14,10 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
     const { imageUpload } = useImageRequest();
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("파일 선택");
-    const [persent, setPersent] = useState(0);
+    // const [persent, setPersent] = useState(0);
     const [imageUrl, setImageUrl] = useState(null);
     const [imageSubmitState, setImageSubmitState] = useState(false);
-    const { imageState, imageDispatch } = useContext(ImageContext);
+    // const { imageState, imageDispatch } = useContext(ImageContext);
     const { state } = useContext(UserContext);
 
     const handleInputChange = e => {
@@ -29,7 +28,7 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
         const fileReader = new FileReader();
         fileReader.readAsDataURL(imageData);
         fileReader.onload = e => setImageUrl(e.target.result);
-    }
+    };
 
 
     // 이미지 프로필에 등록 되는거까진 테스트함. 이거 적용 테스트해봐야됨
@@ -37,7 +36,7 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
     const handleImageUploadSubmit = e => {
         e.preventDefault();
         handleImageUpload();
-    }
+    };
 
     const handleImageUpload = _debounce(async() => {
         try {
@@ -50,15 +49,15 @@ const ImageUploadForm = ({ noneSubmitBtn, path, setUploadState }) => {
             }); 
 
             if(statusCode(number.status, 2)) {
-                setImageSubmitState(true) //성공 시
-                setUploadState(true)
-                alert('변경이 완료 되었습니다!')
+                setImageSubmitState(true); //성공 시
+                setUploadState(true);
+                alert('변경이 완료 되었습니다!');
                 return;
-            } 
+            };
         } catch(err) {
-            console.error(err)
-        }
-    }, 1000)
+            console.error(err);
+        };
+    }, 1000);
 
 
     return (

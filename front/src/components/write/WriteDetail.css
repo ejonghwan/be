@@ -57,3 +57,7 @@
 .write_wrap .write_header .user_thum_wrap > li {
     background-color: transparent;
 }
+
+.write_header_item {
+    margin-bottom: 10px;
+}

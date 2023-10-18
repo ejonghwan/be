@@ -3,17 +3,17 @@ import { Fragment, useEffect, useRef, useState, memo, useContext } from 'react';
 import { changeViewDate } from '../../utils/utils';
 import Button from '../common/form/Button';
 import Popup from '../common/popup/Popup';
-import { PiDotsThreeOutlineVerticalDuotone, PiDotsThreeVerticalDuotone, PiPencilSimpleLineDuotone, PiXSquareDuotone  } from "react-icons/pi";
-import { timeForToday, getByteLengthOfString } from '../../utils/utils';
+import { PiDotsThreeOutlineVerticalDuotone, PiPencilSimpleLineDuotone, PiXSquareDuotone  } from "react-icons/pi";
+import { timeForToday } from '../../utils/utils';
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
 import RecommentLike from './RecommentLike';
 import RecommentEdit from './RecommentEdit';
 import RecommentCreate from './RecommentCreate';
-import './RecommentDetail.css';
 import Spinners from '../common/spinners/Spinners';
 import NotProfileImg from '../user/NotProfileImg';
+import './RecommentDetail.css';
 
 
 
@@ -56,21 +56,21 @@ const RecommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isI
     const handleEleteComment = async () => {
         try {
             if(!window.confirm(`"${recomment.content}" 코멘트를 정말 삭제하시겠습니까?`)) return;
-            WriteDispatch({ type: "RECOMMENT_DELETE_REQUEST" })
+            WriteDispatch({ type: "RECOMMENT_DELETE_REQUEST" });
             await deleteRecomment({
                 userId: recomment.user._id._id,
                 commentId: comment._id,
                 recommentId: recomment._id
-            })
+            });
             commentMoreRef.current.popupClose();
         } catch(err) {
             console.log(err)
-        }
+        };
     };
 
     const handleRecommentState = () => {
-        setRecommentOpen(true)
-    }
+        setRecommentOpen(true);
+    };
 
     useEffect(() => {
         contentHeightSplit();

@@ -7,13 +7,12 @@ import UserRequest from '../../reducers/UserRequest.js';
 import { UserContext } from '../../context/UserContext.js';
 import { HiOutlineChatBubbleLeftEllipsis, HiOutlineChevronDown } from "react-icons/hi2";
 import { statusCode, questionData } from '../../utils/utils.js';
-import SuccessMsg from '../common/successMsg/SuccessMsg.js';
-import '../common/form/Selectbox.css'
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import Spinners from '../common/spinners/Spinners.js';
 import CompleteMsg from '../common/complete/CompleteMsg.js';
 import { PiRobotDuotone } from "react-icons/pi";
+import '../common/form/Selectbox.css';
 
 
 const FindIdQuestion = () => {
@@ -47,7 +46,7 @@ const FindIdQuestion = () => {
                 setEmail(''); 
                 setResult('');
                 setResMsg({id: findId.data.id});
-                selectRef.current[0].selected = true
+                selectRef.current[0].selected = true;
             };
         } catch(err) {
             console.error(err);

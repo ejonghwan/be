@@ -1,12 +1,12 @@
 import { useState, useContext, useEffect, useCallback, Fragment, useRef, memo } from 'react';
-import { PiStarDuotone, PiHeartDuotone } from "react-icons/pi";
+import { PiHeartDuotone } from "react-icons/pi";
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
 import Button from '../common/form/Button';
 import _debounce from 'lodash.debounce';
 import InfoState from '../common/infoState/InfoState';
-import './WriteLike.css';
 import { WriteContext } from '../../context/WriteContext';
+import './WriteLike.css';
 
 
 
@@ -17,8 +17,8 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
     const { state } = useContext(UserContext);
     const { WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
     const [like, setLike] = useState(null);
-    const likeRef = useRef(false)
-    const unlikeRef = useRef(false)
+    const likeRef = useRef(false);
+    const unlikeRef = useRef(false);
 
 
     const handleWriteLike = e => {
@@ -37,7 +37,7 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
         setLike(!like);
         likeRef.current = false;
         unlikeRef.current = true;
-    } ;
+    };
 
 
     // like state는 바로 번경되더라도 실제 요청은 1.5초 후에 클릭되는 상태에 따라 가게 debouce 작업. 
@@ -48,23 +48,23 @@ const WriteLike = ({ writeLikeLen, writeId, userId, className = '' }) => {
                 WriteDispatch({ type: "WRITE_UNLIKE_REQUEST" })
                 if(writes.likes?.filter(likeUser => likeUser === state.user._id).length === 0) return;
                 const resUnlike = await unLikeWrite({ writeId, userId });
-                if(resUnlike.data) setLike(!like)
+                if(resUnlike.data) setLike(!like);
             } else {
                 // 라이크 유저에 내가 있으면 올리기 요청 안되게 함
                 WriteDispatch({ type: "WRITE_LIKE_REQUEST" })
                 if(writes.likes?.filter(likeUser => likeUser === state.user._id).length > 0) return;
                 const resLikeawait = await likeWrite({ writeId, userId });
-                if(resLikeawait.data) setLike(!like)
-            }
+                if(resLikeawait.data) setLike(!like);
+            };
         } catch(err) {
-            console.log(err)
-        } 
+            console.log(err);
+        } ;
     }, 1000), [writes.likes]);
 
     useEffect(() => {
         // writes.likes?.filter(likeUser => likeUser === state.user._id).length > 0 ? true : false
-        writes.likes?.filter(likeUser => likeUser === state.user._id).length > 0 ? setLike(true) : setLike(false)
-    }, [writes.likes])
+        writes.likes?.filter(likeUser => likeUser === state.user._id).length > 0 ? setLike(true) : setLike(false);
+    }, [writes.likes]);
 
 
 

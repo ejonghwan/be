@@ -1,7 +1,6 @@
 import { Fragment, useContext, useEffect, useState } from 'react';
 import SearchRequest from '../../reducers/SearchRequest';
 import { PiFolderDashedDuotone } from "react-icons/pi";
-import './ProjectsSearchDetail.css';
 import { SearchContext } from '../../context/SearchContext';
 import { Link, useParams } from 'react-router-dom';
 import CompleteMsg from '../../components/common/complete/CompleteMsg';
@@ -9,6 +8,7 @@ import ProjectItemsHorizon from '../../components/project/ProjectItemsHorizon';
 import Pagenations from '../../components/common/pagenation/Pagenations';
 import SkeletonSearchCard from '../../components/skeleton/SkeletonSearchCard';
 import SkeletonItem from '../../components/skeleton/SkeletonItem';
+import './ProjectsSearchDetail.css';
 
 const ProjectsSearchDetail = ({ page }) => {
 

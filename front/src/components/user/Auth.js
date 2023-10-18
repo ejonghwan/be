@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, Fragment, useContext, useMemo } from 'react';
+import React, { useState, useEffect, Fragment, useContext, useMemo } from 'react';
 import _debounce from 'lodash.debounce'
 import { useInput } from '../common/hooks/index'
 import Input from '../common/form/Input'
@@ -23,24 +23,24 @@ const Auth = () => {
     const handleAuthMailSubmit = e => {
         e.preventDefault();
         authMail();
-    }
+    };
 
     const authMail = useMemo(() => _debounce(async e => {
         try {
-            dispatch({ type: "AUTH_NUMBER_REQUEST" })
-            const res = await emailAuth({ email: email })
+            dispatch({ type: "AUTH_NUMBER_REQUEST" });
+            const res = await emailAuth({ email: email });
             if(statusCode(res.status, 2)) return setAuthState(true);
         } catch(err) {
-            console.error(err)
-        }
-    }, 500), [email])
+            console.error(err);
+        };
+    }, 500), [email]);
 
 
 
 
     useEffect(() => {
         return () => authMail.cancel();
-    }, [])
+    }, []);
 
 
     return (

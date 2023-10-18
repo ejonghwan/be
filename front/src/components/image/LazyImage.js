@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react'
 
 const LazyImage = ({ webpSrc, imageSrc, alt, className, width, height, isSkeleton = false }) => {
 
-    const imgRef = useRef(null) 
+    const imgRef = useRef(null);
     useEffect(() => {
-        const options = {}
+        const options = {};
         const callback = (entries, observer) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
@@ -13,13 +13,13 @@ const LazyImage = ({ webpSrc, imageSrc, alt, className, width, height, isSkeleto
                     target.src = target.dataset.src;
                     previousSibling.srcset = previousSibling.dataset.srcset;
                     observer.unobserve(target)
-                }
-            })
-        }
-        const observer = new IntersectionObserver(callback, options)
-        observer.observe(imgRef.current)
+                };
+            });
+        };
+        const observer = new IntersectionObserver(callback, options);
+        observer.observe(imgRef.current);
 
-    }, [imageSrc])
+    }, [imageSrc]);
 
     return (
         <picture>

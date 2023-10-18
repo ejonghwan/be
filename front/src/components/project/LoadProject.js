@@ -18,12 +18,12 @@ import UserSearch from '../search/UserSearch';
 import { changeViewDate } from '../../utils/utils';
 import ProjectPublic from './ProjectPublic';
 import ViewDate from '../common/date/ViewDate';
-import './LoadProject.css';
 import WriteUpload from '../write/WriteUpload';
 import DeleteProject from './DeleteProject';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import Spinners from '../common/spinners/Spinners';
 import DaysPanel from '../dayspanel/DaysPanel';
+import './LoadProject.css';
 
 
 const LoadProject = ({ projectId }) => {
@@ -43,9 +43,9 @@ const LoadProject = ({ projectId }) => {
             ProjectDispatch({ type: "A_PROJECT_LOAD_REQUEST" });
             await loadProject(projectId);
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     const handleInviteProject = async e => {
         e.preventDefault();
@@ -54,9 +54,9 @@ const LoadProject = ({ projectId }) => {
             ProjectDispatch({ type: "PROJECT_INVITE_REQUEST" });
             await inviteProject({ projectId, userId});
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     const handleRejectProject = async e => {
         e.preventDefault();
@@ -65,9 +65,9 @@ const LoadProject = ({ projectId }) => {
             ProjectDispatch({ type: "PROJECT_REJECT_REQUEST" });
             await rejectProject({ projectId, userId });
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     const handleWithdrawProject = async e => {
         e.preventDefault();
@@ -75,11 +75,11 @@ const LoadProject = ({ projectId }) => {
             if(window.confirm('정말 탈퇴하시겠습니까?')) {
                 ProjectDispatch({ type: "PROJECT_WITHDRAW_REQUEST" });
                 await withdrawProject({ projectId, userId: state.user._id });
-            }
+            };
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     const handleEditState = () => editRef.current.popupOpen();
     const handleFriendInvite = () => inviteRef.current.popupOpen();
@@ -92,19 +92,19 @@ const LoadProject = ({ projectId }) => {
             e.preventDefault();
             let addState = null;
             if(friendData.length <= 0) return;
-            ProjectDispatch({ type: "PROJECT_ADD_INVITE_REQUEST" })
+            ProjectDispatch({ type: "PROJECT_ADD_INVITE_REQUEST" });
             for(let i = 0; i < friendData.length; i++) {
-                addState = await addFriendProject({ projectId, userId: friendData[i]._id })
-            }
+                addState = await addFriendProject({ projectId, userId: friendData[i]._id });
+            };
             if(addState.status === 200) {
                 inviteRef.current.popupClose();
                 alert('친구를 초대했습니다.');
                 setFriendData([]);
-            }
+            };
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
 
     useEffect(() => {
@@ -112,12 +112,12 @@ const LoadProject = ({ projectId }) => {
             if(state.user?._id === project.constructorUser?._id._id) return 'const';
             if(project.instanceUser?.filter(user => user._id._id === state.user._id ).length > 0) return 'inst';
             return 'visitor';
-        })
-    }, [state, project])
+        });
+    }, [state, project]);
 
     useEffect(() => {
         handleLoadProject();
-    }, [])
+    }, []);
 
 
     return (

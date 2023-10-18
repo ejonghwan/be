@@ -3,7 +3,6 @@ import { UserContext } from '../../context/UserContext';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 import WriteRequest from '../../reducers/WriteRequest';
-import { WriteReducer } from '../../reducers';
 import './CommentCreate.css'
 import { WriteContext } from '../../context/WriteContext';
 import Spinners from '../common/spinners/Spinners';
@@ -19,11 +18,11 @@ const CommentCreate = ({ comments }) => {
 
     const handleChangeContent = e => {
         setSubmitContent(e.target.value);
-    }
+    };
 
     const handleResetComment = () => {
-        setSubmitContent('')
-    }
+        setSubmitContent('');
+    };
 
     const handleCreateComment = async () => {
         try {
@@ -33,11 +32,11 @@ const CommentCreate = ({ comments }) => {
                 writeId: writes._id,
                 content: submitContent,
             })
-            setSubmitContent('')
+            setSubmitContent('');
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     return (
         <div className='create_comment_wrap'>

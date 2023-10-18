@@ -5,7 +5,7 @@ const ProgressBar = ({ persent }) => {
     const barRef = useRef(null);
     const handlePersent = () => barRef.current.style.transform = `scaleX(${persent}%)`;
     
-    useEffect(() => handlePersent(), [persent])
+    useEffect(() => handlePersent(), [persent]);
 
     return (
         <div className="progress-wrap">

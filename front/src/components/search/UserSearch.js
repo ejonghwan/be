@@ -6,12 +6,11 @@ import Tags from '../common/tag/Tags';
 import SearchRequest from '../../reducers/SearchRequest';
 import { UserContext } from '../../context/UserContext';
 import { SearchContext } from '../../context/SearchContext';
-import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
-import './UserSearch.css';
 import Spinners from '../common/spinners/Spinners';
 import NotProfileImg from '../user/NotProfileImg';
+import './UserSearch.css';
 
 
 const UserSearch = ({ setFriendData = [] }) => {
@@ -19,7 +18,7 @@ const UserSearch = ({ setFriendData = [] }) => {
     const { userSearch } = SearchRequest();
     const { state } = useContext(UserContext);
     const { SearchState, SearchDispatch } = useContext(SearchContext);
-    const { ProjectState: { project }, ProjectState } = useContext(ProjectContext);
+    // const { ProjectState: { project }, ProjectState } = useContext(ProjectContext);
 
     const [joinUserValue, setJoinUserValue] = useState(''); // 인풋값
     const [joinUserList, setJoinUserList] = useState([]); //뿌리기 위해 여기서만 사용
@@ -32,23 +31,23 @@ const UserSearch = ({ setFriendData = [] }) => {
 
     // 검색 관련 이벤트
     const handleSearchCange = e => {
-        setJoinUserValue(e.target.value)
-        handleJoinUserSearch(e.target.value) 
+        setJoinUserValue(e.target.value);
+        handleJoinUserSearch(e.target.value);
         //그리고 useCallback 안에서는 state를 구독하지 않기 때문에 변화 값을 인자로 넘겨줘야함 
-    }
+    };
 
     // 유저 검색
     const handleJoinUserSearch = useCallback(_debounce(async (userName) => {
         // useCallback을 사용하면서 joinUserValue를 구독하지 않아, 서치인풋이 리렌더링이 되어도 이 함수의 주소값의 변화가 없음. 중요. debounce 사용하면서 디바운스 계속 호출되던 이슈. 
         try {
             if(userName === '') return setIsUserSearchResult(false);
-            SearchDispatch({ type: "USER_SEARCH_REQUEST" })
+            SearchDispatch({ type: "USER_SEARCH_REQUEST" });
             await userSearch(userName);
           } catch(err) {
-            console.err(err)
-          }
+            console.err(err);
+          };
         setIsUserSearchResult(true)
-    }, 500), [])
+    }, 500), []);
 
      // 유저검색창 엑스버튼
      const handleUserValueReset = () => {
@@ -59,7 +58,7 @@ const UserSearch = ({ setFriendData = [] }) => {
      const handleAddFriend = ({ name, _id }) => () => {
         for(let i = 0; i < joinUserList.length; i++) {
             if(submitData.joinUser[i]._id.match(_id)) return alert('이미 추가한 친구입니다.');
-        }
+        };
         setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.concat({ _id: _id, state: true }) }));
         setJoinUserList(prev => [...prev, { name: name, _id: _id }]);
         setJoinUserValue('');
@@ -71,8 +70,8 @@ const UserSearch = ({ setFriendData = [] }) => {
     const handleJoinUserDelete = (e, tagName) => {
         let getId = joinUserList.filter(user => user.name === tagName)[0]._id;
         setJoinUserList(prev => prev.filter(user => user.name !== tagName));
-        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.filter(user => user._id !== getId) }))
-    }
+        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.filter(user => user._id !== getId) }));
+    };
 
 
     return (

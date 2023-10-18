@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState, useRef } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { ProjectContext } from "../../context/ProjectContext";
 import { useParams } from 'react-router-dom';
 import { PiFileXDuotone } from "react-icons/pi";
@@ -26,8 +26,8 @@ const ProjectsList = ({ page }) => {
         ProjectDispatch({ type: "PROJECT_RANK_LOAD_REQUEST" });
         const res = await loadRankProject({ pageNum: likeProjectPage, limitNum: 20 });
         rankProjects.length >= (res.data.maxCount - 20) && setMoreLikeBtnHide(true);
-        setTabIdx(1)
-    }
+        setTabIdx(1);
+    };
     const handleLikeRankPageup = () => setLikeProjectPage(prev => prev += 1);
 
 
@@ -37,7 +37,7 @@ const ProjectsList = ({ page }) => {
         ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_REQUEST" });
         const res = await loadinstanceRankProject({ pageNum: insUserProjectPage, limitNum: 20 });
         insrankProjects.length >= (res.data.maxCount - 20) && setMoreInsUserBtnHide(true);
-        setTabIdx(0)
+        setTabIdx(0);
     };
     const handleInsUserRankPageup = () => setInsUserProjectPage(prev => prev += 1);
 
@@ -47,32 +47,32 @@ const ProjectsList = ({ page }) => {
     const handleChangeTabValue = (curTabIdx) => {
         if(curTabIdx === 0 && rankProjects.length <= 0) handleLoadLikeRank();
         if(curTabIdx === 1 && insrankProjects.length <= 0) handleLoadInsUser();
-    }
+    };
 
     // 더보기 눌렀을때
     useEffect(() => {
        if(likeProjectPage === 1) return;
        handleLoadLikeRank();
-    }, [likeProjectPage])
+    }, [likeProjectPage]);
 
     useEffect(() => {
         if(insUserProjectPage === 1) return;
         handleLoadInsUser();
-    }, [insUserProjectPage])
+    }, [insUserProjectPage]);
 
 
     // params로 구분
     useEffect(() => {
         if(tabName === 'likes') handleLoadLikeRank();
         if(tabName === 'attend') handleLoadInsUser();
-    }, [])
+    }, []);
 
     return (
         <Fragment>
             <div className='b_conts h2_title_wrap'>
                 <h2 className='gap_0'>{page}</h2>
             </div>
-            <div className='b_conts full bg_gray project_list'>
+            <div className='b_conts full bg_gray project_list h_100'>
                 <div className='b_conts pd_0'>
 
                     <div className="project_list_wrap">

@@ -1,7 +1,6 @@
 import { useContext, Fragment } from 'react';
-import ProjectRequest from '../../reducers/ProjectRequest';
 import { ProjectContext } from '../../context/ProjectContext';
-import { PiStarDuotone, PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone, PiUserPlusDuotone, PiHandEyeDuotone, PiEyeClosedDuotone } from "react-icons/pi";
+import { PiHandEyeDuotone, PiEyeClosedDuotone } from "react-icons/pi";
 import './ProjectPublic.css';
 
 

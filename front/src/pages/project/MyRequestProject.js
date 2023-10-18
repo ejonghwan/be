@@ -3,7 +3,6 @@ import { UserContext } from '../../context/UserContext.js';
 import ProjectItemsHorizon from '../../components/project/ProjectItemsHorizon.js';
 import Button from '../../components/common/form/Button.js';
 import { PiUserCirclePlusDuotone, PiFolderDashedDuotone } from "react-icons/pi";
-import { ProjectContext } from '../../context/ProjectContext.js';
 import UserRequest from '../../reducers/UserRequest.js';
 import CompleteMsg from '../../components/common/complete/CompleteMsg.js';
 import './MyRequestProject.css';
@@ -22,31 +21,31 @@ const MyRequestProject = ({ page }) => {
             dispatch({ type: "MYLIST_PROJECT_REQUEST_REQUEST" });
             await requestMyProject({ userId: state.user._id});
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     const handleInviteProject = async (projectId, userId) => {
         try {
             dispatch({ type: "MYLIST_PROJECT_INVITE_REQUEST" });
             await inviteMyListProject({ projectId, userId});
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     const handleRejectProject = async (projectId, userId) => {
         try {
             dispatch({ type: "MYLIST_PROJECT_REJECT_REQUEST" });
             await rejectMyListProject({ projectId, userId });
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
     useEffect(() => {
         handleRequestMyProject();
-    }, [])
+    }, []);
 
     return (
         <Fragment>
@@ -54,7 +53,7 @@ const MyRequestProject = ({ page }) => {
                 <h2 className='gap_0'>{page}</h2>
             </div>
 
-            <div className='b_conts full bg_gray'>
+            <div className='b_conts full bg_gray h_100'>
                 <div className='b_conts pd_0'>
                     <h3 className='h3_title gap_20'>내가 신청한 습관</h3>
                     {state.requestMyProject.length > 0 ? (

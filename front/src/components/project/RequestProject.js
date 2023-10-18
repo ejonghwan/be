@@ -1,6 +1,5 @@
 import { Fragment, useContext } from 'react';
 import ProjectRequest from '../../reducers/ProjectRequest';
-import { UserContext } from '../../context/UserContext';
 import { ProjectContext } from '../../context/ProjectContext';
 import Button from "../common/form/Button";
 import Spinners from '../common/spinners/Spinners';
@@ -17,11 +16,11 @@ const RequestProject = ({ btnTxt, className = '', projectId, userId}) => {
             e.preventDefault();
             ProjectDispatch({ type: "PROJECT_REQUEST_REQUEST" });
             await requestProject({ projectId, userId });
-            alert('이 습관에 신청하셨습니다. 신청이 수락되면 가입이 완료됩니다.')
+            alert('이 습관에 신청하셨습니다. 신청이 수락되면 가입이 완료됩니다.');
         } catch(err) {
-            console.log(err)
-        }
-    }
+            console.log(err);
+        };
+    };
 
 
     return (

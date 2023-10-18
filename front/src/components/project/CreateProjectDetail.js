@@ -35,8 +35,8 @@ const CreateProjectDetail = () => {
     const [categoryValue, setCategoryValue] = useState(''); 
     const [joinUserValue, setJoinUserValue] = useState(''); // 인풋값
     const [joinUserList, setJoinUserList] = useState([]); //뿌리기 위해 여기서만 사용
-    const [isUserSearchResult, setIsUserSearchResult] = useState(false)
-    const [titleVerifi, setTitleverifi ] = useState(false)
+    const [isUserSearchResult, setIsUserSearchResult] = useState(false);
+    const [titleVerifi, setTitleverifi ] = useState(false);
     const [submitData, setSubmitData] = useState({ 
         constructorUser: { _id: state.user._id },
         title: '',
@@ -50,8 +50,8 @@ const CreateProjectDetail = () => {
 
     const handleValuesChange = e => {
         const {name, value} = e.target;
-        setSubmitData({...submitData, [name]: value})
-    }
+        setSubmitData({...submitData, [name]: value});
+    };
 
     // 카테고리 관련 이벤트
     const handleCategoryReset = () => setCategoryValue('');
@@ -62,8 +62,8 @@ const CreateProjectDetail = () => {
         let equalsFillter = categoryResult.filter((el, idx) => categoryResult.indexOf(el) === idx); //같은거 삭제
         let inCategoryName = [];
         for(let i = 0; i < equalsFillter.length; i++) {
-            inCategoryName.push({ categoryName: equalsFillter[i] })
-        }
+            inCategoryName.push({ categoryName: equalsFillter[i] });
+        };
         
         // 기존에 있는 카테고리네임 중복제거
         let defaultNameFilter = [...submitData.categorys, ...inCategoryName].reduce((acc, cur) => {
@@ -72,37 +72,37 @@ const CreateProjectDetail = () => {
                 return acc;
             }
             return acc;
-        }, [])
+        }, []);
 
-        setSubmitData(prev => ({...prev, categorys: [...defaultNameFilter]}))
-        setCategoryValue('')
-    }, [categoryValue])
+        setSubmitData(prev => ({...prev, categorys: [...defaultNameFilter]}));
+        setCategoryValue('');
+    }, [categoryValue]);
 
     const handleTagDelete = (e, tagName) => {
-        setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}))
-    }
+        setSubmitData(prev => ({ ...prev, categorys: prev.categorys.filter(tag => tag.categoryName !== tagName )}));
+    };
 
    
 
     // 검색 관련 이벤트
     const handleSearchCange = e => {
-        setJoinUserValue(e.target.value)
-        handleJoinUserSearch(e.target.value) 
+        setJoinUserValue(e.target.value);
+        handleJoinUserSearch(e.target.value) ;
         //그리고 useCallback 안에서는 state를 구독하지 않기 때문에 변화 값을 인자로 넘겨줘야함 
-    }
+    };
 
     // 유저 검색
     const handleJoinUserSearch = useCallback(_debounce(async (userName) => {
         // useCallback을 사용하면서 joinUserValue를 구독하지 않아, 서치인풋이 리렌더링이 되어도 이 함수의 주소값의 변화가 없음. 중요. debounce 사용하면서 디바운스 계속 호출되던 이슈. 
         try {
             if(userName === '') return setIsUserSearchResult(false);
-            SearchDispatch({ type: "SEARCH_REQUEST" })
+            SearchDispatch({ type: "SEARCH_REQUEST" });
             await userSearch(userName);
           } catch(err) {
-            console.err(err)
-          }
-        setIsUserSearchResult(true)
-    }, 500), [])
+            console.err(err);
+          };
+        setIsUserSearchResult(true);
+    }, 500), []);
 
      // 유저검색창 엑스버튼
      const handleUserValueReset = () => {
@@ -112,19 +112,19 @@ const CreateProjectDetail = () => {
     
      const handleAddFriend = ({ name, _id }) => () => {
         for(let i = 0; i < joinUserList.length; i++) {
-            if(submitData.joinUser[i]._id.match(_id)) return alert('이미 추가한 친구입니다.')
-        }
+            if(submitData.joinUser[i]._id.match(_id)) return alert('이미 추가한 친구입니다.');
+        };
         setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.concat({ _id: _id, state: true }) }));
         setJoinUserList(prev => [...prev, { name: name, _id: _id }]);
         setJoinUserValue('');
         setIsUserSearchResult(false);
-     }
+     };
 
     const handleJoinUserDelete = (e, tagName) => {
         let getId = joinUserList.filter(user => user.name === tagName)[0]._id;
         setJoinUserList(prev => prev.filter(user => user.name !== tagName));
-        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.filter(user => user._id !== getId) }))
-    }
+        setSubmitData(prev => ({ ...prev, joinUser: prev.joinUser.filter(user => user._id !== getId) }));
+    };
 
 
     // 습관 생성
@@ -134,24 +134,24 @@ const CreateProjectDetail = () => {
             ProjectDispatch({ type: "PROJECT_CREATE_REQUEST" });
             const data = await createProject(submitData);
             if(data) {
-                dispatch({ type: "CREATE_PROJECT_USER_PUSH", data: data })
-                alert(`${title} 습관이 생성 되었습니다!`)
+                dispatch({ type: "CREATE_PROJECT_USER_PUSH", data: data });
+                alert(`${title} 습관이 생성 되었습니다!`);
                 navigate(`/project/detail/${data._id}`);
-            }
+            };
         } catch(err) {
             console.log(err);
-        }
-    }
+        };
+    };
 
     const handleIconClick = idx => {
-        setProjectImages(idx)
-        setSubmitData(prev => ({ ...prev, projectImages: idx }))
+        setProjectImages(idx);
+        setSubmitData(prev => ({ ...prev, projectImages: idx }));
     };
-    const { title, content, projectPublic, categorys } = submitData;
+    const { title, content } = submitData;
 
     useEffect(() => {
-        title.length < 3 || title.length > 20 ? setTitleverifi(false) : setTitleverifi(true)
-    }, [title])
+        title.length < 3 || title.length > 20 ? setTitleverifi(false) : setTitleverifi(true);
+    }, [title]);
 
     
     return (

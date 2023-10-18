@@ -9,8 +9,8 @@ import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import { UserContext } from '../../context/UserContext.js'
 import UserRequest from '../../reducers/UserRequest.js'
 import Button from '../common/form/Button.js';
-import './LoginForm.css';
 import Spinners from '../common/spinners/Spinners.js';
+import './LoginForm.css';
 
 
 const LoginForm = () => {
@@ -18,7 +18,7 @@ const LoginForm = () => {
     const [userId, handleUserId, setUserId] = useInput('')
     const [userPassword, handlePassword, setUserPassword] = useInput('')
 
-    const { loginUser, logoutUser } = UserRequest();
+    const { loginUser } = UserRequest();
     const {state, dispatch} = useContext(UserContext)
     const navigate  = useNavigate();
     const location = useLocation();
@@ -26,24 +26,24 @@ const LoginForm = () => {
     const handleSubmit = async e => {
         e.preventDefault();
         submit();
-    }
+    };
 
 
     const submit =_debounce(async () => {
         try {
-            dispatch({ type: "USER_LOGIN_REQUEST" })
-            const user = await loginUser({ id: userId, password: userPassword })
+            dispatch({ type: "USER_LOGIN_REQUEST" });
+            const user = await loginUser({ id: userId, password: userPassword });
             if(statusCode(user.status, 2)) {
-                setUserId('')
-                setUserPassword('')
+                setUserId('');
+                setUserPassword('');
                 
                 if(location.pathname === '/login') navigate('/'); // 로그인 창에선 메인으로
                
-            }
+            };
         } catch(err) {
             console.error('catch?', err)
-        }
-    }, 500)
+        };
+    }, 500);
 
 
     return (

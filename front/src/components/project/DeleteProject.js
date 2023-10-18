@@ -1,16 +1,13 @@
-import { useState, useEffect, useContext, Fragment, useRef } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProjectRequest from '../../reducers/ProjectRequest';
 import { ProjectContext } from '../../context/ProjectContext';
 import { UserContext } from '../../context/UserContext';
 import Button from '../common/form/Button';
-import { PiGearDuotone, PiSmileyXEyesDuotone, PiUsersDuotone, PiPencilSimpleSlashDuotone, PiUserPlusDuotone } from "react-icons/pi";
 import Input from '../common/form/Input';
-import './DeleteProject.css';
 import Spinners from '../common/spinners/Spinners';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
-
-
+import './DeleteProject.css';
 
 
 const DeleteProject = ({ projectDeleteRef }) => {
@@ -34,7 +31,7 @@ const DeleteProject = ({ projectDeleteRef }) => {
             navi('/');
             projectDeleteRef.current.popupClose();
         } catch(err) {
-            console.log(err)
+            console.log(err);
         };
     };
 

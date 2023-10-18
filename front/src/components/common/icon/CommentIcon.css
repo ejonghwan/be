@@ -2,8 +2,11 @@
     display: inline-flex;
     align-items: center;
     line-height: 1;
+    color: var(--text-color1);
+
 }
 
 .comment_ico > svg {
     margin-right: 5px;
 }
+

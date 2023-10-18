@@ -2,7 +2,7 @@
 import { Fragment } from 'react';
 import IconData from '../common/icon/IconData';
 import { changeViewDate } from '../../utils/utils';
-import { PiHandHeartDuotone, PiCrownDuotone, PiNoteDuotone, PiEyeClosedDuotone, PiUsersThreeDuotone, PiUserCirclePlusDuotone, PiHandEyeDuotone } from "react-icons/pi";
+import { PiHandHeartDuotone, PiCrownDuotone, PiUsersThreeDuotone } from "react-icons/pi";
 import Tags from '../common/tag/Tags';
 import { Link } from 'react-router-dom';
 import './ProjectItemsSquare.css';

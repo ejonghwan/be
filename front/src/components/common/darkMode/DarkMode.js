@@ -7,7 +7,6 @@ import UserRequest from '../../../reducers/UserRequest';
 
 
 const DarkMode = ({ className = '' }) => {
-
     const { state, dispatch } = useContext(UserContext);
     const { changeDarkmode } = UserRequest();
     const [thema, setThema] = useState(state.user.darkMode);

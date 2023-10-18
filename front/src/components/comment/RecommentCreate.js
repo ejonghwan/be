@@ -4,15 +4,16 @@ import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
-import './RecommentCreate.css'
 import Spinners from '../common/spinners/Spinners';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
+import './RecommentCreate.css'
+
 
 const RecommentCreate = ({ comment, setRecommentOpen, targetUser = null }) => {
 
     const { state } = useContext(UserContext);
     const [ submitContent, setSubmitContent ] = useState('');
-    const { WriteState, WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
+    const { WriteState, WriteDispatch } = useContext(WriteContext);
     const { createRecomment } = WriteRequest();
 
     const handleChangeContent = e => {

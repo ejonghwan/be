@@ -65,13 +65,13 @@ const CommentDetail = ({ className = '', idx, align = 'horizon', imgStyle, isId 
             })
             commentMoreRef.current.popupClose();
         } catch(err) {
-            console.log(err)
-        }
+            console.log(err);
+        };
     };
 
     const handleRecommentState = () => {
-        setRecommentOpen(true)
-    }
+        setRecommentOpen(true);
+    };
 
     useEffect(() => {
         contentHeightSplit();

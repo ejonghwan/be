@@ -65,9 +65,6 @@ const RoutesPage = () => {
                 </Routes>
             </Suspense>
 
-    
-
-            {/* <Route path='/write/list/user/:_id' element={!state.loadUserLoading && state.isLogged  ? <WriteDetail page={'글 모음'} /> : <Protected page={'글 모음'} />}></Route> */}
         </Layout>
     );
 };

@@ -1,4 +1,3 @@
-import Button from '../form/Button';
 import './IconVisual.css';
 
 const IconVisual = ({ icon }) => {

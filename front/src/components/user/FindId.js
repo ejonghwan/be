@@ -9,12 +9,11 @@ import { UserContext } from '../../context/UserContext.js';
 import { statusCode } from '../../utils/utils.js';
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
-import SuccessMsg from '../common/successMsg/SuccessMsg.js';
 import { HiOutlineAtSymbol } from "react-icons/hi2";
 import { PiRobotDuotone } from "react-icons/pi";
-import './FindId.css';
 import Spinners from '../common/spinners/Spinners.js';
 import CompleteMsg from '../common/complete/CompleteMsg.js';
+import './FindId.css';
 
 
 
@@ -37,25 +36,25 @@ const FindId = () => {
     }
     const authSubmit = _debounce(async() => {
         try {
-            dispatch({ type: "NON_USER_MAIL_AUTH_REQUEST" })
+            dispatch({ type: "NON_USER_MAIL_AUTH_REQUEST" });
             const number = await nonLoginMemberAuthNumberRequest({ name, email }); 
-            if(statusCode(number.status, 2)) return setAuthToggle(true) //성공 시 
+            if(statusCode(number.status, 2)) return setAuthToggle(true); //성공 시 
         } catch(err) {
-            console.error(err)
-        }
-    }, 1000)
+            console.error(err);
+        };
+    }, 1000);
 
 
     /* 아이디 찾기 서브밋 */
     const handleFindIdSubmit = async e => {
         e.preventDefault();
         findIdSubmit();
-    }
+    };
 
     const findIdSubmit = _debounce(async() => {
         try {
 
-            dispatch({ type: "USER_FIND_ID_REQUEST" })
+            dispatch({ type: "USER_FIND_ID_REQUEST" });
             const findId = await findUserId({ authNumber }); 
             // 여기선 쿠키 2개 보냄
             
@@ -65,19 +64,19 @@ const FindId = () => {
                 setEmail(''); 
                 setAutnNumber('');
                 setResMsg({id: findId.data.id, message: ''});
-            }
+            };
         } catch(err) {
-            console.error(err)
-        }
-    }, 1000)
+            console.error(err);
+        };
+    }, 1000);
 
 
     useEffect(() => {
         return () => {
-            authSubmit.cancel()
-            findIdSubmit.cancel()
-        }
-    }, [])
+            authSubmit.cancel();
+            findIdSubmit.cancel();
+        };
+    }, []);
 
 
     return (

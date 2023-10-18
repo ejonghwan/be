@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback, useContext, useMemo } from 'react';
-import { useSearchParams, useNavigate, useLocation, createBrowserHistory } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
-import Cookies from 'universal-cookie';
-import { useInput, useInputRadio } from '../components/common/hooks/index.js'
-import Input from '../components/common/form/Input.js'
-import Label from '../components/common/form/Label.js'
+// import Cookies from 'universal-cookie';
+import { useInput } from '../components/common/hooks/index.js';
+import Input from '../components/common/form/Input.js';
+import Label from '../components/common/form/Label.js';
 import UserRequest from '../reducers/UserRequest.js';
 import { UserContext } from '../context/UserContext.js';
-import { questionData, statusCode, passwordChecked, englishChecked, stringLengthChecked, onlyNumChecked } from '../utils/utils.js'
+import { questionData, statusCode, passwordChecked, englishChecked, stringLengthChecked, onlyNumChecked } from '../utils/utils.js';
 import SuccessMsg from '../components/common/successMsg/SuccessMsg.js';
 import ErrorMsg from '../components/common/errorMsg/ErrorMsg.js';
 import { HiOutlineChevronDown } from "react-icons/hi2";
@@ -37,53 +37,53 @@ import './signup.css';
 const Signup = ({ page }) => {
     
     const { signupUser } = UserRequest();
-    const { state, dispatch } = useContext(UserContext)
-    const cookies = new Cookies();
-    const successRoot = cookies.get('signup')
+    const { state, dispatch } = useContext(UserContext);
+    // const cookies = new Cookies();
+    // const successRoot = cookies.get('signup');
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const location = useLocation();
+    // const location = useLocation();
     const email = decodeURIComponent(searchParams.get('email'));
     const valid = decodeURIComponent(searchParams.get('valid'));
 
-    const [userId, handleUserId] = useInput('') 
-    const [userPassword, handlePassword] = useInput('') 
-    const [userPasswordCheck, handlePasswordCheck] = useInput('') 
+    const [userId, handleUserId] = useInput('');
+    const [userPassword, handlePassword] = useInput('');
+    const [userPasswordCheck, handlePasswordCheck] = useInput('');
     const [passwordIsChecked, setPasswordIsChecked] = useState(false);
     const [passwordProtected, setPasswordProtected] = useState(false);
     const [englishCheckedState, setEnglishCheckedState] = useState(false);
     // const [userEmail, handleUserEmail] = useInput('') 
-    const [userName, handleUserName] = useInput('') 
-    const [questionType, setQuestionType] = useState(null)
-    const [result, handleResult] = useInput('') 
-    const [terms, setTerms] = useState(false) ;
+    const [userName, handleUserName] = useInput('');
+    const [questionType, setQuestionType] = useState(null);
+    const [result, handleResult] = useInput('');
+    const [terms, setTerms] = useState(false);
     const [submitActive, setSubmitActive] = useState(false);
-    const [phoneNumber, handlePhoneNumber] = useInput('') 
-    const [phoneNumberLengthChecked, setPhoneNumberLengthChecked] = useState(false)
-    const [gender, handleGender] = useInput('남') 
-    const [birthday, handleBirthday] = useInput('')
-    const [birthdayLengthChecked, setBirthdayLengthChecked] = useState(false)
-    const [profileImage, setProfileImage] = useState(null)
+    const [phoneNumber, handlePhoneNumber] = useInput('');
+    const [phoneNumberLengthChecked, setPhoneNumberLengthChecked] = useState(false);
+    const [gender, handleGender] = useInput('남');
+    const [birthday, handleBirthday] = useInput('');
+    const [birthdayLengthChecked, setBirthdayLengthChecked] = useState(false);
+    const [profileImage, setProfileImage] = useState(null);
 
     const handleTerms = useCallback(e => {
         // setTerms({
         //     ...terms,
         //     [e.target.name]: e.target.checked
         // })
-        setTerms(e.target.checked)
-    }, [setTerms])
+        setTerms(e.target.checked);
+    }, [setTerms]);
 
 
     const handleQuestion = useCallback(e => {
-        setQuestionType(e.target.value)
-    }, [questionType, setQuestionType])
+        setQuestionType(e.target.value);
+    }, [questionType, setQuestionType]);
 
     
     // 요청
     const handleSubmit = e => {
         e.preventDefault();
         signup();
-    }
+    };
 
 
     const accData = [
@@ -100,7 +100,7 @@ const Signup = ({ page }) => {
             done: false,
            
         },
-    ]
+    ];
 
 
    
@@ -127,12 +127,12 @@ const Signup = ({ page }) => {
             const user = await signupUser(singupData);
 
             if(statusCode(user.status, 2)) {
-                alert('회원 가입이 완료되었습니다. 기존 페이지는 닫아주세요')
+                alert('회원 가입이 완료되었습니다. 기존 페이지는 닫아주세요');
                 // 로그인 페이지 만들면 로그인으로 
-                navigate('/login')
+                navigate('/login');
             };
         } catch(err) {
-            console.error('view ', err)
+            console.error('view ', err);
         };
     }, 500), [userId, userPassword, userName, passwordIsChecked, terms, questionType, result, phoneNumber, gender, birthday]);
 
@@ -155,52 +155,37 @@ const Signup = ({ page }) => {
 
 
     useEffect(() => { //비번 강화 체크 
-        userPassword && passwordChecked(userPassword) ? setPasswordProtected(true) : setPasswordProtected(false)
-    }, [userPassword])
+        userPassword && passwordChecked(userPassword) ? setPasswordProtected(true) : setPasswordProtected(false);
+    }, [userPassword]);
 
     useEffect(() => { //de 
-        userId && englishChecked(userId) ? setEnglishCheckedState(false) : setEnglishCheckedState(true)
-    }, [userId])
+        userId && englishChecked(userId) ? setEnglishCheckedState(false) : setEnglishCheckedState(true);
+    }, [userId]);
 
     useEffect(() => {
-        phoneNumber && onlyNumChecked(phoneNumber) ? setPhoneNumberLengthChecked(false) : setPhoneNumberLengthChecked(true)
-    }, [phoneNumber]) 
+        phoneNumber && onlyNumChecked(phoneNumber) ? setPhoneNumberLengthChecked(false) : setPhoneNumberLengthChecked(true);
+    }, [phoneNumber]);
 
     useEffect(() => {
-        birthday && stringLengthChecked(birthday, 8) ? setBirthdayLengthChecked(false) : setBirthdayLengthChecked(true)
-    }, [birthday]) 
+        birthday && stringLengthChecked(birthday, 8) ? setBirthdayLengthChecked(false) : setBirthdayLengthChecked(true);
+    }, [birthday]);
 
     useEffect(() => {
         userPassword && userPassword === userPasswordCheck ? setPasswordIsChecked(true) : setPasswordIsChecked(false);
-    }, [userPasswordCheck, userPassword])
+    }, [userPasswordCheck, userPassword]);
 
 
     useEffect(() => {
         if(userId && userPassword && userName && passwordIsChecked && terms && questionType && result && phoneNumber && gender && birthday && passwordProtected && !phoneNumberLengthChecked && !birthdayLengthChecked) {
-            setSubmitActive(true)
+            setSubmitActive(true);
         } else {
-            setSubmitActive(false)
+            setSubmitActive(false);
         };
-    }, [userId, userName, passwordIsChecked, terms, userPassword, userPasswordCheck, questionType, result, phoneNumber, gender, birthday, passwordProtected, phoneNumberLengthChecked, birthdayLengthChecked])
+    }, [userId, userName, passwordIsChecked, terms, userPassword, userPasswordCheck, questionType, result, phoneNumber, gender, birthday, passwordProtected, phoneNumberLengthChecked, birthdayLengthChecked]);
 
 
     return (
-        // id, password, email, name
-        // 이메일은 먼저 인증하고 시작함(임시로 홈에있음)
-
-        /*
-            비번 조건 
-            1. 8자 이상 14자 이하 
-            2. 1개 이상의 숫자 + 1개 이상의 특수문자 
-            3. 아뒤랑 같게 안됨 
-            4. 이메일이랑 같게 안됨 
-            5. 이름이랑 같게 안됨 
-
-            비번 수정 조건 
-            위에 + 
-            6. 이전비번이랑 동일한지 
-            
-        */
+    
         <div className='b_conts'>
             <h2>{page}</h2>
            

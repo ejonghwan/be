@@ -11,8 +11,8 @@ import UserRequest from '../reducers/UserRequest.js';
 import SkeletonItem from '../components/skeleton/SkeletonItem.js';
 import SkeletonCard from '../components/skeleton/SkeletonCard.js';
 import ProjectItemsSquare from '../components/project/ProjectItemsSquare.js';
-import './home.css';
 import Button from '../components/common/form/Button.js';
+import './home.css';
 
 
 
@@ -47,15 +47,12 @@ const Home = ({ page }) => {
     }, [state.isLogged]);
 
     useEffect(() => {
-
-        ProjectDispatch({ type: "PROJECT_RANK_LOAD_REQUEST" })
+        ProjectDispatch({ type: "PROJECT_RANK_LOAD_REQUEST" });
         loadRankProject({ pageNum: 1, limitNum: 10 });
-        ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_REQUEST" })
+        ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_REQUEST" });
         loadinstanceRankProject({ pageNum: 1, limitNum: 10 });
-
-
         return () => ProjectDispatch({ type: "RESET_PROJECTS" });
-    }, [])
+    }, []);
 
 
     

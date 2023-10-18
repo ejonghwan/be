@@ -29,8 +29,8 @@ const ImageUploadView = ({ path, setImageData, className = '', initailImageSrc =
             _id: state.user._id, 
             public: true, 
             path: path, 
-        })
-    }, [file])
+        });
+    }, [file]);
 
     return (
         <div className={`image_upload_wrap pos_image ${className}`}>

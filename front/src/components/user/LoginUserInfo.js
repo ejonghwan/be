@@ -10,7 +10,7 @@ import './LoginUserInfo.css';
 
 
 const LoginUserInfo = () => {
-    const { state } = useContext(UserContext)
+    const { state } = useContext(UserContext);
     const { name, profileImage } = state.user;
     const { menuOpen } = useGlobalState();
 

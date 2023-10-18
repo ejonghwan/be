@@ -2,9 +2,9 @@ import { Fragment, useContext } from 'react';
 import UserRequest from '../../reducers/UserRequest.js';
 import { UserContext } from '../../context/UserContext.js';
 import { useGlobalState } from '../../context/UiContext.js';
-import './LogoutForm.css';
 import Button from '../common/form/Button.js';
 import Spinners from '../common/spinners/Spinners.js';
+import './LogoutForm.css';
 
 
 
@@ -15,12 +15,12 @@ const LogoutForm = () => {
     
     const handleLogout = async () => {
       try {
-        dispatch({ type: "USER_LOGOUT_REQUEST"})
+        dispatch({ type: "USER_LOGOUT_REQUEST"});
         await logoutUser();
         setMenuOpen(false);
       } catch(err) {
-        console.log(err)
-      }
+        console.log(err);
+      };
     };
 
     return (

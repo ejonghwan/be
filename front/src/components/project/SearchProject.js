@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState, useCallback, memo, useEffect, useRef } from 'react';
+import { Fragment, useContext, useState, useCallback, memo, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
 import Search from '../common/form/Search';
@@ -6,7 +6,6 @@ import { PiSmileyXEyesDuotone, PiMagnifyingGlassDuotone, PiArrowSquareInDuotone 
 import SearchRequest from '../../reducers/SearchRequest';
 import { UserContext } from '../../context/UserContext';
 import { SearchContext } from '../../context/SearchContext';
-import { ProjectContext } from '../../context/ProjectContext';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
 import Spinners from '../common/spinners/Spinners';
 import NoData from '../common/notData/NoData';
@@ -20,7 +19,7 @@ const SearchProject = ({ searchProjectRef }) => {
     const { projectRelationSearch, recentSearchAdd, recentSearchdelete } = SearchRequest();
     const { state } = useContext(UserContext);
     const { SearchState, SearchState: { recentText, relationSearch }, SearchDispatch } = useContext(SearchContext);
-    const { ProjectState, ProjectState: { project } } = useContext(ProjectContext);
+    // const { ProjectState: { project } } = useContext(ProjectContext);
     const navigate = useNavigate();
 
     const [searchValue, setSearchValue] = useState(''); // 인풋값
@@ -30,23 +29,23 @@ const SearchProject = ({ searchProjectRef }) => {
 
     // 검색 관련 이벤트a
     const handleSearchCange = e => {
-        setSearchValue(e.target.value)
-        handleSearchProjects(e.target.value) 
+        setSearchValue(e.target.value);
+        handleSearchProjects(e.target.value);
         //그리고 useCallback 안에서는 state를 구독하지 않기 때문에 변화 값을 인자로 넘겨줘야함 
-    }
+    };
 
     // 연관 검색
     const handleSearchProjects = useCallback(_debounce(async (searchText) => {
         try {
             if(searchText === '') return setIsSearchResult(false);
-            SearchDispatch({ type: "PROJECT_SEARCH_RELATION_REQUEST" })
+            SearchDispatch({ type: "PROJECT_SEARCH_RELATION_REQUEST" });
             await projectRelationSearch(searchText);
             SearchValueRef.current = searchText;
           } catch(err) {
-            console.err(err)
-          }
-        setIsSearchResult(true)
-    }, 500), [])
+            console.err(err);
+          };
+        setIsSearchResult(true);
+    }, 500), []);
 
      // 엑스버튼
      const handleResetSearchValue = () => {
@@ -66,8 +65,8 @@ const SearchProject = ({ searchProjectRef }) => {
         };
 
         if(searchTextmatched) { // 같은게 있다면 기존 검색어는 remove 후 다시 추가. 동기적으로 
-            SearchDispatch({ type: "RECENT_SEARCH_DELETE_REQUEST" })
-            await recentSearchdelete({ userId: state.user._id, searchText: isResentValue })
+            SearchDispatch({ type: "RECENT_SEARCH_DELETE_REQUEST" });
+            await recentSearchdelete({ userId: state.user._id, searchText: isResentValue });
         };
 
         SearchDispatch({ type: "RECENT_SEARCH_ADD_REQUEST" });
@@ -78,14 +77,14 @@ const SearchProject = ({ searchProjectRef }) => {
     };
 
     const handleSearchTextChange = (title) => {
-        setSearchValue(title)
-    } 
+        setSearchValue(title);
+    };
 
     const handleSearchKeyUp = e => {
         if(e.key === 'Enter') {
             handleSearchSubmit();
-        }
-    }
+        };
+    };
 
   
     return (

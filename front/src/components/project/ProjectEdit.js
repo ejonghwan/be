@@ -14,11 +14,11 @@ import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
 import UserThumItem from '../common/userThum/UserThumItem';
 import ProjectRequest from '../../reducers/ProjectRequest';
-import './ProjectEdit.css';
 import ViewDate from '../common/date/ViewDate';
 import { changeViewDate } from '../../utils/utils';
 import Spinners from '../common/spinners/Spinners';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
+import './ProjectEdit.css';
 
 
 const ProjectEdit = ({ editRef }) => {
@@ -45,7 +45,7 @@ const ProjectEdit = ({ editRef }) => {
     const handleValuesChange = e => {
         const {name, value} = e.target;
         setSubmitData({...submitData, [name]: value});
-    }
+    };
 
     const handleIconClick = idx => {
         setProjectImages(idx);
@@ -56,13 +56,13 @@ const ProjectEdit = ({ editRef }) => {
     const handleCategoryClick = useCallback(() => {
         let categoryResult = categoryValue.replace(/ /g,"").split('#').filter(item => {
             return item !== null && item !== undefined && item !== '';
-           })
+           });
         
         let equalsFillter = categoryResult.filter((el, idx) => categoryResult?.indexOf(el) === idx); //같은거 삭제
         let inCategoryName = [];
         for(let i = 0; i < equalsFillter.length; i++) {
             inCategoryName.push({ categoryName: equalsFillter[i] });
-        }
+        };
 
         let allCategory = [...submitData.categorys, ...existCategorys, ...inCategoryName];
         let allCategoryEqualsFilter = allCategory.reduce((acc, cur) => acc.find(item => item.categoryName === cur.categoryName) ? acc : [...acc, cur], []);
@@ -101,8 +101,8 @@ const ProjectEdit = ({ editRef }) => {
             editRef.current.popupClose();
         } catch(err) {
             console.log(err);
-        }
-    } 
+        };
+    };
 
     useEffect(() => {
         setProjectImages(project.projectImages);

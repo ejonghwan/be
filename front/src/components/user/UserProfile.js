@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback, useContext, useRef } from 'react';
+import { Fragment, useState, useEffect, useCallback, useContext } from 'react';
 import _debounce from 'lodash.debounce';
 import { useInput } from '../common/hooks/index.js';
 import Input from '../common/form/Input.js';
@@ -8,13 +8,11 @@ import ProfileImageEdit from '../user/ProfileImageEdit.js'
 import UserRequest from '../../reducers/UserRequest.js';
 import { UserContext } from '../../context/UserContext.js';
 import { stringLengthChecked, statusCode, onlyNumChecked, changeViewDate  } from '../../utils/utils.js';
-import './UserProfile.css';
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import { PiBabyDuotone } from "react-icons/pi";
 import Spinners from '../common/spinners/Spinners.js';
-
-
+import './UserProfile.css';
 
 
 const UserProfile = () => {
@@ -24,11 +22,11 @@ const UserProfile = () => {
     const [editEmailState, setEditEmailState] = useState(false);
     const [editEmailAuthState, setEditEmailAuthState] = useState(false);
    
-    const [userName, handleUserName, setUserName] = useInput(state.user.name) ;
-    const [userGender, handleUserGender, setUserGender] = useInput(state.user.gender) ;
+    const [userName, handleUserName, setUserName] = useInput(state.user.name);
+    const [userGender, handleUserGender, setUserGender] = useInput(state.user.gender);
     const [userBirthday, handleUserBirthday, setUserBirthday] = useInput(state.user.birthday);
     const [birthdayLengthChecked, setBirthdayLengthChecked] = useState(false)
-    const [userPhoneNumber, handleUserPhoneNumber] = useInput(state.user.phoneNumber) ;
+    const [userPhoneNumber, handleUserPhoneNumber] = useInput(state.user.phoneNumber);
     const [phoneNumberLengthChecked, setPhoneNumberLengthChecked] = useState(false)
     const [userEmail, handleUserEmail, setUserEmail] = useInput(state.user.email);
     const [authNumber, handleAuthNumber, setAuthNumber] = useInput('');
@@ -52,45 +50,42 @@ const UserProfile = () => {
     }, [editUserInfoState, editEmailState, editEmailAuthState, setUserEmail]);
 
 
-
     // 이메일 수정 인증번호 요청 
     const handleEmailAuth = e => {
         e.preventDefault();
-        dispatch({ type: "AUTH_NUMBER_REQUEST" })
+        dispatch({ type: "AUTH_NUMBER_REQUEST" });
         emailAuth();
     };
     const emailAuth = _debounce(async e => {
         try {
-            dispatch({ type: "USER_MAIL_AUTH_REQUEST" })
+            dispatch({ type: "USER_MAIL_AUTH_REQUEST" });
             const res = await memberAuthNumberRequest({ email: userEmail, _id: state.user._id });
             if(statusCode(res.status, 2)) { setEditEmailAuthState(true); }
         } catch(err) {
             console.error(err);
-
         };
-    }, 500)
+    }, 500);
 
 
     // 이메일 수정 요청  
     const handleEmailEdit = e => {
         e.preventDefault();
         emailEdit();
-    }
+    };
     const emailEdit = _debounce(async () => {
         try {
-            
-            dispatch({ type: "USER_MAIL_EDIT_REQUEST" })
+            dispatch({ type: "USER_MAIL_EDIT_REQUEST" });
             const res = await emailEditUser({ email: userEmail, _id: state.user._id, authNumber: authNumber })
             if(statusCode(res.status, 2)) {
                 setEditEmailState(!editEmailState);
                 setEditEmailAuthState(!editEmailAuthState);
-                setAuthNumber('')
-                alert(`이메일이 ${userEmail}으로 변경되었습니다!`)
-            }
+                setAuthNumber('');
+                alert(`이메일이 ${userEmail}으로 변경되었습니다!`);
+            };
         } catch(err) {
             console.error(err);
-        }
-    }, 500)
+        };
+    }, 500);
 
     
     // 회원정보 수정 요청
@@ -106,29 +101,26 @@ const UserProfile = () => {
                 birthday: userBirthday,
                 phoneNumber: userPhoneNumber,
                 _id: state.user._id
-            }
-            dispatch({ type: "USER_INFO_EDIT_REQUEST" })
+            };
+            dispatch({ type: "USER_INFO_EDIT_REQUEST" });
             await userInfoEditUser(userInfo);
             setEditUserInfoState(!editUserInfoState);
             alert('정보가 변경되었습니다.')
         } catch(err) {
             console.error(err);
         };
-    }, 500)
+    }, 500);
 
 
     useEffect(() => {
-        userPhoneNumber && onlyNumChecked(userPhoneNumber) ? setPhoneNumberLengthChecked(false) : setPhoneNumberLengthChecked(true)
+        userPhoneNumber && onlyNumChecked(userPhoneNumber) ? setPhoneNumberLengthChecked(false) : setPhoneNumberLengthChecked(true);
     }, [userPhoneNumber]);
 
     useEffect(() => {
-        userBirthday && stringLengthChecked(userBirthday, 8) ? setBirthdayLengthChecked(false) : setBirthdayLengthChecked(true)
+        userBirthday && stringLengthChecked(userBirthday, 8) ? setBirthdayLengthChecked(false) : setBirthdayLengthChecked(true);
     }, [userBirthday]);
 
    
-
-
-    
 
     return (
         <div className='form_wrap'>

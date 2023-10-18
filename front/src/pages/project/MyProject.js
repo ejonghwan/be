@@ -29,11 +29,11 @@ const MyProject = ({ page }) => {
     useEffect(() => {
         state.isLogged && handleLoadApplyProject();
         state.isLogged && handleLoadMyProject();
-    }, [state.loadUserDone, state.isLogged])
+    }, [state.loadUserDone, state.isLogged]);
 
     useEffect(() => {
         return () => ProjectDispatch({ type: "RESET_PROJECTS" });
-    }, [])
+    }, []);
 
 
     return (
@@ -42,7 +42,7 @@ const MyProject = ({ page }) => {
                 <h2 className='gap_0'>{page}</h2>
             </div>
 
-            <div className='b_conts full bg_gray'>
+            <div className='b_conts full bg_gray h_100'>
                 {ProjectState.loadMyProjectLoading ? (
                     <div className='b_conts pd_0'>
                         <h3 className='h3_title gap_20'>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, memo, useRef, Fragment } from 'react';
+import { useEffect, useMemo, memo, useRef } from 'react';
 import { format } from 'date-fns';
 import './DaysPanel.css';
 
@@ -44,8 +44,8 @@ const DaysPanel = ({ className = '', userDays = [] }) => {
 
     useEffect(() => {
       const { current } = overviewwrapRef;
-      current.scrollTo(current.clientWidth, 0)
-    }, [])
+      current.scrollTo(current.clientWidth + 500, 0);
+    }, []);
 
     return (
         <div className={`overview_wrap ${className}`} ref={overviewwrapRef}>

@@ -1,7 +1,5 @@
-
 import React, { useState, useEffect, useRef, memo } from 'react';
 import { format } from 'date-fns';
-
 import { Virtual, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Button from '../common/form/Button';

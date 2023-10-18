@@ -4,33 +4,33 @@ import SearchRequest from '../../reducers/SearchRequest';
 import { UserContext } from '../../context/UserContext';
 import Spinners from '../common/spinners/Spinners';
 import Button from '../common/form/Button';
-import { PiClockCountdownThin, PiClockCountdownDuotone  } from "react-icons/pi";
+import { PiClockCountdownDuotone  } from "react-icons/pi";
 import { Link } from 'react-router-dom';
 import './SearchRecent.css';
 
 const SearchRecent = ({ handleSearchSubmit }) => {
 
     const { state } = useContext(UserContext);
-    const {SearchState, SearchState: { recentText }, SearchDispatch} = useContext(SearchContext);
+    const { SearchState, SearchState: { recentText }, SearchDispatch } = useContext(SearchContext);
     const { recentSearch, recentSearchdelete, recentSearchDeleteAll } = SearchRequest();
 
 
     const handleLoadRecentSearch = () => {
-        SearchDispatch({ type: "RECENT_SEARCH_LOAD_REQUEST" })
+        SearchDispatch({ type: "RECENT_SEARCH_LOAD_REQUEST" });
         recentSearch(state.user._id);
-    }   
+    };
 
     const handleDeleteRecentSearch = (searchText) => {
-        SearchDispatch({ type: "RECENT_SEARCH_DELETE_REQUEST" })
-        recentSearchdelete({ userId: state.user._id, searchText: searchText })
-    }
+        SearchDispatch({ type: "RECENT_SEARCH_DELETE_REQUEST" });
+        recentSearchdelete({ userId: state.user._id, searchText: searchText });
+    };
 
     const handleRecentSearchDeleteAll = () => {
-        SearchDispatch({ type: "RECENT_SEARCH_ALLDELETE_REQUEST" })
-        recentSearchDeleteAll({ userId: state.user._id })
-    }
+        SearchDispatch({ type: "RECENT_SEARCH_ALLDELETE_REQUEST" });
+        recentSearchDeleteAll({ userId: state.user._id });
+    };
 
-    useEffect(() => handleLoadRecentSearch(), [])
+    useEffect(() => handleLoadRecentSearch(), []);
 
 
 

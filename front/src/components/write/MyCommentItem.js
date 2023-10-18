@@ -1,6 +1,5 @@
 import { Fragment, useContext, useState } from 'react';
 import { Link } from 'react-router-dom'; 
-import { PiHeartDuotone, PiChatTeardropDotsDuotone } from "react-icons/pi";
 import { changeViewDate } from '../../utils/utils';
 import IconData from '../common/icon/IconData';
 import Button from '../common/form/Button';
@@ -10,7 +9,7 @@ import Spinners from '../common/spinners/Spinners';
 import './MyCommentItem.css';
 
 
-const MyCommentItem = ({ comments = [], isProjectName = false }) => {
+const MyCommentItem = ({ comments = [] }) => {
 
     const { deleteMyComment } = WriteRequest();
     const { WriteState, WriteDispatch } = useContext(WriteContext);
@@ -18,17 +17,17 @@ const MyCommentItem = ({ comments = [], isProjectName = false }) => {
 
     const handleDeleteComment = async (comment) => {
         try {
-            setSelectComment(comment._id)
-            WriteDispatch({ type: "MYCOMMENTS_DELETE_REQUEST" })
+            setSelectComment(comment._id);
+            WriteDispatch({ type: "MYCOMMENTS_DELETE_REQUEST" });
             await deleteMyComment({
                 userId: comment.user._id,
                 writeId: comment.writeId._id,
                 commentId: comment._id
-            })
+            });
         } catch(err) {
-            console.log(err)
-        }
-    } 
+            console.log(err);
+        };
+    };
 
    
 

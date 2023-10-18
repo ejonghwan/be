@@ -1,9 +1,8 @@
-import React, { Fragment, useState, memo, useCallback, useEffect, useRef } from 'react'
+import { useState, memo, useCallback, useEffect, useRef } from 'react'
 import { Virtual, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { format, addMonths, subMonths } from 'date-fns';
-import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
-import { isSameMonth, isSameDay, addDays, parse } from 'date-fns';
+// import { format, addMonths, subMonths } from 'date-fns';
+import { startOfMonth, endOfMonth} from 'date-fns';
 import WriteListItem from '../write/WriteListItem';
 import NoData from '../common/notData/NoData';
 import { PiSmileyXEyesDuotone } from "react-icons/pi";
@@ -13,7 +12,7 @@ import Button from '../common/form/Button';
 
 
 
-const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, slideState, className = '' }) => {
+const CalenderReview = ({ project, prevDay, nextDay, onDateClick, currentMonth, className = '' }) => {
 
     /* 
         다음에 보면 까먹을까봐 정리

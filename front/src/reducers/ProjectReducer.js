@@ -70,7 +70,7 @@ export const ProjectIntialState = {
     insrankMaxCount: '',
     project: {},
     
-}
+};
 
 
 const ProjectReducer = (state = ProjectIntialState, action) => {

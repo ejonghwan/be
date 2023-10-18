@@ -1,16 +1,15 @@
-import React, { Fragment, useCallback, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import WriteListItem from '../../components/write/WriteListItem';
 import { WriteContext } from '../../context/WriteContext';
 import { UserContext } from '../../context/UserContext';
 import WriteRequest from '../../reducers/WriteRequest';
 import Button from '../../components/common/form/Button';
-import './MyWritesList.css';
 import NoData from '../../components/common/notData/NoData';
 import { PiFileXDuotone } from "react-icons/pi";
 import Spinners from '../../components/common/spinners/Spinners';
-import SkeletonCard from '../../components/skeleton/SkeletonCard';
 import SkeletonItem from '../../components/skeleton/SkeletonItem';
 import SkeletonWriteCard from '../../components/skeleton/SkeletonWriteCard';
+import './MyWritesList.css';
 
 const WritesList = ({ page }) => {
 
@@ -21,22 +20,22 @@ const WritesList = ({ page }) => {
     const [ moreBtnHide, setMoreBtnHide ] = useState(false);
 
     const handleWritePageup =() => {
-        setWritePage(prev => prev += 1)
-    }
+        setWritePage(prev => prev += 1);
+    };
 
     const handleLoadMyWrites = async () => {
         WriteDispatch({ type: "MYWRITES_LOAD_REQUEST" });
         const res = await loadMyWrites({ userId: state.user._id, page: writePage });
         res.length < 10 && setMoreBtnHide(true);
-    }
+    };
 
     useEffect(() => {
         handleLoadMyWrites();
-    }, [writePage])
+    }, [writePage]);
 
     useEffect(() => {
-        return () => WriteDispatch({ type: "MYWRITES_CLEAR_REQUEST" })
-    }, [])
+        return () => WriteDispatch({ type: "MYWRITES_CLEAR_REQUEST" });
+    }, []);
 
 
     return (

@@ -1,12 +1,12 @@
-import React, { useEffect, Fragment, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import _debounce from 'lodash.debounce';
 import { useNavigate } from 'react-router-dom';
-import { useInput } from '../common/hooks/index.js'
-import { statusCode } from '../../utils/utils.js'
-import Input from '../common/form/Input.js'
-import Label from '../common/form/Label.js'
-import { UserContext } from '../../context/UserContext.js'
-import UserRequest from '../../reducers/UserRequest.js'
+import { useInput } from '../common/hooks/index.js';
+import { statusCode } from '../../utils/utils.js';
+import Input from '../common/form/Input.js';
+import Label from '../common/form/Label.js';
+import { UserContext } from '../../context/UserContext.js';
+import UserRequest from '../../reducers/UserRequest.js';
 import Button from '../common/form/Button.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
 import { PiSignOutDuotone } from "react-icons/pi";
@@ -41,7 +41,7 @@ const Secession = () => {
         };
     }, 500);
 
-    useEffect(() => () => submit.cancel(), [submit])
+    useEffect(() => () => submit.cancel(), [submit]);
 
     return (
         <div className='form_wrap gapt_50'>

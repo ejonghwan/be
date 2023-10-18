@@ -1,6 +1,6 @@
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import LoadProject from '../../components/project/LoadProject';
-import { useContext } from 'react';
 import { ProjectContext } from '../../context/ProjectContext';
 // import SkeletonProject from '../../components/skeleton/SkeletonProject';
 import Spinners from '../../components/common/spinners/Spinners';

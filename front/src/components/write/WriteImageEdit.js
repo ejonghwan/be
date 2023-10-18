@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect, memo } from 'react'
+import { useState, useContext, useEffect, memo } from 'react'
 import { HiOutlineCamera, HiOutlineXMark } from "react-icons/hi2";
-import ImageUploadForm from '../image/ImageUploadForm.js' 
+import ImageUploadForm from '../image/ImageUploadForm.js';
 import { UserContext } from '../../context/UserContext.js';
 import Button from '../common/form/Button.js';
 import './WriteImageEdit.css'
@@ -11,10 +11,10 @@ const WriteImageEdit = () => {
     const [profileEdit, setProfileEdit] = useState(false);
     const [uploadState, setUploadState] = useState(false);
 
-    const handleProfileImageEdit = () => setProfileEdit(!profileEdit)
+    const handleProfileImageEdit = () => setProfileEdit(!profileEdit);
     useEffect(() => {
-        if(uploadState) { setProfileEdit(!profileEdit) }
-    }, [state, uploadState])
+        if(uploadState) { setProfileEdit(!profileEdit) };
+    }, [state, uploadState]);
     
 
     return (

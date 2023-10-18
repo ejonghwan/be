@@ -1,8 +1,7 @@
-import { Fragment, useContext, useEffect } from 'react';
+import { Fragment, useContext } from 'react';
 import CommentCreate from './CommentCreate';
 import { WriteContext } from '../../context/WriteContext';
 import CommentDetail from './CommentDetail';
-import './Comment.css';
 
 const Comment = ({ comments = [] }) => {
 

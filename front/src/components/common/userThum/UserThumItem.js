@@ -2,19 +2,19 @@ import { Fragment, useRef, useState } from 'react';
 import { changeViewDate } from '../../../utils/utils';
 import Button from '../form/Button';
 import Popup from '../popup/Popup';
-import './UserThum.css';
 import NotProfileImg from '../../user/NotProfileImg';
+import './UserThum.css';
 
 
 const UserThumItem = ({ users = [], className = '', isText, /*isButton = false, buttonName buttonType, onClick*/ buttons = [], align = 'horizon', imgStyle, isId = true}) => {
 
-    const [selectIdx, setSelectIdx] = useState(0)
+    const [selectIdx, setSelectIdx] = useState(0);
     const userInfoRef = useRef(null);
     
     const handleIndex = idx => {
         setSelectIdx(idx);
         userInfoRef.current.popupOpen();
-    }
+    };
 
     return (
         <Fragment>

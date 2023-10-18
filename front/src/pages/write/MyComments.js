@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import MyCommentItem from '../../components/write/MyCommentItem';
 import { WriteContext } from '../../context/WriteContext';
 import { UserContext } from '../../context/UserContext';
@@ -7,8 +7,8 @@ import Button from '../../components/common/form/Button';
 import NoData from '../../components/common/notData/NoData';
 import { PiFileXDuotone } from "react-icons/pi";
 import Spinners from '../../components/common/spinners/Spinners';
-import './MyComments.css';
 import SkeletonComment from '../../components/skeleton/SkeletonComment';
+import './MyComments.css';
 
 
 
@@ -21,22 +21,22 @@ const MyComments = ({ page }) => {
     const [ moreBtnHide, setMoreBtnHide ] = useState(false);
 
     const handleWritePageup =() => {
-        setCommentPage(prev => prev += 1)
-    }
+        setCommentPage(prev => prev += 1);
+    };
 
     const handleLoadMyComments = async () => {
         WriteDispatch({ type: "MYCOMMENTS_LOAD_REQUEST" });
         const res = await loadMyComments({ userId: state.user._id, page: commentPage });
         res.length < 10 && setMoreBtnHide(true);
-    }
+    };
 
     useEffect(() => {
         handleLoadMyComments();
-    }, [commentPage])
+    }, [commentPage]);
 
     useEffect(() => {
-        return () => WriteDispatch({ type: "MYCOMMENTS_CLEAR_REQUEST" })
-    }, [])
+        return () => WriteDispatch({ type: "MYCOMMENTS_CLEAR_REQUEST" });
+    }, []);
 
 
     return (

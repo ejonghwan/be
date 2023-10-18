@@ -1,12 +1,12 @@
-import React, { Fragment, useState, useEffect, useCallback, useContext, useMemo } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import _debounce from 'lodash.debounce';
-import { useInput } from '../common/hooks/index.js'
-import Input from '../common/form/Input.js'
-import Label from '../common/form/Label.js'
-import UserRequest from '../../reducers/UserRequest.js'
-import { UserContext } from '../../context/UserContext.js'
-import { statusCode, passwordChecked } from '../../utils/utils.js'
+import { useInput } from '../common/hooks/index.js';
+import Input from '../common/form/Input.js';
+import Label from '../common/form/Label.js';
+import UserRequest from '../../reducers/UserRequest.js';
+import { UserContext } from '../../context/UserContext.js';
+import { statusCode, passwordChecked } from '../../utils/utils.js';
 import { HiOutlineShieldExclamation } from "react-icons/hi2";
 import SuccessMsg from '../common/successMsg/SuccessMsg.js';
 import ErrorMsg from '../common/errorMsg/ErrorMsg.js';
@@ -19,10 +19,10 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     const { state, dispatch } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const [prevPassword, handlePrevPassword, setPrevPassword] = useInput('') 
-    const [newPassword, handleNewPassword, setNewPassword] = useInput('') 
-    const [newPasswordCheck, handleNewPasswordCheck, setNewPasswordCheck] = useInput('') 
-    const [passwordIsChecked, setPasswordIsChecked] = useState(false) 
+    const [prevPassword, handlePrevPassword, setPrevPassword] = useInput('');
+    const [newPassword, handleNewPassword, setNewPassword] = useInput('');
+    const [newPasswordCheck, handleNewPasswordCheck, setNewPasswordCheck] = useInput('');
+    const [passwordIsChecked, setPasswordIsChecked] = useState(false);
     
     // 유효성 검사
     const [passwordProtected, setPasswordProtected] = useState(null);
@@ -43,14 +43,14 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
     const handlePasswordEditSubmit = useCallback(async e => {
         e.preventDefault();
         prevPasswordCheck ? prevPasswordEdit() : newPasswordEdit();
-    }, [prevPasswordCheck, prevPassword, newPassword, state, passwordIsChecked])
+    }, [prevPasswordCheck, prevPassword, newPassword, state, passwordIsChecked]);
 
 
     // 기존 비번 바꾸기
     const prevPasswordEdit = _debounce(async() => {
         try {   
             if(!prevPassword || !newPassword || !state.user || !passwordIsChecked) throw new Error('정보 확인해주세요');
-            dispatch({ type: "USER_PASSWORD_EDIT_REQUEST" })
+            dispatch({ type: "USER_PASSWORD_EDIT_REQUEST" });
             console.log('view', state.user._id)
             const user = await prevPasswordEditUser({
                 prevPassword, 
@@ -59,18 +59,18 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
                 _id: state.user?._id
             });
             if(statusCode(user.status, 2)) { // 성공시
-                setPrevPassword('')
-                setNewPassword('')
-                setNewPasswordCheck('')
-                alert('비밀번호가 변경 되었습니다. 다시 로그인해주세요.')
-                logoutUser()
-                navigate('/login')
+                setPrevPassword('');
+                setNewPassword('');
+                setNewPasswordCheck('');
+                alert('비밀번호가 변경 되었습니다. 다시 로그인해주세요.');
+                logoutUser();
+                navigate('/login');
                 return;
             }
         } catch(err) {
-            console.error(err)
-        }
-    }, 500)
+            console.error(err);
+        };
+    }, 500);
 
 
     // 비번 찾기
@@ -86,30 +86,30 @@ const UserPasswordEdit = ({ prevPasswordCheck, userId  }) => {
             if(user.data.matched) return setPrevPasswordMatched(true);
             if(statusCode(user.status, 2)) { // 성공시
                 // 완료되면 로그인페이지로 
-                setNewPassword('')
-                setNewPasswordCheck('')
-                alert('비밀번호가 새로 설정되었습니다')
-                navigate('/')
+                setNewPassword('');
+                setNewPasswordCheck('');
+                alert('비밀번호가 새로 설정되었습니다');
+                navigate('/');
             }
 
         } catch(err) {
-            dispatch({ type: "USER_PASSWORD_EDIT_FAILUE", data: err.err })
-            console.error(err)
-        }
-    }, 500)
+            dispatch({ type: "USER_PASSWORD_EDIT_FAILUE", data: err.err });
+            console.error(err);
+        };
+    }, 500);
 
     useEffect(() => {
         passwordChecked(newPassword) === true ? setPasswordProtected(true) : setPasswordProtected(false);
         prevPassword && prevPassword === newPassword ? setPrevPasswordMatched(true) : setPrevPasswordMatched(false);
-    }, [prevPassword, newPassword])
+    }, [prevPassword, newPassword]);
 
 
     useEffect(() => {
         return () => {
             prevPasswordEdit.cancel();
             newPasswordEdit.cancel();
-        }
-    }, [])
+        };
+    }, []);
 
 
     return (

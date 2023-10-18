@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useCallback, memo } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../common/form/Input';
 import Label from '../common/form/Label';
@@ -9,10 +9,10 @@ import _debounce from 'lodash.debounce';
 import ImageUploadView from '../image/ImageUploadView';
 import useImageRequest from '../../reducers/ImageRequest.js';
 import WriteRequest from '../../reducers/WriteRequest';
-import './WriteUpload.css';
 import { ProjectContext } from '../../context/ProjectContext';
 import Spinners from '../common/spinners/Spinners';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
+import './WriteUpload.css';
 
 
 
@@ -37,22 +37,22 @@ const WriteUpload = ({ projectId, projectAuthRef }) => {
 
     const handleValuesChange = e => {
         const {name, value} = e.target;
-        setWriteSubmitData({...writeSubmitData, [name]: value})
-    }
+        setWriteSubmitData({...writeSubmitData, [name]: value});
+    };
 
     const handleCreateWriteSubmit = async(e) => {
         try {
             e.preventDefault();
-            ProjectDispatch({ type: "WRITE_CREATE_REQUEST" })
+            ProjectDispatch({ type: "WRITE_CREATE_REQUEST" });
             const res = await createWrite(writeSubmitData) // 글 보내기
              // 이미지가 있으면 올리고 없으면 올리지 않음. 동기적으로 글 생성 후 그 아이디 받아서 다시 요청
-            if( imageData.file ) { await imageUpload({ ...imageData, _id: res._id }); }
-            projectAuthRef.current.popupClose()
-            navigate(`/write/detail/${res._id}`)
+            if( imageData.file ) { await imageUpload({ ...imageData, _id: res._id }); };
+            projectAuthRef.current.popupClose();
+            navigate(`/write/detail/${res._id}`);
         } catch(err) {
-            console.error(err)      
-        }
-    }
+            console.error(err);
+        };
+    };
 
     return (
         <div className='write_detail_wrap'>

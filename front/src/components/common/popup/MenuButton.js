@@ -8,15 +8,15 @@ const PopupButton = ({ children, className }) => {
     const { menuOpen, setMenuOpen } = useGlobalState();
     
     const handlePopOpen = useCallback(e => {
-      if(e.target.closest(`.menu.button_type3`)) setMenuOpen(true)
-      if(!e.target.closest('#menu') && menuOpen) setMenuOpen(false)
-      if(e.target.closest(`#menu .list`) && menuOpen) setMenuOpen(false)
-    }, [menuOpen, setMenuOpen])
+      if(e.target.closest(`.menu.button_type3`)) setMenuOpen(true);
+      if(!e.target.closest('#menu') && menuOpen) setMenuOpen(false);
+      if(e.target.closest(`#menu .list`) && menuOpen) setMenuOpen(false);
+    }, [menuOpen, setMenuOpen]);
 
       useEffect(() => {
-        window.addEventListener('click', handlePopOpen)
-        return () => window.removeEventListener('click', handlePopOpen)
-      }, [handlePopOpen])
+        window.addEventListener('click', handlePopOpen);
+        return () => window.removeEventListener('click', handlePopOpen);
+      }, [handlePopOpen]);
       
 
     return (

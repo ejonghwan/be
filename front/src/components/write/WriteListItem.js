@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'; 
-import { PiHeartDuotone, PiChatTeardropDotsDuotone, PiHandHeartDuotone } from "react-icons/pi";
+import { PiChatTeardropDotsDuotone, PiHandHeartDuotone } from "react-icons/pi";
 import { changeViewDate } from '../../utils/utils';
-import './WriteListItem.css';
 import NotProfileImg from '../user/NotProfileImg';
+import './WriteListItem.css';
 
 const WriteListItem = ({ writes, isProjectName = false }) => {
     return (

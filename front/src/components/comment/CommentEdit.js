@@ -4,14 +4,15 @@ import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 import WriteRequest from '../../reducers/WriteRequest';
 import { WriteContext } from '../../context/WriteContext';
-import './CommentEdit.css';
 import Spinners from '../common/spinners/Spinners';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
+import './CommentEdit.css';
+
 
 const CommentEdit = ({ comment, setEditOpen }) => {
    
     const { state } = useContext(UserContext);
-    const { WriteState, WriteState: { writes }, WriteDispatch } = useContext(WriteContext);
+    const { WriteState, WriteDispatch } = useContext(WriteContext);
     const [ submitEditContent, setSubmitEditContent ] = useState(comment.content);
     const { editComment } = WriteRequest();
 
@@ -30,7 +31,7 @@ const CommentEdit = ({ comment, setEditOpen }) => {
             await editComment({
                 commentId: comment._id,
                 content: submitEditContent,
-            })
+            });
             setSubmitEditContent('');
             setEditOpen(false);
         } catch(err) {

@@ -183,6 +183,7 @@ body.popup_active {
     padding-right: 7px;
 }
 
+
 #wrap {
     display: flex;
     width: 100%;
@@ -294,7 +295,7 @@ h1 {
 
 h2 {
     font-size: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     font-weight: 500;
 }
 

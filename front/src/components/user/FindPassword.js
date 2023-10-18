@@ -36,14 +36,14 @@ const FindPassword = () => {
         const handleAuthNumberSubmit = e => {
             e.preventDefault();
             authSubmit();
-        }
+        };
         const authSubmit = _debounce(async() => {
             try {
                 dispatch({ type: "NON_USER_MAIL_AUTH_REQUEST" });
                 const number = await nonLoginMemberAuthNumberRequest({ name, email }); 
                 if(statusCode(number.status, 2)) { //성공 시 
                     setAuthToggle(true); 
-                }
+                };
             } catch(err) {
                 console.error(err);
             };
@@ -67,7 +67,7 @@ const FindPassword = () => {
                     setName('');
                     setEmail(''); 
                     setAutnNumber('');
-                    setAuthcom(true)
+                    setAuthcom(true);
                     setResMsg(findId.data.id) //이거 제대로 넘겨줘야...
                 };
             } catch(err) {

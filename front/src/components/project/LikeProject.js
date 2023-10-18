@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect, useCallback, Fragment, memo, useRef } from 'react';
-import { PiStarDuotone, PiHeartDuotone } from "react-icons/pi";
+import { PiHeartDuotone } from "react-icons/pi";
 import { UserContext } from '../../context/UserContext';
 import { ProjectContext } from '../../context/ProjectContext';
 import UserRequest from '../../reducers/UserRequest';
@@ -13,29 +13,29 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
     const { projectLike, projectUnlike }  = UserRequest();
     const { state, dispatch } = useContext(UserContext);
     const { ProjectState: { project }, ProjectDispatch } = useContext(ProjectContext);
-    const [like, setLike] = useState(null)
-    const likeRef = useRef(false)
-    const unlikeRef = useRef(false)
+    const [like, setLike] = useState(null);
+    const likeRef = useRef(false);
+    const unlikeRef = useRef(false);
 
     const handleProjectLike = e => {
         e.preventDefault();
-        if(!state.isLogged) return alert('좋아요를 하려면 로그인을 먼저 해주세요.')
+        if(!state.isLogged) return alert('좋아요를 하려면 로그인을 먼저 해주세요.');
         e.preventDefault();
-        likeApi(like)
-        setLike(!like)
+        likeApi(like);
+        setLike(!like);
         unlikeRef.current = false;
         likeRef.current = true;
-    } 
+    };
 
     const handleProjectUnlike = async e => {
         e.preventDefault();
-        if(!state.isLogged) return alert('좋아요를 취소 하려면 로그인을 먼저 해주세요.')
+        if(!state.isLogged) return alert('좋아요를 취소 하려면 로그인을 먼저 해주세요.');
         e.preventDefault();
-        likeApi(like)
-        setLike(!like)
+        likeApi(like);
+        setLike(!like);
         likeRef.current = false;
         unlikeRef.current = true;
-    } 
+    };
 
 
     // like state는 바로 번경되더라도 실제 요청은 1.5초 후에 클릭되는 상태에 따라 가게 debouce 작업. 
@@ -46,8 +46,8 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
                 const resUnlike = await projectUnlike({ projectId, userId });
                 if(resUnlike.data) {
                     ProjectDispatch({ type: "PROJECT_LIKE_DEC_SUCCESS", data: state.user._id })
-                    setLike(!like)
-                }
+                    setLike(!like);
+                };
             } else {
                 if(project.likeUser?.filter(user => user._id === state.user._id).length > 0) return;
                 const resLikeawait = await projectLike({ projectId, userId });
@@ -59,19 +59,19 @@ const LikeProject = ({ projectLikeLen, projectId, userId, className = '' }) => {
                         email: state.user.email,
                         name: state.user.name,
                         createdAt: state.user.createdAt,
-                    } })
-                    setLike(!like)
-                }
-            }
+                    } });
+                    setLike(!like);
+                };
+            };
         } catch(err) {
-            console.log(err)
-        }
+            console.log(err);
+        };
     }, 1000), [state.user.likeProject, project.likeUser]);
 
 
     useEffect(() => {
-        project.likeUser?.filter(user => user._id === state.user._id).length > 0 ? setLike(true) : setLike(false)
-    }, [project.likeUser])
+        project.likeUser?.filter(user => user._id === state.user._id).length > 0 ? setLike(true) : setLike(false);
+    }, [project.likeUser]);
 
     return (
         <Fragment>

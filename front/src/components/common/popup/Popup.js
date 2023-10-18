@@ -1,4 +1,4 @@
-import { Fragment, useState, memo, forwardRef, useImperativeHandle, useEffect, useCallback } from 'react';
+import { Fragment, useState, memo, forwardRef, useImperativeHandle, useEffect } from 'react';
 import Button from '../form/Button';
 import './Popup.css';
 
@@ -9,10 +9,10 @@ const Popup = forwardRef(({ children, className, isHead = false, title, closeCli
     useImperativeHandle(ref, () => {
 		return { 
 			popupOpen: () => { 
-                setPopOpen(true)
+                setPopOpen(true);
 			 }, 
 			 popupClose: () => {
-                handlePopClose()
+                handlePopClose();
                 // setPopOpen(false)
 			 },
 		};

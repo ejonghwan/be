@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { PiChatCircleDotsDuotone, PiAlienDuotone, PiKeyDuotone, PiSignOutDuotone, PiSignInDuotone, PiNoteDuotone, PiHeartDuotone, PiAtDuotone, PiStackDuotone,  PiNotepad, PiFilePlus, PiBookOpenTextDuotone } from "react-icons/pi";
+import { PiChatCircleDotsDuotone, PiAlienDuotone, PiKeyDuotone, PiSignOutDuotone, PiSignInDuotone, PiNoteDuotone, PiHeartDuotone, PiAtDuotone, PiStackDuotone, PiFilePlus, PiBookOpenTextDuotone } from "react-icons/pi";
 import { UserContext } from '../../../context/UserContext';
 import { useGlobalState } from '../../../context/UiContext';
 import LogoutForm from '../../user/LogoutForm';
@@ -9,7 +9,7 @@ import './Menu.css';
 
 
 const Menu = () => {
-    const {state } = useContext(UserContext)
+    const {state } = useContext(UserContext);
     const { name, email, id } = state.user;    
     const { menuOpen } = useGlobalState();
 

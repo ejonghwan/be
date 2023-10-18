@@ -2,23 +2,23 @@ import { Fragment, useRef, useState } from 'react';
 import Button from '../form/Button';
 import './Pagenations.css';
 
-const Pagenations = ({ allLength, pageNum, setPageNum, testlength = 525 }) => {
+const Pagenations = ({ allLength, pageNum, setPageNum }) => {
 
     const [pageGroupMinLen, setPageGroupMinLen] = useState(0); //0부터 +-
     const [pageGroupMaxLen, setPageGroupMaxLen] = useState(1);  //1부터 +-
-    const pageGroupNumberRef = useRef(10) // 보여지는 페이징 숫자.
+    const pageGroupNumberRef = useRef(10); // 보여지는 페이징 숫자.
 
     const handlePrevPageGroup = () => {
-        setPageGroupMinLen(prev => prev - 1)
-        setPageGroupMaxLen(prev => prev - 1)
-        setPageNum( pageGroupMinLen * pageGroupNumberRef.current - (pageGroupNumberRef.current - 1))
-    }
+        setPageGroupMinLen(prev => prev - 1);
+        setPageGroupMaxLen(prev => prev - 1);
+        setPageNum( pageGroupMinLen * pageGroupNumberRef.current - (pageGroupNumberRef.current - 1));
+    };
     
     const handleNextPageGroup = () => {
-        setPageGroupMinLen(prev => prev + 1)
-        setPageGroupMaxLen(prev => prev + 1)
-        setPageNum(pageGroupMaxLen * pageGroupNumberRef.current + 1)
-    }
+        setPageGroupMinLen(prev => prev + 1);
+        setPageGroupMaxLen(prev => prev + 1);
+        setPageNum(pageGroupMaxLen * pageGroupNumberRef.current + 1);
+    };
 
     return (
         <div className='page_number_wrap'> 

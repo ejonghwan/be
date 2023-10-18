@@ -1,34 +1,27 @@
 import { Fragment, useContext, useEffect, useState } from 'react';
 import SearchRequest from '../../reducers/SearchRequest';
 import { PiFolderDashedDuotone } from "react-icons/pi";
-import './TagSearchDetail.css';
 import { SearchContext } from '../../context/SearchContext';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CompleteMsg from '../../components/common/complete/CompleteMsg';
 import ProjectItemsHorizon from '../../components/project/ProjectItemsHorizon';
 import Pagenations from '../../components/common/pagenation/Pagenations';
 import SkeletonSearchCard from '../../components/skeleton/SkeletonSearchCard';
 import SkeletonItem from '../../components/skeleton/SkeletonItem';
+import './TagSearchDetail.css';
 
 const TagSearchDetail = ({ page }) => {
 
     const { tagSearch } = SearchRequest();
-    const { SearchState, SearchState: { searchTagAllLength, categorySearch }, SearchDispatch } = useContext(SearchContext);
+    const { SearchState, SearchState: { categorySearch }, SearchDispatch } = useContext(SearchContext);
     const { tagValue } = useParams();
     const [ pageNum, setPageNum ] = useState(1);
 
-    // useEffect(() => {
-    //     tagSearch({ type: "PROJECT_SEARCH_REQUEST" })
-    //     projectSearch({ categoryName: tagValue, pageNum })
-    //     // console.log('페이징 변경될때 검색', projectSearchData, searchTagAllLength)
-        
-    // }, [pageNum])
-
     useEffect(() => {
-        SearchDispatch({ type: "TAG_SEARCH_REQUEST" })
-        tagSearch({ categoryName: tagValue, pageNum })
+        SearchDispatch({ type: "TAG_SEARCH_REQUEST" });
+        tagSearch({ categoryName: tagValue, pageNum });
         // console.log('첫로딩 검색', projectSearchData, searchTagAllLength);
-    }, [tagValue])
+    }, [tagValue]);
 
     /*
         통합검색은 페이지네이션으로 적용. 이유는 사용자가 전에 검색했던 데이터를 대략적으로 몇페이지에 있는지 알 수 있게 하기 위해..

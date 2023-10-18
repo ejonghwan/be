@@ -2,27 +2,26 @@ import Input from '../common/form/Input';
 import Textarea from '../common/form/Textarea';
 import Button from '../common/form/Button';
 
-import { useContext, useEffect, useState, useCallback, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 import Label from '../common/form/Label';
 import { UserContext } from '../../context/UserContext';
 import _debounce from 'lodash.debounce';
 import ImageUploadView from '../image/ImageUploadView';
 import useImageRequest from '../../reducers/ImageRequest.js';
 import WriteRequest from '../../reducers/WriteRequest';
-import './WriteEdit.css';
 import { WriteContext } from '../../context/WriteContext';
 import Spinners from '../common/spinners/Spinners';
 import ErrorMsg from '../common/errorMsg/ErrorMsg';
+import './WriteEdit.css';
 
 
 
 const WriteEdit = ({ editWriteRef, writes }) => {
 
     const { state } = useContext(UserContext);
-    const { WriteState } = useContext(WriteContext)
+    const { WriteState } = useContext(WriteContext);
     const { imageUpload, imageDelete } = useImageRequest();
-    const { createWrite, editWrite } = WriteRequest();
+    const { editWrite } = WriteRequest();
 
     const [imageData, setImageData] = useState({});
 
@@ -36,8 +35,8 @@ const WriteEdit = ({ editWriteRef, writes }) => {
 
     const handleValuesChange = e => {
         const {name, value} = e.target;
-        setWriteSubmitData({...writeSubmitData, [name]: value})
-    }
+        setWriteSubmitData({...writeSubmitData, [name]: value});
+    };
 
     const handleEditWriteSubmit = _debounce(async(e) => {
         try {
@@ -46,14 +45,14 @@ const WriteEdit = ({ editWriteRef, writes }) => {
             
             if( imageData.file ) { 
                 console.log(writes?.writeImages[0]?.key)
-                if(writes?.writeImages[0]?.key) { await imageDelete({ fileName: writes?.writeImages[0]?.key }); }
+                if(writes?.writeImages[0]?.key) { await imageDelete({ fileName: writes?.writeImages[0]?.key }); };
                 await imageUpload({ ...imageData, _id: res._id }); 
             };
             editWriteRef.current.popupClose();
         } catch(err) {
-            console.error(err)
-        }
-    }, 1000)
+            console.error(err);
+        };
+    }, 1000);
 
 
     return (

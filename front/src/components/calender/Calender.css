@@ -51,7 +51,7 @@
 
 .calendar .body .col {
     cursor: pointer;
-    border-top: 1px solid var(--line-color1);
+    /* border-top: 1px solid var(--line-color1); */
     /* margin-right: 10px; */
     min-height: 100px;
 }
@@ -381,6 +381,10 @@ body.pc .calendar .body .col:hover {
     }
     .certified_img .not_profileImg {
         font-size: .8rem !important;
+    }
+
+    .certified_img > img {
+        height: auto;
     }
 
 

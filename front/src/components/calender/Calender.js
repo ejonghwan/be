@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useRef } from 'react';
-import { format, addMonths, subMonths, addYears, subYears, daysInWeek } from 'date-fns';
+import { format, addMonths, subMonths, addYears, subYears } from 'date-fns';
 // import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { addDays, subDays } from 'date-fns';
 import { Virtual, Navigation } from 'swiper';

@@ -3,8 +3,8 @@ import { HiOutlineCamera, HiOutlineXMark } from "react-icons/hi2";
 import ImageUploadForm from '../image/ImageUploadForm.js' 
 import { UserContext } from '../../context/UserContext.js';
 import Button from '../common/form/Button.js';
-import './ProfileImageEdit.css'
 import NotProfileImg from './NotProfileImg.js';
+import './ProfileImageEdit.css';
 
 
 const ProfileImageEdit = () => {
@@ -12,10 +12,10 @@ const ProfileImageEdit = () => {
     const [profileEdit, setProfileEdit] = useState(false);
     const [uploadState, setUploadState] = useState(false);
 
-    const handleProfileImageEdit = () => setProfileEdit(!profileEdit)
+    const handleProfileImageEdit = () => setProfileEdit(!profileEdit);
     useEffect(() => {
-        if(uploadState) { setProfileEdit(!profileEdit) }
-    }, [state, uploadState])
+        if(uploadState) { setProfileEdit(!profileEdit) };
+    }, [state, uploadState]);
     
 
     return (
