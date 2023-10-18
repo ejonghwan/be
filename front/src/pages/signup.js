@@ -17,6 +17,7 @@ import Info from '../components/common/terms/info.js';
 import Acc from '../components/common/accordion/Accordion.js';
 import Spinners from '../components/common/spinners/Spinners.js';
 import './signup.css';
+import '../components/common/form/Selectbox.css';
 
 // 회원가입 시 메일인증
 // https://lakelouise.tistory.com/240

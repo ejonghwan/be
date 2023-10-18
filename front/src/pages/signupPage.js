@@ -1,5 +1,4 @@
 import Auth from '../components/user/Auth';
-import './signupPage.css'
 
 const signupPage = ({ page }) => {
     return (

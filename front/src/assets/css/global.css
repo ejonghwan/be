@@ -338,15 +338,15 @@ svg {
 }
 
 .align_c {
-    text-align: center;
+    text-align: center ;
 }
 
 .align_l {
-    text-align: left;
+    text-align: left !important;
 }
 
 .align_r {
-    text-align: right;
+    text-align: right !important;
 }
 
 .flex {

@@ -7,3 +7,7 @@
 .terms > input {
     flex: 0;
 }
+
+.Profile_info_wrap > li + li {
+    margin-top: 20px;
+}
