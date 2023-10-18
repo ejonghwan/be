@@ -224,8 +224,8 @@ const UserProfile = () => {
                             <strong className='Profile_info_tit'>이메일</strong> 
                             <div className='Profile_info_cont'>
                                 <span>{state.user.email}</span>
-                                <Button className={'button_type_txt'} name="email" onClick={handleToggle}>
-                                    이메일 수정
+                                <Button className={'button_type_txt arrow_right'} name="email" onClick={handleToggle}>
+                                    변경
                                 </Button>
                             </div>
                         </Fragment>
@@ -339,13 +339,13 @@ const UserProfile = () => {
                                 <li>
                                     <strong className='Profile_info_tit'>가입일</strong>
                                     <div className='Profile_info_cont'>
-                                        {state.user.createdAt}
+                                        {changeViewDate(state.user.createdAt, 'second')}
                                     </div>
                                 </li>
                                 <li>
                                     <strong className='Profile_info_tit'>수정일</strong>
                                     <div className='Profile_info_cont'>
-                                        {state.user.updatedAt}
+                                        {changeViewDate(state.user.updatedAt, 'second')}
                                     </div>
                                 </li>
                             </ul>

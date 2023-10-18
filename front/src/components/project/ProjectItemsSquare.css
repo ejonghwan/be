@@ -22,13 +22,13 @@
 
 
 
-.project_items_square .project_items:hover .project_image {
+body.pc .project_items_square .project_items:hover .project_image {
     transition: all .5s;
     box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 10px inset;
 }
 
 
-.project_items_square .project_items:hover .const_user svg {
+body.pc .project_items_square .project_items:hover .const_user svg {
     color: rgb(234, 179, 11);
 }
 
@@ -53,7 +53,7 @@
     font-size: 1.8rem;
 }
 
-.project_items_square .project_title:hover {
+body.pc .project_items_square .project_title:hover {
     text-decoration: underline;
     color: var(--point-color);
 }

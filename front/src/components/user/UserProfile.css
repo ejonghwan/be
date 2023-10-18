@@ -24,6 +24,13 @@
     width: 70%;
 }
 
+.Profile_info_wrap .Profile_info_cont button {
+    padding-right: 10px;
+    margin-left: 10px;
+    font-size: 1.4rem;
+    text-decoration: none;
+}
+
 .Profile_info_wrap .btn {
     margin-left: auto;
     width: 70%;

@@ -151,5 +151,19 @@
         height: 100%;
         padding-bottom: 55px;
     }
+
+    .popup_type_default.search_project {
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    #popup .popup_head {
+        font-size: 1.6rem;
+    }
+
+    /* .menu_type_small {
+
+    } */
 }
 

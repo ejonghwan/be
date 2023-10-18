@@ -456,3 +456,12 @@ button:disabled {
     left: 50%;
     transform: rotate(-45deg) translate(-50%, -50%);
 } */
+
+@media screen and (max-width: 760px) {
+    .button_type_close::after {
+        width: 25px;
+    }
+    .button_type_close::before {
+        width: 25px;
+    }
+}

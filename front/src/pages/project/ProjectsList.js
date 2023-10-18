@@ -75,7 +75,7 @@ const ProjectsList = ({ page }) => {
             <div className='b_conts full bg_gray project_list'>
                 <div className='b_conts pd_0'>
 
-                    <div>
+                    <div className="project_list_wrap">
                         <Tab 
                             tabHead={[<span>좋아요 순</span>, <span>참여인원 순</span>]} 
                             tabBody={[

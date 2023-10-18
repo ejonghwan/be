@@ -76,7 +76,7 @@
     --hover-color4:#000000;
     --hover-color5: #151515;
     --icon-color: #bfbfbf;
-    --icon-color1: #dcdcdc;
+    --icon-color1: #9d9d9d;
     --scroll-color: #666666;
     --scroll-bg-color: #121213;
     --disabled-bg-color: #464646;
@@ -564,7 +564,7 @@ form {
 @media screen and (max-width: 960px) {
     .b_conts {
         width: 100%;
-        padding: 20px 10px;
+        padding: 20px 15px;
     }
 }
 

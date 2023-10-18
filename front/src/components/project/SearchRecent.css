@@ -11,3 +11,9 @@
 .search_result.recent .delete_all_wrap button {
     font-size: 1.2rem;
 }
+
+@media screen and (max-width: 760px) {
+    .search_result.recent .search_result_item {
+        margin-top: 5px;
+    }
+}

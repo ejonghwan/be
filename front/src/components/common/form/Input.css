@@ -95,8 +95,13 @@ input[type=radio]:checked + label{
 
 
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 760px) {
     .form_wrap {
         width: 100%;
+    }
+
+    [class*=input_type] {
+        padding: 20px;
+        font-size: 1.5rem;
     }
 }

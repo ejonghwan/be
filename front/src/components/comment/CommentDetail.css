@@ -53,14 +53,18 @@
     flex: 0 0 auto;
 }
 
-.comment_user_thum_wrap:hover .comment_user_thum_inner > .user_thum_more {
+/* .comment_user_thum_wrap:hover .comment_user_thum_inner > .user_thum_more {
     opacity: 1;
-}
+} */
 .comment_user_thum_wrap .user_thum_more {
-    opacity: 0;
+    /* opacity: 0; */
     padding: 10px 0px 10px 10px;
     width: 30px;
     flex: 0 0 auto;
+}
+
+.comment_user_thum_wrap .user_thum_more svg {
+    color: var(--text-color2);
 }
 
 .comment_user_thum_wrap .user_thum_txt_wrap {
@@ -139,4 +143,11 @@
         width: 30px;
         height: 30px;
     }
+
+    .comment_user_thum_wrap .popup.comment_more {
+     
+        width: auto;
+        height: auto;
+    }
+    
 }

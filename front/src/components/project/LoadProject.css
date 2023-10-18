@@ -1,5 +1,6 @@
 .project_detail {
     margin-bottom: 50px;
+    overflow-x: hidden;
 }
 
 .part_user .user_thum_wrap {
