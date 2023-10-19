@@ -8,6 +8,7 @@ import { PiFolderDashedDuotone } from "react-icons/pi";
 import { Link } from 'react-router-dom';
 import SkeletonCard from '../../components/skeleton/SkeletonCard.js';
 import SkeletonItem from '../../components/skeleton/SkeletonItem.js';
+import HeadMetaTag from '../../components/common/HeadMetaTag.js';
 
 const MyProject = ({ page }) => {
 
@@ -38,6 +39,7 @@ const MyProject = ({ page }) => {
 
     return (
         <Fragment>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
             <div className='b_conts'>
                 <h2 className='gap_0'>{page}</h2>
             </div>

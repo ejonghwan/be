@@ -9,6 +9,7 @@ import Pagenations from '../../components/common/pagenation/Pagenations';
 import SkeletonSearchCard from '../../components/skeleton/SkeletonSearchCard';
 import SkeletonItem from '../../components/skeleton/SkeletonItem';
 import './ProjectsSearchDetail.css';
+import HeadMetaTag from '../../components/common/HeadMetaTag';
 
 const ProjectsSearchDetail = ({ page }) => {
 
@@ -37,6 +38,7 @@ const ProjectsSearchDetail = ({ page }) => {
 
     return (
         <div>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
             <div className='b_conts'>
                 <h2 className='gap_0'>{page}</h2>      
             </div>

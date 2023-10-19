@@ -9,6 +9,7 @@ import { PiFileXDuotone } from "react-icons/pi";
 import Spinners from '../../components/common/spinners/Spinners';
 import SkeletonComment from '../../components/skeleton/SkeletonComment';
 import './MyComments.css';
+import HeadMetaTag from '../../components/common/HeadMetaTag';
 
 
 
@@ -41,6 +42,7 @@ const MyComments = ({ page }) => {
 
     return (
         <div className='b_conts writes_list'>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
             <h2>{page}</h2>
             <div className='writes_align'>최근 순</div>
             {WriteState.myCommentsLoading && (

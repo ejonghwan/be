@@ -10,6 +10,7 @@ import Spinners from '../../components/common/spinners/Spinners';
 import SkeletonItem from '../../components/skeleton/SkeletonItem';
 import SkeletonWriteCard from '../../components/skeleton/SkeletonWriteCard';
 import './MyWritesList.css';
+import HeadMetaTag from '../../components/common/HeadMetaTag';
 
 const WritesList = ({ page }) => {
 
@@ -40,6 +41,7 @@ const WritesList = ({ page }) => {
 
     return (
         <div className='b_conts writes_list'>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
             <h2>{page}</h2>
             <div className='writes_align'>최근 순</div>
 

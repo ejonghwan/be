@@ -18,6 +18,7 @@ import Acc from '../components/common/accordion/Accordion.js';
 import Spinners from '../components/common/spinners/Spinners.js';
 import './signup.css';
 import '../components/common/form/Selectbox.css';
+import HeadMetaTag from '../components/common/HeadMetaTag.js';
 
 // 회원가입 시 메일인증
 // https://lakelouise.tistory.com/240
@@ -188,6 +189,7 @@ const Signup = ({ page }) => {
     return (
     
         <div className='b_conts'>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
             <h2>{page}</h2>
            
                 <div className='form_wrap'>

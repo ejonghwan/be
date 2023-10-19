@@ -2,6 +2,7 @@ import LoginForm from '../../components/user/LoginForm';
 import FindList from '../../components/user/FindList';
 import { Fragment, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
+import HeadMetaTag from '../../components/common/HeadMetaTag';
 
 const ProtectedPage = ({ page }) => {
 
@@ -9,6 +10,7 @@ const ProtectedPage = ({ page }) => {
 
     return (
         <Fragment>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
             {/* 로딩 중일땐 아래 jsx 안보이게 처리 */}
             {!state.loadUserLoading && (
                 <div className='b_conts'>

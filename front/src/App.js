@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { BrowserRouter, useSearchParams  } from 'react-router-dom';
-import RoutesPage from './pages/index.js'
-import { getQueryString, getWithExpire } from './utils/utils.js'
+import {useEffect, useContext } from 'react';
+import { useSearchParams  } from 'react-router-dom';
+import RoutesPage from './pages/index.js';
+import {  getWithExpire } from './utils/utils.js';
 
 
 // context & request
-import { ImageProvider } from './context/ImageContext.js'
-import { UserProvider, UserContext } from './context/UserContext.js'
-import UserRequest from './reducers/UserRequest.js'
-import Loader3 from './components/common/spinners/Loader3.js';
+import { UserContext } from './context/UserContext.js';
+import UserRequest from './reducers/UserRequest.js';
+import HeadMetaTag from './components/common/HeadMetaTag.js';
 // import { getUser } from './reducers/UserRequest.js'
 
 
@@ -16,10 +15,12 @@ const App = () => {
 
   const { getUser } = UserRequest();
   const {state, dispatch} = useContext(UserContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [ searchParams ] = useSearchParams();
   
   const valid = searchParams.get('valid');
   const accToken = searchParams.get('accToken');
+
+
 
   // 유저 새로고침
   const userLoad = async () => {
@@ -68,6 +69,8 @@ const App = () => {
   return (
       <div className="App"> 
         {/* {state.loadUserLoading && <Loader3 full={true} scale='2' />} */}
+        
+        <HeadMetaTag />
         <RoutesPage />
       </div>
   );

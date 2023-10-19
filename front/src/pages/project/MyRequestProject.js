@@ -7,6 +7,7 @@ import UserRequest from '../../reducers/UserRequest.js';
 import CompleteMsg from '../../components/common/complete/CompleteMsg.js';
 import './MyRequestProject.css';
 import { Link } from 'react-router-dom';
+import HeadMetaTag from '../../components/common/HeadMetaTag.js';
 
 
 const MyRequestProject = ({ page }) => {
@@ -49,6 +50,7 @@ const MyRequestProject = ({ page }) => {
 
     return (
         <Fragment>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
             <div className='b_conts'>
                 <h2 className='gap_0'>{page}</h2>
             </div>

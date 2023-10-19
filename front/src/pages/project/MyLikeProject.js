@@ -4,6 +4,7 @@ import ProjectItemsHorizon from '../../components/project/ProjectItemsHorizon.js
 import { PiFolderDashedDuotone } from "react-icons/pi";
 import { Link } from 'react-router-dom';
 import CompleteMsg from '../../components/common/complete/CompleteMsg.js';
+import HeadMetaTag from '../../components/common/HeadMetaTag.js';
 
 const MyLikeProject = ({ page }) => {
 
@@ -13,6 +14,7 @@ const MyLikeProject = ({ page }) => {
 
     return (
         <Fragment>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
             <div className='b_conts'>
                 <h2 className='gap_0'>{page}</h2>
             </div>

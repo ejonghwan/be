@@ -8,6 +8,7 @@ import Button from '../../components/common/form/Button';
 import Tab from "../../components/common/tab/Tab";
 import NoData from "../../components/common/notData/NoData";
 import Spinners from "../../components/common/spinners/Spinners";
+import HeadMetaTag from "../../components/common/HeadMetaTag";
 
 
 const ProjectsList = ({ page }) => {
@@ -69,6 +70,7 @@ const ProjectsList = ({ page }) => {
 
     return (
         <Fragment>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
             <div className='b_conts h2_title_wrap'>
                 <h2 className='gap_0'>{page}</h2>
             </div>

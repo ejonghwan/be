@@ -17,7 +17,7 @@ const __dirname = path.resolve();
 dotenv.config()
 
 
-// 이거 대체 어디다쓴거지 ? 
+// 이거 대체 어디
 export const mailAuth = async (req, res, next) => {
     try {
         /*

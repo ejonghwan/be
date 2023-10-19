@@ -13,6 +13,7 @@ import SkeletonCard from '../components/skeleton/SkeletonCard.js';
 import ProjectItemsSquare from '../components/project/ProjectItemsSquare.js';
 import Button from '../components/common/form/Button.js';
 import './home.css';
+import HeadMetaTag from '../components/common/HeadMetaTag.js';
 
 
 
@@ -60,9 +61,10 @@ const Home = ({ page }) => {
 
     return (
         <Fragment>
+            <HeadMetaTag title={`HOBBYIST. 습관 만들기 | 홈`} />
             <h2 className='blind'><span>{page}</span></h2>
             {/* {state.loadUserLoading && ( <div><Spinners /></div> )} */}
-           
+
             <div className='b_conts full bg_gray'>
                 <div className='b_conts pd_0'>
                     {ProjectState.loadMyProjectLoading || ProjectState.loadMyapplyProjectLoading ? (

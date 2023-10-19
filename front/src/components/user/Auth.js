@@ -78,8 +78,9 @@ const Auth = () => {
             ) : (
             <SuccessMsg className={'success_type1'}>
                 <strong>인증메일이 발송되었습니다.</strong>
-                <span>발송된 메일의 인증페이지로 회원가입을 진행해주세요.</span>
-                <span className='gapt_5'>※ 인증된 페이지는 15분 후에 만료됩니다.</span>
+                <span className='gapt_10'>발송된 메일의 인증페이지로 회원가입을 진행해주세요.</span>
+                <span className='gapt_30'>※ 인증 메일에 발송된 인증번호는 1시간 후에 만료됩니다.</span>
+                <span className='gapt_5'>※ 인증된 페이지는 15분 후에 닫힙니다.</span>
 
             </SuccessMsg>
         )}

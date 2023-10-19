@@ -9,5 +9,10 @@
 }
 
 .Profile_info_wrap > li + li {
-    margin-top: 20px;
+    margin-top: 30px;
+}
+
+.Profile_info_wrap .Profile_info_tit {
+    display: block;
+    margin-bottom: 10px;
 }

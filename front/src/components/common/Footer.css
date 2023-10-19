@@ -2,3 +2,24 @@
     /* margin-top: 60px; */
     background-color: var(--main-bg-color2);
 }
+
+#footer li {
+    font-weight: 400;
+}
+
+#footer li + li {
+    margin-top: 5px;
+}
+
+
+#footer li.logo_wrap {
+    margin-top: 40px;
+    font-weight: 700;
+}
+
+#footer li.logo_wrap .logo{
+    color: var(--text-color2);
+}
+
+
+

@@ -9,6 +9,7 @@ import { GlobalProvider } from './context/UiContext';
 import { SearchProvider } from './context/SearchContext';
 import { ProjectProvider } from './context/ProjectContext';
 import { WriteProvider } from './context/WriteContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 // css
 import './assets/css/fonts.css'
@@ -25,19 +26,21 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
       <ScrollTop />
-      <UserProvider>
-        <ProjectProvider>
-          <WriteProvider>
-            <ImageProvider>
-              <SearchProvider>
-                    <GlobalProvider>
-                      <App />
-                    </GlobalProvider>
-              </SearchProvider>
-            </ImageProvider>
-          </WriteProvider>
-        </ProjectProvider>
-      </UserProvider>
+      <HelmetProvider>
+        <UserProvider>
+          <ProjectProvider>
+            <WriteProvider>
+              <ImageProvider>
+                <SearchProvider>
+                      <GlobalProvider>
+                        <App />
+                      </GlobalProvider>
+                </SearchProvider>
+              </ImageProvider>
+            </WriteProvider>
+          </ProjectProvider>
+        </UserProvider>
+      </HelmetProvider>
     </BrowserRouter>
 );
 
