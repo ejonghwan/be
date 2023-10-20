@@ -68,7 +68,7 @@ export const WriteIntialState = {
     writes: {},
     writeList: [], 
     commentsList: [], 
-}
+};
 
 
 const WriteReducer = (state = WriteIntialState, action) => {
@@ -607,13 +607,8 @@ const WriteReducer = (state = WriteIntialState, action) => {
                 myCommentDeleteError: action.data,
             };
 
-
-
-
-
-
-            default: return { ...state }
-    }
-}
+            default: return { ...state };
+    };
+};
 
 export default WriteReducer;

@@ -3,15 +3,15 @@ import { WriteContext } from '../context/WriteContext';
 import { ProjectContext } from '../context/ProjectContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
-import { UserContext } from '../context/UserContext';
+// import { UserContext } from '../context/UserContext';
+import { getWithExpire } from '../utils/utils.js';
 
 const host = process.env.REACT_APP_BACKEND_HOST;
 
 const WriteRequest = () => {
-    const { dispatch } = useContext(UserContext);
     const { WriteDispatch } = useContext(WriteContext); 
     const { ProjectDispatch } = useContext(ProjectContext); 
-    const accToken = localStorage.getItem('X-access-token');
+    const accToken = getWithExpire('X-access-token');
     const navigate = useNavigate();
 
     const createWrite = async data => {
@@ -27,11 +27,12 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.post(`${host}/api/write`, data, config);
             ProjectDispatch({ type: "WRITE_CREATE_SUCCESS", data: res.data });
             return res.data.write;
         } catch(err) {
+            console.error(err);
             ProjectDispatch({ type: "WRITE_CREATE_FAILUE", data: err.response.data.message });
         };
     };
@@ -53,6 +54,7 @@ const WriteRequest = () => {
             
             return res.data;
         } catch(err) {
+            console.error(err);
             WriteDispatch({ type: "WRITE_LOAD_FAILUE", data: err.response.data.message });
         };
     };
@@ -68,13 +70,14 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/write/like`, data, config);
             WriteDispatch({ type: "WRITE_LIKE_SUCCESS", data: res.data });
 
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "WRITE_LIKE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -89,13 +92,14 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/write/unlike`, data, config);
             WriteDispatch({ type: "WRITE_UNLIKE_SUCCESS", data: res.data });
 
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "WRITE_UNLIKE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -111,13 +115,14 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/write/edit/${writeId}`, data, config);
             WriteDispatch({ type: "WRITE_EDIT_SUCCESS", data: res.data });
 
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "WRITE_EDIT_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
     
@@ -135,7 +140,7 @@ const WriteRequest = () => {
                 },
                 data: data,
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.delete(`${host}/api/write`, config);
             WriteDispatch({ type: "WRITE_DELETE_SUCCESS", data: res.data });
@@ -143,6 +148,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "WRITE_DELETE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -159,7 +165,7 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.post(`${host}/api/comment`, data, config);
             WriteDispatch({ type: "COMMENT_CREATE_SUCCESS", data: res.data });
@@ -167,6 +173,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "COMMENT_CREATE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -181,7 +188,7 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.patch(`${host}/api/comment/like`, data, config);
             WriteDispatch({ type: "COMMENT_LIKE_SUCCESS", data: res.data });
@@ -189,6 +196,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "COMMENT_LIKE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -203,7 +211,7 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.patch(`${host}/api/comment/unlike`, data, config);
             WriteDispatch({ type: "COMMENT_UNLIKE_SUCCESS", data: res.data });
@@ -211,6 +219,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "COMMENT_UNLIKE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -225,7 +234,7 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.patch(`${host}/api/comment/edit/${commentId}`, { content }, config);
             WriteDispatch({ type: "COMMENT_EDIT_SUCCESS", data: res.data });
@@ -233,6 +242,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "COMMENT_EDIT_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -258,6 +268,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "COMMENT_DELETE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -274,7 +285,7 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.post(`${host}/api/recomment`, data, config);
             WriteDispatch({ type: "RECOMMENT_CREATE_SUCCESS", data: res.data });
@@ -282,13 +293,13 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "RECOMMENT_CREATE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
 
     const likeRecomment = async data => {
         try {
-            console.log('redu?', data)
             const { userId, commentId, recommentId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 user 잘못되었습니다');
             if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
@@ -299,14 +310,14 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
-            console.log('redu?', data)
+            };
             const res = await axios.patch(`${host}/api/recomment/like`, data, config);
             WriteDispatch({ type: "RECOMMENT_LIKE_SUCCESS", data: res.data });
 
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "RECOMMENT_LIKE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -323,7 +334,7 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.patch(`${host}/api/recomment/unlike`, data, config);
             WriteDispatch({ type: "RECOMMENT_UNLIKE_SUCCESS", data: res.data });
@@ -331,6 +342,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "RECOMMENT_UNLIKE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -346,7 +358,7 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.patch(`${host}/api/recomment/edit/${recommentId}`, data, config);
             WriteDispatch({ type: "RECOMMENT_EDIT_SUCCESS", data: res.data });
@@ -354,6 +366,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "RECOMMENT_EDIT_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -370,7 +383,7 @@ const WriteRequest = () => {
                 },
                 data: data,
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.delete(`${host}/api/recomment`, config);
             WriteDispatch({ type: "RECOMMENT_DELETE_SUCCESS", data: res.data });
@@ -378,6 +391,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "RECOMMENT_DELETE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -391,13 +405,14 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.get(`${host}/api/write/my/${userId}/${page}`, config);
             WriteDispatch({ type: "MYWRITES_LOAD_SUCCESS", data: res.data });
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "MYWRITES_LOAD_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -412,13 +427,14 @@ const WriteRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.get(`${host}/api/comment/my/${userId}/${page}`, config);
             WriteDispatch({ type: "MYCOMMENTS_LOAD_SUCCESS", data: res.data });
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "MYCOMMENTS_LOAD_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -435,7 +451,7 @@ const WriteRequest = () => {
                 },
                 data: data,
                 withCredentials: true,
-            }
+            };
 
             const res = await axios.delete(`${host}/api/comment`, config);
             WriteDispatch({ type: "MYCOMMENTS_DELETE_SUCCESS", data: res.data });
@@ -443,6 +459,7 @@ const WriteRequest = () => {
             return res.data;
         } catch(err) {
             WriteDispatch({ type: "MYCOMMENTS_DELETE_FAILUE", data: err.response.data.message });
+            console.error(err);
         };
     };
 
@@ -469,7 +486,7 @@ const WriteRequest = () => {
         loadMyComments,
         deleteMyComment
     };
-}
+};
 
 export default WriteRequest;
 

@@ -80,11 +80,10 @@ export const UserIntialState = {
 
     user: {},
     requestMyProject: []
-}
+};
 
 
 const UserReducer = (state = UserIntialState, action) => {
-    
         switch(action.type) {
             
             case "ERROR_LOADING_CLEAR" : 
@@ -94,13 +93,13 @@ const UserReducer = (state = UserIntialState, action) => {
                     mailAuthErrorMessage: '',
                     imageErrorMessage: '',
                     globalErrorMessage: '',
-                }
+                };
 
             case "USER_SIGNUP_REQEUST": 
                 return {
                     ...state,
                     signupUserLoading: true,
-                }
+                };
             
             case "USER_SIGNUP_SUCCESS": 
                 return {
@@ -108,20 +107,20 @@ const UserReducer = (state = UserIntialState, action) => {
                     signupUserLoading: false,
                     signupUserError: '',
                     signupUserDone: true
-                }
+                };
 
             case "USER_SIGNUP_FAILUE" : 
                 return {
                     ...state,
                     signupUserLoading: false,
                     signupUserError: action.data,
-                }
+                };
 
             case "USER_LOAD_REQUEST": 
                 return {
                     ...state,
                     loadUserLoading: true,
-                }
+                };
 
             case "USER_LOAD_SUCCESS": 
                 return {
@@ -131,7 +130,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     loadUserError: '',
                     user: action.data,
                     isLogged: true,
-                }
+                };
 
             case "USER_LOAD_FAILUE" : 
                 return {
@@ -139,13 +138,13 @@ const UserReducer = (state = UserIntialState, action) => {
                     loadUserLoading: false,
                     loadUserError: action.data,
                     isLogged: false,
-                }
+                };
 
             case "USER_LOGIN_REQUEST": 
                 return {
                     ...state,
                     loginUserLoading: true,
-                }
+                };
 
             case "USER_LOGIN_SUCCESS": 
                 return {
@@ -155,7 +154,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     loginUserError: '',
                     user: action.data,
                     isLogged: true,
-                }
+                };
 
             case "USER_LOGIN_FAILUE" : 
                 return {
@@ -163,13 +162,13 @@ const UserReducer = (state = UserIntialState, action) => {
                     loginUserLoading: false,
                     isLogged: false,
                     loginUserError: action.data,
-                }
+                };
                 
             case "USER_LOGOUT_REQUEST": 
                 return {
                     ...state, 
                     logoutUserLoading: true
-                }
+                };
 
             
             case "USER_LOGOUT_SUCCESS": 
@@ -179,7 +178,7 @@ const UserReducer = (state = UserIntialState, action) => {
                     logoutUserError: '',
                     user: {},
                     isLogged: false,
-                }
+                };
 
 
             case "USER_LOGOUT_FAILUE": 
@@ -187,14 +186,14 @@ const UserReducer = (state = UserIntialState, action) => {
                     ...state, 
                     logoutUserLoading: false,
                     logoutUserError: action.data,
-                }
+                };
 
 
             case "USER_INFO_EDIT_REQUEST" : 
                 return {
                     ...state,
                     editUserInfoLoading: true,
-                }
+                };
 
 
             case "USER_INFO_EDIT_SUCCESS": 
@@ -209,19 +208,19 @@ const UserReducer = (state = UserIntialState, action) => {
                         birthday: action.data.birthday,
                         phoneNumber: action.data.phoneNumber,
                     }
-                }
+                };
             case "USER_INFO_EDIT_FAILUE" : 
                 return {
                     ...state,
                     editUserInfoLoading: false,
                     editUserInfoError: action.data,
-                }
+                };
 
             case "USER_MAIL_EDIT_REQUEST": 
                 return {
                     ...state,
                     editUserMailLoading: true,
-                }
+                };
 
             case "USER_MAIL_EDIT_SUCCESS": 
                 return {
@@ -233,20 +232,20 @@ const UserReducer = (state = UserIntialState, action) => {
                         ...state.user,
                         email: action.data.email,
                     }
-                }
+                };
 
             case "USER_MAIL_EDIT_FAILUE" : 
                 return {
                     ...state,
                     editUserMailLoading: false,
                     editUserMailError: action.data,
-                }
+                };
 
             case "USER_MAIL_AUTH_REQUEST": 
                 return {
                     ...state,
                     authUserMailLoading: true,
-                }
+                };
 
             case "USER_MAIL_AUTH_SUCCESS": 
                 return {
@@ -258,21 +257,21 @@ const UserReducer = (state = UserIntialState, action) => {
                         ...state.user,
                         email: action.data.email
                     }
-                }
+                };
 
             case "USER_MAIL_AUTH_FAILUE" : 
                 return {
                     ...state,
                     authUserMailLoading: false,
                     authUserMailError: action.data
-                }
+                };
 
 
             case "NON_USER_MAIL_AUTH_REQUEST": 
                 return {
                     ...state,
                     authNonUserMailLoading: true,
-                }
+                };
 
             case "NON_USER_MAIL_AUTH_SUCCESS": 
                 return {
@@ -280,21 +279,20 @@ const UserReducer = (state = UserIntialState, action) => {
                     authNonUserMailLoading: false,
                     authNonUserMailDone: true,
                     authNonUserMailError:'',
-                   
-                }
+                };
 
             case "NON_USER_MAIL_AUTH_FAILUE" : 
                 return {
                     ...state,
                     authNonUserMailLoading: false,
                     authNonUserMailError: action.data
-                }
+                };
 
             case "AUTH_NUMBER_REQUEST": 
                 return {
                     ...state,
                     authNumberLoading: true,
-                }
+                };
 
             case "AUTH_NUMBER_SUCCESS": 
                 return {
@@ -302,20 +300,20 @@ const UserReducer = (state = UserIntialState, action) => {
                     authNumberLoading: false,
                     authNumberDone: true,
                     authNumberError: '',
-                }
+                };
 
             case "AUTH_NUMBER_FAILUE" : 
                 return {
                     ...state,
                     authNumberLoading: false,
                     authNumberError: action.data
-                }
+                };
             
             case "USER_SECESSION_REQUEST": 
                 return {
                     ...state,
                     secessionUserLoading: true,
-                }
+                };
 
             case "USER_SECESSION_SUCCESS": 
                 return {
@@ -325,22 +323,21 @@ const UserReducer = (state = UserIntialState, action) => {
                     secessionUserError: '',
                     user: {},
                     isLogged: false
-                    
-                }
+                };
 
             case "USER_SECESSION_FAILUE" : 
                 return {
                     ...state,
                     secessionUserLoading: false,
                     secessionUserError: action.data
-                }
+                };
             
           
             case "USER_PASSWORD_EDIT_REQUEST": 
                 return {
                     ...state,
                     changeUserPasswordLoading: true,
-                }
+                };
 
 
             case "USER_PASSWORD_EDIT_SUCCESS": 
@@ -349,21 +346,21 @@ const UserReducer = (state = UserIntialState, action) => {
                     changeUserPasswordLoading: false,
                     changeUserPasswordError: '',
                     changeUserPasswordDone: true,
-                }
+                };
 
             case "USER_PASSWORD_EDIT_FAILUE" : 
                 return {
                     ...state,
                     changeUserPasswordLoading: false,
                     changeUserPasswordError: action.data
-                }
+                };
 
 
             case "USER_FIND_ID_REQUEST": 
                 return {
                     ...state,
                     findIdLoading: true,
-                }
+                };
                 
 
             case "USER_FIND_ID_SUCCESS": 
@@ -372,20 +369,20 @@ const UserReducer = (state = UserIntialState, action) => {
                     findIdLoading: false,
                     findIdError: '',
                     findIdDone: true,
-                }
+                };
 
             case "USER_FIND_ID_FAILUE" : 
                 return {
                     ...state,
                     findIdLoading: false,
                     findIdError: action.data
-                }
+                };
 
             case "USER_QUESTION_FIND_ID_REQUEST": 
                 return {
                     ...state,
                     questionFindIdLoading: true,
-                }
+                };
                 
 
             case "USER_QUESTION_FIND_ID_SUCCESS": 
@@ -394,14 +391,14 @@ const UserReducer = (state = UserIntialState, action) => {
                     questionFindIdLoading: false,
                     questionFindIdError: '',
                     questionFindIdDone: true,
-                }
+                };
 
             case "USER_QUESTION_FIND_ID_FAILUE" : 
                 return {
                     ...state,
                     questionFindIdLoading: false,
                     questionFindIdError: action.data
-                }
+                };
 
             
             // no
@@ -409,7 +406,7 @@ const UserReducer = (state = UserIntialState, action) => {
                 return {
                     ...state,
                     editUserProfileImageLoading: true, 
-                }
+                };
 
             case "USER_PROFILEIMAGE_EDIT_SUCCESS": 
                 return {
@@ -421,14 +418,14 @@ const UserReducer = (state = UserIntialState, action) => {
                         ...state.user,
                         profileImage: action.data
                     }
-                }
+                };
 
             case "USER_PROFILEIMAGE_EDIT_FAILUE": 
                 return {
                     ...state,
                     editUserProfileImageLoading: false, 
                     editUserProfileImageError: action.data
-                }
+                };
 
             // case "IMAGE_FAILUE": 
             //     return {
@@ -445,13 +442,13 @@ const UserReducer = (state = UserIntialState, action) => {
                         ...state.user,
                         likeProject: state.user.likeProject.concat(action.data)
                     }
-                }
+                };
 
             case "PROJECT_LIKE_FAILUE" : 
                 return {
                     ...state,
                     globalErrorMessage: action.data
-                }
+                };
 
 
             case "PROJECT_UNLIKE_SUCCESS": 
@@ -461,14 +458,13 @@ const UserReducer = (state = UserIntialState, action) => {
                         ...state.user,
                         likeProject: state.user.likeProject.filter(project => project._id !== action.data)
                     },
-                    
-                }
+                };
 
             case "PROJECT_UNLIKE_FAILUE" : 
                 return {
                     ...state,
                     globalErrorMessage: action.data
-                }
+                };
 
             case "CREATE_PROJECT_USER_PUSH" : 
                 return {
@@ -477,17 +473,16 @@ const UserReducer = (state = UserIntialState, action) => {
                         ...state.user,
                         projects: state.user.projects.concat(action.data)
                     }
-                }
+                };
 
 
             case "USER_DARKMODE_CHANGE_REQUEST": 
                 return {
                     ...state,
                     chageDarkModeLoading: true,
-                }
+                };
 
             case "USER_DARKMODE_CHANGE_SUCCESS":
-                console.log(action.data) 
                 return {
                     ...state,
                     chageDarkModeLoading: false,
@@ -497,24 +492,23 @@ const UserReducer = (state = UserIntialState, action) => {
                         ...state.user,
                         darkMode: action.data.mode
                     }
-                }
+                };
 
             case "USER_DARKMODE_CHANGE_FAILUE" : 
                 return {
                     ...state,
                     chageDarkModeLoading: false,
                     chageDarkModeError: action.data
-                }
+                };
 
 
             case "MYLIST_PROJECT_INVITE_REQUEST": 
                 return {
                     ...state,
                     inviteMylistProjectLoading: true,
-                }
+                };
 
             case "MYLIST_PROJECT_INVITE_SUCCESS":
-                console.log('action.data', action.data)
                 return {
                     ...state,
                     inviteMylistProjectLoading: false,
@@ -529,21 +523,21 @@ const UserReducer = (state = UserIntialState, action) => {
                             return project
                         })
                     }
-                }
+                };
 
             case "MYLIST_PROJECT_INVITE_FAILUE" : 
                 return {
                     ...state,
                     inviteMylistProjectLoading: false,
                     inviteMylistProjectError: action.data
-                }
+                };
 
 
             case "MYLIST_PROJECT_REJECT_REQUEST": 
                 return {
                     ...state,
                     rejectMylistProjectLoading: true,
-                }
+                };
 
             case "MYLIST_PROJECT_REJECT_SUCCESS":
                 return {
@@ -560,21 +554,21 @@ const UserReducer = (state = UserIntialState, action) => {
                             return project
                         })
                     }
-                }
+                };
 
             case "MYLIST_PROJECT_REJECT_FAILUE" : 
                 return {
                     ...state,
                     rejectMylistProjectLoading: false,
                     rejectMylistProjectError: action.data
-                }
+                };
 
 
             case "MYLIST_PROJECT_REQUEST_REQUEST": 
                 return {
                     ...state,
                     requestMylistProjectLoading: true,
-                }
+                };
 
             case "MYLIST_PROJECT_REQUEST_SUCCESS":
                 return {
@@ -583,14 +577,14 @@ const UserReducer = (state = UserIntialState, action) => {
                     requestMylistProjectDone: true,
                     requestMylistProjectError:'',
                     requestMyProject: action.data
-                }
+                };
 
             case "MYLIST_PROJECT_REQUEST_FAILUE" : 
                 return {
                     ...state,
                     requestMylistProjectLoading: false,
                     requestMylistProjectError: action.data
-                }
+                };
 
             case "MY_PROJECTS_DELETE_SUCCESS":
                 return {
@@ -599,14 +593,14 @@ const UserReducer = (state = UserIntialState, action) => {
                         ...state.user,
                         projects: state.user.projects.filter(project => project._id !== action.data.projectId)
                     }
-                }
+                };
 
                 
             case "MY_PROJECTS_UPDATE_REQUEST": 
                 return {
                     ...state,
                     updateMyProjectsLoading: true,
-                }
+                };
 
             case "MY_PROJECTS_UPDATE_SUCCESS":
                 return {
@@ -625,19 +619,17 @@ const UserReducer = (state = UserIntialState, action) => {
                             return project
                         })
                     }
-                }
+                };
 
             case "MY_PROJECTS_UPDATE_FAILUE" : 
                 return {
                     ...state,
                     updateMyProjectsLoading: false,
                     updateMyProjectsError: action.data
-                }
+                };
 
-            
-
-            default: return { ...state }
-    }
-}
+            default: return { ...state };
+    };
+};
 
 export default UserReducer;

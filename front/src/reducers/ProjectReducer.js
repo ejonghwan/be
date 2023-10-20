@@ -80,7 +80,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     createProjectLoading: true,
-                }
+                };
 
             case "PROJECT_CREATE_SUCCESS": 
                 // action  {type: "", data: ...} 
@@ -90,20 +90,20 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     createProjectDone: true,
                     createProjectError: '',
                     project: action.data,
-                }
+                };
 
             case "PROJECT_CREATE_FAILUE" : 
                 return {
                     ...state,
                     createProjectLoading: false,
                     createProjectError: action.data,
-                }
+                };
                 
             case "PROJECT_DELETE_REQUEST": 
                 return {
                     ...state,
                     deleteProjectLoading: true,
-                }
+                };
 
             case "PROJECT_DELETE_SUCCESS": 
                 return {
@@ -112,20 +112,20 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     deleteProjectDone: true,
                     deleteProjectError: '',
                     project: {}
-                }
+                };
 
             case "PROJECT_DELETE_FAILUE" : 
                 return {
                     ...state,
                     deleteProjectLoading: false,
                     deleteProjectError: action.data,
-                }
+                };
 
             case "A_PROJECT_LOAD_REQUEST": 
                 return {
                     ...state,
                     aLoadProjectLoading: true,
-                }
+                };
 
             case "A_PROJECT_LOAD_SUCCESS": 
                 return {
@@ -134,14 +134,14 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     aLoadProjectDone: true,
                     aLoadProjectError: '',
                     project: action.data,
-                }
+                };
 
             case "A_PROJECT_LOAD_FAILUE" : 
                 return {
                     ...state,
                     aLoadProjectLoading: false,
                     aLoadProjectError: action.data,
-                }
+                };
 
             case "PROJECT_LIKE_INC_SUCCESS": 
                 return {
@@ -151,7 +151,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                         likeCount: state.project.likeCount + 1,
                         likeUser: state.project.likeUser.concat(action.data)
                     }
-                }
+                };
 
             case "PROJECT_LIKE_DEC_SUCCESS": 
                 return {
@@ -161,13 +161,13 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                         likeCount: state.project.likeCount - 1,
                         likeUser: state.project.likeUser.filter(user => user._id !== action.data)
                     }
-                }
+                };
                 
             case "PROJECT_REQUEST_REQUEST": 
                 return {
                     ...state,
                     requestInfriendProjectLoading: true,
-                }
+                };
             
             case "PROJECT_REQUEST_SUCCESS": 
                 return {
@@ -176,20 +176,20 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     requestInfriendProjectDone: true,
                     requestInfriendProjectError: '',
                     project: { ...state.project, joinUser: [ ...action.data ] },
-                }
+                };
 
             case "PROJECT_REQUEST_FAILUE" : 
                 return {
                     ...state,
                     requestInfriendProjectLoading: false,
                     requestInfriendProjectError: action.data
-                }
+                };
             
             case "PROJECT_INVITE_REQUEST": 
                 return {
                     ...state,
                     inviteProjectLoading: true,
-                }
+                };
 
             case "PROJECT_INVITE_SUCCESS": 
                 return {
@@ -198,20 +198,20 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     inviteProjectDone: true,
                     inviteProjectError: '',
                     project: action.data.project
-                }
+                };
 
             case "PROJECT_INVITE_FAILUE" : 
                 return {
                     ...state,
                     inviteProjectLoading: false,
                     inviteProjectError: action.data,
-                }
+                };
 
             case "PROJECT_REJECT_REQUEST": 
                 return {
                     ...state,
                     rejectProjectLoading: true,
-                }
+                };
 
             case "PROJECT_REJECT_SUCCESS": 
                 return {
@@ -220,20 +220,20 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     rejectProjectDone: true,
                     rejectProjectError: '',
                     project: {...state.project, joinUser: [...state.project.joinUser.filter(user => user._id._id !== action.data.userId)]},
-                }
+                };
 
             case "PROJECT_REJECT_FAILUE" : 
                 return {
                     ...state,
                     rejectProjectLoading: false,
                     rejectProjectError: action.data,
-                }
+                };
 
             case "PROJECT_WITHDRAW_REQUEST": 
                 return {
                     ...state,
                     drowProjectLoading: true,
-                }
+                };
 
             case "PROJECT_WITHDRAW_SUCCESS": 
                 return {
@@ -242,20 +242,20 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     drowProjectDone: true,
                     drowProjectError: '',
                     project: action.data,
-                }
+                };
 
             case "PROJECT_WITHDRAW_FAILUE" : 
                 return {
                     ...state,
                     drowProjectLoading: false,
                     drowProjectError: action.data,
-                }
+                };
 
             case "PROJECT_ADD_INVITE_REQUEST": 
                 return {
                     ...state,
                     addInviteProjectLoading: true,
-                }
+                };
 
             case "PROJECT_ADD_INVITE_SUCCESS": 
                 return {
@@ -267,20 +267,20 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                         ...state.project,
                         joinUser: [...action.data]
                     },
-                }
+                };
 
             case "PROJECT_ADD_INVITE_FAILUE" : 
                 return {
                     ...state,
                     addInviteProjectLoading: false,
                     addInviteProjectError: action.data,
-                }
+                };
 
             case "PROJECT_EDIT_REQUEST": 
                 return {
                     ...state,
                     editProjectLoading: true,
-                }
+                };
 
             case "PROJECT_EDIT_SUCCESS": 
                 return {
@@ -297,20 +297,20 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                         projectPublic: action.data.projectPublic,
                         updatedAt: action.data.updatedAt,
                     },
-                }
+                };
 
             case "PROJECT_EDIT_FAILUE" : 
                 return {
                     ...state,
                     editProjectLoading: false,
                     editProjectError: action.data,
-                }
+                };
 
             case "WRITE_CREATE_REQUEST": 
                 return {
                     ...state,
                     createWriteLoading: true,
-                }
+                };
 
             case "WRITE_CREATE_SUCCESS": 
                 return {
@@ -322,21 +322,21 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                         ...state.project,
                         writes: [...state.project.writes.concat(action.data.write)]
                     },
-                }
+                };
 
             case "WRITE_CREATE_FAILUE" : 
                 return {
                     ...state,
                     createWriteLoading: false,
                     createWriteError: action.data,
-                }
+                };
 
 
             case "PROJECT_MYAPPLY_LOAD_REQUEST": 
                 return {
                     ...state,
                     loadMyapplyProjectLoading: true,
-                }
+                };
 
             case "PROJECT_MYAPPLY_LOAD_SUCCESS": 
                 return {
@@ -345,14 +345,14 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadMyapplyProjectDone: true,
                     loadMyapplyProjectError: '',
                     myapplyProject: action.data
-                }
+                };
 
             case "PROJECT_MYAPPLY_LOAD_FAILUE" : 
                 return {
                     ...state,
                     loadMyapplyProjectLoading: false,
                     loadMyapplyProjectError: action.data,
-                }
+                };
 
 
 
@@ -360,7 +360,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loadMyProjectLoading: true,
-                }
+                };
 
             case "MYPROJECT_LOAD_SUCCESS": 
                 return {
@@ -369,14 +369,14 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadMyProjectDone: true,
                     loadMyProjectError: '',
                     myProject: action.data
-                }
+                };
 
             case "MYPROJECT_LOAD_FAILUE" : 
                 return {
                     ...state,
                     loadMyProjectLoading: false,
                     loadMyProjectError: action.data,
-                }
+                };
 
 
 
@@ -385,7 +385,7 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     loadLankProjectsLoading: true,
-                }
+                };
 
             case "PROJECT_RANK_LOAD_SUCCESS": 
                 return {
@@ -395,21 +395,21 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadLankProjectsError: '',
                     rankProjects: state.rankProjects.concat(action.data.project),
                     rankMaxCount: action.data.maxCount
-                }
+                };
 
             case "PROJECT_RANK_LOAD_FAILUE" : 
                 return {
                     ...state,
                     loadLankProjectsLoading: false,
                     loadLankProjectsError: action.data,
-                }
+                };
 
 
             case "PROJECT_INSRANK_LOAD_REQUEST": 
                 return {
                     ...state,
                     loadInsLankProjectsLoading: true,
-                }
+                };
 
             case "PROJECT_INSRANK_LOAD_SUCCESS": 
                 return {
@@ -419,14 +419,14 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     loadInsLankProjectsError: '',
                     insrankProjects: state.insrankProjects.concat(action.data.project),
                     insrankMaxCount: action.data.maxCount
-                }
+                };
 
             case "PROJECT_INSRANK_LOAD_FAILUE" : 
                 return {
                     ...state,
                     loadInsLankProjectsLoading: false,
                     loadInsLankProjectsError: action.data,
-                }
+                };
                 
 
             case "RESET_PROJECTS" : 
@@ -438,12 +438,10 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     project: {},
                     rankProjects: [],
                     insrankProjects: []
-                }
+                };
 
-            
-            
-            default: return { ...state }
-    }
-}
+            default: return { ...state };
+    };
+};
 
 export default ProjectReducer;

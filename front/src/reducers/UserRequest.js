@@ -23,7 +23,7 @@ const host = process.env.REACT_APP_BACKEND_HOST;
 const UserRequest = () => {
     const { dispatch } = useContext(UserContext); 
     const { ProjectDispatch } = useContext(ProjectContext);
-    const accToken = getWithExpire('X-access-token')
+    const accToken = getWithExpire('X-access-token');
 
    // 회원가입 유저
      const emailAuth = async data => {
@@ -34,7 +34,7 @@ const UserRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
-            }
+            };
             const res = await axios.post(`${host}/api/auth`, data, config);
             dispatch({ type: "AUTH_NUMBER_SUCCESS" })
             return res;
@@ -42,8 +42,8 @@ const UserRequest = () => {
             console.error(err);
             dispatch({ type: "AUTH_NUMBER_FAILUE", data: err.response.data.message });
             return err.response;
-        }
-    }
+        };
+    };
 
     
     // 회원가입 유저
@@ -70,17 +70,17 @@ const UserRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true,
-            }
-            const user = await axios.post(`${host}/api/users/signup`, {...data, darkMode: initTheme, profileImage: { bg: randomColor, firstString: id.slice(0, 1) }}, config)
-            dispatch({ type: "USER_SIGNUP_SUCCESS" })
+            };
+            const user = await axios.post(`${host}/api/users/signup`, {...data, darkMode: initTheme, profileImage: { bg: randomColor, firstString: id.slice(0, 1) }}, config);
+            dispatch({ type: "USER_SIGNUP_SUCCESS" });
             return user;
 
         } catch(err) {
-            console.error('saga err', err)
-            dispatch({ type: "USER_SIGNUP_FAILUE", data: err.response.data.message })
-            return err.response
-        } 
-    }
+            console.error('saga err', err);
+            dispatch({ type: "USER_SIGNUP_FAILUE", data: err.response.data.message });
+            return err.response;
+        } ;
+    };
 
 
     // 유저 불러오기
@@ -118,7 +118,6 @@ const UserRequest = () => {
     // 유저 프로젝트만 불러오기
      const getUserProjects = async userId => {
         try {
-            console.log(userId)
             if(!userId || typeof userId !== 'string') throw new Error('is not id');
             const config = {
                 headers: { 
@@ -126,7 +125,7 @@ const UserRequest = () => {
                     'X-access-token': accToken,
                 },
                 withCredentials: true
-            }
+            };
 
             const user = await axios.get(`${host}/api/users/load/projects/${userId}`, config);
             dispatch({ type: "MY_PROJECTS_UPDATE_SUCCESS", data: user.data });
@@ -148,7 +147,7 @@ const UserRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true // 쿠키 cors 통신 설정
-            }
+            };
 
             const user = await axios.post(`${host}/api/users/login`, data, config);
             // localStorage.setItem('X-access-token', user.data.accToken);
@@ -165,7 +164,6 @@ const UserRequest = () => {
     // 로그아웃 유저 
      const logoutUser = async () => {
         try {
-            ;
             if(!accToken) throw new Error('is not acctoken');
             const config = {
                 headers: {
@@ -191,7 +189,6 @@ const UserRequest = () => {
     // 이름 수정 
      const userInfoEditUser = async data => {
         try {
-            ;
             if(!accToken) throw new Error('user request error. is not acc token');
 
             const { name, gender, birthday, phoneNumber, _id } = data;
@@ -207,21 +204,20 @@ const UserRequest = () => {
                     'X-access-token': accToken,
                 },
                 withCredentials: true,
-            }
+            };
             const user = await axios.patch(`${host}/api/users/edit/userInfo`, data, config);
             dispatch({ type: "USER_INFO_EDIT_SUCCESS", data: user.data });
             return user;
         } catch(err) {
             console.error(err)
             dispatch({ type: "USER_INFO_EDIT_FAILUE", data: err.response.data.message });
-            return err.response
-        }
-    }
+            return err.response;
+        };
+    };
    
     // 회원 + 로그인 인사람 인증번호 보내기 (회원이 로그인 한 상태에서 인증할 때)
      const memberAuthNumberRequest = async data => {
         try {
-            ;
             if(!accToken) return;
             const { email, _id } = data;
             if(!email && typeof email !== 'string') throw new Error('user request error. is not email');
@@ -232,7 +228,7 @@ const UserRequest = () => {
                     'X-access-token': accToken,
                 },
                 withCredentials: true // 쿠키 cors 통신 설정
-            }
+            };
             const res = await axios.post(`${host}/api/auth/member/number`, data, config);
             dispatch({ type: "USER_MAIL_AUTH_SUCCESS" })
             return res;
@@ -240,8 +236,8 @@ const UserRequest = () => {
             console.error(err)
             dispatch({ type: "USER_MAIL_AUTH_FAILUE", data: err.response.data.message });
             return err.response;
-        }
-    }
+        };
+    };
    
 
     // 비회원 + 비로그인 인증번호 보내기  (회원가입)
@@ -442,7 +438,7 @@ const UserRequest = () => {
             dispatch({ type: "USER_SECESSION_FAILUE", data: err.response.data.message })
             return err.response;
         };
-    }
+    };
 
     // 프로젝트 좋아요
     const projectLike = async data => {
@@ -465,9 +461,9 @@ const UserRequest = () => {
             
         } catch(err) {
             console.error(err);
-            dispatch({ type: "PROJECT_LIKE_FAILUE", data: err.response.data.message })
+            dispatch({ type: "PROJECT_LIKE_FAILUE", data: err.response.data.message });
         };
-    }
+    };
 
       // 프로젝트 좋아요 취소
       const projectUnlike = async data => {
@@ -493,7 +489,7 @@ const UserRequest = () => {
             console.error(err);
             dispatch({ type: "PROJECT_UNLIKE_FAILUE", data: err.response.data.message });
         };
-    }
+    };
 
      // 다크모드 변경
      const changeDarkmode = async data => {
@@ -517,7 +513,7 @@ const UserRequest = () => {
             console.error(err);
             dispatch({ type: "USER_DARKMODE_CHANGE_FAILUE", data: err.response.data.message });
         };
-    }
+    };
 
       // 프로젝트 초대수락
       const inviteMyListProject = async data => {
@@ -532,15 +528,15 @@ const UserRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/project/join/accept/${projectId}/${userId}`, {}, config);
             dispatch({ type: "MYLIST_PROJECT_INVITE_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             dispatch({ type: "MYLIST_PROJECT_INVITE_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     // 프로젝트 초대거절
@@ -555,15 +551,15 @@ const UserRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/project/join/reject/${projectId}/${userId}`, {}, config);
             dispatch({ type: "MYLIST_PROJECT_REJECT_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             dispatch({ type: "MYLIST_PROJECT_REJECT_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     // 내가 신청한 프로젝트
@@ -577,15 +573,15 @@ const UserRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.get(`${host}/api/project/myrequest/${userId}`, config);
             dispatch({ type: "MYLIST_PROJECT_REQUEST_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             dispatch({ type: "MYLIST_PROJECT_REQUEST_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     return {
@@ -612,8 +608,8 @@ const UserRequest = () => {
         requestMyProject,
         getUserProjects
 
-    }
-}
+    };
+};
 
 export default UserRequest;
 

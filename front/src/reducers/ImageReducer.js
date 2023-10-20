@@ -1,6 +1,6 @@
 export const ImageIntialState = {
     images: [],
-}
+};
 
 
 const ImageReducer = (state = ImageIntialState, action) => {
@@ -10,20 +10,20 @@ const ImageReducer = (state = ImageIntialState, action) => {
             return {
                 ...state,
                 images: [...state.images].concat(action.data),
-            }
+            };
 
         case "IMAGE_UPLOAD_REQUEST": 
             return {
                 ...state,
                 images: [...state.images].concat(action.data),
-            }
+            };
 
         default: 
             return {
                 ...state
-            }
-    }
-}
+            };
+    };
+};
 
 
 

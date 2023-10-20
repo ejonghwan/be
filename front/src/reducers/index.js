@@ -1,8 +1,8 @@
-import ImageReducer, { ImageIntialState } from './ImageReducer.js'
-import UserReducer, { UserIntialState } from './UserReducer.js'
-import SearchReducer, { SearchIntialState } from './SearchReducer.js'
-import ProjectReducer, { ProjectIntialState } from './ProjectReducer.js'
-import WriteReducer, { WriteIntialState } from './WriteReducer.js'
+import ImageReducer, { ImageIntialState } from './ImageReducer.js';
+import UserReducer, { UserIntialState } from './UserReducer.js';
+import SearchReducer, { SearchIntialState } from './SearchReducer.js';
+import ProjectReducer, { ProjectIntialState } from './ProjectReducer.js';
+import WriteReducer, { WriteIntialState } from './WriteReducer.js';
 
 export {
     ImageIntialState,
@@ -15,5 +15,4 @@ export {
     ProjectReducer,
     WriteIntialState,
     WriteReducer,
-
-}
+};

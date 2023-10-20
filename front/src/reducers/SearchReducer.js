@@ -44,7 +44,7 @@ export const SearchIntialState = {
     searchAllLength: 0, // 검색된 총 db 갯수
     searchTagAllLength: 0 //태그 검색 총 갯수
 
-}
+};
 
 
 const SearchReducer = (state = SearchIntialState, action) => {
@@ -54,7 +54,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                 return {
                     ...state,
                     searchUserLoading: true,
-                }
+                };
             
             case "USER_SEARCH_SUCCESS": 
                 // action  {type: "", data: ...} 
@@ -64,14 +64,14 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     searchUserDone: true,
                     searchUserError: '',
                     userSearch: action.data
-                }
+                };
 
             case "USER_SEARCH_FAILUE" : 
                 return {
                     ...state,
                     searchUserLoading: false,
                     searchUserError: action.data,
-                }
+                };
 
 
             
@@ -81,7 +81,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                 return {
                     ...state,
                     searchProjectsLoading: true,
-                }
+                };
 
             case "PROJECT_SEARCH_SUCCESS": 
                 return {
@@ -91,21 +91,21 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     searchProjectsError: '',
                     projectSearchData: action.data.search,
                     searchAllLength: action.data.searchAllLength
-                }
+                };
 
             case "PROJECT_SEARCH_FAILUE" : 
                 return {
                     ...state,
                     searchProjectsLoading: false,
                     searchProjectsError: action.data,
-                }
+                };
 
                 
             case "PROJECT_SEARCH_RELATION_REQUEST": 
                 return {
                     ...state,
                     searchProjectsRelationLoading: true,
-                }
+                };
 
             case "PROJECT_SEARCH_RELATION_SUCCESS": 
                 return {
@@ -114,14 +114,14 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     searchProjectsRelationDone: true,
                     searchProjectsRelationError: '',
                     relationSearch: action.data,
-                }
+                };
 
             case "PROJECT_SEARCH_RELATION_FAILUE" : 
                 return {
                     ...state,
                     searchProjectsRelationRelationLoading: false,
                     searchProjectsRelationError: action.data,
-                }
+                };
 
                 
 
@@ -135,14 +135,14 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     loading: false,
                     // user: action.data,
                     // isLogged: true,
-                }
+                };
 
             case "CATEGORY_SEARCH_FAILUE" : 
                 return {
                     ...state,
                     loading: false,
                     // isLogged: false,
-                }
+                };
 
 
 
@@ -150,7 +150,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                 return {
                     ...state,
                     recentSearchLoading: true,
-                }
+                };
 
             case "RECENT_SEARCH_LOAD_SUCCESS": 
                 return {
@@ -159,21 +159,21 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     recentSearchDone: true,
                     recentSearchError: '',
                     recentText: action.data,
-                }
+                };
 
             case "RECENT_SEARCH_LOAD_FAILUE" : 
                 return {
                     ...state,
                     recentSearchLoading: false,
                     recentSearchError: action.data,
-                }
+                };
             
 
             case "RECENT_SEARCH_ADD_REQUEST": 
                 return {
                     ...state,
                     recentSearchAddLoading: true,
-                }
+                };
 
             case "RECENT_SEARCH_ADD_SUCCESS": 
                 return {
@@ -182,14 +182,14 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     recentSearchAddDone: true,
                     recentSearchAddError: '',
                     recentText: [action.data, ...state.recentText],
-                }
+                };
 
             case "RECENT_SEARCH_ADD_FAILUE" : 
                 return {
                     ...state,
                     recentSearchAddLoading: false,
                     recentSearchAddError: action.data,
-                }
+                };
 
 
                 
@@ -197,7 +197,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                 return {
                     ...state,
                     recentSearchDeleteLoading: true,
-                }
+                };
 
             case "RECENT_SEARCH_DELETE_SUCCESS": 
                 return {
@@ -206,21 +206,21 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     recentSearchDeleteDone: true,
                     recentSearchDeleteError: '',
                     recentText: state.recentText.filter(text => text !== action.data),
-                }
+                };
 
             case "RECENT_SEARCH_DELETE_FAILUE" : 
                 return {
                     ...state,
                     recentSearchDeleteLoading: false,
                     recentSearchDeleteError: action.data,
-                }
+                };
 
 
             case "RECENT_SEARCH_ALLDELETE_REQUEST": 
                 return {
                     ...state,
                     recentSearchAllDeleteLoading: true,
-                }
+                };
 
             case "RECENT_SEARCH_ALLDELETE_SUCCESS": 
                 return {
@@ -229,14 +229,14 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     recentSearchAllDeleteDone: true,
                     recentSearchAllDeleteError: '',
                     recentText: []
-                }
+                };
 
             case "RECENT_SEARCH_ALLDELETE_FAILUE" : 
                 return {
                     ...state,
                     recentSearchAllDeleteLoading: false,
                     recentSearchAllDeleteError: action.data,
-                }
+                };
 
 
 
@@ -244,7 +244,7 @@ const SearchReducer = (state = SearchIntialState, action) => {
                 return {
                     ...state,
                     SearchTagLoading: true,
-                }
+                };
 
             case "TAG_SEARCH_SUCCESS": 
                 return {
@@ -254,24 +254,18 @@ const SearchReducer = (state = SearchIntialState, action) => {
                     SearchTagError: '',
                     categorySearch: action.data.category[0].projects,
                     searchTagAllLength: action.data.searchTagAllLength
-                }
+                };
 
             case "TAG_SEARCH_FAILUE" : 
                 return {
                     ...state,
                     SearchTagLoading: false,
                     SearchTagError: action.data,
-                }
+                };
 
 
-                
-
-
-
-
-
-            default: return { ...state }
-    }
-}
+            default: return { ...state };
+    };
+};
 
 export default SearchReducer;

@@ -30,16 +30,16 @@ const ProjectRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.post(`${host}/api/project`, data, config);
             ProjectDispatch({ type: "PROJECT_CREATE_SUCCESS", data: res.data });
 
             return res.data;
         } catch(err) {
-            console.log('err??', err)
+            console.error('err??', err)
             ProjectDispatch({ type: "PROJECT_CREATE_FAILUE", data: err.response.data.message });
-        }
-    } 
+        };
+    };
 
 
     // 프로젝트 로드
@@ -49,7 +49,7 @@ const ProjectRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
-            }
+            };
             const res = await axios.get(`${host}/api/project/${projectId}`, config);
             if(res.data === null) return navigate('/page/error/404');
             ProjectDispatch({ type: "A_PROJECT_LOAD_SUCCESS", data: res.data });
@@ -58,8 +58,8 @@ const ProjectRequest = () => {
         } catch(err) {
             console.error(err);
             ProjectDispatch({ type: "A_PROJECT_LOAD_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
     
     // 프로젝트 초대
@@ -74,15 +74,15 @@ const ProjectRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/join/project/join/invite/${projectId}/${userId}`, {}, config);
             ProjectDispatch({ type: "PROJECT_REQUEST_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err.message.data.message });
-        }
-    }
+        };
+    };
 
      // 프로젝트 가입신청
      const requestProject = async data => {
@@ -97,15 +97,15 @@ const ProjectRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/project/join/${projectId}/${userId}`, {}, config);
             ProjectDispatch({ type: "PROJECT_REQUEST_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             ProjectDispatch({ type: "PROJECT_REQUEST_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
     // 프로젝트 초대수락
     const inviteProject = async data => {
@@ -120,15 +120,15 @@ const ProjectRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/project/join/accept/${projectId}/${userId}`, {}, config);
             ProjectDispatch({ type: "PROJECT_INVITE_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             ProjectDispatch({ type: "PROJECT_INVITE_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     // 프로젝트 초대거절
@@ -143,15 +143,15 @@ const ProjectRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/project/join/reject/${projectId}/${userId}`, {}, config);
             ProjectDispatch({ type: "PROJECT_REJECT_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             ProjectDispatch({ type: "PROJECT_REJECT_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     
@@ -167,15 +167,15 @@ const ProjectRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.delete(`${host}/api/project/delete/${projectId}/${userId}`, config);
             ProjectDispatch({ type: "PROJECT_WITHDRAW_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err.response.data);
             ProjectDispatch({ type: "PROJECT_WITHDRAW_FAILUE", data: err.response.data });
-        }
-    }
+        };
+    };
 
 
     // 프로젝트 친구초대
@@ -190,21 +190,20 @@ const ProjectRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/project/join/invite/${projectId}/${userId}`, {}, config);
             ProjectDispatch({ type: "PROJECT_ADD_INVITE_SUCCESS", data: res.data });
             return res;
         } catch(err) {
             console.error(err.response.data);
             ProjectDispatch({ type: "PROJECT_ADD_INVITE_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     // 프로젝트 수정
     const editProject = async data => {
         try {
-            
             const { projectId, instanceUser, content, projectPublic, categorys, deleteCategorys, projectImages } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(instanceUser && typeof instanceUser !== 'object') throw new Error('type check instanceUser');
@@ -220,17 +219,15 @@ const ProjectRequest = () => {
                     'X-access-token': accToken, 
                 },
                 withCredentials: true,
-            }
-            console.log(data)
+            };
             const res = await axios.patch(`${host}/api/project/edit/${projectId}`, data, config);
             ProjectDispatch({ type: "PROJECT_EDIT_SUCCESS", data: res.data });
-            console.log(res)
             return res;
         } catch(err) {
             console.error(err.response.data);
             ProjectDispatch({ type: "PROJECT_EDIT_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
     const deleteProject = async data => {
         try {
@@ -268,7 +265,7 @@ const ProjectRequest = () => {
                     'X-access-token': accToken, 
              },
                 withCredentials: true,
-            }
+            };
             const res = await axios.get(`${host}/api/project/myprojects/${userId}`, config);
             ProjectDispatch({ type: "MYPROJECT_LOAD_SUCCESS", data: res.data });
 
@@ -276,8 +273,8 @@ const ProjectRequest = () => {
         } catch(err) {
             console.error(err);
             ProjectDispatch({ type: "MYPROJECT_LOAD_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     // 내가 신청한 프로젝트
@@ -350,10 +347,6 @@ const ProjectRequest = () => {
         };
     };
 
-
-
-
-
     return {
         createProject, 
         loadProject,
@@ -369,8 +362,8 @@ const ProjectRequest = () => {
         loadMyProject,
         loadRankProject,
         loadinstanceRankProject
-    }
-}
+    };
+};
 
 export default ProjectRequest;
 

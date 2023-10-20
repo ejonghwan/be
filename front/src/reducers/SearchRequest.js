@@ -16,15 +16,15 @@ const SearchRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
-            }
+            };
             const res = await axios.get(`${host}/api/search/user/${encodeName}`, config);
             SearchDispatch({ type: "USER_SEARCH_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             SearchDispatch({ type: "USER_SEARCH_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     // 습관 검색
@@ -37,35 +37,33 @@ const SearchRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
-            }
+            };
             const res = await axios.get(`${host}/api/search/project/${encodeName}/${pageNum}`, config);
             SearchDispatch({ type: "PROJECT_SEARCH_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             SearchDispatch({ type: "PROJECT_SEARCH_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
     // 연관 검색
      const projectRelationSearch = async searchText => {
-
-        console.log('request 이거 가는지')
         try {
             if(!searchText || typeof searchText !== 'string') throw new Error('넘어온 검색값이 잘못되었습니다');
             let encodeName = encodeURIComponent(searchText);
             const config = {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true,
-            }
+            };
             const res = await axios.get(`${host}/api/search/relation/project/${encodeName}`, config);
             SearchDispatch({ type: "PROJECT_SEARCH_RELATION_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             SearchDispatch({ type: "PROJECT_SEARCH_RELATION_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     
@@ -76,15 +74,15 @@ const SearchRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
-            }
+            };
             const res = await axios.get(`${host}/api/search/recent/load/${userId}`, config);
             SearchDispatch({ type: "RECENT_SEARCH_LOAD_SUCCESS", data: res.data.prevSearch });
 
         } catch(err) {
             console.error(err);
             SearchDispatch({ type: "RECENT_SEARCH_LOAD_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
        // 이전 검색어 추가
        const recentSearchAdd = async data => {
@@ -95,7 +93,7 @@ const SearchRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
-            }
+            };
             let encodeName = encodeURIComponent(searchText);
             const res = await axios.patch(`${host}/api/search/recent/add/${userId}/${encodeName}`, {}, config);
             SearchDispatch({ type: "RECENT_SEARCH_ADD_SUCCESS", data: res.data });
@@ -103,8 +101,8 @@ const SearchRequest = () => {
         } catch(err) {
             console.error(err);
             SearchDispatch({ type: "RECENT_SEARCH_ADD_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
       // 이전 검색어 삭제
       const recentSearchdelete = async data => {
@@ -115,7 +113,7 @@ const SearchRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
-            }
+            };
             let encodeName = encodeURIComponent(searchText);
             const res = await axios.patch(`${host}/api/search/recent/delete/${userId}/${encodeName}`, {}, config);
             SearchDispatch({ type: "RECENT_SEARCH_DELETE_SUCCESS", data: res.data });
@@ -123,8 +121,8 @@ const SearchRequest = () => {
         } catch(err) {
             console.error(err);
             SearchDispatch({ type: "RECENT_SEARCH_DELETE_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
       // 이전 검색어 모두 삭제
       const recentSearchDeleteAll = async data => {
@@ -134,15 +132,15 @@ const SearchRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
-            }
+            };
             const res = await axios.patch(`${host}/api/search/recent/deleteall/${userId}`, { data }, config);
             SearchDispatch({ type: "RECENT_SEARCH_ALLDELETE_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             SearchDispatch({ type: "RECENT_SEARCH_ALLDELETE_FAILUE", data: err.response.data.message });
-        }
-    }
+        };
+    };
 
 
     // 태그 검색
@@ -153,19 +151,15 @@ const SearchRequest = () => {
             const config = {
                 headers: { "Content-Type": "application/json", },
                 withCredentials: true,
-            }
+            };
             const res = await axios.get(`${host}/api/search/category/${categoryName}/${pageNum}`, config);
             SearchDispatch({ type: "TAG_SEARCH_SUCCESS", data: res.data });
 
         } catch(err) {
             console.error(err);
             SearchDispatch({ type: "TAG_SEARCH_FAILUE", data: err.response.data.message });
-        }
-    }
-
-
-
-
+        };
+    };
 
 
     return {
@@ -177,8 +171,8 @@ const SearchRequest = () => {
         projectRelationSearch,
         recentSearchDeleteAll,
         tagSearch
-    }
-}
+    };
+};
 
 export default SearchRequest;
 
