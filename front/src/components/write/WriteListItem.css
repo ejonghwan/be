@@ -46,7 +46,7 @@
     transition: transform .2s;
 }
 
-.write_list_wrap > li:hover {
+body.pc .write_list_wrap > li:hover {
     box-shadow: var(--box-shadow);
     transform: translateY(-2px);
 }

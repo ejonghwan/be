@@ -26,7 +26,7 @@
     filter: saturate(80%);
 }
 
-.tag_wrap > li:hover > a {
+body.pc .tag_wrap > li:hover > a {
     filter: saturate(150%);
     background-color: var(--tag-color);
     color: var(--text-color-white);

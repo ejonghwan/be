@@ -464,4 +464,5 @@ button:disabled {
     .button_type_close::before {
         width: 25px;
     }
+
 }

@@ -332,14 +332,6 @@ body.pc .calendar .body .col:hover {
 
 
 
-/* .calendar .zzzzzzzzzzzzzzz {
-    background-color: rgb(191, 219, 255);
-} */
-
-
-
-
-
 @media screen and (max-width: 760px) {
 
     .calendar .header {
@@ -347,7 +339,7 @@ body.pc .calendar .body .col:hover {
     }
 
     .calendar .body {
-        padding: 0px;
+        padding: 0px 1px;
     }
 
     .calendar .days {

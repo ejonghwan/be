@@ -15,8 +15,10 @@ const ProtectedPage = ({ page }) => {
             {!state.loadUserLoading && (
                 <div className='b_conts'>
                     <h2>{page}</h2>
-                    <p className='align_c gap_50'>{page} 페이지를 보시려면 로그인해주세요.</p>
-                    <LoginForm />
+                    <p className='align_c gap_50 gapt_50'>{page} 페이지를 보시려면 로그인해주세요.</p>
+                    <div className='gap_50'>
+                        <LoginForm />
+                    </div>
                     <FindList />
                 </div>
             )}
