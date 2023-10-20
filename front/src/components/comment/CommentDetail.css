@@ -145,7 +145,7 @@
     }
 
     .comment_user_thum_wrap .popup.comment_more {
-     
+        padding: 0px 5px;
         width: auto;
         height: auto;
     }
