@@ -1,6 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
-import { auth } from '../middleware/auth.js' ;
 
 // model 
 import Project from '../models/project.js';
@@ -8,8 +6,6 @@ import User from '../models/users.js';
 import Category from '../models/category.js';
 
 const router = express.Router();
-
-
 
 
 /*
@@ -64,8 +60,8 @@ router.get('/project/:searchText/:pageNum', async (req, res) => {
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
 
 //@ path    GET /api/search/relation/project/:searchText
 //@ doc     프로젝트, 글 검색 연관 검색
@@ -87,8 +83,8 @@ router.get('/relation/project/:searchText', async (req, res) => {
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
 
 
 //@ path    GET /api/search/:userId
@@ -118,8 +114,8 @@ router.get('/user/:user', async (req, res) => {
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
 
 
 //@ path    GET /api/search/recent/load/:userId
@@ -129,13 +125,13 @@ router.get('/recent/load/:userId', async (req, res) => {
     try {
         const { userId } = req.params;
          const userSearchData = await User.findById(userId).select("prevSearch");
-         userSearchData.prevSearch = userSearchData.prevSearch.reverse().slice(0, 10)
+         userSearchData.prevSearch = userSearchData.prevSearch.reverse().slice(0, 10);
          res.status(200).json(userSearchData);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
 
 
 //@ path    PATCH /api/search/recent/add/:userId/:searchText
@@ -144,13 +140,13 @@ router.get('/recent/load/:userId', async (req, res) => {
 router.patch('/recent/add/:userId/:searchText', async (req, res) => {
     try {
         const { userId, searchText } = req.params; 
-         await User.findByIdAndUpdate(userId, { $push: { prevSearch: searchText } }, { new: true }).select("prevSearch")
+         await User.findByIdAndUpdate(userId, { $push: { prevSearch: searchText } }, { new: true }).select("prevSearch");
          res.status(201).json(searchText);
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
 
 //@ path    PATCH /api/search/recent/delete/:userId/:searchText
 //@ doc     이전 검색어 삭제
@@ -163,10 +159,9 @@ router.patch('/recent/delete/:userId/:searchText', async (req, res) => {
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
 
-// http://localhost:8080/api/search/recent/delete/all/65223bfdd8eb0e9d3bd79929
 
 //@ path    PATCH /api/search/recent/deleteall/:userId
 //@ doc     이전 검색어 삭제
@@ -179,8 +174,8 @@ router.patch('/recent/deleteall/:userId', async (req, res) => {
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
 
 
 
@@ -192,16 +187,15 @@ router.get('/category/:categoryName/:pageNum', async (req, res) => {
         // 카테고리네임 프론트에서 encodeURIComponent("호호")
         const { categoryName, pageNum } = req.params;
         const page = parseInt(pageNum);
-        const category = await Category.find({ categoryName: categoryName }, ).sort({ createdAt: -1 }).skip((page - 1) * 10).limit(10).populate("projects")
+        const category = await Category.find({ categoryName: categoryName }, ).sort({ createdAt: -1 }).skip((page - 1) * 10).limit(10).populate("projects");
         const searchTagAllLength = await Category.find({ categoryName: categoryName } ).count();
 
         res.status(201).json({ category, searchTagAllLength });
     } catch (err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-
-})
+    };
+});
 
 
 

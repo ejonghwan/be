@@ -27,18 +27,17 @@ export const mailOpt = (reqUser, title, contents) => {
     };
 
     return mailOptions;
-}
+};
 
 
 // 메일 전송
 export const sendMail = (mailOption) => {
-    mailPoster.sendMail(mailOption, function(error, info){
-    if (error) {
-        console.log('에러 ' + error);
-    }
-    else {
-        console.log('전송 완료 ' + info.response);
-        next()
-    }
+    mailPoster.sendMail(mailOption, function(error, info) {
+        if (error) {
+            console.log('에러 ' + error);
+        } else {
+            console.log('전송 완료 ' + info.response);
+            next();
+        };
     });
 }

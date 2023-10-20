@@ -24,7 +24,7 @@ router.get('/load', auth, async (req, res) => {
         // user db data 처리는 auth 미들웨어에 있음
         if(req.reftoken) {
             // auth 미들웨어에서 acc/ref 토큰 모두 만료되어 ref 다시 만들고 db에 저장 후 쿠키로 응답
-            console.log('모두 만료돼서 디비 토큰 다시 저장하고 acc 다시 발급')
+            console.log('모두 만료돼서 디비 토큰 다시 저장하고 acc 다시 발급');
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(req.reftoken, salt,(err, hash) => {
                     res.cookie('X-refresh-token', hash, { expires: new Date(Date.now() + (1000 * 60 * 60 * 4)), httpOnly: true });
@@ -49,13 +49,12 @@ router.get('/load', auth, async (req, res) => {
 router.get('/load/projects/:userId', auth, async (req, res) => {
     try {
         const { userId } = req.params;
-        const projects = await User.findById(userId).populate({path: 'projects', select: 'constructorUser instanceUser'}).select('projects')
-
-        res.status(201).json( projects )
+        const projects = await User.findById(userId).populate({path: 'projects', select: 'constructorUser instanceUser'}).select('projects');
+        res.status(201).json( projects );
     } catch(err) {
-        console.error(err)
-        res.status(500).json({ message: err.message })
-    }
+        console.error(err);
+        res.status(500).json({ message: err.message });
+    };
 });
 
 
@@ -66,13 +65,13 @@ router.get('/load/projects/:userId', auth, async (req, res) => {
 //@ access  public
 router.get('/', auth, async (req, res) => {
     try {
-        const user = await User.find()
-        res.status(201).json({ user })
+        const user = await User.find();
+        res.status(201).json({ user });
     } catch(err) {
-        console.error(err)
-        res.status(500).json({ message: err.message })
-    }
-})
+        console.error(err);
+        res.status(500).json({ message: err.message });
+    };
+});
 
 
 //@ path    POST /api/users/login
@@ -82,8 +81,8 @@ router.post('/login', async (req, res) => {
     try {
         const { id, password } = req.body;
 
-        if(!id) return res.status(400).json({ message: '아이디가 없습니다.' }) 
-        if(!password) return res.status(400).json({ message: '비밀번호가 없습니다.' }) 
+        if(!id) return res.status(400).json({ message: '아이디가 없습니다.' });
+        if(!password) return res.status(400).json({ message: '비밀번호가 없습니다.' });
 
         // 파퓰레이트 하위는 아래처럼 쓰면됨 이거 정리해둬야됨  221109 하다감
         // const user = await User.findOne({ id: id }).populate({ path: "projects", populate: { path: "rank.a" } }).exec();
@@ -96,14 +95,14 @@ router.post('/login', async (req, res) => {
             { path: "joinProjects._id"},
             { path: 'likeProject', select: '_id title likeCount instanceUser createdAt constructorUser projectImages', populate: {path: "constructorUser._id", select: "name"} },
         ]).exec();
-        if(!user) return res.status(400).json({ message: "유저가 없습니다" })
+        if(!user) return res.status(400).json({ message: "유저가 없습니다" });
 
         const match = await bcrypt.compare(password, user.password);
-        if(!match) return res.status(400).json({ message: "비밀번호가 일치하지 않습니다." })
+        if(!match) return res.status(400).json({ message: "비밀번호가 일치하지 않습니다." });
         if(match) {
             // 2h acc토큰 발급
             jwt.sign({ id: id }, process.env.JWT_KEY, { expiresIn: "2h" }, (err, accToken) => {
-                if(err) throw new Error(err)
+                if(err) throw new Error(err);
                 // token hash
                 bcrypt.genSalt(10, async (err, salt) => {
                     bcrypt.hash(user.token, salt, (err, hash) => {
@@ -112,16 +111,16 @@ router.post('/login', async (req, res) => {
                         delete user._doc.question;
                         res.cookie('X-refresh-token', hash, { expires: new Date(Date.now() + 7200000), httpOnly: true });
                         res.status(200).json({ accToken, ...user._doc });
-                    })
-                })
+                    });
+                });
             });
         };
 
     } catch(err) {
-        console.error(err)
-        res.status(500).json({ message: err.message }) 
-    }
-})
+        console.error(err);
+        res.status(500).json({ message: err.message });
+    };
+});
 
 
 //@ path    GET /api/users/logout
@@ -129,7 +128,7 @@ router.post('/login', async (req, res) => {
 //@ access  public
 router.get('/logout', auth, (req, res) => {
     res.status(200).clearCookie('X-refresh-token').end();
-})
+});
 
 
 
@@ -171,8 +170,8 @@ router.post('/signup', async (req, res) => {
     } catch(err) {
         console.error('server:', err);
         res.status(500).json({ message: err.message });
-    }
-})
+    };
+});
 
 
 //@ path    PATCH /api/users/edit/userInfo
@@ -181,21 +180,21 @@ router.post('/signup', async (req, res) => {
 router.patch('/edit/userInfo', auth, async(req, res) => {
     try {
         const { name, gender, birthday, phoneNumber, _id } = req.body;
-        if(!name || typeof name !== 'string') return res.status(400).json({ message: '이름이 잘못되었습니다' }) 
-        if(!gender || typeof gender !== 'string') return res.status(400).json({ message: '성별이 잘못되었습니다' }) 
-        if(!birthday || typeof birthday !== 'string') return res.status(400).json({ message: '생일이 잘못되었습니다' }) 
-        if(!phoneNumber || typeof phoneNumber !== 'string') return res.status(400).json({ message: '번호가 잘못되었습니다' }) 
-        if(!mongoose.isValidObjectId(_id)) return res.status(400).json({ message: '_아이디가 잘못되었습니다' }) 
+        if(!name || typeof name !== 'string') return res.status(400).json({ message: '이름이 잘못되었습니다' });
+        if(!gender || typeof gender !== 'string') return res.status(400).json({ message: '성별이 잘못되었습니다' }); 
+        if(!birthday || typeof birthday !== 'string') return res.status(400).json({ message: '생일이 잘못되었습니다' }); 
+        if(!phoneNumber || typeof phoneNumber !== 'string') return res.status(400).json({ message: '번호가 잘못되었습니다' }); 
+        if(!mongoose.isValidObjectId(_id)) return res.status(400).json({ message: '_아이디가 잘못되었습니다' });
 
         // 한번 find하고 비교해서 바뀐거만 할지... 아니면 몇개안되니 find update 한번에 할지 ..고민
-        const user = await User.findOneAndUpdate({ _id: _id }, { $set: {name, gender, birthday, phoneNumber} }, { new: true })
+        const user = await User.findOneAndUpdate({ _id: _id }, { $set: {name, gender, birthday, phoneNumber} }, { new: true });
 
-        res.status(201).json(user)
+        res.status(201).json(user);
     } catch(err) {
-        console.error(err)
-        res.status(500).json({ message: err.message })
-    }
-})
+        console.error(err);
+        res.status(500).json({ message: err.message });
+    };
+});
 
 
 //@ path    PATCH /api/users/edit/email
@@ -267,8 +266,8 @@ router.post('/edit/password', auth, async (req, res) => {
 router.post('/find/password', async (req, res) => {
     try {
         const { _id, newPassword, newPasswordCheck } = req.body;
-        if(!_id && typeof _id !== 'string') return res.status(400).json({ message: '아이디가 없습니다.' }) ;
-        if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' }) 
+        if(!_id && typeof _id !== 'string') return res.status(400).json({ message: '아이디가 없습니다.' });
+        if(!newPassword && typeof newPassword !== 'string') return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' });
         if(newPassword !== newPasswordCheck) return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' });
 
         const user = await User.findOne({id: _id});
@@ -284,7 +283,7 @@ router.post('/find/password', async (req, res) => {
             });
         });
     } catch(err) {
-        console.error(err)
+        console.error(err);
         res.status(500).json({ message: err.message });
     };
 });
@@ -351,24 +350,12 @@ router.post('/find/id/question', async (req, res) => {
 
         res.status(200).json({id: user.id});
     } catch(err) {
-        console.error(err)
+        console.error(err);
         res.status(500).json({ message: err.message });
     };
 });
 
 
-
-
-// router.get('/image', async (req, res) => {
-//     try {
-//         const image = await Image.find();
-//         console.log('all img: ', image)
-//         res.status(201).json(image)
-//     } catch(err) {
-//         console.error(err)
-//         res.status(500).json({ message: err.message })
-//     }
-// })
 
 
 
@@ -394,10 +381,10 @@ router.post('/delete', auth, async (req, res) => {
         for(let i = 0; i < projectList.length; i++) {
             categoryList.push(...projectList[i].categorys);
         };
-        const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], []) //중복제거
+        const categorys = categoryList.reduce((acc, obj) => acc.includes(obj.categoryName) ? acc : [...acc, obj.categoryName], []); //중복제거
         projectList.map(async item => {
             // 유저 삭제 시 유저가 만든 카테고리에 연결된 프로젝트 아이디 삭제
-            await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": item._id } }, { new: true }) //후 ..삭제됐다!!!
+            await Category.updateMany({ categoryName: categorys }, { $pull: { "projects": item._id } }, { new: true });
         });
 
         // 0309 내일 이부분부터... 특정필드 삭제하고 하나씪 지워지는지 테스트 - 테스트 완료

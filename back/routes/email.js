@@ -1,11 +1,9 @@
 import express from 'express';
-import querystring from 'querystring'
-import mongoose from 'mongoose';
+import querystring from 'querystring';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { auth } from '../middleware/auth.js' ;
-import { mailAuth } from '../middleware/mailAuth.js'; //이거 대체 어디쓴거지 ?
 
 import { signMailAuth } from '../middleware/signMailAuth.js';
 import { mailAuthNumber, nonLoginAuthNumber } from '../middleware/mailAuthNumber.js';
@@ -24,10 +22,7 @@ dotenv.config();
 //@ access  public
 router.post('/', signMailAuth, async (req, res) => {
     try {
-       
-        console.log(req.body, '이메일인증')
         res.status(200).json({ message: '이메일로 전송되었습니다.', email: req.body.email })
-       
     } catch(err) {
         console.error(err)
         res.status(500).json({ message: err.message })
@@ -40,8 +35,6 @@ router.post('/', signMailAuth, async (req, res) => {
 //@ access  public
 router.get('/signup', async (req, res) => {
     try {
-       
-        console.log(req.query, '이메일인증')
         const { auth } = req.query;
         const match = jwt.verify(auth, process.env.JWT_KEY, {ignoreExpiration: true},) 
 

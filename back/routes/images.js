@@ -21,7 +21,7 @@ router.post('/:path/:id', auth, upload.single("image"), async (req, res) => {
     try {
         //post로 이미지를 보낼때 이미 req에 저장이 되어있음. upload(미들웨어)를 이용해서 저장된 이미지 가져옴 
         // postman  body -> form-data -> key에 위에 미들웨어와 동일한 키값 image넣음
-        if(!req.file) return res.status(400).json({ message: 'is not file' })
+        if(!req.file) return res.status(400).json({ message: 'is not file' });
         const { path, id } = req.params;
         
         // 어떤건 body에 저장됨? 
@@ -33,22 +33,22 @@ router.post('/:path/:id', auth, upload.single("image"), async (req, res) => {
             key: req.file.filename, 
             originalFileName: req.file.originalname,
             imgPublic: req.body.imgPublic,
-        })
+        });
         image.save();
 
         if(path && path === 'userProfile') { 
             await User.findByIdAndUpdate(id, { profileImage: { _id: image._id, key: image.key } });
-        } 
+        };
         if(path && path === 'write') { 
             await Write.findByIdAndUpdate(id, { writeImages: { _id: image._id, key: image.key } }); 
-        } 
+        };
         
         res.json(image); //db 정보 그대로 줌
 
     } catch(err) {
-        res.status(400).json({ message: err.message })
-    }
-})
+        res.status(400).json({ message: err.message });
+    };
+});
 
 
 // @ GET /api/images
@@ -56,13 +56,12 @@ router.post('/:path/:id', auth, upload.single("image"), async (req, res) => {
 // @ desc 이미지 불러오기
 router.get('/', async (req, res) => {
     try {
-        const images = await ImageModel.find()
-        // console.log(images)
-        res.status(201).json(images)
+        const images = await ImageModel.find();
+        res.status(201).json(images);
     } catch(err) {
-        console.error(err)
-    }
-})
+        console.error(err);
+    };
+});
 
 
 
@@ -77,9 +76,9 @@ router.delete('/:filename', auth, async (req, res) => {
         await unlink(`./uploads/${filename}`);
         res.end();
     } catch(err) {
-        console.error(err)
-    }
-})
+        console.error(err);
+    };
+});
 
  
 
