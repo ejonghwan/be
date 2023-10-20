@@ -25,7 +25,7 @@
 
 .tab_type1 .tab_header_item {
     flex: 0 0 auto;
-    border-bottom: 1px solid rgb(46, 46, 46);
+    border-bottom: 1px solid var(--line-color1)
 }
 
 .tab_type1 .tab_header_item button {

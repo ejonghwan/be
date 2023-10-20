@@ -68,6 +68,10 @@ const ProjectsList = ({ page }) => {
         if(tabName === 'attend') handleLoadInsUser();
     }, []);
 
+    useEffect(() => {
+        return () => ProjectDispatch({ type: "RESET_PROJECTS" });    
+    }, []);
+
     return (
         <Fragment>
             <HeadMetaTag title={`HOBBYIST. 습관 만들기 | ${page}`} />
