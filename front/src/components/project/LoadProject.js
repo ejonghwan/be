@@ -190,9 +190,14 @@ const LoadProject = ({ projectId }) => {
 
                             {/* 습관 참여유저 */}
                             <div className='part_user'>
-                                <h3 className='gapt_50 gap_10'>습관에 참여한 친구들</h3>
+                                <h3 className='gapt_50 gap_10'>습관 진행중인 사람</h3>
                                 {project.instanceUser && project.instanceUser.length > 0 ? (
-                                    <UserThumItem users={project.instanceUser} isText={true} className={'vertical'} matched={'part_user'}/>
+                                    <Fragment>
+                                        <p className='gap_5'>생성자</p>
+                                        <UserThumItem users={[project.constructorUser]} isText={true} className={'vertical'} matched={'part_user'}/>
+                                        <p className='gap_5'>참여자</p>
+                                        <UserThumItem users={project.instanceUser} isText={true} className={'vertical'} matched={'part_user'}/>
+                                    </Fragment>
                                 ) : (
                                     <NoData icon={<PiUsersDuotone />} title={"이 습관을 같이 하는 친구가 없습니다."} />
                                 )}
