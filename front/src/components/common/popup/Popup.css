@@ -145,6 +145,7 @@
 
     .popup_type_default.user_search_pop {
         top: 0;
+        left: 0;
     }
 
     #popup.profile_edit {

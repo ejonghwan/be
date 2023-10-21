@@ -132,6 +132,7 @@ const UserRequest = () => {
             return user;
         } catch(err) {
             console.error(err);
+            dispatch({ type: "USER_LOGOUT_SUCCESS" });
             dispatch({ type: "MY_PROJECTS_UPDATE_FAILUE", data: err.response.data.message });
             return err.response;
         };

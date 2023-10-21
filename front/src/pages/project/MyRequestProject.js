@@ -2,7 +2,7 @@ import { Fragment, useContext, useEffect } from 'react';
 import { UserContext } from '../../context/UserContext.js';
 import ProjectItemsHorizon from '../../components/project/ProjectItemsHorizon.js';
 import Button from '../../components/common/form/Button.js';
-import { PiUserCirclePlusDuotone, PiFolderDashedDuotone } from "react-icons/pi";
+import { PiPlusCircleBold, PiFolderDashedDuotone } from "react-icons/pi";
 import UserRequest from '../../reducers/UserRequest.js';
 import CompleteMsg from '../../components/common/complete/CompleteMsg.js';
 import './MyRequestProject.css';
@@ -95,8 +95,8 @@ const MyRequestProject = ({ page }) => {
                                         {project.joinUser?.filter(user => user.state === false).map( user => (
                                             <div className='request_friend_inner' key={user._id._id}>
                                                 <span>{user._id.id}</span>
-                                                <Button className={'button_reset ico_hover_type1'} onClick={() => handleInviteProject(project._id, user._id._id)}>
-                                                    <PiUserCirclePlusDuotone />
+                                                <Button className={'button_reset button_text ico_hover_type1'} onClick={() => handleInviteProject(project._id, user._id._id)}>
+                                                    <PiPlusCircleBold />
                                                 </Button>
                                                 <Button className={'button_type_close hover_type1'} onClick={() => handleRejectProject(project._id, user._id._id)}></Button>
                                             </div>

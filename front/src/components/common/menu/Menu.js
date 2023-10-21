@@ -80,7 +80,7 @@ const Menu = () => {
                 <li>
                     <Link to="/project/myapply" className='list'>
                         <PiSignInDuotone />
-                        <span>습관 신청/초대</span>
+                        <span>신청/초대 현황</span>
                     </Link>
                 </li>
             </ul>

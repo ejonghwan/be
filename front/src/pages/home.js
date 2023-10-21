@@ -50,7 +50,7 @@ const Home = ({ page }) => {
         loadRankProject({ pageNum: 1, limitNum: 10 });
         ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_REQUEST" });
         loadinstanceRankProject({ pageNum: 1, limitNum: 10 });
-        // return () => ProjectDispatch({ type: "RESET_PROJECTS" });
+        return () => ProjectDispatch({ type: "RESET_PROJECTS_LIST" });
     }, []);
 
 

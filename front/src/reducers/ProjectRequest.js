@@ -272,6 +272,7 @@ const ProjectRequest = () => {
             return res.data;
         } catch(err) {
             console.error(err);
+            dispatch({ type: "USER_LOGOUT_SUCCESS" });
             ProjectDispatch({ type: "MYPROJECT_LOAD_FAILUE", data: err.response.data.message });
         };
     };

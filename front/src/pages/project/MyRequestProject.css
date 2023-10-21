@@ -65,3 +65,16 @@
     padding: 3px 10px;
     border-radius: 8px;
 }
+
+@media screen and (max-width: 760px) {
+    .request_friend button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .request_friend button svg {
+        width: 26px;
+        height: 26px;
+        margin-top: 2px;
+    }
+}
