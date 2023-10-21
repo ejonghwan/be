@@ -10,15 +10,14 @@
 }
 
 .user_thum_wrap > li {
-    flex: 0 0 auto;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     background: var(--bg-box-color0);
     padding: 20px 10px;
     border-radius: 18px;
-    flex: 1 0 auto;
-    max-width: 150px;
+    flex: 0 0 auto;
+    width: 115px;
     /* gap: 10px; */
 }
 
