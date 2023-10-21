@@ -422,6 +422,7 @@ button:disabled {
 
 .button_more {
     padding: 13px 40px 13px 25px !important;
+    background-color: transparent;
 }
 
 

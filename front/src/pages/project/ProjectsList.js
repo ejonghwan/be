@@ -14,7 +14,7 @@ import HeadMetaTag from "../../components/common/HeadMetaTag";
 const ProjectsList = ({ page }) => {
     const { tabName } = useParams();
     const [ tabIdx, setTabIdx ] = useState(() => tabName === 'likes' ? 0 : 1);
-    const {  ProjectState, ProjectState: { rankProjects = [], insrankProjects = [], rankMaxCount, insrankMaxCount }, ProjectDispatch  } = useContext(ProjectContext)
+    const {  ProjectState, ProjectState: { rankProjects = [], insrankProjects = []}, ProjectDispatch  } = useContext(ProjectContext)
     const { loadRankProject, loadinstanceRankProject } = ProjectRequest();
     const [ likeProjectPage, setLikeProjectPage ] = useState(1);
     const [ insUserProjectPage, setInsUserProjectPage ] = useState(1);

@@ -1,7 +1,7 @@
 import './Input.css';
 
 
-const Input = ({ id, className, type, required, placeholder, name, value, onChange, onKeyUp, disabled, checked, defaultChecked }) => {
+const Input = ({ id, className = '', type, required, placeholder, name, value, onChange, onKeyUp, disabled, checked, defaultChecked, autocomplete = 'off' }) => {
     return (
         <input 
             id={id} 
@@ -16,6 +16,7 @@ const Input = ({ id, className, type, required, placeholder, name, value, onChan
             disabled={disabled} 
             checked={checked}
             defaultChecked={defaultChecked}
+            autocomplete={autocomplete}
         />
     );
 };

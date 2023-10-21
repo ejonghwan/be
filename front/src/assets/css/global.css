@@ -197,6 +197,7 @@ body.popup_active {
 
 #contents {
     flex: 1 1 100%;
+    padding-bottom: 100px;
 }
 
 #footer {
@@ -582,6 +583,10 @@ form {
 
     h2 {
         margin-bottom: 20px;
+    }
+
+    #contents {
+        padding-bottom: 50px;
     }
 
 }
