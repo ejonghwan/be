@@ -108,7 +108,7 @@ router.get('/user/:user', async (req, res) => {
                 }
             }
         ]
-        }).populate({ path: 'id' });
+        }).select('_id id profileImage name')
          res.status(200).json(findUser);
 
     } catch (err) {

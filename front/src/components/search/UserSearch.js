@@ -99,7 +99,7 @@ const UserSearch = ({ setFriendData = [] }) => {
                         <li key={idx} className='search_result_user_item'>
                             {
                                 <button type='button' 
-                                    className='button_reset' 
+                                    className='button_reset hover_type1' 
                                     title={`${user.id}님 초대`} 
                                     onClick={handleAddFriend({ name: user.name, _id: user._id })}
                                 >   
@@ -111,9 +111,9 @@ const UserSearch = ({ setFriendData = [] }) => {
                                     
                                     <strong className='user_name'>{user.name}</strong>
                                     <span className='user_id'>{user.id}</span>
-                                    <span className='button_reset button_plus'>
+                                    {/* <span className='button_reset button_plus'>
                                         <span className='blind'>{`친구추가된 목록에서 ${user.name} 없애기`}</span>
-                                    </span>
+                                    </span> */}
                                 </button>
                             }
                         </li>))}

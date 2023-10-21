@@ -20,6 +20,7 @@ import { ProjectContext } from '../../context/ProjectContext';
 import _debounce from 'lodash.debounce';
 import NoData from '../common/notData/NoData';
 import Spinners from '../common/spinners/Spinners';
+import NotProfileImg from '../user/NotProfileImg';
 
 
 const CreateProjectDetail = () => {
@@ -219,34 +220,55 @@ const CreateProjectDetail = () => {
                             </div>
                         ) : (
                             <ul className='search_result_user'>
-                                {SearchState.userSearch?.filter(user => user.id !== state.user.id).map(((user, idx) => <li key={idx} className='search_result_user_item'>{
-                                    <button type='button' 
-                                        className='button_reset' 
-                                        title={`${user.id}님 초대`} 
-                                        onClick={handleAddFriend({ name: user.name, _id: user._id })}
-                                    >
-                                        <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="유저 프로필 이미지" className='user_img'/>
-                                        <strong className='user_name'>{user.name}</strong>
-                                        <span className='user_id'>{user.id}</span>
-                                        <span className='button_reset button_plus'>
-                                            <span className='blind'>{`친구추가된 목록에서 ${user.name} 없애기`}</span>
-                                        </span>
-                                    </button>
-                                }</li>))}
+                                {SearchState.userSearch?.filter(user => user.id !== state.user.id).map(((user, idx) => 
+                                    <li key={idx} className='search_result_user_item'>
+                                        {<button type='button' 
+                                            className='button_reset hover_type1' 
+                                            title={`${user.id}님 초대`} 
+                                            onClick={handleAddFriend({ name: user.name, _id: user._id })}
+                                        >
+
+                                            {user.profileImage.key ? (
+                                                <img src={`${process.env.REACT_APP_BACKEND_HOST}/uploads/${user.profileImage.key}`} alt="유저 프로필 이미지" className='user_img' />
+                                            ) : (
+                                                <NotProfileImg firstString={user.profileImage?.firstString} userBgColor={user.profileImage?.bg} />
+                                            )}
+                                            <strong className='user_name'>{user.name}</strong>
+                                            <span className='user_id'>{user.id}</span>
+                                            {/* <span className='button_reset button_plus'>
+                                                <span className='blind'>{`친구추가된 목록에서 ${user.name} 없애기`}</span>
+                                            </span> */}
+                                        </button>}
+                                    </li>
+                                ))}
                             </ul>
                         )}
+
                         {/* 검색 결과가 없는 경우 */}
-                        {!SearchState.loading && SearchState.userSearch.length === 0 && <NoData icon={<PiSmileyXEyesDuotone />} title={"검색한 친구는 회원이 아닙니다."} subText={" 다시 검색해보세요."}/>}
+                        {(!SearchState.loading && SearchState.userSearch.length === 0 || 
+                        SearchState.userSearch?.filter(user => user.id === state.user.id).length > 0) && (
+                            <NoData 
+                                icon={<PiSmileyXEyesDuotone />} 
+                                title={"검색한 친구는 회원이 아닙니다."} 
+                                subText={" 다시 검색해보세요."}
+                            />
+                        )}
+
                         {SearchState.searchUserError && (
                             <ErrorMsg className={'error_type1 align_c gapt_30'}>
-                              {SearchState.searchUserError}
-                          </ErrorMsg>
+                                {SearchState.searchUserError}
+                            </ErrorMsg>
                         )}
                     </Search>
+                  
+
+
                     <div className='category_wrap gapt_10'>
                         <Tags tags={joinUserList?.map(user => user.name)} isLink={false} handleDelete={handleJoinUserDelete} contentName={"친구"} isNoData={false}/>
                     </div>
                 </div>
+
+
                 <div className='gap_30'>
                     <Search 
                         id={'category'}
