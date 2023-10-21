@@ -17,8 +17,8 @@ export const auth = async (req, res, next) => {
              // decode가 있으면 acc로 인증 
              console.log('????????????????????')
             if(match && match.exp > Date.now().valueOf() / 1000) { 
-                // writes 지우고 테스트
-                const user = await User.findOne({ id: match.id }).select('birthday comments createdAt darkMode email gender id joinProjects likePost likeProject name phoneNumber prevSearch profileImage projects recomments updatedAt').populate([ 
+                // writes comments recomments likePost 지우고 테스트
+                const user = await User.findOne({ id: match.id }).select('birthday createdAt darkMode email gender id joinProjects likeProject name phoneNumber prevSearch profileImage projects  updatedAt').populate([ 
                     { path: "projects", 
                         populate: [
                             {path: "constructorUser._id", select: "name"},
@@ -38,7 +38,7 @@ export const auth = async (req, res, next) => {
                 console.log('auth /  acc 토큰 만료돼서 refresh 토큰 으로 인증하고 다시 발급');
 
                 const refreshTokenDecode = decodeURIComponent(getRefreshToken);
-                const user = await User.findOne({ id: match.id }).select('birthday comments createdAt darkMode email gender id joinProjects likePost likeProject name phoneNumber prevSearch profileImage projects recomments updatedAt').populate([ 
+                const user = await User.findOne({ id: match.id }).select('birthday createdAt darkMode email gender id joinProjects likeProject name phoneNumber prevSearch profileImage projects  updatedAt').populate([ 
                     { path: "projects", 
                         populate: [
                             {path: "constructorUser._id", select: "name"},
