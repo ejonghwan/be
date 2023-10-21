@@ -69,7 +69,7 @@ const ProjectsList = ({ page }) => {
     }, []);
 
     useEffect(() => {
-        return () => ProjectDispatch({ type: "RESET_PROJECTS" });    
+        return () => ProjectDispatch({ type: "RESET_PROJECTS_LIST" });    
     }, []);
 
     return (

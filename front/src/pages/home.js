@@ -12,8 +12,8 @@ import SkeletonItem from '../components/skeleton/SkeletonItem.js';
 import SkeletonCard from '../components/skeleton/SkeletonCard.js';
 import ProjectItemsSquare from '../components/project/ProjectItemsSquare.js';
 import Button from '../components/common/form/Button.js';
-import './home.css';
 import HeadMetaTag from '../components/common/HeadMetaTag.js';
+import './home.css';
 
 
 
@@ -23,8 +23,6 @@ const Home = ({ page }) => {
     const { ProjectState, ProjectState: { myapplyProject, myProject, rankProjects, insrankProjects }, ProjectDispatch } = useContext(ProjectContext);
     const { myApplyProject, loadMyProject, loadRankProject, loadinstanceRankProject } = ProjectRequest();
     const { getUserProjects } = UserRequest();
-
-
 
     const handleLoadApplyProject = useCallback(() => {
         ProjectDispatch({ type: "PROJECT_MYAPPLY_LOAD_REQUEST" });
@@ -52,7 +50,7 @@ const Home = ({ page }) => {
         loadRankProject({ pageNum: 1, limitNum: 10 });
         ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_REQUEST" });
         loadinstanceRankProject({ pageNum: 1, limitNum: 10 });
-        return () => ProjectDispatch({ type: "RESET_PROJECTS" });
+        // return () => ProjectDispatch({ type: "RESET_PROJECTS" });
     }, []);
 
 

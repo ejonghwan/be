@@ -436,6 +436,11 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                     myapplyProject: [],
                     myProject: [],
                     project: {},
+                };
+
+            case "RESET_PROJECTS_LIST" : 
+                return {
+                    ...state,
                     rankProjects: [],
                     insrankProjects: []
                 };
