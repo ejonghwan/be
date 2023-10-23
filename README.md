@@ -22,6 +22,9 @@ React, CSS, MongoDB, NodeJS
 
 ![1회원가입](https://github.com/ejonghwan/be/assets/53946298/0479e7b8-1293-4940-bbd2-783b952cad78)
 
+https://github.com/ejonghwan/be/assets/53946298/ee55e1b5-8757-4cd3-9144-d16b99c77e81
+<video src="https://github.com/ejonghwan/be/assets/53946298/ee55e1b5-8757-4cd3-9144-d16b99c77e81" width="800" muted  controls autoplay loop>
+</video>
 
 
  [Google](https://google.com, "google link")
