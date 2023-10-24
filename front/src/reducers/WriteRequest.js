@@ -16,6 +16,7 @@ const WriteRequest = () => {
 
     const createWrite = async data => {
         try {
+            if(!accToken) return;
             const { user, project, title, content } = data;
             if(!title || typeof title !== 'string') throw new Error('넘어온 제목값이 잘못되었습니다');
             if(!content || typeof content !== 'string') throw new Error('넘어온 내용값이 잘못되었습니다');
@@ -39,6 +40,7 @@ const WriteRequest = () => {
 
     const loadWrite = async _id => {
         try {
+            if(!accToken) return;
             if(!_id || typeof _id !== 'string') throw new Error('넘어온 _id가 잘못되었습니다');
             const config = {
                 headers: { 
@@ -61,6 +63,7 @@ const WriteRequest = () => {
 
     const likeWrite = async data => {
         try {
+            if(!accToken) return;
             const { userId, writeId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId가 잘못되었습니다');
             if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
@@ -83,6 +86,7 @@ const WriteRequest = () => {
 
     const unLikeWrite = async data => {
         try {
+            if(!accToken) return;
             const { userId, writeId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId가 잘못되었습니다');
             if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
@@ -106,7 +110,7 @@ const WriteRequest = () => {
 
     const editWrite = async data => {
         try {
-
+            if(!accToken) return;
             const { writeId } = data;
             if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
             const config = {
@@ -129,6 +133,7 @@ const WriteRequest = () => {
 
     const deleteWrite = async data => {
         try {
+            if(!accToken) return;
             const { userId, writeId, projectId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
             if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId 잘못되었습니다');
@@ -155,6 +160,7 @@ const WriteRequest = () => {
 
     const createComment = async data => {
         try {
+            if(!accToken) return;
             const { user, writeId, content } = data;
             if(!user || typeof user !== 'object') throw new Error('넘어온 user가 잘못되었습니다');
             if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId가 잘못되었습니다');
@@ -179,6 +185,7 @@ const WriteRequest = () => {
 
     const likeComment = async data => {
         try {
+            if(!accToken) return;
             const { userId, commentId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId가 잘못되었습니다');
             if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
@@ -202,6 +209,7 @@ const WriteRequest = () => {
 
     const unlikeComment = async data => {
         try {
+            if(!accToken) return;
             const { userId, commentId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
             if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
@@ -225,6 +233,7 @@ const WriteRequest = () => {
 
     const editComment = async data => {
         try {
+            if(!accToken) return;
             const { commentId, content } = data;
             if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
             if(!content || typeof content !== 'string') throw new Error('넘어온 content 잘못되었습니다');
@@ -249,6 +258,7 @@ const WriteRequest = () => {
 
     const deleteComment = async data => {
         try {
+            if(!accToken) return;
             const { userId, writeId, commentId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
             if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId 잘못되었습니다');
@@ -275,6 +285,7 @@ const WriteRequest = () => {
 
     const createRecomment = async data => {
         try {
+            if(!accToken) return;
             const { user, content, commentId } = data;
             if(!user || typeof user !== 'object') throw new Error('넘어온 user 잘못되었습니다');
             if(!content || typeof content !== 'string') throw new Error('넘어온 content 잘못되었습니다');
@@ -300,6 +311,7 @@ const WriteRequest = () => {
 
     const likeRecomment = async data => {
         try {
+            if(!accToken) return;
             const { userId, commentId, recommentId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 user 잘못되었습니다');
             if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
@@ -323,6 +335,7 @@ const WriteRequest = () => {
 
     const unlikeRecomment = async data => {
         try {
+            if(!accToken) return;
             const { userId, commentId, recommentId } = data;
             console.log('redu?', data)
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 user 잘못되었습니다');
@@ -348,6 +361,7 @@ const WriteRequest = () => {
 
     const editRecomment = async data => {
         try {
+            if(!accToken) return;
             const { content, commentId, recommentId } = data;
             if(!content || typeof content !== 'string') throw new Error('넘어온 content 잘못되었습니다');
             if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
@@ -372,6 +386,7 @@ const WriteRequest = () => {
 
     const deleteRecomment = async data => {
         try {
+            if(!accToken) return;
             const { userId, commentId, recommentId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
             if(!commentId || typeof commentId !== 'string') throw new Error('넘어온 commentId 잘못되었습니다');
@@ -397,6 +412,7 @@ const WriteRequest = () => {
 
     const loadMyWrites = async data => {
         try {
+            if(!accToken) return;
             const { userId, page } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
             const config = {
@@ -419,6 +435,7 @@ const WriteRequest = () => {
 
     const loadMyComments = async data => {
         try {
+            if(!accToken) return;
             const { userId, page } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
             const config = {
@@ -440,6 +457,7 @@ const WriteRequest = () => {
 
     const deleteMyComment = async data => {
         try {
+            if(!accToken) return;
             const { userId, writeId, commentId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
             if(!writeId || typeof writeId !== 'string') throw new Error('넘어온 writeId 잘못되었습니다');

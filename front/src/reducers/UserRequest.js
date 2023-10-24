@@ -87,6 +87,7 @@ const UserRequest = () => {
      const getUser = async query => { // 쿠키없으면 로컬에서 acc토큰없애기 
         try {
             let userAccToken = null;
+            if(!accToken) return;
             if(query) { userAccToken = query }; //이미 가입된 이메일로 들어오는 유저들은 로그인 로직탐. query로 acc토큰 받음 
             if(localStorage.getItem('X-access-token')) {
                 userAccToken = getWithExpire('X-access-token')
@@ -118,6 +119,7 @@ const UserRequest = () => {
     // 유저 프로젝트만 불러오기
      const getUserProjects = async userId => {
         try {
+            if(!accToken) return;
             if(!userId || typeof userId !== 'string') throw new Error('is not id');
             const config = {
                 headers: { 
@@ -519,7 +521,7 @@ const UserRequest = () => {
       // 프로젝트 초대수락
       const inviteMyListProject = async data => {
         try {
-    
+            if(!accToken) return;
             const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
@@ -543,6 +545,7 @@ const UserRequest = () => {
     // 프로젝트 초대거절
      const rejectMyListProject = async data => {
         try {
+            if(!accToken) return;
             const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
@@ -566,6 +569,7 @@ const UserRequest = () => {
     // 내가 신청한 프로젝트
      const requestMyProject = async data => {
         try {
+            if(!accToken) return;
             const { userId } = data;
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
             const config = {

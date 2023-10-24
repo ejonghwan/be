@@ -17,6 +17,7 @@ const useImageRequest = () => {
 
     const imageUpload = async data => {
         try {
+            if(!accToken) return;
             const { file, name, _id, imgPublic, path } = data;
             const formData = new FormData();
             formData.append('image', file); //form data에 배열로 담김
@@ -54,6 +55,7 @@ const useImageRequest = () => {
 
     const imageDelete = async data => {
         try {
+            if(!accToken) return;
             const { fileName } = data;
             const image = await axios.delete(`${host}/api/images/${encodeURIComponent(fileName)}`, {
                 headers: { 

@@ -17,6 +17,7 @@ const ProjectRequest = () => {
     // 프로젝트 생성
      const createProject = async data => {
         try {
+            if(!accToken) return;
             const { title, content, projectPublic, categorys, joinUser, constructorUser } = data;
             if(!title || typeof title !== 'string') throw new Error('넘어온 제목값이 잘못되었습니다');
             if(!content || typeof content !== 'string') throw new Error('넘어온 내용값이 잘못되었습니다');
@@ -45,6 +46,7 @@ const ProjectRequest = () => {
     // 프로젝트 로드
     const loadProject = async projectId => {
         try {
+            if(!accToken) return;
             if(!projectId || typeof projectId !== 'string') throw new Error('넘어온 projectId 잘못되었습니다');
             const config = {
                 headers: { "Content-Type": "application/json", },
@@ -65,6 +67,7 @@ const ProjectRequest = () => {
     // 프로젝트 초대
     const requestInviteProject = async data => {
         try {
+            if(!accToken) return;
             const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
@@ -87,7 +90,7 @@ const ProjectRequest = () => {
      // 프로젝트 가입신청
      const requestProject = async data => {
         try {
-    
+            if(!accToken) return;
             const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
@@ -110,7 +113,7 @@ const ProjectRequest = () => {
     // 프로젝트 초대수락
     const inviteProject = async data => {
         try {
-    
+            if(!accToken) return;
             const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
@@ -134,6 +137,7 @@ const ProjectRequest = () => {
     // 프로젝트 초대거절
      const rejectProject = async data => {
         try {
+            if(!accToken) return;
             const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
@@ -158,6 +162,7 @@ const ProjectRequest = () => {
     // 프로젝트 탈퇴
     const withdrawProject = async data => {
         try {
+            if(!accToken) return;
             const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
@@ -181,6 +186,7 @@ const ProjectRequest = () => {
     // 프로젝트 친구초대
     const addFriendProject = async data => {
         try {
+            if(!accToken) return;
             const { projectId, userId } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(!userId || typeof userId !== 'string') throw new Error('is not userId');
@@ -204,6 +210,7 @@ const ProjectRequest = () => {
     // 프로젝트 수정
     const editProject = async data => {
         try {
+            if(!accToken) return;
             const { projectId, instanceUser, content, projectPublic, categorys, deleteCategorys, projectImages } = data;
             if(!projectId || typeof projectId !== 'string') throw new Error('is not projectId');
             if(instanceUser && typeof instanceUser !== 'object') throw new Error('type check instanceUser');
@@ -231,6 +238,7 @@ const ProjectRequest = () => {
 
     const deleteProject = async data => {
         try {
+            if(!accToken) return;
             const { projectId, userId } = data;
             if(!projectId) throw new Error('is not projectId');
             if(userId && typeof userId !== 'string') throw new Error('type check instanceUser');
@@ -258,6 +266,7 @@ const ProjectRequest = () => {
     // 내 프로젝트 로드
     const loadMyProject = async ({ userId }) => {
         try {
+            if(!accToken) return;
             if(!userId || typeof userId !== 'string') throw new Error('넘어온 userId 잘못되었습니다');
             const config = {
                 headers: { 
@@ -281,6 +290,7 @@ const ProjectRequest = () => {
     // 내가 신청한 프로젝트
     const myApplyProject = async data => {
         try {
+            if(!accToken) return;
             const { userId } = data;
             if(userId && typeof userId !== 'string') throw new Error('type check instanceUser');
             
