@@ -44,7 +44,9 @@ Reducer는 상태와 액션을 관리했고 Request파일에서는 API요청과 
 > 4. Component 파일의 상태 변경
 
 ### 3-2. Back
-Backend에서는 Express와 mongoose를 사용했습니다.   
+Backend에서는 Express와 mongoose를 사용했습니다. 
+API를 만들고 Postman으로 테스트하며 API 문서를 만들었습니다.  
+<img src="https://github.com/ejonghwan/be/assets/53946298/65b79b13-8205-49c0-8181-5165ae610101" width="40%" height="auto"></img>
 이미지 처리는 Multer모듈을 이용해서 작업했고 이미지파일은 Back서버의 uploads 폴더에 담아두는 것으로 일단 처리했습니다.    무료서버라서 프론트에서 1MB 제한을 걸어두었습니다.   
 
 Router 분리를 users, write, search, recomment, project, imgage, email, comment로 작업하였고 인증과 이미지 처리, 이메일 인증, 인증번호 보내는 것들은 Middleware를 만들어 처리했습니다.   
