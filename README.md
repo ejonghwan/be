@@ -31,10 +31,11 @@ React, CSS, NodeJS, MongoDB
 Componenets와 pages 폴더를 분리하여 관리했습니다.
 Components안에서는 각 파트별(users, projects, writes, comment, recomments, common 등..)로 큰 단위, 작은 단위별로 컴포넌트를 제작하여 사용했고 큰 단위의 컴포넌트를 pages에서 import 했습니다.
 
-상태관리는 Context API와 useReducer을 활용하여 관리했습니다   
+상태관리는 Context API와 useReducer을 활용하여 관리했습니다.   
 reducers 폴더에 Reducer와 Request 파일을 파트별로 만들어 관리했습니다.   
 Reducer는 상태와 액션을 관리했고 Request파일에서는 API요청과 응답에 따라 액션을 실행합니다.   
 필요에 따라 응답값을 컴포넌트에서 리턴값으로 활용하기도 했습니다.   
+
 상태관리에 Redux와 Redux-saga를 사용할까 고민도 해봤지만 이 개발과정에서 데이터 흐름을 더 잘 이해하고 싶어서 Redux를 사용하지 않고 비슷한 구조로 작업하려면 어떻게 해야 할지 고민을 많이 했습니다. 마찬가지의 이유로 immer같은 불변 객체를 관리하는 모듈을 사용하지 않고 작업했습니다.   
 
 > 데이터 흐름 
@@ -44,12 +45,13 @@ Reducer는 상태와 액션을 관리했고 Request파일에서는 API요청과 
 > 4. Component 파일의 상태 변경
 
 ### 3-2. Back
-Backend에서는 Express와 mongoose를 사용했습니다. 
-API를 만들고 Postman으로 테스트하며 API 문서를 만들었습니다.  
-<img src="https://github.com/ejonghwan/be/assets/53946298/65b79b13-8205-49c0-8181-5165ae610101" width="40%" height="auto"></img>
-이미지 처리는 Multer모듈을 이용해서 작업했고 이미지파일은 Back서버의 uploads 폴더에 담아두는 것으로 일단 처리했습니다.    무료서버라서 프론트에서 1MB 제한을 걸어두었습니다.   
+Backend에서는 Express와 mongoose를 사용했습니다.   
+API를 만들고 Postman으로 테스트하며 API 문서를 만들었습니다.   
+<img src="https://github.com/ejonghwan/be/assets/53946298/65b79b13-8205-49c0-8181-5165ae610101" width="100%" height="auto"></img>
 
+이미지 처리는 Multer모듈을 이용해서 작업했고 이미지파일은 Back서버의 uploads 폴더에 담아두는 것으로 일단 처리했습니다.    무료서버라서 프론트에서 1MB 제한을 걸어두었습니다.   
 Router 분리를 users, write, search, recomment, project, imgage, email, comment로 작업하였고 인증과 이미지 처리, 이메일 인증, 인증번호 보내는 것들은 Middleware를 만들어 처리했습니다.   
+
 작업하면서 가장 애를 먹은 부분 중 하나가 회원 인증처리였습니다.    
 많이 학습하며 고민한 끝에 짧은 토큰 Access Token과 긴 토큰 Refresh Token을 발급하여 관리하는 방법을 선택했고 회원가입 시 Refresh Token을 암호화(bcrypt 사용)하여 DB에 저장하고 Front에는 HTTP Only Cookies로 보냈습니다.    
 Access Token의 시간을 2시간으로 잡고 2시간 내에는 Access Token을 2시간이 지나면 Refresh Token토큰 을 보내 DB에 저장되어 있는 Refresh Token토큰과 비교했습니다.    
