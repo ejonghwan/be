@@ -442,7 +442,9 @@ const ProjectReducer = (state = ProjectIntialState, action) => {
                 return {
                     ...state,
                     rankProjects: [],
-                    insrankProjects: []
+                    insrankProjects: [],
+                    myapplyProject: [],
+                    myProject: [],
                 };
 
             default: return { ...state };
