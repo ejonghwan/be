@@ -7,7 +7,6 @@ import ProjectItems from '../components/project/ProjectItems.js';
 import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import ProjectRequest from '../reducers/ProjectRequest.js';
 import { ProjectContext } from '../context/ProjectContext.js';
-// import UserRequest from '../reducers/UserRequest.js';
 import SkeletonItem from '../components/skeleton/SkeletonItem.js';
 import SkeletonCard from '../components/skeleton/SkeletonCard.js';
 import ProjectItemsSquare from '../components/project/ProjectItemsSquare.js';
@@ -22,7 +21,6 @@ const Home = ({ page }) => {
     const { state } = useContext(UserContext);
     const { ProjectState, ProjectState: { myapplyProject, myProject, rankProjects, insrankProjects }, ProjectDispatch } = useContext(ProjectContext);
     const { myApplyProject, loadMyProject, loadRankProject, loadinstanceRankProject } = ProjectRequest();
-    // const { getUserProjects } = UserRequest();
 
     const handleLoadApplyProject = useCallback(() => {
         ProjectDispatch({ type: "PROJECT_MYAPPLY_LOAD_REQUEST" });
@@ -34,14 +32,9 @@ const Home = ({ page }) => {
         loadMyProject({ userId: state.user._id });
     }, [state.isLogged])
 
-    // const handleUserProjectsUpdate = () => {
-    //     dispatch({ type: "MY_PROJECTS_UPDATE_REQUEST" });
-    //     getUserProjects(state.user._id);
-    // };
     
     useEffect(() => {
         state.isLogged && handleLoadApplyProject();
-        // state.isLogged && handleUserProjectsUpdate();
         state.isLogged && handleLoadMyProject();
     }, [state.isLogged]);
 
