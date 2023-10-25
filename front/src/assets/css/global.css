@@ -17,6 +17,7 @@
     --main-bg-color2:#f4f4f4;
     --main-bg-color3: #f0f0f0;
     --header-bg-color: #f4f4f4;
+    --footer-bg-color: rgb(244, 244, 244);
     --hover-color: #f2f2f2;
     --hover-color2:rgb(226, 226, 226);
     --hover-color3:rgba(9, 9, 9, 0.258);
@@ -70,6 +71,7 @@
     --main-bg-color2: rgb(37 37 38);
     --main-bg-color3: #27272B;
     --header-bg-color: #121213;
+    --footer-bg-color: #161616;
     --hover-color: #212121;
     --hover-color2:rgb(36, 36, 36);
     --hover-color3:rgba(201, 201, 201, 0.258);

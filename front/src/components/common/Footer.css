@@ -1,6 +1,7 @@
 #footer {
     /* margin-top: 60px; */
-    background-color: var(--main-bg-color2);
+    /* background-color: var(--main-bg-color2); */
+    background-color: var(--footer-bg-color);
 }
 
 #footer .b_conts {
