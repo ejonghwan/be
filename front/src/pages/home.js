@@ -41,7 +41,7 @@ const Home = ({ page }) => {
     
     useEffect(() => {
         state.isLogged && handleLoadApplyProject();
-        state.isLogged && handleUserProjectsUpdate();
+        // state.isLogged && handleUserProjectsUpdate();
         state.isLogged && handleLoadMyProject();
     }, [state.isLogged]);
 
