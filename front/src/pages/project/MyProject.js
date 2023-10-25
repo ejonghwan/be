@@ -33,7 +33,7 @@ const MyProject = ({ page }) => {
     }, [state.loadUserDone, state.isLogged]);
 
     useEffect(() => {
-        return () => ProjectDispatch({ type: "RESET_PROJECTS" });
+        return () => ProjectDispatch({ type: "RESET_PROJECTS_LIST" });
     }, []);
 
 
