@@ -7,7 +7,7 @@ import ProjectItems from '../components/project/ProjectItems.js';
 import { PiFolderNotchPlusDuotone } from "react-icons/pi";
 import ProjectRequest from '../reducers/ProjectRequest.js';
 import { ProjectContext } from '../context/ProjectContext.js';
-import UserRequest from '../reducers/UserRequest.js';
+// import UserRequest from '../reducers/UserRequest.js';
 import SkeletonItem from '../components/skeleton/SkeletonItem.js';
 import SkeletonCard from '../components/skeleton/SkeletonCard.js';
 import ProjectItemsSquare from '../components/project/ProjectItemsSquare.js';
@@ -19,10 +19,10 @@ import './home.css';
 
 const Home = ({ page }) => {
 
-    const { state, dispatch } = useContext(UserContext);
+    const { state } = useContext(UserContext);
     const { ProjectState, ProjectState: { myapplyProject, myProject, rankProjects, insrankProjects }, ProjectDispatch } = useContext(ProjectContext);
     const { myApplyProject, loadMyProject, loadRankProject, loadinstanceRankProject } = ProjectRequest();
-    const { getUserProjects } = UserRequest();
+    // const { getUserProjects } = UserRequest();
 
     const handleLoadApplyProject = useCallback(() => {
         ProjectDispatch({ type: "PROJECT_MYAPPLY_LOAD_REQUEST" });
@@ -34,10 +34,10 @@ const Home = ({ page }) => {
         loadMyProject({ userId: state.user._id });
     }, [state.isLogged])
 
-    const handleUserProjectsUpdate = () => {
-        dispatch({ type: "MY_PROJECTS_UPDATE_REQUEST" });
-        getUserProjects(state.user._id);
-    };
+    // const handleUserProjectsUpdate = () => {
+    //     dispatch({ type: "MY_PROJECTS_UPDATE_REQUEST" });
+    //     getUserProjects(state.user._id);
+    // };
     
     useEffect(() => {
         state.isLogged && handleLoadApplyProject();
@@ -51,7 +51,6 @@ const Home = ({ page }) => {
         ProjectDispatch({ type: "PROJECT_INSRANK_LOAD_REQUEST" });
         loadinstanceRankProject({ pageNum: 1, limitNum: 10 });
         return () => {
-            console.log('언마운트?')
             ProjectDispatch({ type: "RESET_PROJECTS_LIST" });
         }
     }, []);
@@ -124,8 +123,8 @@ const Home = ({ page }) => {
                 
                     // spaceBetween={50}
                     slidesPerView={2}
-                    onSlideChange={() => console.log('slide change')}
-                    onSwiper={(swiper) => console.log(swiper)}
+                    // onSlideChange={() => console.log('slide change')}
+                    // onSwiper={(swiper) => console.log(swiper)}
                     modules={[Navigation, Pagination, Scrollbar, A11y ]}
                     navigation={{
                         prevEl: '.projectlikePrev',
@@ -168,8 +167,8 @@ const Home = ({ page }) => {
                 <Swiper
                     // spaceBetween={50}
                     slidesPerView={2}
-                    onSlideChange={() => console.log('slide change')}
-                    onSwiper={(swiper) => console.log(swiper)}
+                    // onSlideChange={() => console.log('slide change')}
+                    // onSwiper={(swiper) => console.log(swiper)}
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     navigation={{
                         prevEl: '.projectinsPrev',
