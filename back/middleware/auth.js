@@ -15,7 +15,6 @@ export const auth = async (req, res, next) => {
         if(accToken) {
             const match = jwt.verify(accToken, process.env.JWT_KEY, {ignoreExpiration: true}) 
              // decode가 있으면 acc로 인증 
-             console.log('????????????????????')
             if(match && match.exp > Date.now().valueOf() / 1000) { 
                 // writes comments recomments likePost 지우고 테스트
                 const user = await User.findOne({ id: match.id }).select('birthday createdAt darkMode email gender id joinProjects likeProject name phoneNumber prevSearch profileImage projects  updatedAt').populate([ 

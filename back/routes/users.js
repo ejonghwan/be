@@ -109,7 +109,7 @@ router.post('/login', async (req, res) => {
                         delete user._doc.password;
                         delete user._doc.token;
                         delete user._doc.question;
-                        res.cookie('X-refresh-token', hash, { expires: new Date(Date.now() + 7200000), httpOnly: true });
+                        res.cookie('X-refresh-token', hash, { expires: new Date(Date.now() + 1000 * 60 * 60 * 6), httpOnly: true });
                         res.status(200).json({ accToken, ...user._doc });
                     });
                 });
