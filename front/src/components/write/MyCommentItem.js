@@ -41,7 +41,8 @@ const MyCommentItem = ({ comments = [] }) => {
                         </div>
                     ) : (
                         <Fragment>
-                            <div className='project_image'>{IconData[comment.writeId.project._id.projectImages]}</div>
+                            { console.log('coco??', comment) }
+                            {/* <div className='project_image'>{IconData[comment.writeId.project?._id.projectImages]}</div>
                             <div>
                                 <div className='comments_list_content word_ellip_3'>{comment.content}</div>
                                 <Link to={`/write/detail/${comment.writeId._id}`} className='comments_list_write'>
@@ -52,12 +53,11 @@ const MyCommentItem = ({ comments = [] }) => {
                                 </Link>
                                 <div className='comments_date_wrap'>
                                     <p>{changeViewDate(comment.createdAt, 'day')}</p>
-                                    {/* <p>수정일 {changeViewDate(comment.updatedAt, 'day')}</p> */}
                                 </div>
                             </div>
                             <Button className={'button_reset button_delete2'} onClick={() => handleDeleteComment(comment)}>
                                 <span className='blind'>이 댓글 삭제</span>
-                            </Button>
+                            </Button> */}
                         </Fragment>
                     )}
                 </li>
