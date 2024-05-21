@@ -109,12 +109,17 @@ router.post('/', auth, async (req, res) => {
         // const date = new Date();
         // const curDate = new Date(date.setHours(date.getHours() + 9));
         // const nowDate = `${curDate.getFullYear()},` + `${curDate.getMonth() + 1},` + `${curDate.getDate()}`;
-        const date = moment();
-        const nowDate = date.subtract(9, 'h').format("YYYY/MM/DD");
-        console.log('date??', date)
-        console.log('nowDate??', date.subtract(9, 'h').format());
+        // const date = moment().format("YYYY/MM/DD");
+        const nowDate = moment().format("YYYY/MM/DD");
+        // const nowDate = date.subtract(9, 'h').format("YYYY/MM/DD");
+        console.log('date??', nowDate, moment().format())
+        // console.log('nowDate??', date.add(9, 'h').format());
+        // console.log('nowDate??', date.subtract(9, 'h').format());
+        // console.log('nowDate??', nowDate);
+        // 저녁 10시쯤 하면 뺴는게 맞고   subtract
+        // 새벽 1시쯤 하면 더하는게 맞네 ?   add
 
-
+        
          
         // const nowDate = date.format("YYYY/MM/DD");
         const isConstructor = await Project.findOne( { $and: [{ _id: project._id }, { "constructorUser._id": user._id } ] }, );
