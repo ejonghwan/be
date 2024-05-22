@@ -110,9 +110,10 @@ router.post('/', auth, async (req, res) => {
         // const curDate = new Date(date.setHours(date.getHours() + 9));
         // const nowDate = `${curDate.getFullYear()},` + `${curDate.getMonth() + 1},` + `${curDate.getDate()}`;
         // const date = moment().format("YYYY/MM/DD");
-        const nowDate = moment().format("YYYY/MM/DD");
+        const nowDate = moment().add(9, 'h').format("YYYY/MM/DD");
         // const nowDate = date.subtract(9, 'h').format("YYYY/MM/DD");
         console.log('date??', nowDate, moment().format())
+        console.log('date22??', nowDate, moment().add(9, 'h').format())
         // console.log('nowDate??', date.add(9, 'h').format());
         // console.log('nowDate??', date.subtract(9, 'h').format());
         // console.log('nowDate??', nowDate);
