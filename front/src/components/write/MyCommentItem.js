@@ -41,7 +41,8 @@ const MyCommentItem = ({ comments = [] }) => {
                         </div>
                     ) : (
                         <Fragment>
-                            { comment.writeId?.project._id.projectImages && <div className='project_image'>{IconData[comment.writeId?.project._id.projectImages]}</div> }
+                            {/* { comment.writeId?.project._id.projectImages && <div className='project_image'>{IconData[comment.writeId?.project._id.projectImages]}</div> } */}
+                            { console.log('comment id??', comment.writeId?.project._id) }
                             <div>
                                 <div className='comments_list_content word_ellip_3'>{comment?.content}</div>
                                 <Link to={`/write/detail/${comment.writeId?._id}`} className='comments_list_write'>
