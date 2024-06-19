@@ -41,14 +41,14 @@ const MyCommentItem = ({ comments = [] }) => {
                         </div>
                     ) : (
                         <Fragment>
-                            { comment.writeId?.project?._id?.projectImages && <div className='project_image'>{IconData[comment.writeId?.project?._id?.projectImages]}</div> }
+                            <div className='project_image'>{IconData[comment.writeId?.project?._id?.projectImages]}</div>
                             <div>
                                 <div className='comments_list_content word_ellip_3'>{comment?.content}</div>
                                 <Link to={`/write/detail/${comment.writeId?._id}`} className='comments_list_write'>
                                     <span className='tit'>{comment.writeId?.title}</span> 글에 남긴 댓글
                                 </Link>
-                                <Link to={`/project/detail/${comment.writeId?.project._id._id}`} className='comments_list_title'>
-                                    <span className='tit'>{comment.writeId?.project._id.title}</span> 중에서...
+                                <Link to={`/project/detail/${comment.writeId?.project?._id?._id}`} className='comments_list_title'>
+                                    <span className='tit'>{comment.writeId?.project?._id?.title}</span> 중에서...
                                 </Link>
                                 <div className='comments_date_wrap'>
                                     <p>{changeViewDate(comment.createdAt, 'day')}</p>
