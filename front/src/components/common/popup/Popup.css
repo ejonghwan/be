@@ -10,7 +10,7 @@
     padding: 20px;
     z-index: 100;
     max-width: 980px;
-    max-height: 90vh;
+    /* max-height: 90vh; */
 }
 
 
@@ -75,7 +75,7 @@
     position: relative;
 }
 
-#popup .popup_body:after {
+/* #popup .popup_body:after {
     content: '';
     display: block;
     width: 100%;
@@ -83,7 +83,7 @@
     position: fixed;
     bottom: 70px;
     background: linear-gradient(0deg, #121213, #12121300);
-}
+} */
 
 #popup .popup_bottom {
     position: absolute;
