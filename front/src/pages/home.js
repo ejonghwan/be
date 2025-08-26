@@ -13,6 +13,7 @@ import ProjectItemsSquare from '../components/project/ProjectItemsSquare.js';
 import Button from '../components/common/form/Button.js';
 import HeadMetaTag from '../components/common/HeadMetaTag.js';
 import './home.css';
+import aa from '../../src/assets/images/testimge.png';
 
 
 
@@ -57,8 +58,10 @@ const Home = ({ page }) => {
             <HeadMetaTag title={`HOBBYIST. 습관 만들기 | 홈`} />
             <h2 className='blind'><span>{page}</span></h2>
             {/* {state.loadUserLoading && ( <div><Spinners /></div> )} */}
-
+            <img src="aa" width="100px" />
             <div className='b_conts full bg_gray'>
+
+
                 <div className='b_conts pd_0'>
                     {ProjectState.loadMyProjectLoading || ProjectState.loadMyapplyProjectLoading ? (
                         <Fragment>
